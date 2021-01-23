@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from clients.viewsapi import ClientViewSet
+import clients
+from clients.views_api import ClientViewSet
 
 router = routers.DefaultRouter()
 router.register(r'clients', ClientViewSet)
@@ -25,5 +26,5 @@ router.register(r'clients', ClientViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-
+    path('client/', include('clients.urls'))
 ]

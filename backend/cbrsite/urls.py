@@ -17,14 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-import clients
 from clients.views_api import ClientViewSet
 
 router = routers.DefaultRouter()
+# Register additional api url endpoints here
 router.register(r'clients', ClientViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('client/', include('clients.urls'))
 ]

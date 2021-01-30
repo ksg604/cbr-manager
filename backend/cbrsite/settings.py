@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -116,3 +117,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SITE_URL ='http://127.0.0.1:8000/'
+
+# REST AUTH
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}

@@ -3,6 +3,7 @@ package com.example.cbr_manager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,9 @@ public class DashboardActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DashboardActivity.this, "All Clients Clicked.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(DashboardActivity.this, "All Clients Clicked.", Toast.LENGTH_SHORT).show();
+                Intent startIntent = new Intent(getApplicationContext(), AllClientsActivity.class);
+                startActivity(startIntent);
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.cbr_manager;
 
 import android.os.Bundle;
 
+import com.example.cbr_manager.service.AuthService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +28,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                AuthService authService = new AuthService("user1", "password2021");
+                try {
+                    authService.authenticate();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
+
     }
 }

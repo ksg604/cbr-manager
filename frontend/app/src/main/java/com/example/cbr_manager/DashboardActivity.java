@@ -20,7 +20,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+//        getActionBar().setTitle("Dashboard");
+//        getSupportActionBar().setTitle("Dashboard");
         Button button = (Button) findViewById(R.id.allClientsButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,3 +17,6 @@ Currently in `frontend/res/raw/configsample.properties` exists.
 3. Fill `api_url ` in the config file with your IP
 
    i.e `http://192.168.1.70:8000/api`
+
+
+Here is a stackoverflow on how to access these values in `config.properties` https://stackoverflow.com/a/35527922/5579664

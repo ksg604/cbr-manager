@@ -26,7 +26,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="4dp"
+                android:padding="0dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/dog" />
         </androidx.cardview.widget.CardView>

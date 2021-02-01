@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -49,6 +50,14 @@ public class ViewPagerAdapter extends PagerAdapter {
         imageView.setImageResource(models.get(position).getImage());
         name.setText(models.get(position).getName());
         place.setText(models.get(position).getLocation());
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Priority client position " + position + " selected." , Toast.LENGTH_SHORT).show();
+            }
+        });
+
         container.addView(view, 0);
         return view;
     }

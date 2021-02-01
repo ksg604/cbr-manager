@@ -5,19 +5,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class AllClientsActivity extends AppCompatActivity {
+public class AllClientsActivity extends AppCompatActivity implements ExampleItemAdapter.OnItemListener {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    ArrayList<ExampleItem> exampleItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_clients);
 
-        ArrayList<ExampleItem> exampleItems = new ArrayList<>();
+        exampleItems = new ArrayList<>();
         exampleItems.add(new ExampleItem(R.drawable.dog, "Peter Tran", "Burnaby Region"));
         exampleItems.add(new ExampleItem(R.drawable.dog, "Leonhard Euler", "SFU"));
         exampleItems.add(new ExampleItem(R.drawable.dog, "Leonhard Euler", "Vancouver Region"));
@@ -39,8 +42,14 @@ public class AllClientsActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleItemAdapter(exampleItems);
+        mAdapter = new ExampleItemAdapter(exampleItems, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        ExampleItem exampleItem = exampleItems.get(position);
+        Toast.makeText(this, "Item " + position + " selected.", Toast.LENGTH_SHORT).show();
     }
 }

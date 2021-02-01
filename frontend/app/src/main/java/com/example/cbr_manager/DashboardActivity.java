@@ -45,6 +45,6 @@ public class DashboardActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager2);
         viewPager.setAdapter(adapter);
         viewPager.setClipToPadding(false);
-        viewPager.setPadding(80,0,80,0);
+        viewPager.setPadding(220,0,220,0);
     }
 }

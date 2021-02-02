@@ -24,19 +24,21 @@ SECRET_KEY = 'y*g*axxtgv$fe+&8&_^h&@y!wz%4vih@k!gl3gu+sb0&w$hu7='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
     'clients.apps.ClientsConfig',
+    'authenticate.apps.AuthenticateConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -115,4 +117,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SITE_URL ='http://127.0.0.1:8000/'
+# REST AUTH
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}

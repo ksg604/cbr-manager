@@ -1,17 +1,15 @@
 package com.example.cbr_manager;
 
 import android.os.Bundle;
-
-import com.example.cbr_manager.service.AuthService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-
-import java.io.IOException;
+import com.example.cbr_manager.service.APIClientService;
+import com.example.cbr_manager.service.auth.AuthToken;
+import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,21 +17,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button requestBtn = findViewById(R.id.request);
+        Button responseBtn = findViewById(R.id.response);
+
+        LoginUserPass cred = new LoginUserPass("user1", "password2021");
+        APIClientService client = new APIClientService(cred);
+
+        requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            public void onClick(View v) {
+                client.authenticate();
+                Snackbar.make(v, "request", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
 
-                AuthService authService = new AuthService("user1", "password2021");
-                try {
-                    authService.authenticate();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        responseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthToken authToken = client.getAuthToken();
+
+                if (authToken != null) {
+                    Snackbar.make(v, client.getAuthToken().toString(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(v, "no request for the token has been done yet", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
             }
         });

@@ -33,10 +33,10 @@
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
     <Button
-        android:id="@+id/newClientButton"
+        android:id="@+id/clientDetailsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Client"
+        android:text="Client Info"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="center" />
 

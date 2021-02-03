@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        newClientButton = (Button) findViewById(R.id.newClientButton);
-        newClientButton.setOnClickListener(new View.OnClickListener() {
+        Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
+        clientDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newClientIntent = new Intent(v.getContext(), ClientDetailsActivity.class);

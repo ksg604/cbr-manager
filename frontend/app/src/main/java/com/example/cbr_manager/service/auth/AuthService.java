@@ -1,7 +1,6 @@
 package com.example.cbr_manager.service.auth;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.service.AuthAPI;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +48,5 @@ public class AuthService {
 
     private void setAuthToken(AuthToken authToken) {
         this.authToken = authToken;
-        System.out.println("ok");
     }
 }

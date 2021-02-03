@@ -21,18 +21,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-//        getActionBar().setTitle("Dashboard");
-//        getSupportActionBar().setTitle("Dashboard");
-        Button button = (Button) findViewById(R.id.allClientsButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(DashboardActivity.this, "All Clients Clicked.", Toast.LENGTH_SHORT).show();
-                Intent startIntent = new Intent(getApplicationContext(), AllClientsActivity.class);
-                startActivity(startIntent);
-            }
-        });
 
+        setupAllClientsButton();
         // Test data
         models = new ArrayList<>();
         models.add(new ViewPagerModel(R.drawable.dog, "Peter Tran", "Simon Fraser University") );
@@ -41,6 +31,21 @@ public class DashboardActivity extends AppCompatActivity {
         models.add(new ViewPagerModel(R.drawable.dog, "James Stewart", "Simon Fraser University") );
         models.add(new ViewPagerModel(R.drawable.dog, "Demo Boi", "Simon Fraser University") );
 
+        setupViewPager();
+    }
+
+    private void setupAllClientsButton() {
+        Button button = (Button) findViewById(R.id.allClientsButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), AllClientsActivity.class);
+                startActivity(startIntent);
+            }
+        });
+    }
+
+    private void setupViewPager() {
         adapter = new ViewPagerAdapter(models, this);
         viewPager = findViewById(R.id.viewPager2);
         viewPager.setAdapter(adapter);

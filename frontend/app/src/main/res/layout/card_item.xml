@@ -23,7 +23,7 @@
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:background="@drawable/high_priority_bg"
+                android:background="#ff5c67"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

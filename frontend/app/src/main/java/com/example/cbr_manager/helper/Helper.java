@@ -4,7 +4,7 @@ import com.example.cbr_manager.BuildConfig;
 
 
 public class Helper {
-    public static String getBaseUrl() {
+    public static String getAPIUrl() {
         return BuildConfig.API_URL;
     }
 }

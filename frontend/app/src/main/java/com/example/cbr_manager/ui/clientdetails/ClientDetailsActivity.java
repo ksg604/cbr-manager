@@ -1,4 +1,4 @@
-package com.example.cbr_manager;
+package com.example.cbr_manager.ui.clientdetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.cbr_manager.R;
 
 public class ClientDetailsActivity extends AppCompatActivity {
 

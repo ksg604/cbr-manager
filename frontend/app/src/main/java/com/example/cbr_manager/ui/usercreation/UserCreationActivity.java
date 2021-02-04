@@ -1,7 +1,8 @@
-package com.example.cbr_manager;
+package com.example.cbr_manager.ui.usercreation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,11 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cbr_manager.R;
+import com.example.cbr_manager.ui.dashboard.DashboardActivity;
+import com.example.cbr_manager.ui.login.LoginActivity;
+
 public class UserCreationActivity extends AppCompatActivity {
 
     private EditText editTextUserName, editTextEmail, editTextPassword, editTextPasswordConfirm;
     private Button buttonSubmit;
-    private TextView textUserName, textPassword, textEmail, textPasswordConfirm, textInputWarning;
+    private TextView  textInputWarning;
     private String warningText = "";
 
     @Override
@@ -25,24 +30,27 @@ public class UserCreationActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPasswordConfirm = findViewById(R.id.editTextPasswordConfirm);
         buttonSubmit = findViewById(R.id.buttonSubmit);
-        textUserName = findViewById(R.id.textUserName);
-        textEmail = findViewById(R.id.textEmail);
-        textPassword = findViewById(R.id.textPassword);
-        textPasswordConfirm = findViewById(R.id.textPasswordConfirm);
         textInputWarning = findViewById(R.id.textInputWarning);
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateInput()){
+                    sendUserCreateRequest();
+                    textInputWarning.setVisibility(View.GONE);
+                    Toast.makeText(UserCreationActivity.this, "User succesfully registered!", Toast.LENGTH_SHORT).show();
+                }
+                Intent intent = new Intent(UserCreationActivity.this, LoginActivity.class);
+                startActivity(intent);
+                }
+
+        });
     }
+
 
     public void onRegisterButtonClick(View view) {
-        initRegister();
+        ;
     }
 
-    private void initRegister() {
-        if (validateInput()){
-            sendUserCreateRequest();
-            textInputWarning.setVisibility(View.GONE);
-            Toast.makeText(this, "User succesfully registered!", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void sendUserCreateRequest() {
         //TODO: method to send form data to register new user in Django server

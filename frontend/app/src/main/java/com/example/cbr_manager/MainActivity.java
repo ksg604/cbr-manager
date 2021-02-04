@@ -3,6 +3,8 @@ package com.example.cbr_manager;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

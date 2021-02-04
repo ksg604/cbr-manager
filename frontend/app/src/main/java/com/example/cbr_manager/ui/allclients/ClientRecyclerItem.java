@@ -1,4 +1,4 @@
-package com.example.cbr_manager;
+package com.example.cbr_manager.ui.allclients;
 
 public class ClientRecyclerItem {
     private int mImageResource;

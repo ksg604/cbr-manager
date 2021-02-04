@@ -1,4 +1,4 @@
-package com.example.cbr_manager;
+package com.example.cbr_manager.ui.dashboard;
 
 public class ViewPagerModel {
     private int image;

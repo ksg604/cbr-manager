@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cbr_manager.service.APIClientService;
+import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.AuthToken;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Button responseBtn = findViewById(R.id.response);
 
         LoginUserPass cred = new LoginUserPass("user1", "password2021");
-        APIClientService client = new APIClientService(cred);
+        APIService client = new APIService(cred);
 
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override

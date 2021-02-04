@@ -5,10 +5,10 @@ import com.example.cbr_manager.service.auth.AuthToken;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 
 
-public class APIClientService {
+public class APIService {
     private final AuthService authService;
 
-    public APIClientService(LoginUserPass loginUserPass) {
+    public APIService(LoginUserPass loginUserPass) {
         // initialize all API services
         authService = new AuthService(loginUserPass);
     }

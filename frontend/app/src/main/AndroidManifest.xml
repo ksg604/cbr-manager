@@ -20,10 +20,7 @@
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="@string/title_activity_login"
             android:theme="@style/Theme.Cbr_manager.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,7 +23,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cbr_manager.MainActivity;
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.UserCreationActivity;
 import com.example.cbr_manager.ui.login.LoginViewModel;
 import com.example.cbr_manager.ui.login.LoginViewModelFactory;
 
@@ -115,6 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                Intent intent = new Intent(LoginActivity.this, UserCreationActivity.class);
+                startActivity(intent);
             }
         });
     }

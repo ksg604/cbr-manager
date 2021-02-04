@@ -20,7 +20,7 @@ public class AuthService {
         this.loginUserPass = loginUserPass; // Todo: credentials are stored in plaintext!
     }
 
-    public void registerToken() {
+    public void fetchAuthToken() {
         AuthAPI authAPI = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

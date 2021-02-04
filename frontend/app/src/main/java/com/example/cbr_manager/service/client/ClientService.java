@@ -21,7 +21,7 @@ public class ClientService {
     public ClientService(AuthToken auth) {
         this.authToken = auth;
 
-        initClientAPI();
+        this.clientAPI = getClientAPI();
     }
 
     public Call<List<Client>> getClients() {
@@ -30,8 +30,8 @@ public class ClientService {
         return this.clientAPI.getClients(authHeader);
     }
 
-    private void initClientAPI() {
-        this.clientAPI = new Retrofit.Builder()
+    private ClientAPI getClientAPI() {
+        return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ClientAPI.class);

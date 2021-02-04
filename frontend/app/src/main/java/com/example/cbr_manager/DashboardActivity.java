@@ -23,6 +23,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         setupAllClientsButton();
+        setupAddClientButton();
         // Test data
         models = new ArrayList<>();
         models.add(new ViewPagerModel(R.drawable.dog, "Peter Tran", "Simon Fraser University") );
@@ -32,6 +33,16 @@ public class DashboardActivity extends AppCompatActivity {
         models.add(new ViewPagerModel(R.drawable.dog, "Demo Boi", "Simon Fraser University") );
 
         setupViewPager();
+    }
+
+    private void setupAddClientButton() {
+        Button button = (Button) findViewById(R.id.addClientButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DashboardActivity.this, "Going to add client activity.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setupAllClientsButton() {

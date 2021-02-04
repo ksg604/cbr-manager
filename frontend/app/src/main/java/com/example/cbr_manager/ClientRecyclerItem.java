@@ -1,11 +1,11 @@
 package com.example.cbr_manager;
 
-public class ExampleItem {
+public class ClientRecyclerItem {
     private int mImageResource;
     private String mText1;
     private String mText2;
 
-    public ExampleItem(int mImageResource, String mText1, String mText2) {
+    public ClientRecyclerItem(int mImageResource, String mText1, String mText2) {
         this.mImageResource = mImageResource;
         this.mText1 = mText1;
         this.mText2 = mText2;

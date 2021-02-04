@@ -9,4 +9,10 @@
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... </string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="all_clients">All Clients</string>
+    <string name="add_client">Add Client</string>
+    <string name="outstanding_visits">Outstanding Visits</string>
+    <string name="outstanding_referrals">Outstanding Referrals</string>
+    <string name="firstname_lastname">FirstName LastName</string>
+    <string name="location">Simon Fraser University</string>
 </resources>

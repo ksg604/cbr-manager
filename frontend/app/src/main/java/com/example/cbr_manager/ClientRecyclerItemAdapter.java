@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ExampleItemAdapter extends RecyclerView.Adapter<ExampleItemAdapter.ExampleViewHolder> {
+public class ClientRecyclerItemAdapter extends RecyclerView.Adapter<ClientRecyclerItemAdapter.ClientItemViewHolder> {
 
-    private ArrayList<ExampleItem> exampleItems;
+    private ArrayList<ClientRecyclerItem> clientRecyclerItems;
     private OnItemListener onItemListener;
 
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
         public TextView textView1;
         public TextView textView2;
         OnItemListener onItemListener;
 
-        public ExampleViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
+        public ClientItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             textView1 = itemView.findViewById(R.id.textView6);
@@ -43,22 +43,22 @@ public class ExampleItemAdapter extends RecyclerView.Adapter<ExampleItemAdapter.
         void onItemClick(int position);
     }
 
-    public ExampleItemAdapter(ArrayList<ExampleItem> exampleItems, OnItemListener onItemListener) {
-        this.exampleItems = exampleItems;
+    public ClientRecyclerItemAdapter(ArrayList<ClientRecyclerItem> clientRecyclerItems, OnItemListener onItemListener) {
+        this.clientRecyclerItems = clientRecyclerItems;
         this.onItemListener = onItemListener;
     }
 
     @NonNull
     @Override
-    public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ClientItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.client_item, parent, false);
-        ExampleViewHolder evh = new ExampleViewHolder(v, onItemListener);
+        ClientItemViewHolder evh = new ClientItemViewHolder(v, onItemListener);
         return evh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        ExampleItem currentItem = exampleItems.get(position);
+    public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
+        ClientRecyclerItem currentItem = clientRecyclerItems.get(position);
 
         holder.imageView.setImageResource(currentItem.getmImageResource());
         holder.textView1.setText(currentItem.getmText1());
@@ -67,7 +67,7 @@ public class ExampleItemAdapter extends RecyclerView.Adapter<ExampleItemAdapter.
 
     @Override
     public int getItemCount() {
-        return exampleItems.size();
+        return clientRecyclerItems.size();
     }
 
 

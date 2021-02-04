@@ -14,7 +14,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private Button buttonNewUser;
+    private Button newClientButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setupButtons();
+    }
 
+    private void setupButtons() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserCreationActivity.class);
                 startActivity(intent);
+
+        Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
+        clientDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newClientIntent = new Intent(v.getContext(), ClientDetailsActivity.class);
+                startActivity(newClientIntent);
+
             }
         });
     }

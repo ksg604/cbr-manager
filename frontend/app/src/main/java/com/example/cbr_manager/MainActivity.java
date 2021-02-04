@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserCreationActivity.class);
                 startActivity(intent);
-
+            }
+        });
         Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
         clientDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent newClientIntent = new Intent(v.getContext(), ClientDetailsActivity.class);
                 startActivity(newClientIntent);
 
+            }
+        });
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), DashboardActivity.class);
+                startActivity(startIntent);
             }
         });
     }

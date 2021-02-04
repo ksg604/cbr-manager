@@ -41,4 +41,17 @@
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="center" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="245dp"
+        android:text="dashboard" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/Theme.Cbr_manager.PopupOverlay" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.example.cbr_manager;
+package com.example.cbr_manager.ui.dashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.cbr_manager.R;
+import com.example.cbr_manager.ui.allclients.AllClientsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

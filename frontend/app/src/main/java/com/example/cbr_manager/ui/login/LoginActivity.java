@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,8 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.ui.login.LoginViewModel;
-import com.example.cbr_manager.ui.login.LoginViewModelFactory;
+import com.example.cbr_manager.ui.dashboard.DashboardActivity;
+import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button buttonNewUser = findViewById(R.id.buttonNewUser);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -115,6 +117,16 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, UserCreationActivity.class);
+                startActivity(intent);
             }
         });
     }

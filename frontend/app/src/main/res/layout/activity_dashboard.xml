@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="40dp"
         android:background="#EAEDF4"
-        tools:context=".DashboardActivity">
+        tools:context=".ui.dashboard.DashboardActivity">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:context=".DashboardActivity">
+            tools:context=".ui.dashboard.DashboardActivity">
 
             <TextView
                 android:id="@+id/alertTextView"

@@ -3,6 +3,8 @@ package com.example.cbr_manager;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -45,22 +47,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
         clientDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newClientIntent = new Intent(v.getContext(), ClientDetailsActivity.class);
                 startActivity(newClientIntent);
-
-            }
-        });
-
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startIntent = new Intent(getApplicationContext(), DashboardActivity.class);
-                startActivity(startIntent);
             }
         });
     }

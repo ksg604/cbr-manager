@@ -26,8 +26,8 @@ public class AuthService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(AuthAPI.class);
 
-        Call<AuthToken> call = authAPI.getToken(loginUserPass);
-        call.enqueue(new Callback<AuthToken>() {
+        Call<AuthToken> getTokenCall = authAPI.getToken(loginUserPass);
+        getTokenCall.enqueue(new Callback<AuthToken>() {
             @Override
             public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
                 if (response.isSuccessful()) {

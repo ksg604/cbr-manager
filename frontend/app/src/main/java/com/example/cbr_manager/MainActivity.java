@@ -2,15 +2,14 @@ package com.example.cbr_manager;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-import android.widget.Button;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,17 +39,17 @@ public class MainActivity extends AppCompatActivity {
         buttonNewUser = findViewById(R.id.buttonNewUser);
         buttonNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, UserCreationActivity.class);
                 startActivity(intent);
-
-        Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
-        clientDetailsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newClientIntent = new Intent(v.getContext(), ClientDetailsActivity.class);
-                startActivity(newClientIntent);
-
+                Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
+                clientDetailsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent newClientIntent = new Intent(v.getContext(), ClientDetailsActivity.class);
+                        startActivity(newClientIntent);
+                    }
+                });
             }
         });
     }

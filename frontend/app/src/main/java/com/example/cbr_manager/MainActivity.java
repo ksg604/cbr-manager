@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserCreationActivity.class);
                 startActivity(intent);
-
+            }
+        });
         Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
         clientDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override

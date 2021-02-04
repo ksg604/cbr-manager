@@ -12,9 +12,9 @@ import retrofit2.Response;
 
 public class APIService {
 
-    public static AuthService authService;
-    public static ClientService clientService;
     private static APIService INSTANCE = null;
+    public AuthService authService;
+    public ClientService clientService;
 
     private APIService() {
     }
@@ -26,7 +26,7 @@ public class APIService {
         return (INSTANCE);
     }
 
-    private static void authenticate(LoginUserPass loginUserPass) {
+    public void authenticate(LoginUserPass loginUserPass) {
         authService = new AuthService(loginUserPass);
         authService.fetchAuthToken().enqueue(new Callback<AuthToken>() {
             @Override
@@ -46,7 +46,12 @@ public class APIService {
         });
     }
 
-    private static void initializeServices(AuthToken token){
-        clientService = new ClientService(token);
+    private void initializeServices(AuthToken token){
+        this.clientService = new ClientService(token);
+    }
+
+    public boolean isAuthenticated(){
+        // Todo needs a better check, maybe a specific endpoint to check validity of auth token
+        return authService.getAuthToken() != null;
     }
 }

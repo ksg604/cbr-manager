@@ -14,6 +14,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private Button buttonNewUser;
     private Button newClientButton;
 
     @Override
@@ -35,12 +37,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonNewUser = findViewById(R.id.buttonNewUser);
+        buttonNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UserCreationActivity.class);
+                startActivity(intent);
+
         Button clientDetailsButton = (Button) findViewById(R.id.clientDetailsButton);
         clientDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newClientIntent = new Intent(v.getContext(), ClientDetailsActivity.class);
                 startActivity(newClientIntent);
+
             }
         });
     }

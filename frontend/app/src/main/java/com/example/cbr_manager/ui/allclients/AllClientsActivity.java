@@ -1,7 +1,7 @@
 package com.example.cbr_manager.ui.allclients;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,12 @@ public class AllClientsActivity extends AppCompatActivity implements ClientRecyc
 
     @Override
     public void onItemClick(int position) {
-        ClientRecyclerItem clientRecyclerItem = clientRecyclerItems.get(position);
-        Toast.makeText(this, "Item " + position + " selected.", Toast.LENGTH_SHORT).show();
+        Intent clientInfoIntent = new Intent(this, ClientDetailsActivity.class);
+
+        ClientRecyclerItem recyclerItem = clientRecyclerItems.get(position);
+        clientInfoIntent.putExtra("clientId", recyclerItem.getClient().getId());
+
+        startActivity(clientInfoIntent);
     }
 
     public void fetchClientsToList(List<ClientRecyclerItem> clientUIList) {
@@ -57,7 +62,7 @@ public class AllClientsActivity extends AppCompatActivity implements ClientRecyc
                     if (response.isSuccessful()) {
                         List<Client> clientList = response.body();
                         for (Client client : clientList) {
-                            clientUIList.add(new ClientRecyclerItem(R.drawable.dog, client.getFullName(), "Burnaby Region"));
+                            clientUIList.add(new ClientRecyclerItem(R.drawable.dog, client.getFullName(), "Burnaby Region", client));
                         }
                     }
                     adapter.notifyDataSetChanged();

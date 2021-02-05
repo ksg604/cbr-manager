@@ -17,6 +17,11 @@ public class ClientDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_details);
+
+        Intent intent = getIntent();
+        int clientId = intent.getIntExtra("clientId", -1);
+
+        System.out.println(clientId);
         setupButtons();
         setupTextViews();
         setupImageViews();

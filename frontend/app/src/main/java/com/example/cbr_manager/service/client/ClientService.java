@@ -39,8 +39,12 @@ public class ClientService {
         return this.clientAPI.getClients(authHeader);
     }
 
-    public Call<Client> getClient(int id) {
-        return this.clientAPI.getClient(authHeader, id);
+    public Call<Client> modifyClient(Client client) {
+        return this.clientAPI.modifyClient(authHeader, client.getId(), client);
+    }
+
+    public Call<Client> getClient(int clientId) {
+        return this.clientAPI.getClient(authHeader, clientId);
     }
 
 }

@@ -3,8 +3,10 @@ package com.example.cbr_manager.service.client;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /*
@@ -16,4 +18,7 @@ public interface ClientAPI {
 
     @GET("api/clients/{id}")
     Call<Client> getClient(@Header("Authorization") String authHeader, @Path("id") int id);
+
+    @PUT("api/clients/{id}")
+    Call<Client> modifyClient(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
 }

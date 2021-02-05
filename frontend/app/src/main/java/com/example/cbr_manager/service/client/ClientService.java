@@ -16,18 +16,16 @@ public class ClientService {
 
     private final AuthToken authToken;
 
+    private final String authHeader;
+
     private ClientAPI clientAPI;
 
     public ClientService(AuthToken auth) {
         this.authToken = auth;
 
+        this.authHeader = Helper.formatTokenHeader(this.authToken);
+
         this.clientAPI = getClientAPI();
-    }
-
-    public Call<List<Client>> getClients() {
-        String authHeader = Helper.formatTokenHeader(this.authToken);
-
-        return this.clientAPI.getClients(authHeader);
     }
 
     private ClientAPI getClientAPI() {
@@ -35,6 +33,14 @@ public class ClientService {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(ClientAPI.class);
+    }
+
+    public Call<List<Client>> getClients() {
+        return this.clientAPI.getClients(authHeader);
+    }
+
+    public Call<Client> getClient(int id) {
+        return this.clientAPI.getClient(authHeader, id);
     }
 
 }

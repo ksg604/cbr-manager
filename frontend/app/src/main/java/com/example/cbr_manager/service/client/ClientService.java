@@ -44,6 +44,7 @@ public class ClientService {
     }
 
     public Call<Client> createClient(Client client){
+        // note: client id for the client object can be anything. default it manually to -1.
         return this.clientAPI.createClient(authHeader, client);
     }
 

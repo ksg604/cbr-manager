@@ -11,11 +11,38 @@
     <string name="visits">Visits</string>
     <string name="cbr_logo">CBR Logo</string>
     <string name="consent">1. Do you consent to this interview</string>
-    <string name="what_is_your_id">2. What is your ID Number?</string>
-    <string name="location">3. Location</string>
-    <string name="what_is_your_village_number">4. What is your village number?</string>
+    <string name="date_form_complete">2. Date form completed</string>
+    <string name="what_is_your_id">3. What is your ID Number?</string>
+    <string name="location">4. Location</string>
+    <string name="what_is_your_village_number">5. What is your village number?</string>
+    <string name="first_name">6. First Name</string>
+    <string name="last_name">7. Last Name</string>
+    <string name="gender">8. Gender</string>
+    <string name="age">9. Age</string>
+    <string name="contact_number">10. Contact Number(insert N/A if not available)</string>
+    <string name="type_of_disability">11. Type of disability</string>
+    <string name="caregiver_present">12. Caregiver present for interview</string>
+    <string name="caregiver_contact_number">13. If yes, caregiver contact number(insert N/A if not available)</string>
+    <string name="photo_of_client">14. Photo of client + caregiver if present</string>
+    <string name="date_format">yyyy-mm-dd</string>
+
+
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <string name="amputee">Amputee</string>
+    <string name="polio">Polio</string>
+    <string name="spinal_cord_injury">Spinal Cord Injury</string>
+    <string name="cerebral_palsy">Cerebral Palsy</string>
+    <string name="spina_bifida">Spina Bifida</string>
+    <string name="hydrocephalus">Hydrocephalus</string>
+    <string name="visual_impairment">Visual Impairment</string>
+    <string name="hearing_impairment">Hearing Impairment</string>
+    <string name="dont_know">Don&apos;t Know</string>
+    <string name="other">Other</string>
+    <string name="take_photo">Take Photo</string>
+
+
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>

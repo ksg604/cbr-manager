@@ -1,8 +1,12 @@
 package com.example.cbr_manager.service.client;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Client {
+    @SerializedName("first_name")
     private String firstName;
 
+    @SerializedName("last_name")
     private String lastName;
 
     private final int id;
@@ -31,5 +35,9 @@ public class Client {
 
     public int getId() {
         return id;
+    }
+
+    public String getFullName() {
+        return this.getFirstName() + " " + this.getLastName();
     }
 }

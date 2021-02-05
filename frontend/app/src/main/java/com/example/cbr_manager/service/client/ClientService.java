@@ -43,6 +43,10 @@ public class ClientService {
         return this.clientAPI.modifyClient(authHeader, client.getId(), client);
     }
 
+    public Call<Client> createClient(Client client){
+        return this.clientAPI.createClient(authHeader, client);
+    }
+
     public Call<Client> getClient(int clientId) {
         return this.clientAPI.getClient(authHeader, clientId);
     }

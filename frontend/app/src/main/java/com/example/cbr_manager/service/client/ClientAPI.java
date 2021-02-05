@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -21,4 +22,7 @@ public interface ClientAPI {
 
     @PUT("api/clients/{id}")
     Call<Client> modifyClient(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
+
+    @POST("api/clients/}")
+    Call<Client> createClient(@Header("Authorization") String authHeader, @Body Client client);
 }

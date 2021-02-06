@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +16,16 @@ public class VillageInfo extends AppCompatActivity implements AdapterView.OnItem
     private Spinner spinner;
     private static final String[] paths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
             "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
+    private EditText editTextId, editTextVillageNum;
+
+    String id, location, villageNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_client_village_info);
+
+        editTextId = (EditText)findViewById(R.id.editTextFirstName);
 
         spinner = (Spinner)findViewById(R.id.location_dropdown);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(VillageInfo.this,
@@ -27,27 +34,31 @@ public class VillageInfo extends AppCompatActivity implements AdapterView.OnItem
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        editTextVillageNum = (EditText)findViewById(R.id.editTextVillageNum);
+
+        Button button = findViewById(R.id.nextButton);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateInfo(v);
+            }
+        });
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
-        switch (position) {
-            case 0:
-                // Whatever you want to happen when the first item gets selected
-                break;
-            case 1:
-                // Whatever you want to happen when the second item gets selected
-                break;
-            case 2:
-                // Whatever you want to happen when the thrid item gets selected
-                break;
-
-        }
+        location = paths[position];
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        // TODO Auto-generated method stub
+        location = "";
+    }
+
+    private void updateInfo(View v) {
+        id = editTextId.getText().toString();
+        villageNumber = editTextVillageNum.getText().toString();
     }
 }

@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
@@ -14,32 +14,30 @@ import com.example.cbr_manager.R;
 
 public class Consent extends AppCompatActivity {
 
-    RadioGroup radioGroup;
-    RadioButton radioButton;
-    EditText year, month, day;
-    boolean consent;
-    String date;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
+    private EditText year, month, day;
+    private boolean consent;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_client_consent);
-        TextView text = findViewById(R.id.textView3);
 
         radioGroup = findViewById(R.id.radioGroup);
-        Button button = findViewById(R.id.button);
+        Button button = findViewById(R.id.nextButton);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkButton(v);
                 checkDate(v);
-                text.setText("Date:" + date);
             }
         });
     }
 
-    public void checkButton(View v) {
+    private void checkButton(View v) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
         String c = radioButton.getText().toString();
@@ -50,7 +48,7 @@ public class Consent extends AppCompatActivity {
         }
     }
 
-    public void checkDate(View v) {
+    private void checkDate(View v) {
         year = findViewById(R.id.editTextYear);
         month = findViewById(R.id.editTextMonth);
         day = findViewById(R.id.editTextDay);

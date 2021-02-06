@@ -40,7 +40,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/editTextVillageNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -48,7 +48,6 @@
         android:layout_marginTop="12dp"
         android:autofillHints=""
         android:ems="10"
-        android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -71,11 +70,11 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:text="@string/location"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -83,10 +82,10 @@
         android:layout_marginRight="20dp"
         android:text="@string/next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextVillageNum" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/prevButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -94,10 +93,10 @@
         android:layout_marginTop="40dp"
         android:text="@string/previous"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextVillageNum" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editTextFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

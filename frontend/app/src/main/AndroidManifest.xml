@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cbr_manager">
         <activity
-            android:name=".create_client.Consent"
+            android:name=".create_client.CaregiverInfo"
             android:label="MainActivity"
             android:theme="@style/Theme.Cbr_manager.NoActionBar">
         <intent-filter>

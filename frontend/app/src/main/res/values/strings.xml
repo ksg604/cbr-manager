@@ -24,7 +24,9 @@
     <string name="caregiver_present">12. Caregiver present for interview</string>
     <string name="caregiver_contact_number">13. If yes, caregiver contact number(insert N/A if not available)</string>
     <string name="photo_of_client">14. Photo of client + caregiver if present</string>
-    <string name="date_format">yyyy-mm-dd</string>
+    <string name="Year">Year</string>
+    <string name="Month">Month</string>
+    <string name="Day">Day</string>
 
 
     <string name="yes">Yes</string>
@@ -38,7 +40,7 @@
     <string name="hydrocephalus">Hydrocephalus</string>
     <string name="visual_impairment">Visual Impairment</string>
     <string name="hearing_impairment">Hearing Impairment</string>
-    <string name="dont_know">Don&apos;t Know</string>
+    <string name="dont_know">Don\'t Know</string>
     <string name="other">Other</string>
     <string name="take_photo">Take Photo</string>
 

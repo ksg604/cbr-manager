@@ -15,26 +15,25 @@
         android:theme="@style/Theme.Cbr_manager"
         tools:targetApi="n">
         <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
+        <activity
             android:name=".ui.clientdetails.ClientDetailsActivity"
             android:label=".ClientDetailsActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
             android:name=".ui.usercreation.UserCreationActivity"
             android:label=".UserCreationActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:label=".DashboardActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
             android:name=".ui.allclients.AllClientsActivity"
             android:label=".AllClientsActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
@@ -45,7 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

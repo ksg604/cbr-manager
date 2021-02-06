@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.ui.dashboard.DashboardActivity;
 import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
@@ -117,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                 startActivity(intent);
             }
         });

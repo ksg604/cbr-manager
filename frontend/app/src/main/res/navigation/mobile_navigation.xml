@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_client_list"
-        android:name="com.example.cbr_manager.ui.gallery.GalleryFragment"
+        android:name="com.example.cbr_manager.ui.clientlist.ClientListFragment"
         android:label="Client List"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_client_list" />
 
     <fragment
         android:id="@+id/nav_slideshow"

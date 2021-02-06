@@ -6,4 +6,4 @@ from clients.models import Client
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
-        fields = ['first_name', 'last_name']  # exposes first_name and last_name of the model
+        fields = ['id', 'first_name', 'last_name', 'location', 'age', 'date']  # exposes first_name and last_name of the model

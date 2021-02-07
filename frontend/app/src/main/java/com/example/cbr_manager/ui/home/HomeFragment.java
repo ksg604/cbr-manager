@@ -57,12 +57,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_nav_dashboard_to_nav_client_list);
-//                ClientListFragment clientListFragment = new ClientListFragment();
-//                FragmentManager manager = getFragmentManager();
-//                manager.beginTransaction() // This stuff isn't ideal.
-//                        .replace(R.id.nav_host_fragment, clientListFragment, clientListFragment.getTag())
-//                        .commit();
-
             }
         });
 

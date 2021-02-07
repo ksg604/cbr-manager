@@ -4,16 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.ui.clientlist.ClientListFragment;
 import com.example.cbr_manager.ui.dashboard.ViewPagerAdapter;
 import com.example.cbr_manager.ui.dashboard.ViewPagerModel;
 
@@ -41,7 +46,26 @@ public class HomeFragment extends Fragment {
         models.add(new ViewPagerModel(R.drawable.dog, "Demo Boi", "Simon Fraser University") );
 
         setupViewPager(root);
+        setupButtons(root);
         return root;
+    }
+
+    private void setupButtons(View root) {
+        Button allClientsButton = (Button) root.findViewById(R.id.allClientsButton);
+        allClientsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_nav_dashboard_to_nav_client_list);
+//                ClientListFragment clientListFragment = new ClientListFragment();
+//                FragmentManager manager = getFragmentManager();
+//                manager.beginTransaction() // This stuff isn't ideal.
+//                        .replace(R.id.nav_host_fragment, clientListFragment, clientListFragment.getTag())
+//                        .commit();
+
+            }
+        });
+
     }
 
     private void setupViewPager(View root) {

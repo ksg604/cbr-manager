@@ -24,12 +24,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.ui.dashboard.DashboardActivity;
 import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+
+    private static APIService apiService = APIService.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,6 +121,10 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+
+                LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                apiService.authenticate(credential);
+
                 Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                 startActivity(intent);
             }

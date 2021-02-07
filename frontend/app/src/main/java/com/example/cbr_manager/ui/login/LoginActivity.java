@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
                 apiService.authenticate(credential);
 
-                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                 startActivity(intent);
             }
         });

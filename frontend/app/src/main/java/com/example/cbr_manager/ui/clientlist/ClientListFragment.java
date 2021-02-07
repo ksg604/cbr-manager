@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.clientlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.allclients.ClientRecyclerItem;
 import com.example.cbr_manager.ui.allclients.ClientRecyclerItemAdapter;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +99,13 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
     @Override
     public void onItemClick(int position) {
+//        Toast.makeText(getContext(), "Item " + position + " selected.", Toast.LENGTH_SHORT).show();
+
+        Intent clientInfoIntent = new Intent(getContext(), ClientDetailsActivity.class);
+
         ClientListRecyclerItem clientListRecyclerItem = clientRecyclerItems.get(position);
-        Toast.makeText(getContext(), "Item " + position + " selected.", Toast.LENGTH_SHORT).show();
+        clientInfoIntent.putExtra("clientId", clientListRecyclerItem.getClient().getId());
+
+        startActivity(clientInfoIntent);
     }
 }

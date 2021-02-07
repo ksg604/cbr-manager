@@ -27,4 +27,8 @@ public class ClientListRecyclerItem {
     public String getmText2() {
         return mText2;
     }
+
+    public Client getClient() {
+        return client;
+    }
 }

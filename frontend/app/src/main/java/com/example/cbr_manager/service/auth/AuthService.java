@@ -3,8 +3,6 @@ package com.example.cbr_manager.service.auth;
 import com.example.cbr_manager.BuildConfig;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,33 +18,23 @@ public class AuthService {
         this.loginUserPass = loginUserPass; // Todo: credentials are stored in plaintext!
     }
 
-    public void fetchAuthToken() {
-        AuthAPI authAPI = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(AuthAPI.class);
-
-        Call<AuthToken> getTokenCall = authAPI.getToken(loginUserPass);
-        getTokenCall.enqueue(new Callback<AuthToken>() {
-            @Override
-            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
-                if (response.isSuccessful()) {
-                    setAuthToken(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AuthToken> call, Throwable t) {
-                // Todo: not sure proper method of error handling
-            }
-        });
+    public Call<AuthToken> fetchAuthToken() {
+        AuthAPI authAPI = getAuthAPI();
+        return authAPI.getToken(loginUserPass);
     }
 
     public AuthToken getAuthToken() {
         return this.authToken;
     }
 
-    private void setAuthToken(AuthToken authToken) {
+    public void setAuthToken(AuthToken authToken) {
         this.authToken = authToken;
+    }
+
+    private AuthAPI getAuthAPI() {
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(AuthAPI.class);
     }
 }

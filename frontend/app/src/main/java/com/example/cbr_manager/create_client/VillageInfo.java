@@ -1,5 +1,6 @@
 package com.example.cbr_manager.create_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +19,7 @@ public class VillageInfo extends AppCompatActivity implements AdapterView.OnItem
             "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
     private EditText editTextId, editTextVillageNum;
 
-    String id, location, villageNumber;
+    String id="", location="", villageNumber="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,19 +31,25 @@ public class VillageInfo extends AppCompatActivity implements AdapterView.OnItem
         spinner = (Spinner)findViewById(R.id.location_dropdown);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(VillageInfo.this,
                 android.R.layout.simple_spinner_item,paths);
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
         editTextVillageNum = (EditText)findViewById(R.id.editTextVillageNum);
 
-        Button button = findViewById(R.id.nextButton);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        Button nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateInfo(v);
+                nextSurveyPage();
+            }
+        });
+        Button prevButton = findViewById(R.id.prevButton);
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prevSurveyPage();
             }
         });
     }
@@ -60,5 +67,14 @@ public class VillageInfo extends AppCompatActivity implements AdapterView.OnItem
     private void updateInfo(View v) {
         id = editTextId.getText().toString();
         villageNumber = editTextVillageNum.getText().toString();
+    }
+
+    private void nextSurveyPage() {
+        Intent intent = new Intent(this, PersonalInfo.class);
+        startActivity(intent);
+    }
+    private void prevSurveyPage() {
+        Intent intent = new Intent(this, Consent.class);
+        startActivity(intent);
     }
 }

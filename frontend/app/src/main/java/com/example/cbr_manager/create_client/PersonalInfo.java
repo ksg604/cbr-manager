@@ -1,5 +1,6 @@
 package com.example.cbr_manager.create_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,11 +41,18 @@ public class PersonalInfo extends AppCompatActivity implements AdapterView.OnIte
         editTextContactNumber = (EditText) findViewById(R.id.editTextContactNumber);
 
         Button nextButton = findViewById(R.id.nextButton);
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateInfo(v);
+                nextSurveyPage();
+            }
+        });
+        Button prevButton = findViewById(R.id.prevButton);
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prevSurveyPage();
             }
         });
     }
@@ -63,5 +71,13 @@ public class PersonalInfo extends AppCompatActivity implements AdapterView.OnIte
         lastName = editTextLastName.getText().toString();
         age = Integer.parseInt(editTextAge.getText().toString());
         contactNumber = editTextContactNumber.getText().toString();
+    }
+    private void nextSurveyPage() {
+        Intent intent = new Intent(this, Disability.class);
+        startActivity(intent);
+    }
+    private void prevSurveyPage() {
+        Intent intent = new Intent(this, VillageInfo.class);
+        startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.cbr_manager.create_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,13 +27,13 @@ public class Consent extends AppCompatActivity {
         setContentView(R.layout.create_client_consent);
 
         radioGroup = findViewById(R.id.radioGroup);
-        Button button = findViewById(R.id.nextButton);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        Button nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkButton(v);
                 checkDate(v);
+                nextSurveyPage();
             }
         });
     }
@@ -53,5 +54,10 @@ public class Consent extends AppCompatActivity {
         month = findViewById(R.id.editTextMonth);
         day = findViewById(R.id.editTextDay);
         date = year.getText().toString() + "/" + month.getText().toString() + "/" + day.getText().toString();
+    }
+
+    private void nextSurveyPage() {
+        Intent intent = new Intent(this, VillageInfo.class);
+        startActivity(intent);
     }
 }

@@ -17,7 +17,9 @@ class Client(models.Model):
     contact_client = models.IntegerField(default=0)
     care_present = models.CharField(max_length=5)
     contact_care = models.IntegerField(default=0)
+    photo = models.ImageField(upload_to='images/', default='default.png')
     disability = models.CharField(max_length=50)
+
 
     class Meta:
         ordering = ['id']

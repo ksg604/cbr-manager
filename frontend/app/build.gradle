@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_URL", properties.getProperty("API_URL", "")
+        buildConfigField "String", "API_URL", properties.getProperty("API_URL", '"http://127.0.0.1:8000/"')
     }
 
     buildTypes {

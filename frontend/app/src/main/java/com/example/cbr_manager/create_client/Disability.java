@@ -18,7 +18,7 @@ public class Disability extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_client_disability);
+        setContentView(R.layout.activity_create_client_disability);
         String txt;
 
         for(int i=0 ; i<10 ; i++) {

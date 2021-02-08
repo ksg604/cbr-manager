@@ -24,7 +24,7 @@ public class PersonalInfo extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_client_personal_info);
+        setContentView(R.layout.activity_create_client_personal_info);
 
         editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) findViewById(R.id.editTextLastName);

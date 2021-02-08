@@ -17,7 +17,7 @@ public class Photo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_client_photo);
+        setContentView(R.layout.activity_create_client_photo);
 
         cameraButton = findViewById(R.id.takePhotoButton);
         //TODO: Add Camera functionality

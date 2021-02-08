@@ -24,7 +24,7 @@ public class VillageInfo extends AppCompatActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_client_village_info);
+        setContentView(R.layout.activity_create_client_village_info);
 
         editTextId = (EditText)findViewById(R.id.editTextFirstName);
 

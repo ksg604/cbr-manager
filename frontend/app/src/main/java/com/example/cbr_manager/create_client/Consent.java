@@ -24,7 +24,7 @@ public class Consent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_client_consent);
+        setContentView(R.layout.activity_create_client_consent);
 
         radioGroup = findViewById(R.id.radioGroup);
         Button nextButton = findViewById(R.id.nextButton);

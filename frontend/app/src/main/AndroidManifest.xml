@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cbr_manager">
         <activity
-            android:name=".create_client.Consent"
-            android:label="Consent"
+            android:name=".MainActivity"
+            android:label="MainActivity"
             android:theme="@style/Theme.Cbr_manager.NoActionBar">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".create_client.Consent"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".create_client.VillageInfo"
             android:screenOrientation="portrait" />

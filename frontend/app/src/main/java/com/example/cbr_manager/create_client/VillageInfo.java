@@ -61,7 +61,7 @@ public class VillageInfo extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        location = "";
+        location = paths[0];
     }
 
     private void updateInfo(View v) {

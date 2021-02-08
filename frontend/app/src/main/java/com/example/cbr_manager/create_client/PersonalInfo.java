@@ -17,7 +17,7 @@ public class PersonalInfo extends AppCompatActivity implements AdapterView.OnIte
     EditText editTextFirstName, editTextLastName, editTextAge, editTextContactNumber;
     Spinner spinner;
     String firstName, lastName, contactNumber;
-    int age;
+    int age=0;
     char gender;
     private static final String[] paths = {"Male", "Female"};
 
@@ -64,12 +64,17 @@ public class PersonalInfo extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        gender = ' ';
+        gender = paths[0].charAt(0);
     }
     public void updateInfo(View v) {
         firstName = editTextFirstName.getText().toString();
         lastName = editTextLastName.getText().toString();
-        age = Integer.parseInt(editTextAge.getText().toString());
+        String age_string = editTextAge.getText().toString();
+        if(age_string.length()==0) {
+            age=0;
+        } else {
+            age = Integer.parseInt(age_string);
+        }
         contactNumber = editTextContactNumber.getText().toString();
     }
     private void nextSurveyPage() {

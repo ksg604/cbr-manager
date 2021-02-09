@@ -21,9 +21,12 @@ class VisitSerializer(serializers.ModelSerializer):
         update_object(client, **client_info)
         post_update_client_json = ClientSerializer(client).data
 
-        return Visit(user_creator=validated_data['user_creator'], client=client,
-                     additional_notes=validated_data['additional_notes'], client_state_previous=pre_update_client_json,
-                     client_state_updated=post_update_client_json)
+        visit_obj = Visit(user_creator=validated_data['user_creator'], client=client,
+                          additional_notes=validated_data['additional_notes'],
+                          client_state_previous=pre_update_client_json,
+                          client_state_updated=post_update_client_json)
+        visit_obj.save()
+        return visit_obj
 
 
 def update_object(obj, **kwargs):

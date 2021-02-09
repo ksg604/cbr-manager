@@ -1,4 +1,4 @@
-package com.example.cbr_manager.create_client;
+package com.example.cbr_manager.ui.create_client;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +7,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cbr_manager.MainActivity;
+import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 
 
-public class Photo extends AppCompatActivity {
+public class PhotoActivity extends AppCompatActivity {
     Button cameraButton;
 
     @Override
@@ -38,11 +38,11 @@ public class Photo extends AppCompatActivity {
         });
     }
     private void submitSurvey() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NavigationActivity.class);
         startActivity(intent);
     }
     private void prevSurveyPage() {
-        Intent intent = new Intent(this, CaregiverInfo.class);
+        Intent intent = new Intent(this, CaregiverInfoActivity.class);
         startActivity(intent);
     }
 }

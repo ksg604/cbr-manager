@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.allclients;
+package com.example.cbr_manager.ui.clientlist;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +13,9 @@ import com.example.cbr_manager.R;
 
 import java.util.ArrayList;
 
-public class ClientRecyclerItemAdapter extends RecyclerView.Adapter<ClientRecyclerItemAdapter.ClientItemViewHolder> {
+public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> {
 
-    private ArrayList<ClientRecyclerItem> clientRecyclerItems;
+    private ArrayList<ClientListRecyclerItem> clientListRecyclerItems;
     private OnItemListener onItemListener;
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -45,8 +45,8 @@ public class ClientRecyclerItemAdapter extends RecyclerView.Adapter<ClientRecycl
         void onItemClick(int position);
     }
 
-    public ClientRecyclerItemAdapter(ArrayList<ClientRecyclerItem> clientRecyclerItems, OnItemListener onItemListener) {
-        this.clientRecyclerItems = clientRecyclerItems;
+    public ClientListRecyclerItemAdapter(ArrayList<ClientListRecyclerItem> clientListRecyclerItems, OnItemListener onItemListener) {
+        this.clientListRecyclerItems = clientListRecyclerItems;
         this.onItemListener = onItemListener;
     }
 
@@ -60,7 +60,7 @@ public class ClientRecyclerItemAdapter extends RecyclerView.Adapter<ClientRecycl
 
     @Override
     public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
-        ClientRecyclerItem currentItem = clientRecyclerItems.get(position);
+        ClientListRecyclerItem currentItem = clientListRecyclerItems.get(position);
 
         holder.imageView.setImageResource(currentItem.getmImageResource());
         holder.textView1.setText(currentItem.getmText1());
@@ -69,7 +69,7 @@ public class ClientRecyclerItemAdapter extends RecyclerView.Adapter<ClientRecycl
 
     @Override
     public int getItemCount() {
-        return clientRecyclerItems.size();
+        return clientListRecyclerItems.size();
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.dashboard;
+package com.example.cbr_manager.ui.home;
 
 import android.content.Context;
 import android.view.LayoutInflater;

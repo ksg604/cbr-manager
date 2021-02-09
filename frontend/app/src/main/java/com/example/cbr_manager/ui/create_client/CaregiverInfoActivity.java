@@ -1,4 +1,4 @@
-package com.example.cbr_manager.create_client;
+package com.example.cbr_manager.ui.create_client;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
 
-public class CaregiverInfo extends AppCompatActivity {
+public class CaregiverInfoActivity extends AppCompatActivity {
 
     private RadioGroup radioGroup;
     private RadioButton radioButton;
@@ -61,12 +61,12 @@ public class CaregiverInfo extends AppCompatActivity {
     }
 
     private void nextSurveyPage() {
-        Intent intent = new Intent(this, Photo.class);
+        Intent intent = new Intent(this, PhotoActivity.class);
         startActivity(intent);
     }
 
     private void prevSurveyPage() {
-        Intent intent = new Intent(this, Disability.class);
+        Intent intent = new Intent(this, DisabilityActivity.class);
         startActivity(intent);
     }
 }

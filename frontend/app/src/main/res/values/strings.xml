@@ -14,7 +14,7 @@
     <string name="consent">1. Do you consent to this interview</string>
     <string name="date_form_complete">2. Date form completed</string>
     <string name="what_is_your_id">3. What is your ID Number?</string>
-    <string name="location2">4. Location</string>
+    <string name="client_creation_location">4. Location</string>
     <string name="what_is_your_village_number">5. What is your village number?</string>
     <string name="first_name">6. First Name</string>
     <string name="last_name">7. Last Name</string>

@@ -1,4 +1,4 @@
-package com.example.cbr_manager.create_client;
+package com.example.cbr_manager.ui.create_client;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cbr_manager.R;
 
 
-public class Consent extends AppCompatActivity {
+public class ConsentActivity extends AppCompatActivity {
 
     private RadioGroup radioGroup;
     private RadioButton radioButton;
@@ -57,7 +57,7 @@ public class Consent extends AppCompatActivity {
     }
 
     private void nextSurveyPage() {
-        Intent intent = new Intent(this, VillageInfo.class);
+        Intent intent = new Intent(this, VillageInfoActivity.class);
         startActivity(intent);
     }
 }

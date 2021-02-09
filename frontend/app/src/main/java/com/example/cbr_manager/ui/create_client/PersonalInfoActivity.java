@@ -1,4 +1,4 @@
-package com.example.cbr_manager.create_client;
+package com.example.cbr_manager.ui.create_client;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
 
-public class PersonalInfo extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class PersonalInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EditText editTextFirstName, editTextLastName, editTextAge, editTextContactNumber;
     Spinner spinner;
     String firstName, lastName, contactNumber;
@@ -30,7 +30,7 @@ public class PersonalInfo extends AppCompatActivity implements AdapterView.OnIte
         editTextLastName = (EditText) findViewById(R.id.editTextLastName);
 
         spinner = (Spinner)findViewById(R.id.gender_dropdown);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PersonalInfo.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PersonalInfoActivity.this,
                 android.R.layout.simple_spinner_item,paths);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -78,11 +78,11 @@ public class PersonalInfo extends AppCompatActivity implements AdapterView.OnIte
         contactNumber = editTextContactNumber.getText().toString();
     }
     private void nextSurveyPage() {
-        Intent intent = new Intent(this, Disability.class);
+        Intent intent = new Intent(this, DisabilityActivity.class);
         startActivity(intent);
     }
     private void prevSurveyPage() {
-        Intent intent = new Intent(this, VillageInfo.class);
+        Intent intent = new Intent(this, VillageInfoActivity.class);
         startActivity(intent);
     }
 }

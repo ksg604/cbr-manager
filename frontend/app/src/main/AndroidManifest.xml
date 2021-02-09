@@ -45,22 +45,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".create_client.Consent"
+            android:name=".ui.create_client.ConsentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.VillageInfo"
+            android:name=".ui.create_client.VillageInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.PersonalInfo"
+            android:name=".ui.create_client.PersonalInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.Disability"
+            android:name=".ui.create_client.DisabilityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.CaregiverInfo"
+            android:name=".ui.create_client.CaregiverInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.Photo"
+            android:name=".ui.create_client.PhotoActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

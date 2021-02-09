@@ -1,24 +1,20 @@
 package com.example.cbr_manager.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.ui.clientlist.ClientListFragment;
+import com.example.cbr_manager.ui.create_client.ConsentActivity;
 import com.example.cbr_manager.ui.dashboard.ViewPagerAdapter;
 import com.example.cbr_manager.ui.dashboard.ViewPagerModel;
 
@@ -60,6 +56,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Button button = (Button) root.findViewById(R.id.addClientButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ConsentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupViewPager(View root) {

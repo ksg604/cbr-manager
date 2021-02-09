@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.ui.allclients.AllClientsActivity;
+import com.example.cbr_manager.ui.create_client.ConsentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(DashboardActivity.this, "Going to add client activity.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), ConsentActivity.class);
+                startActivity(intent);
             }
         });
     }

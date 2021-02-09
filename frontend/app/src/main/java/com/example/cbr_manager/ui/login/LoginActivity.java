@@ -27,6 +27,7 @@ import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
                 apiService.authenticate(credential);
 
-                Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, CreateVisitActivity.class);
                 startActivity(intent);
             }
         });

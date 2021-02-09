@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from clients.views_api import ClientViewSet
-from Users.views import UserViewSet
+from users.views import UserViewSet
 
 router = routers.DefaultRouter()
 

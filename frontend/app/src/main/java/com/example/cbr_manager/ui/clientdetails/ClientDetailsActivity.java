@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -129,6 +130,20 @@ public class ClientDetailsActivity extends AppCompatActivity {
 
     private void setupButtons() {
         setupBackButton();
+        setupNewVisitButton();
+    }
+
+    private void setupNewVisitButton() {
+        Button newVisitButton = findViewById(R.id.clientDetailsNewVisitButton);
+        newVisitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView nameTextView = (TextView) findViewById(R.id.clientDetailsNameTextView);
+                String name = nameTextView.getText().toString();
+                Intent intent = new Intent(ClientDetailsActivity.this, CreateVisitActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupBackButton() {

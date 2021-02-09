@@ -18,12 +18,15 @@ from django.urls import path, include
 from rest_framework import routers
 from clients.views_api import ClientViewSet
 from users.views import UserViewSet
+from visits.views import VisitViewSet
 
 router = routers.DefaultRouter()
 
 # Register additional api url endpoints here
 router.register(r'clients', ClientViewSet)
 router.register(r'users', UserViewSet)
+router.register(r'visits', VisitViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

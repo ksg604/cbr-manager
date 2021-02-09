@@ -16,9 +16,9 @@ class Client(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     gender = models.CharField(max_length=20)
     age = models.IntegerField(default=0)
-    contact_client = models.IntegerField(blank=True)
+    contact_client = models.IntegerField(default=0)
     care_present = models.CharField(max_length=5)
-    contact_care = models.IntegerField(blank=True)
+    contact_care = models.IntegerField(default=0)
     photo = models.ImageField(upload_to='images/', default='default.png')
     disability = models.CharField(max_length=50)
 

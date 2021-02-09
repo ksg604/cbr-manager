@@ -1,4 +1,4 @@
-package com.example.cbr_manager.create_client;
+package com.example.cbr_manager.ui.create_client;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
 
-public class Disability extends AppCompatActivity {
+public class DisabilityActivity extends AppCompatActivity {
 
     RadioButton[] buttons = new RadioButton[10];
     boolean[] disabilities_check = new boolean[10];
@@ -54,12 +54,12 @@ public class Disability extends AppCompatActivity {
         }
     }
     private void nextSurveyPage() {
-        Intent intent = new Intent(this, CaregiverInfo.class);
+        Intent intent = new Intent(this, CaregiverInfoActivity.class);
         startActivity(intent);
     }
 
     private void prevSurveyPage() {
-        Intent intent = new Intent(this, PersonalInfo.class);
+        Intent intent = new Intent(this, PersonalInfoActivity.class);
         startActivity(intent);
     }
 }

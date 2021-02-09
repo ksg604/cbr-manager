@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.ui.dashboard.DashboardActivity;
 import com.example.cbr_manager.ui.login.LoginActivity;
 
 public class UserCreationActivity extends AppCompatActivity {

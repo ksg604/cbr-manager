@@ -15,26 +15,17 @@
         android:theme="@style/Theme.Cbr_manager"
         tools:targetApi="n">
         <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
+        <activity
             android:name=".ui.clientdetails.ClientDetailsActivity"
             android:label=".ClientDetailsActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
             android:name=".ui.usercreation.UserCreationActivity"
             android:label=".UserCreationActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
-        <activity
-            android:name=".ui.dashboard.DashboardActivity"
-            android:label=".DashboardActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
-        <activity
-            android:name=".ui.allclients.AllClientsActivity"
-            android:label=".AllClientsActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
@@ -46,22 +37,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".create_client.Consent"
+            android:name=".ui.create_client.ConsentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.VillageInfo"
+            android:name=".ui.create_client.VillageInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.PersonalInfo"
+            android:name=".ui.create_client.PersonalInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.Disability"
+            android:name=".ui.create_client.DisabilityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.CaregiverInfo"
+            android:name=".ui.create_client.CaregiverInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".create_client.Photo"
+            android:name=".ui.create_client.PhotoActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

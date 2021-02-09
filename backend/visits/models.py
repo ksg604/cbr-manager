@@ -13,3 +13,6 @@ class Visit(models.Model):
     client_state_updated = models.JSONField()
 
     additional_notes = models.TextField(verbose_name="additional notes")
+
+    def __str__(self):
+        return "Visit {} - {} {}".format(self.id, self.client.first_name, self.client.last_name)

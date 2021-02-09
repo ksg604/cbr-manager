@@ -15,8 +15,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.ui.create_client.ConsentActivity;
-import com.example.cbr_manager.ui.dashboard.ViewPagerAdapter;
-import com.example.cbr_manager.ui.dashboard.ViewPagerModel;
 
 import java.util.ArrayList;
 import java.util.List;

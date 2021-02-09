@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAEDF4"
-    tools:context=".ui.allclients.AllClientsActivity">
+    tools:context=".ui.clientlist.ClientListFragment">
 
     <SearchView
         android:id="@+id/clientSearchView"

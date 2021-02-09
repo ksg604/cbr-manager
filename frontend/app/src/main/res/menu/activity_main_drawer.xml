@@ -13,8 +13,13 @@
             android:icon="@drawable/ic_clients"
             android:title="Client List" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_visits"
+            android:icon="@drawable/ic_visit"
+            android:title="Visits" />
+        <item
+            android:id="@+id/nav_new_client"
             android:icon="@drawable/ic_client_add"
-            android:title="New Client" />
+            android:title="New Client"
+            />
     </group>
 </menu>

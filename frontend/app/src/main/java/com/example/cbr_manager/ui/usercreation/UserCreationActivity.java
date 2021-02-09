@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.ui.login.LoginActivity;
 
 public class UserCreationActivity extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class UserCreationActivity extends AppCompatActivity {
     private Button buttonSubmit;
     private TextView  textInputWarning;
     private String warningText = "";
+    private static final APIService apiService = APIService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +35,14 @@ public class UserCreationActivity extends AppCompatActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateInput()){
+                if (simpleValidationInput()){
                     sendUserCreateRequest();
+                    //apiService
                     textInputWarning.setVisibility(View.GONE);
                     Toast.makeText(UserCreationActivity.this, "User succesfully registered!", Toast.LENGTH_SHORT).show();
                 }
                 Intent intent = new Intent(UserCreationActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 }
 
@@ -55,7 +59,7 @@ public class UserCreationActivity extends AppCompatActivity {
         //TODO: method to send form data to register new user in Django server
     }
 
-    private boolean validateInput() {
+    private boolean simpleValidationInput() {
         boolean inputIsValid = true;
         String password = editTextPassword.getText().toString();
         String passwordConfirm = editTextPasswordConfirm.getText().toString();

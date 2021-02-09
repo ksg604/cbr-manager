@@ -29,7 +29,7 @@
         android:layout_marginLeft="104dp"
         android:layout_marginBottom="16dp"
         android:max="4"
-        android:progress="3"
+        android:progress="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -60,4 +60,96 @@
         app:layout_constraintEnd_toStartOf="@+id/healthFragmentNextButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.028"
+        app:singleLine="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/wheelchairChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Wheelchair" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/prostheticChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Prosthetic" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/orthoticChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Orthotic" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/wheelchairRepairsChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Wheelchair repairs" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/referralChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Referral" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/adviceChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Advice" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/advocacyChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Advocacy" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/encouragementChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Encouragement" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <EditText
+        android:id="@+id/testingHiddenTextMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+
+    <Button
+        android:id="@+id/testingVisibleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginLeft="156dp"
+        android:layout_marginTop="36dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testingHiddenTextMultiLine" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_locationFragment_to_healthProvisionFragment"
             app:destination="@id/healthProvisionFragment" />
+        <action
+            android:id="@+id/action_locationFragment_to_preambleFragment"
+            app:destination="@id/preambleFragment" />
     </fragment>
     <fragment
         android:id="@+id/healthProvisionFragment"
@@ -31,6 +34,9 @@
         <action
             android:id="@+id/action_healthProvisionFragment_to_educationProvisionFragment"
             app:destination="@id/educationProvisionFragment" />
+        <action
+            android:id="@+id/action_healthProvisionFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
     </fragment>
     <fragment
         android:id="@+id/educationProvisionFragment"
@@ -40,10 +46,17 @@
         <action
             android:id="@+id/action_educationProvisionFragment_to_socialProvisionFragment"
             app:destination="@id/socialProvisionFragment" />
+        <action
+            android:id="@+id/action_educationProvisionFragment_to_healthProvisionFragment"
+            app:destination="@id/healthProvisionFragment" />
     </fragment>
     <fragment
         android:id="@+id/socialProvisionFragment"
         android:name="com.example.cbr_manager.ui.createvisit.SocialProvisionFragment"
         android:label="fragment_social_provision"
-        tools:layout="@layout/fragment_social_provision" />
+        tools:layout="@layout/fragment_social_provision" >
+        <action
+            android:id="@+id/action_socialProvisionFragment_to_educationProvisionFragment"
+            app:destination="@id/educationProvisionFragment" />
+    </fragment>
 </navigation>

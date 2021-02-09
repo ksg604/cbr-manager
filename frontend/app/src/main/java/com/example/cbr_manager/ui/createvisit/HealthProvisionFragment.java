@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 
@@ -82,7 +83,17 @@ public class HealthProvisionFragment extends Fragment {
         view.findViewById(R.id.healthFragmentPreviousButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                NavHostFragment.findNavController(HealthProvisionFragment.this)
+                        .navigate(R.id.action_healthProvisionFragment_to_locationFragment);
+            }
+        });
+        TextView textView = view.findViewById(R.id.testingHiddenTextMultiLine);
+        textView.setVisibility(View.GONE);
+
+        view.findViewById(R.id.wheelchairChip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setVisibility(View.VISIBLE);
             }
         });
     }

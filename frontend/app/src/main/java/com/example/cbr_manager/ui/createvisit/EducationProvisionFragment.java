@@ -82,7 +82,8 @@ public class EducationProvisionFragment extends Fragment {
         view.findViewById(R.id.fragmentEducationPreviousButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                NavHostFragment.findNavController(EducationProvisionFragment.this)
+                        .navigate(R.id.action_educationProvisionFragment_to_healthProvisionFragment);
             }
         });
     }

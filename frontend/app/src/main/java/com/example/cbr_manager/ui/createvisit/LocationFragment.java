@@ -78,5 +78,13 @@ public class LocationFragment extends Fragment {
                         .navigate(R.id.action_locationFragment_to_healthProvisionFragment);
             }
         });
+
+        view.findViewById(R.id.locationFragmentPreviousButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(LocationFragment.this)
+                        .navigate(R.id.action_locationFragment_to_preambleFragment);
+            }
+        });
     }
 }

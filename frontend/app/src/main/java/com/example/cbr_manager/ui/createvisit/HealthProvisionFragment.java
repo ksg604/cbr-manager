@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
+import com.google.android.material.chip.Chip;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,13 +88,59 @@ public class HealthProvisionFragment extends Fragment {
                         .navigate(R.id.action_healthProvisionFragment_to_locationFragment);
             }
         });
-        TextView textView = view.findViewById(R.id.testingHiddenTextMultiLine);
+        TextView textView = view.findViewById(R.id.wheelchairTextMultiLine);
         textView.setVisibility(View.GONE);
+        Chip wheelchairChip = view.findViewById(R.id.wheelchairChip);
+        setChipListener(wheelchairChip, textView);
 
-        view.findViewById(R.id.wheelchairChip).setOnClickListener(new View.OnClickListener() {
+        TextView prostheticTextView = view.findViewById(R.id.protheticTextMultiLine);
+        prostheticTextView.setVisibility(View.GONE);
+        Chip c2 = view.findViewById(R.id.prostheticChip);
+        setChipListener(c2, prostheticTextView);
+
+        TextView t3 = view.findViewById(R.id.orthoticTextMultiLine);
+        t3.setVisibility(View.GONE);
+        Chip c3 = view.findViewById(R.id.orthoticChip);
+        setChipListener(c3, t3);
+
+        TextView t4 = view.findViewById(R.id.wheelchairRepairsTextMultiLine);
+        t4.setVisibility(View.GONE);
+        Chip c4 = view.findViewById(R.id.wheelchairRepairsChip);
+        setChipListener(c4, t4);
+
+        TextView t5 = view.findViewById(R.id.referralTextMultiLine5);
+        t5.setVisibility(View.GONE);
+        Chip c5 = view.findViewById(R.id.referralChip);
+        setChipListener(c5, t5);
+
+        TextView t6 = view.findViewById(R.id.adviceTextMultiLine);
+        t6.setVisibility(View.GONE);
+        Chip c6 = view.findViewById(R.id.adviceChip);
+        setChipListener(c6, t6);
+
+        TextView t7 = view.findViewById(R.id.advocacyTextMultiLine);
+        t7.setVisibility(View.GONE);
+        Chip c7 = view.findViewById(R.id.advocacyChip);
+        setChipListener(c7, t7);
+
+        TextView t8 = view.findViewById(R.id.encouragementTextMultiLine);
+        t8.setVisibility(View.GONE);
+        Chip c8 = view.findViewById(R.id.encouragementChip);
+        setChipListener(c8, t8);
+    }
+
+    private void setChipListener(Chip chip, TextView textView) {
+        chip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setVisibility(View.VISIBLE);
+//                textView.setVisibility(View.VISIBLE);
+                if (chip.isChecked()) {
+//                    chip.setChecked(false);
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    textView.setVisibility(View.GONE);
+//                    chip.setChecked(true);
+                }
             }
         });
     }

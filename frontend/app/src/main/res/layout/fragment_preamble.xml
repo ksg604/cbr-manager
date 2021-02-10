@@ -14,6 +14,14 @@
         android:orientation="vertical"
         android:layout_marginBottom="80dp">
 
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="4"
+            android:progress="0" />
+
         <TextView
             android:id="@+id/fragmentPreambleTitleTextView"
             android:layout_width="wrap_content"

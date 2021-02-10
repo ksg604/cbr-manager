@@ -173,19 +173,19 @@
                     android:id="@+id/radioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="Cancelled" />
 
                 <RadioButton
                     android:id="@+id/radioButton10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="Ongoing" />
 
                 <RadioButton
                     android:id="@+id/radioButton11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RadioButton" />
+                    android:text="Concluded" />
             </RadioGroup>
 
             <TextView

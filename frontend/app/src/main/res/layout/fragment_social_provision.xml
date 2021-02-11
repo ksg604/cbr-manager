@@ -89,7 +89,7 @@
                 android:text="Description of advice" />
 
             <EditText
-                android:id="@+id/editTextTextMultiLine"
+                android:id="@+id/educationProvisionAdviceTextMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -108,7 +108,7 @@
                 android:text="Description of advocacy" />
 
             <EditText
-                android:id="@+id/editTextTextMultiLine2"
+                android:id="@+id/educationProvisionAdvocacyTextMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -127,7 +127,7 @@
                 android:text="Description of referral" />
 
             <EditText
-                android:id="@+id/editTextTextMultiLine3"
+                android:id="@+id/educationProvisionReferralTextMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -146,7 +146,7 @@
                 android:text="Description of encouragement" />
 
             <EditText
-                android:id="@+id/editTextTextMultiLine4"
+                android:id="@+id/educationProvisionEncouragementTextMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

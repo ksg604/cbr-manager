@@ -26,7 +26,7 @@
                 android:progress="4" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/socialProvisionTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -38,7 +38,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/socialProvisionChipGroupTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -54,25 +54,25 @@
                 android:layout_marginRight="16dp">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip8"
+                    android:id="@+id/socialProvisionAdviceChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Advice" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip9"
+                    android:id="@+id/socialProvisionAdvocacyChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Advocacy" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip10"
+                    android:id="@+id/socialProvisionReferralChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Referral" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip11"
+                    android:id="@+id/socialProvisionEncouragementChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Encouragement" />
@@ -80,7 +80,7 @@
             </com.google.android.material.chip.ChipGroup>
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/socialProvisionAdviceTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -89,7 +89,7 @@
                 android:text="Description of advice" />
 
             <EditText
-                android:id="@+id/educationProvisionAdviceTextMultiLine"
+                android:id="@+id/socialProvisionAdviceTextMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -99,7 +99,7 @@
                 android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/socialProvisionAdvocacyTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -108,7 +108,7 @@
                 android:text="Description of advocacy" />
 
             <EditText
-                android:id="@+id/educationProvisionAdvocacyTextMultiLine"
+                android:id="@+id/socialProvisionAdvocacyMultiLineText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

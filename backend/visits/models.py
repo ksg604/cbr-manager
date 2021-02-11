@@ -9,10 +9,13 @@ class Visit(models.Model):
     user_creator = models.ForeignKey(User, on_delete=models.CASCADE)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
 
-    client_state_previous = models.JSONField()
-    client_state_updated = models.JSONField()
+    client_state_previous = models.JSONField(blank=True, null=True, editable=False)
+    client_state_updated = models.JSONField(blank=True, null=True, editable=False)
 
-    additional_notes = models.TextField(verbose_name="additional notes")
+    # contains the specific info that was changed
+    client_info_changed = models.JSONField(blank=True, null=True, editable=False)
+
+    additional_notes = models.TextField(verbose_name="additional notes", blank=True, null=True, default="")
 
     def __str__(self):
         return "Visit {} - {} {}".format(self.id, self.client.first_name, self.client.last_name)

@@ -612,7 +612,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Description of advice" />
+                    android:text="Description of advice"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/socialProvisionAdviceTextMultiLine"
@@ -622,7 +623,8 @@
                     android:layout_marginRight="16dp"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/socialProvisionAdvocacyTextView"
@@ -631,7 +633,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Description of advocacy" />
+                    android:text="Description of advocacy"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/socialProvisionAdvocacyMultiLineText"
@@ -641,7 +644,8 @@
                     android:layout_marginRight="16dp"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/socialProvisionReferralTextView"
@@ -650,7 +654,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Description of referral" />
+                    android:text="Description of referral"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/socialProvisionReferralTextMultiLine"
@@ -660,7 +665,8 @@
                     android:layout_marginRight="16dp"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/socialProvisionEncouragementTextView"
@@ -669,7 +675,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Description of encouragement" />
+                    android:text="Description of encouragement"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/socialProvisionEncouragementTextMultiLine"
@@ -679,7 +686,8 @@
                     android:layout_marginRight="16dp"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/socialProvisionGoalMetTextView"
@@ -688,7 +696,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Goal met?" />
+                    android:text="Goal met?"
+                    android:visibility="gone"/>
 
                 <RadioGroup
                     android:id="@+id/socialProvisionRadioGroup"

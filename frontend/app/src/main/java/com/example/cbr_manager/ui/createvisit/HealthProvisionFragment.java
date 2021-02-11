@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.createvisit;
 
+import android.opengl.ETC1;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -67,6 +68,7 @@ public class HealthProvisionFragment extends Fragment {
 
         setupVisibilityHealthProvisions(view);
         setupVisibilityEducationProvisions(view);
+        setupVisibilitySocialProvisions(view);
 
     }
 
@@ -132,7 +134,28 @@ public class HealthProvisionFragment extends Fragment {
         TextView encourageTV = view.findViewById(R.id.educationProvisionEncouragementTextView);
         EditText encourageET = view.findViewById(R.id.educationProvisionEncouragementTextMultiLine);
         setChipListener(encourageChip,encourageET,encourageTV);
+    }
 
+    private void setupVisibilitySocialProvisions(View view) {
+        Chip adviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
+        TextView adviceTV = view.findViewById(R.id.socialProvisionAdviceTextView);
+        EditText adviceET = view.findViewById(R.id.socialProvisionAdviceTextMultiLine);
+        setChipListener(adviceChip,adviceET,adviceTV);
+
+        Chip advocacyChip = view.findViewById(R.id.socialProvisionAdvocacyChip);
+        TextView advocacyTV = view.findViewById(R.id.socialProvisionAdvocacyTextView);
+        EditText advocacyET = view.findViewById(R.id.socialProvisionAdvocacyMultiLineText);
+        setChipListener(advocacyChip,advocacyET,advocacyTV);
+
+        Chip referralChip = view.findViewById(R.id.socialProvisionReferralChip);
+        TextView referralTV = view.findViewById(R.id.socialProvisionReferralTextView);
+        EditText referralET = view.findViewById(R.id.socialProvisionReferralTextMultiLine);
+        setChipListener(referralChip,referralET,referralTV);
+
+        Chip encourageChip = view.findViewById(R.id.socialProvisionEncouragementChip);
+        TextView encourageTV = view.findViewById(R.id.socialProvisionEncouragementTextView);
+        EditText encourageET = view.findViewById(R.id.socialProvisionEncouragementTextMultiLine);
+        setChipListener(encourageChip,encourageET,encourageTV);
     }
 
     private void setChipListener(Chip chip, EditText editText, TextView textView) {

@@ -19,7 +19,7 @@
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="4"
+            android:max="2"
             android:progress="0" />
 
         <TextView
@@ -97,12 +97,14 @@
                 android:id="@+id/chip16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checkable="true"
                 android:text="Education" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checkable="true"
                 android:text="Social" />
         </com.google.android.material.chip.ChipGroup>
 

@@ -30,7 +30,7 @@
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="4"
+                    android:max="2"
                     android:progress="2" />
 
                 <TextView
@@ -554,18 +554,21 @@
                         android:id="@+id/socialProvisionAdviceChip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checkable="true"
                         android:text="Advice" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/socialProvisionAdvocacyChip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checkable="true"
                         android:text="Advocacy" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/socialProvisionReferralChip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checkable="true"
                         android:text="Referral" />
 
                     <com.google.android.material.chip.Chip
@@ -723,7 +726,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/submit"
         android:textColor="@color/purple_700"
         app:backgroundTint="#FFF"
@@ -736,7 +739,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/previous"
         android:textColor="@color/purple_700"
         app:backgroundTint="#FFF"

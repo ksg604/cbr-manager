@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
@@ -63,58 +64,87 @@ public class HealthProvisionFragment extends Fragment {
                         .navigate(R.id.action_healthProvisionFragment_to_locationFragment);
             }
         });
-        TextView textView = view.findViewById(R.id.wheelchairTextMultiLine);
-        textView.setVisibility(View.GONE);
-        Chip wheelchairChip = view.findViewById(R.id.wheelchairChip);
-        setChipListener(wheelchairChip, textView);
 
-        TextView prostheticTextView = view.findViewById(R.id.protheticTextMultiLine);
-        prostheticTextView.setVisibility(View.GONE);
-        Chip c2 = view.findViewById(R.id.prostheticChip);
-        setChipListener(c2, prostheticTextView);
+        setupVisibilityHealthProvisions(view);
+        setupVisibilityEducationProvisions(view);
 
-        TextView t3 = view.findViewById(R.id.orthoticTextMultiLine);
-        t3.setVisibility(View.GONE);
-        Chip c3 = view.findViewById(R.id.orthoticChip);
-        setChipListener(c3, t3);
-
-        TextView t4 = view.findViewById(R.id.wheelchairRepairsTextMultiLine);
-        t4.setVisibility(View.GONE);
-        Chip c4 = view.findViewById(R.id.wheelchairRepairsChip);
-        setChipListener(c4, t4);
-
-        TextView t5 = view.findViewById(R.id.referralTextMultiLine5);
-        t5.setVisibility(View.GONE);
-        Chip c5 = view.findViewById(R.id.referralChip);
-        setChipListener(c5, t5);
-
-        TextView t6 = view.findViewById(R.id.adviceTextMultiLine);
-        t6.setVisibility(View.GONE);
-        Chip c6 = view.findViewById(R.id.adviceChip);
-        setChipListener(c6, t6);
-
-        TextView t7 = view.findViewById(R.id.advocacyTextMultiLine);
-        t7.setVisibility(View.GONE);
-        Chip c7 = view.findViewById(R.id.advocacyChip);
-        setChipListener(c7, t7);
-
-        TextView t8 = view.findViewById(R.id.encouragementTextMultiLine);
-        t8.setVisibility(View.GONE);
-        Chip c8 = view.findViewById(R.id.encouragementChip);
-        setChipListener(c8, t8);
     }
 
-    private void setChipListener(Chip chip, TextView textView) {
+    private void setupVisibilityHealthProvisions(View view) {
+        EditText wheelchairMT = view.findViewById(R.id.wheelchairTextMultiLine);
+        Chip wheelchairChip = view.findViewById(R.id.wheelchairChip);
+        TextView wheelchairTextView = view.findViewById(R.id.healthProvisionsWheelChairTextView);
+        setChipListener(wheelchairChip, wheelchairMT, wheelchairTextView);
+
+        EditText prostheticMultiTextView = view.findViewById(R.id.protheticTextMultiLine);
+        Chip c2 = view.findViewById(R.id.prostheticChip);
+        TextView protheticTextView = view.findViewById(R.id.protheticTextView);
+        setChipListener(c2, prostheticMultiTextView, protheticTextView);
+
+        EditText t3 = view.findViewById(R.id.orthoticTextMultiLine);
+        Chip c3 = view.findViewById(R.id.orthoticChip);
+        TextView orthoticTextView = view.findViewById(R.id.orthoticTextView);
+        setChipListener(c3, t3, orthoticTextView);
+
+        EditText t4 = view.findViewById(R.id.wheelchairRepairsTextMultiLine);
+        Chip c4 = view.findViewById(R.id.wheelchairRepairsChip);
+        TextView wheelchairRepairsTextView = view.findViewById(R.id.wheelchairRepairsTextView);
+        setChipListener(c4, t4, wheelchairRepairsTextView);
+
+        EditText t5 = view.findViewById(R.id.referralTextMultiLine5);
+        Chip c5 = view.findViewById(R.id.referralChip);
+        TextView referralTextView = view.findViewById(R.id.referralTextView);
+        setChipListener(c5, t5, referralTextView);
+
+        EditText t6 = view.findViewById(R.id.adviceTextMultiLine);
+        Chip c6 = view.findViewById(R.id.adviceChip);
+        TextView adviceTextView = view.findViewById(R.id.adviceTextView);
+        setChipListener(c6, t6, adviceTextView);
+
+        EditText t7 = view.findViewById(R.id.advocacyTextMultiLine);
+        Chip c7 = view.findViewById(R.id.advocacyChip);
+        TextView advocacyTextView = view.findViewById(R.id.advocacyTextView);
+        setChipListener(c7, t7, advocacyTextView);
+
+        EditText t8 = view.findViewById(R.id.encouragementTextMultiLine);
+        Chip c8 = view.findViewById(R.id.encouragementChip);
+        TextView encouragementTextView = view.findViewById(R.id.encouragementTextView);
+        setChipListener(c8, t8, encouragementTextView);
+    }
+
+    private void setupVisibilityEducationProvisions(View view) {
+        Chip adviceChip = view.findViewById(R.id.educationProvisionsAdviceChip);
+        TextView adviceTV = view.findViewById(R.id.educationProvisionAdviceTextView);
+        EditText adviceET = view.findViewById(R.id.educationProvisionAdviceTextMultiLine);
+        setChipListener(adviceChip,adviceET,adviceTV);
+
+        Chip advocacyChip = view.findViewById(R.id.educationProvisionsAdvocacyChip);
+        TextView advocacyTV = view.findViewById(R.id.educationProvisionAdvocacyTextView);
+        EditText advocacyET = view.findViewById(R.id.educationProvisionAdvocacyTextMultiLine);
+        setChipListener(advocacyChip,advocacyET,advocacyTV);
+
+        Chip referralChip = view.findViewById(R.id.educationProvisionsReferralChip);
+        TextView referralTV = view.findViewById(R.id.educationProvisionReferralTextView);
+        EditText referralET = view.findViewById(R.id.educationProvisionReferralTextMultiLine);
+        setChipListener(referralChip,referralET,referralTV);
+
+        Chip encourageChip = view.findViewById(R.id.educationProvisionsEncouragementChip);
+        TextView encourageTV = view.findViewById(R.id.educationProvisionEncouragementTextView);
+        EditText encourageET = view.findViewById(R.id.educationProvisionEncouragementTextMultiLine);
+        setChipListener(encourageChip,encourageET,encourageTV);
+
+    }
+
+    private void setChipListener(Chip chip, EditText editText, TextView textView) {
         chip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                textView.setVisibility(View.VISIBLE);
                 if (chip.isChecked()) {
-//                    chip.setChecked(false);
+                    editText.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.VISIBLE);
                 } else {
+                    editText.setVisibility(View.GONE);
                     textView.setVisibility(View.GONE);
-//                    chip.setChecked(true);
                 }
             }
         });

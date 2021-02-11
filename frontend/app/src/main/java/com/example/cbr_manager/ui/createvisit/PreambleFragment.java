@@ -10,8 +10,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.cbr_manager.R;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 public class PreambleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +52,25 @@ public class PreambleFragment extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(PreambleFragment.this)
                         .navigate(R.id.action_preambleFragment_to_locationFragment);
+            }
+        });
+
+        ChipGroup cbrChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
+        TextView cbrTypeTextView = view.findViewById(R.id.cbrTypeTextView);
+        cbrChipGroup.setVisibility(View.GONE);
+        cbrTypeTextView.setVisibility(View.GONE);
+
+        Chip cbrChip = view.findViewById(R.id.cbrChip);
+        cbrChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbrChip.isChecked()) {
+                    cbrChipGroup.setVisibility(View.VISIBLE);
+                    cbrTypeTextView.setVisibility(View.VISIBLE);
+                } else {
+                    cbrChipGroup.setVisibility(View.GONE);
+                    cbrTypeTextView.setVisibility(View.GONE);
+                }
             }
         });
     }

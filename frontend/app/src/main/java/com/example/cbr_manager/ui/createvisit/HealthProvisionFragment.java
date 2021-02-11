@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
@@ -53,8 +54,6 @@ public class HealthProvisionFragment extends Fragment {
         view.findViewById(R.id.healthFragmentNextButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(HealthProvisionFragment.this)
-                        .navigate(R.id.action_healthProvisionFragment_to_educationProvisionFragment);
             }
         });
 
@@ -112,6 +111,20 @@ public class HealthProvisionFragment extends Fragment {
         Chip c8 = view.findViewById(R.id.encouragementChip);
         TextView encouragementTextView = view.findViewById(R.id.encouragementTextView);
         setChipListener(c8, t8, encouragementTextView);
+
+        RadioButton conclusionRadioButton = view.findViewById(R.id.concludedHPRadioButton);
+        conclusionRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (conclusionRadioButton.isChecked()) {
+                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
+                } else {
+                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void setupVisibilityEducationProvisions(View view) {

@@ -10,11 +10,16 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PreambleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +59,13 @@ public class PreambleFragment extends Fragment {
                         .navigate(R.id.action_preambleFragment_to_locationFragment);
             }
         });
+
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String todayString = format.format(today);
+
+       EditText textView = (EditText) view.findViewById(R.id.fragmentPreambleEditTextDate);
+       textView.setText(todayString);
 
         ChipGroup cbrChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
         TextView cbrTypeTextView = view.findViewById(R.id.cbrTypeTextView);

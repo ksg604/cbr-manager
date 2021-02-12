@@ -1,46 +1,25 @@
 package com.example.cbr_manager.ui.createvisit;
 
 public class HealthProvision {
-    private String providedHealth;
-    private String associatedTextBox;
-    private VisitSurvey.Goal goalMetHealthProvision;
-    private String conclusionOutcomeHealthProvision;
+    boolean wheelchairProvided;
+    boolean prostheticProvided;
+    boolean orthoticProvided;
+    boolean repairsProvided;
+    boolean referralProvided;
+    boolean adviceProvided;
+    boolean advocacyProvided;
+    boolean encouragementProvided;
 
+    String wheelchairText;
+    String prostheticText;
+    String orthoticText;
+    String repairsText;
+    String referralText;
+    String adviceText;
+    String advocacyText;
+    String encouragementText;
 
-    public HealthProvision(String providedHealth, String associatedTextBox) {
-        this.providedHealth = providedHealth;
-        this.associatedTextBox = associatedTextBox;
-    }
-
-    public String getProvidedHealth() {
-        return providedHealth;
-    }
-
-    public VisitSurvey.Goal getGoalMetHealthProvision() {
-        return goalMetHealthProvision;
-    }
-
-    public void setGoalMetHealthProvision(VisitSurvey.Goal goalMetHealthProvision) {
-        this.goalMetHealthProvision = goalMetHealthProvision;
-    }
-
-    public String getConclusionOutcomeHealthProvision() {
-        return conclusionOutcomeHealthProvision;
-    }
-
-    public void setConclusionOutcomeHealthProvision(String conclusionOutcomeHealthProvision) {
-        this.conclusionOutcomeHealthProvision = conclusionOutcomeHealthProvision;
-    }
-
-    public void setProvidedHealth(String providedHealth) {
-        this.providedHealth = providedHealth;
-    }
-
-    public String getAssociatedTextBox() {
-        return associatedTextBox;
-    }
-
-    public void setAssociatedTextBox(String associatedTextBox) {
-        this.associatedTextBox = associatedTextBox;
-    }
+    String goalMet;
+    boolean isConcluded;
+    String conclusion;
 }

@@ -73,6 +73,11 @@ public class PreambleFragment extends Fragment {
         cbrTypeTextView.setVisibility(View.GONE);
 
         Chip cbrChip = view.findViewById(R.id.cbrChip);
+//        if (!cbrChip.isChecked()) {
+//            ((CreateVisitActivity) getActivity()).setCheckedHealthProvision(true);
+//            ((CreateVisitActivity) getActivity()).setCheckedEducationProvision(true);
+//            ((CreateVisitActivity) getActivity()).setCheckedSocialProvision(true);
+//        }
         cbrChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

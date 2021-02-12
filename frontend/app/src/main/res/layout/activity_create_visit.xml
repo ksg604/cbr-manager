@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_new_visit"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="192dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_new_visit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

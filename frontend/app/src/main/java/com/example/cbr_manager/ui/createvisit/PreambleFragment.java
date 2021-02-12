@@ -94,6 +94,16 @@ public class PreambleFragment extends Fragment {
         Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
         Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
 
+        if (!healthProvisionChip.isChecked()) {
+            ((CreateVisitActivity) getActivity()).setCheckedHealthProvision(false);
+        }
+        if (!educationProvisionChip.isChecked()) {
+            ((CreateVisitActivity) getActivity()).setCheckedEducationProvision(false);
+        }
+        if (!socialProvisionChip.isChecked()) {
+            ((CreateVisitActivity) getActivity()).setCheckedSocialProvision(false);
+        }
+
         healthProvisionChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

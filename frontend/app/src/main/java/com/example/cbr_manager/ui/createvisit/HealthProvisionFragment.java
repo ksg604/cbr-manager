@@ -75,15 +75,15 @@ public class HealthProvisionFragment extends Fragment {
         LinearLayout educationProvisionLayout = view.findViewById(R.id.educationProvisionsLayout);
         LinearLayout socialProvisionLayout = view.findViewById(R.id.socialProvisionsLayout);
 
-        if (((CreateVisitActivity) getActivity()).isCheckedHealthProvision()) {
+        if (!((CreateVisitActivity) getActivity()).isCheckedHealthProvision()) {
             healthProvisionLayout.setVisibility(View.GONE);
         }
 
-        if (((CreateVisitActivity) getActivity()).isCheckedEducationProvision()) {
+        if (!((CreateVisitActivity) getActivity()).isCheckedEducationProvision()) {
             educationProvisionLayout.setVisibility(View.GONE);
         }
 
-        if (((CreateVisitActivity) getActivity()).isCheckedSocialProvision()) {
+        if (!((CreateVisitActivity) getActivity()).isCheckedSocialProvision()) {
             socialProvisionLayout.setVisibility(View.GONE);
         }
 

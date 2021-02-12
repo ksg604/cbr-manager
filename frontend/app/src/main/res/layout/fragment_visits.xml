@@ -6,18 +6,159 @@
     android:layout_height="match_parent"
     tools:context=".ui.visits.VisitsFragment">
 
-    <TextView
-        android:id="@+id/text_slideshow"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_horizontal" />
+        tools:context=".ScrollingActivity"
+        tools:showIn="@layout/fragment_visits"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/hha_logo" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Feb 10, 2021, 12pm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Feb 11, 2021, 12pm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Feb 14, 2021, 11am"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="May 12, 2021, 12pm"
+                app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="June 10, 2021, 6:30pm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="July 12, 2021, 8:30am"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button5" />
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="August 10, 2021, 12pm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button6" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="August 19, 2021, 12pm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="August 25, 2021, 12pm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button8" />
+
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="August 31, 2021, 9pm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button9" />
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="September 15, 2021, 10am"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button10" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="September 22, 2021, 12pm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button11" />
+
+            <Button
+                android:id="@+id/button13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="October 31, 2021, 9pm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button12" />
+
+            <Button
+                android:id="@+id/button14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="November 5, 2021, 10am"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button13" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,10 +8,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -68,6 +70,22 @@ public class HealthProvisionFragment extends Fragment {
         setupVisibilityHealthProvisions(view);
         setupVisibilityEducationProvisions(view);
         setupVisibilitySocialProvisions(view);
+
+        LinearLayout healthProvisionLayout = view.findViewById(R.id.healthProvisionsLayout);
+        LinearLayout educationProvisionLayout = view.findViewById(R.id.educationProvisionsLayout);
+        LinearLayout socialProvisionLayout = view.findViewById(R.id.socialProvisionsLayout);
+
+        if (((CreateVisitActivity) getActivity()).isCheckedHealthProvision()) {
+            healthProvisionLayout.setVisibility(View.GONE);
+        }
+
+        if (((CreateVisitActivity) getActivity()).isCheckedEducationProvision()) {
+            educationProvisionLayout.setVisibility(View.GONE);
+        }
+
+        if (((CreateVisitActivity) getActivity()).isCheckedSocialProvision()) {
+            socialProvisionLayout.setVisibility(View.GONE);
+        }
 
     }
 

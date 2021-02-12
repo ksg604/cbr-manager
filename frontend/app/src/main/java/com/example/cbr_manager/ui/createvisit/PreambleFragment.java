@@ -86,6 +86,10 @@ public class PreambleFragment extends Fragment {
             }
         });
 
+        setupProvisionChipListeners(view);
+    }
+
+    private void setupProvisionChipListeners(View view) {
         Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
         Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
         Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
@@ -93,21 +97,27 @@ public class PreambleFragment extends Fragment {
         healthProvisionChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (healthProvisionChip.isChecked()) {
+                    ((CreateVisitActivity) getActivity()).setCheckedHealthProvision(true);
+                }
             }
         });
 
         educationProvisionChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (educationProvisionChip.isChecked()) {
+                    ((CreateVisitActivity) getActivity()).setCheckedEducationProvision(true);
+                }
             }
         });
 
         socialProvisionChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (socialProvisionChip.isChecked()) {
+                    ((CreateVisitActivity) getActivity()).setCheckedSocialProvision(true);
+                }
             }
         });
     }

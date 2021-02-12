@@ -4,6 +4,7 @@ import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.AuthToken;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.service.client.ClientService;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserService;
 
 import retrofit2.Call;
@@ -48,8 +49,9 @@ public class APIService {
         });
     }
 
-    private void initializeServices(AuthToken token){
+    public void initializeServices(AuthToken token){
         this.clientService = new ClientService(token);
+        this.userService = new UserService(token);
     }
 
     public boolean isAuthenticated(){
@@ -57,23 +59,7 @@ public class APIService {
         return authService.getAuthToken() != null;
     }
 
-    public void checkNewUserInput(LoginUserPass loginUserPass) {
-        authService = new AuthService(loginUserPass);
-        authService.fetchAuthToken().enqueue(new Callback<AuthToken>() {
-            @Override
-            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
-                if (response.isSuccessful()){
-                    AuthToken token = response.body();
-
-                    authService.setAuthToken(token);
-                    initializeServices(token);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AuthToken> call, Throwable t) {
-                // Todo: not sure proper method of error handling
-            }
-        });
+    public void testInitializeUserService(){
+        this.userService = new UserService();
     }
 }

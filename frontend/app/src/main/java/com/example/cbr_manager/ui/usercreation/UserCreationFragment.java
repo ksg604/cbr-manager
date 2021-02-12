@@ -34,6 +34,7 @@ public class UserCreationFragment extends Fragment {
     private TextView  textInputWarning;
     private String warningText = "";
     private static final APIService apiService = APIService.getInstance();
+    User userToSend;
     View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,40 +51,36 @@ public class UserCreationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (simpleValidationInput()){
-                    //sendUserCreateRequest();
-                    //apiService
+                    sendUserCreateRequest();
                     textInputWarning.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "User succesfully registered!", Toast.LENGTH_SHORT).show();
                 }
                 }
-
         });
         return root;
     }
 
-    private void sendUserCreateRequest(User user) {
-        apiService.userService.createUser(user).enqueue(new Callback<User>() {
+    public void sendUserCreateRequest() {
+        User user = new User(editTextUserName.getText().toString(),editTextPassword.getText().toString(),editTextEmail.getText().toString(),"Jane","Doe");
+        Call<User> call = apiService.userService.createUser(user);
+        call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-
                 if(response.isSuccessful()){
-                    User user = response.body();
-
-                    // Todo: dynamically set the user info here
-                    //setupNameTextView(user.getFullName());
+                    Snackbar.make(root, "Successfully created the user.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 } else{
                     Snackbar.make(root, "Failed to create the user.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Snackbar.make(root, "Failed to get the user. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
+        @Override
+        public void onFailure(Call<User> call, Throwable t) {
+            Snackbar.make(root, "Failed to create the user. Please try again", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+    }); }
+
 
     private boolean simpleValidationInput() {
         boolean inputIsValid = true;

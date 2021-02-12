@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.exceptions import MethodNotAllowed
 
 from clients.serializer import ClientSerializer
 from visits.models import Visit
@@ -11,6 +12,9 @@ class VisitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visit
         fields = ["id", "datetime_created", "user_creator", "client", "additional_notes", "client_info_changed"]
+
+    def create(self, validated_data):
+        raise MethodNotAllowed("POST", detail="user api/client/{id} to create visits")
 
     def update(self, instance, validated_data):
         client = instance.client

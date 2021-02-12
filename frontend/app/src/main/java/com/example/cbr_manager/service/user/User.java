@@ -3,34 +3,34 @@ package com.example.cbr_manager.service.user;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-    @SerializedName("first_name")
-    private String firstName;
+    @SerializedName("username")
+    private String username;
 
-    @SerializedName("last_name")
-    private String passWord;
+    @SerializedName("password")
+    private String password;
 
     private final int id;
 
-    public User(String firstName, String passWord, int id) {
-        this.firstName = firstName;
-        this.passWord = passWord;
+    public User(String username, String password, int id) {
+        this.username = username;
+        this.password = password;
         this.id = id;
     }
 
     public String getFirstName() {
-        return firstName;
+        return username;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.username = firstName;
     }
 
     public String getPassWord() {
-        return passWord;
+        return password;
     }
 
     public void setPassWord(String passWord) {
-        this.passWord = passWord;
+        this.password = passWord;
     }
 
     public int getId() {

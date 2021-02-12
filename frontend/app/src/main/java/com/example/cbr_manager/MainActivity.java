@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -43,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         buttonNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UserCreationActivity.class);
-                startActivity(intent);
+
             }
         });
 

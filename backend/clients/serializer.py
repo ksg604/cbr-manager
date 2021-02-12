@@ -8,9 +8,11 @@ from visits.utils import differentiate_key_value
 
 
 class ClientSerializer(serializers.ModelSerializer):
-    create_visit = serializers.BooleanField(required=False, write_only=True)
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False, write_only=True)
-    additional_visit_info = serializers.CharField(required=False, write_only=True)
+    create_visit = serializers.BooleanField(required=False, write_only=True, help_text="required for visit creation on a client update")
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False, write_only=True,
+                                              help_text="required for visit creation")
+    additional_visit_info = serializers.CharField(required=False, write_only=True,
+                                                  help_text="optional for visit creation")
 
     class Meta:
         model = Client

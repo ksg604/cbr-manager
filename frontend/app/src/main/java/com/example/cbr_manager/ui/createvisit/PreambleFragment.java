@@ -85,5 +85,30 @@ public class PreambleFragment extends Fragment {
                 }
             }
         });
+
+        Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
+        Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
+        Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
+
+        healthProvisionChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        educationProvisionChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        socialProvisionChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

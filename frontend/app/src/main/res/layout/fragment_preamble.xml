@@ -35,7 +35,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/purposeVisitTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -57,14 +57,14 @@
                 android:text="CBR" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip13"
+                android:id="@+id/purposeReferralChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="Disability centre referral" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip14"
+                android:id="@+id/purposeFollowUpChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
@@ -88,21 +88,21 @@
             android:layout_marginLeft="16dp">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip15"
+                android:id="@+id/healthProvisionChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="Health" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip16"
+                android:id="@+id/educationProvisionChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="Education" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip17"
+                android:id="@+id/socialProvisionChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"

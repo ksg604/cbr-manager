@@ -3,6 +3,7 @@ from rest_framework import serializers
 from clients.models import Client
 from clients.serializer import ClientSerializer
 from visits.models import Visit
+from visits.utils import differentiate_key_value, update_object
 
 
 class VisitSerializer(serializers.ModelSerializer):
@@ -31,15 +32,4 @@ class VisitSerializer(serializers.ModelSerializer):
                                     client_info_changed=client_info_changed_json)
 
 
-def differentiate_key_value(dict_a, dict_b):
-    diff = {}
-    for (k1, v1), (k2, v2) in zip(dict_a.items(), dict_b.items()):
-        if k1 == k2 and v1 != v2:
-            diff[k1] = v1
-    return diff  # returns difference of A - B
 
-
-def update_object(obj, **kwargs):
-    for k, v in kwargs.items():
-        setattr(obj, k, v)
-    obj.save()

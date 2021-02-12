@@ -37,3 +37,7 @@ class Client(models.Model):
 
     class Meta:
         ordering = ['id']
+
+
+    def __str__(self):
+        return "{} {}".format(self.first_name, self.last_name)

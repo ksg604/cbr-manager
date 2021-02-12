@@ -1,10 +1,13 @@
 from rest_framework import serializers
+from rest_framework.authtoken.admin import User
+from rest_framework.exceptions import ValidationError
 
 from clients.models import Client
+from visits.models import Visit
+from visits.utils import differentiate_key_value
 
 
-class ClientSerializer(serializers.HyperlinkedModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = ['id', 'first_name', 'last_name', 'location', 'age', 'date']
-        # exposes fields for testing POST/GET
+        fields = "__all__"

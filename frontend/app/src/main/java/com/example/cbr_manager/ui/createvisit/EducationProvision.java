@@ -1,6 +1,6 @@
 package com.example.cbr_manager.ui.createvisit;
 
-public class SocialProvision {
+public class EducationProvision {
     boolean isAdvice;
     boolean isAdvocacy;
     boolean isReferral;

@@ -5,10 +5,7 @@ from visits.models import Visit
 from visits.serializer import VisitSerializer
 
 
-class VisitViewSet(mixins.CreateModelMixin,
-                   mixins.ListModelMixin,
-                   mixins.RetrieveModelMixin,
-                   viewsets.GenericViewSet):
+class VisitViewSet(viewsets.ModelViewSet):
     serializer_class = VisitSerializer
     queryset = Visit.objects.all()
 

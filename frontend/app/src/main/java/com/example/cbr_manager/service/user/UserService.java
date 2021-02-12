@@ -28,6 +28,14 @@ public class UserService {
         this.userAPI = getUserAPI();
     }
 
+    public UserService() {
+        this.authToken = null;
+
+        this.authHeader = null;
+
+        this.userAPI = getUserAPI();
+    }
+
     private UserAPI getUserAPI() {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -37,10 +45,6 @@ public class UserService {
 
     public Call<List<User>> getUsers() {
         return this.userAPI.getUsers(authHeader);
-    }
-
-    public Call<User> modifyUser(User user) {
-        return this.userAPI.modifyUser(authHeader, user.getId(), user);
     }
 
     public Call<User> createUser(User user){

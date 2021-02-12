@@ -27,7 +27,6 @@ import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.LoginUserPass;
-import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -133,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, UserCreationActivity.class);
-                startActivity(intent);
+
             }
         });
     }

@@ -4,6 +4,8 @@ import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.AuthToken;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.service.client.ClientService;
+import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.service.user.UserService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,6 +17,7 @@ public class APIService {
     private static APIService INSTANCE = null;
     public AuthService authService;
     public ClientService clientService;
+    public UserService userService;
 
     private APIService() {
     }
@@ -46,12 +49,17 @@ public class APIService {
         });
     }
 
-    private void initializeServices(AuthToken token){
+    public void initializeServices(AuthToken token){
         this.clientService = new ClientService(token);
+        this.userService = new UserService(token);
     }
 
     public boolean isAuthenticated(){
         // Todo needs a better check, maybe a specific endpoint to check validity of auth token
         return authService.getAuthToken() != null;
+    }
+
+    public void testInitializeUserService(){
+        this.userService = new UserService();
     }
 }

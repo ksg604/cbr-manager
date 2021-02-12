@@ -19,7 +19,11 @@
         <item
             android:id="@+id/nav_new_client"
             android:icon="@drawable/ic_client_add"
-            android:title="New Client"
+            android:title="New Client"/>
+        <item
+            android:id="@+id/nav_user_creation"
+            android:icon="@drawable/ic_client_add"
+            android:title="User Creation (Admin only)"
             />
     </group>
 </menu>

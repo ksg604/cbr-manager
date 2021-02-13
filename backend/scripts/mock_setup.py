@@ -61,4 +61,4 @@ def download_image(image_url):
 
 if __name__ == '__main__':
     create_default_super_user("user1", "email@email.com", "password123")
-    generate_random_clients(5)
+    generate_random_clients(2)

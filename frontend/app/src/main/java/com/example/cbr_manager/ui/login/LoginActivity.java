@@ -25,6 +25,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.AuthToken;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,8 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
-                finish();
+//                //Complete and destroy login activity once successful
+//                finish();
             }
         });
 
@@ -119,20 +120,29 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
 
                 LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
                 apiService.authenticate(credential, new Callback<AuthToken>() {
                     @Override
                     public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
-                        Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                        startActivity(intent);
+                        if (apiService.isAuthenticated()) {
+
+                            loginViewModel.login(credential.username,
+                                    credential.password);
+
+                            Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Snackbar.make(v, "Error " + Integer.toString(response.code()) + " Could not authenticate", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                        loadingProgressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void onFailure(Call<AuthToken> call, Throwable t) {
-
+                        // TODO: handle a critical failure
+                        loadingProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
             }

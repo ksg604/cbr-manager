@@ -37,9 +37,8 @@ public class APIService {
                     AuthToken token = response.body();
                     authService.setAuthToken(token);
                     initializeServices(token);
-
-                    listener.onResponse(call, response);
                 }
+                listener.onResponse(call, response);
             }
 
             @Override

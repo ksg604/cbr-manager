@@ -23,15 +23,15 @@ class Client(models.Model):
     disability = models.CharField(max_length=50)
 
     # Extra text field for Client information(Health/Education... etc)
-    health_risk = models.CharField(max_length=30)
+    health_risk = models.IntegerField(max_length=30)
     health_require = models.TextField(blank=True)
     health_goal = models.TextField(blank=True)
 
-    education_risk = models.CharField(max_length=30)
+    education_risk = models.IntegerField(max_length=30)
     education_require = models.TextField(blank=True)
     education_goal = models.TextField(blank=True)
 
-    social_risk = models.CharField(max_length=30)
+    social_risk = models.IntegerField(max_length=30)
     social_require = models.TextField(blank=True)
     social_goal = models.TextField(blank=True)
 
@@ -42,3 +42,7 @@ class Client(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
+
+    def save(self, *args, **kwargs):
+        self.risk_score = int(self.health_risk) + int(self.social_risk) + int(self.education_risk)
+        super(Client, self).save(*args, **kwargs)

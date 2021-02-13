@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.google.android.material.chip.Chip;
@@ -55,8 +58,9 @@ public class PreambleFragment extends Fragment {
         view.findViewById(R.id.preambleNextButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(PreambleFragment.this)
-                        .navigate(R.id.action_preambleFragment_to_locationFragment);
+//                NavHostFragment.findNavController(PreambleFragment.this)
+//                        .navigate(R.id.action_preambleFragment_to_locationFragment);
+                Toast.makeText(getContext(), "Submitted.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -73,11 +77,7 @@ public class PreambleFragment extends Fragment {
         cbrTypeTextView.setVisibility(View.GONE);
 
         Chip cbrChip = view.findViewById(R.id.cbrChip);
-//        if (!cbrChip.isChecked()) {
-//            ((CreateVisitActivity) getActivity()).setCheckedHealthProvision(true);
-//            ((CreateVisitActivity) getActivity()).setCheckedEducationProvision(true);
-//            ((CreateVisitActivity) getActivity()).setCheckedSocialProvision(true);
-//        }
+
         cbrChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +92,17 @@ public class PreambleFragment extends Fragment {
         });
 
         setupProvisionChipListeners(view);
+        setupProvisionLayoutVisibility(view);
+
+        setupVisibilityHealthProvisions(view);
+        setupVisibilityEducationProvisions(view);
+        setupVisibilitySocialProvisions(view);
+    }
+
+    private void setupProvisionLayoutVisibility(View view) {
+        LinearLayout healthProvisionLayout = view.findViewById(R.id.healthProvisionsLayout);
+        LinearLayout educationProvisionLayout = view.findViewById(R.id.educationProvisionsLayout);
+        LinearLayout socialProvisionLayout = view.findViewById(R.id.socialProvisionsLayout);
     }
 
     private void setupProvisionChipListeners(View view) {
@@ -132,6 +143,121 @@ public class PreambleFragment extends Fragment {
             public void onClick(View v) {
                 if (socialProvisionChip.isChecked()) {
                     ((CreateVisitActivity) getActivity()).setCheckedSocialProvision(true);
+                }
+            }
+        });
+    }
+
+    private void setupVisibilityHealthProvisions(View view) {
+        EditText wheelchairMT = view.findViewById(R.id.wheelchairTextMultiLine);
+        Chip wheelchairChip = view.findViewById(R.id.wheelchairChip);
+        TextView wheelchairTextView = view.findViewById(R.id.healthProvisionsWheelChairTextView);
+        setChipListener(wheelchairChip, wheelchairMT, wheelchairTextView);
+
+        EditText prostheticMultiTextView = view.findViewById(R.id.protheticTextMultiLine);
+        Chip c2 = view.findViewById(R.id.prostheticChip);
+        TextView protheticTextView = view.findViewById(R.id.protheticTextView);
+        setChipListener(c2, prostheticMultiTextView, protheticTextView);
+
+        EditText t3 = view.findViewById(R.id.orthoticTextMultiLine);
+        Chip c3 = view.findViewById(R.id.orthoticChip);
+        TextView orthoticTextView = view.findViewById(R.id.orthoticTextView);
+        setChipListener(c3, t3, orthoticTextView);
+
+        EditText t4 = view.findViewById(R.id.wheelchairRepairsTextMultiLine);
+        Chip c4 = view.findViewById(R.id.wheelchairRepairsChip);
+        TextView wheelchairRepairsTextView = view.findViewById(R.id.wheelchairRepairsTextView);
+        setChipListener(c4, t4, wheelchairRepairsTextView);
+
+        EditText t5 = view.findViewById(R.id.referralTextMultiLine5);
+        Chip c5 = view.findViewById(R.id.referralChip);
+        TextView referralTextView = view.findViewById(R.id.referralTextView);
+        setChipListener(c5, t5, referralTextView);
+
+        EditText t6 = view.findViewById(R.id.adviceTextMultiLine);
+        Chip c6 = view.findViewById(R.id.adviceChip);
+        TextView adviceTextView = view.findViewById(R.id.adviceTextView);
+        setChipListener(c6, t6, adviceTextView);
+
+        EditText t7 = view.findViewById(R.id.advocacyTextMultiLine);
+        Chip c7 = view.findViewById(R.id.advocacyChip);
+        TextView advocacyTextView = view.findViewById(R.id.advocacyTextView);
+        setChipListener(c7, t7, advocacyTextView);
+
+        EditText t8 = view.findViewById(R.id.encouragementTextMultiLine);
+        Chip c8 = view.findViewById(R.id.encouragementChip);
+        TextView encouragementTextView = view.findViewById(R.id.encouragementTextView);
+        setChipListener(c8, t8, encouragementTextView);
+
+        RadioButton conclusionRadioButton = view.findViewById(R.id.concludedHPRadioButton);
+        conclusionRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (conclusionRadioButton.isChecked()) {
+                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
+                } else {
+                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    private void setupVisibilityEducationProvisions(View view) {
+        Chip adviceChip = view.findViewById(R.id.educationProvisionsAdviceChip);
+        TextView adviceTV = view.findViewById(R.id.educationProvisionAdviceTextView);
+        EditText adviceET = view.findViewById(R.id.educationProvisionAdviceTextMultiLine);
+        setChipListener(adviceChip,adviceET,adviceTV);
+
+        Chip advocacyChip = view.findViewById(R.id.educationProvisionsAdvocacyChip);
+        TextView advocacyTV = view.findViewById(R.id.educationProvisionAdvocacyTextView);
+        EditText advocacyET = view.findViewById(R.id.educationProvisionAdvocacyTextMultiLine);
+        setChipListener(advocacyChip,advocacyET,advocacyTV);
+
+        Chip referralChip = view.findViewById(R.id.educationProvisionsReferralChip);
+        TextView referralTV = view.findViewById(R.id.educationProvisionReferralTextView);
+        EditText referralET = view.findViewById(R.id.educationProvisionReferralTextMultiLine);
+        setChipListener(referralChip,referralET,referralTV);
+
+        Chip encourageChip = view.findViewById(R.id.educationProvisionsEncouragementChip);
+        TextView encourageTV = view.findViewById(R.id.educationProvisionEncouragementTextView);
+        EditText encourageET = view.findViewById(R.id.educationProvisionEncouragementTextMultiLine);
+        setChipListener(encourageChip,encourageET,encourageTV);
+    }
+
+    private void setupVisibilitySocialProvisions(View view) {
+        Chip adviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
+        TextView adviceTV = view.findViewById(R.id.socialProvisionAdviceTextView);
+        EditText adviceET = view.findViewById(R.id.socialProvisionAdviceTextMultiLine);
+        setChipListener(adviceChip,adviceET,adviceTV);
+
+        Chip advocacyChip = view.findViewById(R.id.socialProvisionAdvocacyChip);
+        TextView advocacyTV = view.findViewById(R.id.socialProvisionAdvocacyTextView);
+        EditText advocacyET = view.findViewById(R.id.socialProvisionAdvocacyMultiLineText);
+        setChipListener(advocacyChip,advocacyET,advocacyTV);
+
+        Chip referralChip = view.findViewById(R.id.socialProvisionReferralChip);
+        TextView referralTV = view.findViewById(R.id.socialProvisionReferralTextView);
+        EditText referralET = view.findViewById(R.id.socialProvisionReferralTextMultiLine);
+        setChipListener(referralChip,referralET,referralTV);
+
+        Chip encourageChip = view.findViewById(R.id.socialProvisionEncouragementChip);
+        TextView encourageTV = view.findViewById(R.id.socialProvisionEncouragementTextView);
+        EditText encourageET = view.findViewById(R.id.socialProvisionEncouragementTextMultiLine);
+        setChipListener(encourageChip,encourageET,encourageTV);
+    }
+
+    private void setChipListener(Chip chip, EditText editText, TextView textView) {
+        chip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chip.isChecked()) {
+                    editText.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    editText.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
                 }
             }
         });

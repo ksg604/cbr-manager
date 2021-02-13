@@ -72,3 +72,13 @@ or http://127.0.0.1:8000/api/clients/1 to get only get the client of id=1
 Alternatively you can also manually define the behaviour of the api through [Views](https://www.django-rest-framework.org/api-guide/views/) or further specify the ViewSet behavior.
 
 You can use Postman or any http request method at this endpoint to do CRUD operations too
+
+# User Create Example
+
+I created a `User` model with two fields `first_name` and `last_name`
+
+Visit http://127.0.0.1:8000/users/ to create a user or retrieve all users
+
+or http://127.0.0.1:8000/users/1 to get only get the user of id=1
+
+You can post/put/delete any user by using postman or from the users page.

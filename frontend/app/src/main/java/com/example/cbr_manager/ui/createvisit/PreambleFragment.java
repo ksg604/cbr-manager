@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,25 +75,7 @@ public class PreambleFragment extends Fragment {
        EditText textView = (EditText) view.findViewById(R.id.fragmentPreambleEditTextDate);
        textView.setText(todayString);
 
-//        ChipGroup cbrChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
-//        TextView cbrTypeTextView = view.findViewById(R.id.cbrTypeTextView);
-//        cbrChipGroup.setVisibility(GONE);
-//        cbrTypeTextView.setVisibility(GONE);
-//
-//        Chip cbrChip = view.findViewById(R.id.cbrChip);
-//
-//        cbrChip.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (cbrChip.isChecked()) {
-//                    cbrChipGroup.setVisibility(View.VISIBLE);
-//                    cbrTypeTextView.setVisibility(View.VISIBLE);
-//                } else {
-//                    cbrChipGroup.setVisibility(GONE);
-//                    cbrTypeTextView.setVisibility(GONE);
-//                }
-//            }
-//        });
+       setupLocationSpinner(view);
 
         setupProvisionChipListeners(view);
         setupProvisionLayoutVisibility(view);
@@ -98,6 +83,16 @@ public class PreambleFragment extends Fragment {
         setupVisibilityHealthProvisions(view);
         setupVisibilityEducationProvisions(view);
         setupVisibilitySocialProvisions(view);
+
+        setupRadioGroupProvisionListeners(view);
+    }
+
+    private void setupLocationSpinner(View view) {
+        Spinner spinner = (Spinner) view.findViewById(R.id.locationFragmentSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.locationsArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     private void setupProvisionLayoutVisibility(View view) {
@@ -153,8 +148,6 @@ public class PreambleFragment extends Fragment {
                     }
                 });
             }
-
-
         });
     }
 
@@ -241,20 +234,6 @@ public class PreambleFragment extends Fragment {
         Chip c8 = view.findViewById(R.id.encouragementChip);
         TextView encouragementTextView = view.findViewById(R.id.encouragementTextView);
         setChipListener(c8, t8, encouragementTextView);
-
-        RadioButton conclusionRadioButton = view.findViewById(R.id.concludedHPRadioButton);
-        conclusionRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (conclusionRadioButton.isChecked()) {
-                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(View.VISIBLE);
-                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
-                } else {
-                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(View.VISIBLE);
-                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     private void setupVisibilityEducationProvisions(View view) {
@@ -311,6 +290,51 @@ public class PreambleFragment extends Fragment {
                 } else {
                     editText.setVisibility(GONE);
                     textView.setVisibility(GONE);
+                }
+            }
+        });
+    }
+
+    private void setupRadioGroupProvisionListeners(View view) {
+        RadioGroup healthRadioGroup = view.findViewById(R.id.healthProvisionsRadioGroup);
+        RadioGroup educationRadioGroup = view.findViewById(R.id.educationProvisionRadioGroup);
+        RadioGroup socialRadioGroup = view.findViewById(R.id.socialProvisionRadioGroup);
+
+        healthRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.concludedHPRadioButton) {
+                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
+                } else {
+                    view.findViewById(R.id.healthProvisionConclusionTextView).setVisibility(GONE);
+                    view.findViewById(R.id.healthProvisionConclusionTextMultiLine).setVisibility(GONE);
+                }
+            }
+        });
+
+        educationRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.educationProvisionConcludedRadioButton) {
+                    view.findViewById(R.id.educationProvisionConclusionTextView).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.educationProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
+                } else {
+                    view.findViewById(R.id.educationProvisionConclusionTextView).setVisibility(GONE);
+                    view.findViewById(R.id.educationProvisionConclusionTextMultiLine).setVisibility(GONE);
+                }
+            }
+        });
+
+        socialRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.socialProvisionConcludedRadioButton) {
+                    view.findViewById(R.id.socialProvisionConclusionTextView).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.socialProvisionConclusionTextMultiLine).setVisibility(View.VISIBLE);
+                } else {
+                    view.findViewById(R.id.socialProvisionConclusionTextView).setVisibility(GONE);
+                    view.findViewById(R.id.socialProvisionConclusionTextMultiLine).setVisibility(GONE);
                 }
             }
         });

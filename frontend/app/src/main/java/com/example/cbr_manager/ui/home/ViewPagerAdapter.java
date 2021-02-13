@@ -12,23 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.Client;
 
 import java.util.List;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
-    private List<ClientViewPagerModel> models;
+    private List<Client> clients;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public ViewPagerAdapter(List<ClientViewPagerModel> models, Context context) {
-        this.models = models;
+    public ViewPagerAdapter(List<Client> clients, Context context) {
+        this.clients = clients;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return models.size();
+        return clients.size();
     }
 
     @Override
@@ -42,16 +43,18 @@ public class ViewPagerAdapter extends PagerAdapter {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.card_item, container, false);
 
+        Client client = clients.get(position);
+
         ImageView imageView;
-        TextView name, place;
+        TextView fullName, location;
 
-        imageView = view.findViewById(R.id.imageView2);
-        name = view.findViewById(R.id.textView2);
-        place = view.findViewById(R.id.textView3);
+        imageView = view.findViewById(R.id.imageClient);
+        fullName = view.findViewById(R.id.textFullName);
+        location = view.findViewById(R.id.textLocation);
 
-        imageView.setImageResource(models.get(position).getImage());
-        name.setText(models.get(position).getName());
-        place.setText(models.get(position).getLocation());
+        imageView.setImageResource(R.drawable.dog);
+        fullName.setText(client.getFullName());
+        location.setText(client.getLocation());
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

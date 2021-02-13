@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     private final APIService apiService = APIService.getInstance();
     ViewPager viewPager;
     ViewPagerAdapter adapter;
-    List<ClientViewPagerModel> models = new ArrayList<>();
+    List<Client> clientViewPagerList = new ArrayList<>();
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,25 +38,25 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        fetchClientsToList(models);
 
-        setupViewPager(root);
+
+        setupViewPager(root, clientViewPagerList);
         setupButtons(root);
+
+        fetchClientsToList(clientViewPagerList);
 
         return root;
     }
 
 
-    public void fetchClientsToList(List<ClientViewPagerModel> clientPagerModelList) {
+    public void fetchClientsToList(List<Client> clientList) {
         if (apiService.isAuthenticated()) {
             apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
                 @Override
                 public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
                     if (response.isSuccessful()) {
-                        List<Client> clientList = response.body();
-                        for (Client client : clientList) {
-                            clientPagerModelList.add(new ClientViewPagerModel(R.drawable.dog, client.getFirstName(), client.getLocation()));
-                        }
+                        List<Client> clients = response.body();
+                        clientList.addAll(clients);
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -89,8 +89,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void setupViewPager(View root) {
-        adapter = new ViewPagerAdapter(models, getContext());
+    private void setupViewPager(View root, List<Client> clientList) {
+        adapter = new ViewPagerAdapter(clientList, getContext());
         viewPager = root.findViewById(R.id.clientPriorityList);
         viewPager.setAdapter(adapter);
         viewPager.setClipToPadding(false);

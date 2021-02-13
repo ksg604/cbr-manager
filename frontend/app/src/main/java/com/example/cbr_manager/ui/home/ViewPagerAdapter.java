@@ -45,21 +45,22 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         Client client = clients.get(position);
 
-        ImageView imageView;
-        TextView fullName, location;
-
-        imageView = view.findViewById(R.id.imageClient);
-        fullName = view.findViewById(R.id.textFullName);
-        location = view.findViewById(R.id.textLocation);
-
+        ImageView imageView = view.findViewById(R.id.imageClient);
         imageView.setImageResource(R.drawable.dog);
+
+        TextView fullName = view.findViewById(R.id.textFullName);
         fullName.setText(client.getFullName());
+
+        TextView location = view.findViewById(R.id.textLocation);
         location.setText(client.getLocation());
+
+        TextView riskScore = view.findViewById(R.id.textScore);
+        riskScore.setText(Integer.toString(client.getRiskScore()));
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Priority client position " + position + " selected." , Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Priority client position " + position + " selected.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -69,6 +70,6 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 }

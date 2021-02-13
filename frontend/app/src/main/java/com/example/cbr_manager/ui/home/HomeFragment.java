@@ -16,9 +16,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.ui.create_client.ConsentActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,20 +45,27 @@ public class HomeFragment extends Fragment {
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
 
-        fetchClientsToList(clientViewPagerList);
+        getTopFiveRiskiestClients(clientViewPagerList);
 
         return root;
     }
 
 
-    public void fetchClientsToList(List<Client> clientList) {
+    public void getTopFiveRiskiestClients(List<Client> clientList) {
         if (apiService.isAuthenticated()) {
             apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
                 @Override
                 public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
                     if (response.isSuccessful()) {
                         List<Client> clients = response.body();
-                        clientList.addAll(clients);
+
+                        if (clients != null) {
+                            Collections.sort(clients, new ClientRiskScoreComparator(ClientRiskScoreComparator.SortOrder.DESCENDING));
+
+                            List<Client> topFiveClients = clients.subList(0, 5);
+
+                            clientList.addAll(topFiveClients);
+                        }
                     }
                     adapter.notifyDataSetChanged();
                 }

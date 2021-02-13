@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,8 @@ import com.google.android.material.chip.ChipGroup;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import static android.view.View.GONE;
 
 public class PreambleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,7 +56,7 @@ public class PreambleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.preambleNextButton).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.preambleSubmitButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                NavHostFragment.findNavController(PreambleFragment.this)
@@ -71,25 +72,25 @@ public class PreambleFragment extends Fragment {
        EditText textView = (EditText) view.findViewById(R.id.fragmentPreambleEditTextDate);
        textView.setText(todayString);
 
-        ChipGroup cbrChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
-        TextView cbrTypeTextView = view.findViewById(R.id.cbrTypeTextView);
-        cbrChipGroup.setVisibility(View.GONE);
-        cbrTypeTextView.setVisibility(View.GONE);
-
-        Chip cbrChip = view.findViewById(R.id.cbrChip);
-
-        cbrChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cbrChip.isChecked()) {
-                    cbrChipGroup.setVisibility(View.VISIBLE);
-                    cbrTypeTextView.setVisibility(View.VISIBLE);
-                } else {
-                    cbrChipGroup.setVisibility(View.GONE);
-                    cbrTypeTextView.setVisibility(View.GONE);
-                }
-            }
-        });
+//        ChipGroup cbrChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
+//        TextView cbrTypeTextView = view.findViewById(R.id.cbrTypeTextView);
+//        cbrChipGroup.setVisibility(GONE);
+//        cbrTypeTextView.setVisibility(GONE);
+//
+//        Chip cbrChip = view.findViewById(R.id.cbrChip);
+//
+//        cbrChip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (cbrChip.isChecked()) {
+//                    cbrChipGroup.setVisibility(View.VISIBLE);
+//                    cbrTypeTextView.setVisibility(View.VISIBLE);
+//                } else {
+//                    cbrChipGroup.setVisibility(GONE);
+//                    cbrTypeTextView.setVisibility(GONE);
+//                }
+//            }
+//        });
 
         setupProvisionChipListeners(view);
         setupProvisionLayoutVisibility(view);
@@ -100,9 +101,61 @@ public class PreambleFragment extends Fragment {
     }
 
     private void setupProvisionLayoutVisibility(View view) {
+
+        ChipGroup cbrChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
+        TextView cbrTypeTextView = view.findViewById(R.id.cbrTypeTextView);
+        cbrChipGroup.setVisibility(GONE);
+        cbrTypeTextView.setVisibility(GONE);
         LinearLayout healthProvisionLayout = view.findViewById(R.id.healthProvisionsLayout);
         LinearLayout educationProvisionLayout = view.findViewById(R.id.educationProvisionsLayout);
         LinearLayout socialProvisionLayout = view.findViewById(R.id.socialProvisionsLayout);
+
+        Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
+        Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
+        Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
+
+        Chip cbrChip = view.findViewById(R.id.cbrChip);
+        cbrChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbrChip.isChecked()) {
+                    healthProvisionLayout.setVisibility(GONE);
+                    educationProvisionLayout.setVisibility(GONE);
+                    socialProvisionLayout.setVisibility(GONE);
+                    cbrChipGroup.setVisibility(View.VISIBLE);
+                    cbrTypeTextView.setVisibility(View.VISIBLE);
+
+                    setupProvisionLayoutChipListeners(healthProvisionChip, healthProvisionLayout);
+                    setupProvisionLayoutChipListeners(educationProvisionChip, educationProvisionLayout);
+                    setupProvisionLayoutChipListeners(socialProvisionChip, socialProvisionLayout);
+                } else {
+                    healthProvisionLayout.setVisibility(View.VISIBLE);
+                    educationProvisionLayout.setVisibility(View.VISIBLE);
+                    socialProvisionLayout.setVisibility(View.VISIBLE);
+                    cbrChipGroup.setVisibility(GONE);
+                    cbrTypeTextView.setVisibility(GONE);
+
+                    healthProvisionChip.setChecked(false);
+                    educationProvisionChip.setChecked(false);
+                    socialProvisionChip.setChecked(false);
+                }
+            }
+
+            private void setupProvisionLayoutChipListeners(Chip chip, LinearLayout linearLayout) {
+                chip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (chip.isChecked()) {
+                            linearLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            linearLayout.setVisibility(GONE);
+                        }
+                    }
+                });
+            }
+
+
+        });
     }
 
     private void setupProvisionChipListeners(View view) {
@@ -256,8 +309,8 @@ public class PreambleFragment extends Fragment {
                     editText.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.VISIBLE);
                 } else {
-                    editText.setVisibility(View.GONE);
-                    textView.setVisibility(View.GONE);
+                    editText.setVisibility(GONE);
+                    textView.setVisibility(GONE);
                 }
             }
         });

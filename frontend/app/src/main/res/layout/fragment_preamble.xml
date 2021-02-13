@@ -15,13 +15,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#7b8087"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/preambleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="1dp"
+                android:background="#FFF"
                 android:orientation="vertical">
 
                 <SeekBar
@@ -184,7 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginBottom="8dp">
+                android:background="#FFF"
+                android:layout_marginBottom="1dp">
 
                 <TextView
                     android:id="@+id/fragmentLocationTitleTextView"
@@ -261,7 +264,10 @@
                 android:id="@+id/healthProvisionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginBottom="1dp"
+                android:background="#FFF"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/healthProvisionsTitleTextView"
@@ -394,7 +400,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/orthoticTextView"
@@ -403,7 +409,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of orthotic"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/orthoticTextMultiLine"
@@ -416,7 +422,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/wheelchairRepairsTextView"
@@ -425,7 +431,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of wheelchair repairs"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/wheelchairRepairsTextMultiLine"
@@ -438,7 +444,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/referralTextView"
@@ -447,7 +453,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of referral"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/referralTextMultiLine5"
@@ -460,7 +466,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/adviceTextView"
@@ -469,7 +475,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of advice"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/adviceTextMultiLine"
@@ -482,7 +488,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/advocacyTextView"
@@ -491,7 +497,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of advocacy"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/advocacyTextMultiLine"
@@ -504,7 +510,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/encouragementTextView"
@@ -513,7 +519,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of encouragement"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/encouragementTextMultiLine"
@@ -526,7 +532,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/textView16"
@@ -573,7 +579,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Conclusion"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/healthProvisionConclusionTextMultiLine"
@@ -586,14 +592,17 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/educationProvisionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="1dp"
+                android:background="#FFF"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/educationProvisionsTitleTextView"
@@ -671,7 +680,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionAdvocacyTextView"
@@ -681,7 +690,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of advocacy"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/educationProvisionAdvocacyTextMultiLine"
@@ -692,7 +701,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionReferralTextView"
@@ -702,7 +711,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of referral"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/educationProvisionReferralTextMultiLine"
@@ -713,7 +722,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionEncouragementTextView"
@@ -723,7 +732,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of encouragement"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/educationProvisionEncouragementTextMultiLine"
@@ -734,7 +743,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionRadioGroupTextView"
@@ -744,7 +753,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="16dp"
                     android:text="Goals met?"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <RadioGroup
                     android:id="@+id/educationProvisionRadioGroup"
@@ -798,7 +807,9 @@
                 android:id="@+id/socialProvisionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="#FFF"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/socialProvisionTitleTextView"
@@ -867,7 +878,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of advice"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionAdviceTextMultiLine"
@@ -878,7 +889,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionAdvocacyTextView"
@@ -888,7 +899,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of advocacy"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionAdvocacyMultiLineText"
@@ -899,7 +910,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionReferralTextView"
@@ -909,7 +920,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of referral"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionReferralTextMultiLine"
@@ -920,7 +931,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionEncouragementTextView"
@@ -930,7 +941,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of encouragement"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionEncouragementTextMultiLine"
@@ -941,7 +952,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionGoalMetTextView"
@@ -951,7 +962,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Goal met?"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <RadioGroup
                     android:id="@+id/socialProvisionRadioGroup"
@@ -1008,15 +1019,14 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/preambleNextButton"
+        android:id="@+id/preambleSubmitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="Submit"
-        android:textColor="@color/purple_700"
+        android:textColor="@color/teal_700"
         app:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

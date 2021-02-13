@@ -14,34 +14,59 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.create_client.ConsentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private final APIService apiService = APIService.getInstance();
     ViewPager viewPager;
     ViewPagerAdapter adapter;
-    List<ViewPagerModel> models;
+    List<ClientViewPagerModel> models = new ArrayList<>();
+    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-        models = new ArrayList<>();
-        models.add(new ViewPagerModel(R.drawable.dog, "Peter Tran", "Simon Fraser University") );
-        models.add(new ViewPagerModel(R.drawable.dog, "Paul Erdos", "Budapest, Germany") );
-        models.add(new ViewPagerModel(R.drawable.dog, "Leonhard Euler", "Switzerland") );
-        models.add(new ViewPagerModel(R.drawable.dog, "James Stewart", "Simon Fraser University") );
-        models.add(new ViewPagerModel(R.drawable.dog, "Demo Boi", "Simon Fraser University") );
+        fetchClientsToList(models);
 
         setupViewPager(root);
         setupButtons(root);
+
         return root;
+    }
+
+
+    public void fetchClientsToList(List<ClientViewPagerModel> clientPagerModelList) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
+                @Override
+                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
+                    if (response.isSuccessful()) {
+                        List<Client> clientList = response.body();
+                        for (Client client : clientList) {
+                            clientPagerModelList.add(new ClientViewPagerModel(R.drawable.dog, client.getFirstName(), client.getLocation()));
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<List<Client>> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     private void setupButtons(View root) {
@@ -66,10 +91,10 @@ public class HomeFragment extends Fragment {
 
     private void setupViewPager(View root) {
         adapter = new ViewPagerAdapter(models, getContext());
-        viewPager = root.findViewById(R.id.viewPager2);
+        viewPager = root.findViewById(R.id.clientPriorityList);
         viewPager.setAdapter(adapter);
         viewPager.setClipToPadding(false);
-        viewPager.setPadding(220,0,220,0);
+        viewPager.setPadding(220, 0, 220, 0);
     }
 
 

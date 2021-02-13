@@ -1,11 +1,11 @@
 package com.example.cbr_manager.ui.home;
 
-public class ViewPagerModel {
+public class ClientViewPagerModel {
     private int image;
     private String name;
     private String location;
 
-    public ViewPagerModel(int image, String name, String location) {
+    public ClientViewPagerModel(int image, String name, String location) {
         this.image = image;
         this.name = name;
         this.location = location;

@@ -17,11 +17,11 @@ import java.util.List;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
-    private List<ViewPagerModel> models;
+    private List<ClientViewPagerModel> models;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public ViewPagerAdapter(List<ViewPagerModel> models, Context context) {
+    public ViewPagerAdapter(List<ClientViewPagerModel> models, Context context) {
         this.models = models;
         this.context = context;
     }

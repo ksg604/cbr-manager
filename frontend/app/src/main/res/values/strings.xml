@@ -91,6 +91,8 @@
     <string name="name_of_client">Name of client</string>
     <string name="client_name">Client Name</string>
     <string name="name_of_cbr_worker">Name of CBR Worker</string>
+    <string name="create_visit">Create Visit</string>
+    <string name="cbr_worker_name">CBR Worker Name</string>
     <string-array name="locationsArray">
         <item>BidiBidi Zone 1</item>
         <item>BidiBidi Zone 2</item>

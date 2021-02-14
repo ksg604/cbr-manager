@@ -8,6 +8,8 @@ from visits.utils import differentiate_key_value
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    risk_score = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Client
         fields = "__all__"

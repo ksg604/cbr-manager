@@ -23,6 +23,6 @@ public interface UserAPI {
     @PUT("api/users/{id}")
     Call<User> modifyUser(@Header("Authorization") String authHeader, @Path("id") int id, @Body User user);
 
-    @POST("api/users/}")
+    @POST("api/users/")
     Call<User> createUser(@Header("Authorization") String authHeader, @Body User user);
 }

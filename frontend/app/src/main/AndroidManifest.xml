@@ -23,6 +23,7 @@
             android:name=".ui.clientdetails.ClientDetailsActivity"
             android:label=".ClientDetailsActivity"
             android:theme="@style/Theme.Cbr_manager.NoActionBar" />
+            android:theme="@style/Theme.Cbr_manager.NoActionBar" />
         <activity
             android:name=".ui.usercreation.UserCreationActivity"
             android:label=".UserCreationActivity"

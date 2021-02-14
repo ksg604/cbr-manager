@@ -26,4 +26,11 @@
         android:name="com.example.cbr_manager.ui.visits.VisitsFragment"
         android:label="Visits"
         tools:layout="@layout/fragment_visits" />
+
+    <fragment
+        android:id="@+id/nav_user_creation"
+        android:name="com.example.cbr_manager.ui.usercreation.UserCreationFragment"
+        android:label="User Creation"
+        tools:layout="@layout/fragment_user_creation" />
+
 </navigation>

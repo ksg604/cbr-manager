@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
 
         getTopFiveRiskiestClients(clientViewPagerList);
 
+
         return root;
     }
 
@@ -99,7 +100,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupViewPager(View root, List<Client> clientList) {
-        adapter = new ViewPagerAdapter(clientList, getContext());
+        adapter = new ViewPagerAdapter(this.getActivity(), clientList);
         viewPager = root.findViewById(R.id.clientPriorityList);
         viewPager.setAdapter(adapter);
         viewPager.setClipToPadding(false);

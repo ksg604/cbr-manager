@@ -94,8 +94,13 @@ class Client(models.Model):
     referral_social_provision = models.BooleanField(blank=True, default=False)
     encouragement_social_provision = models.BooleanField(blank=True, default=False)
 
-    goal_met_social_provision = models.BooleanField(blank=True, default=False)
-    conclusion_social_provision = models.BooleanField(blank=True, default=False)
+    advice_social_provision_text = models.TextField(blank=True, max_length=100)
+    advocacy_social_provision_text = models.TextField(blank=True, max_length=100)
+    referral_social_provision_text = models.TextField(blank=True, max_length=100)
+    encouragement_social_provision_text = models.TextField(blank=True, max_length=100)
+
+    goal_met_social_provision = models.TextField(blank=True, max_length=100)
+    conclusion_social_provision = models.TextField(blank=True, max_length=100)
 
     class Meta:
         ordering = ['id']

@@ -2,7 +2,6 @@ package com.example.cbr_manager.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +52,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         Client client = clients.get(position);
 
         ImageView imageView = view.findViewById(R.id.imageClient);
-        setClientPhoto(imageView, client.getPhoto());
+        Helper.setImageViewFromURL(client.getPhoto(), imageView);
 
         TextView fullName = view.findViewById(R.id.textFullName);
         fullName.setText(client.getFullName());
@@ -83,32 +82,5 @@ public class ViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
-    }
-
-    private void setClientPhoto(ImageView imView, String imageURL) {
-
-        Thread imageDLThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Drawable clientPhoto = null;
-                try {
-                    clientPhoto = Helper.getImageFromUrl(imageURL);
-                } catch (Exception e) {
-                    // failed to get photo set default
-                    imView.setImageResource(R.drawable.dog);
-                    return;
-                }
-
-                // we can only set a UI field on the main UI thread
-                Drawable finalClientPhoto = clientPhoto;
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        imView.setImageDrawable(finalClientPhoto);
-                    }
-                });
-            }
-        });
-        imageDLThread.start();
     }
 }

@@ -1,286 +1,313 @@
 package com.example.cbr_manager.service.client;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+// Todo: figure out image upload
+@JsonIgnoreProperties({"photo"})
 public class Client {
-    @SerializedName("id")
-    private final int id;
-
-    @SerializedName("risk_score")
-    private int riskScore;
-
-    @SerializedName("first_name")
+    @JsonProperty("id")
+    private Integer id;
+    @JsonProperty("risk_score")
+    private Integer riskScore;
+    @JsonProperty("first_name")
     private String firstName;
-
-    @SerializedName("last_name")
+    @JsonProperty("last_name")
     private String lastName;
-
-    @SerializedName("location")
+    @JsonProperty("location")
     private String location;
-
-    @SerializedName("gps_location")
+    @JsonProperty("gps_location")
     private String gpsLocation;
-
-    @SerializedName("consent")
+    @JsonProperty("consent")
     private String consent;
-
-    @SerializedName("village_no")
-    private int villageNo;
-
-    @SerializedName("date")
+    @JsonProperty("village_no")
+    private Integer villageNo;
+    @JsonProperty("date")
     private String date;
-
-    @SerializedName("gender")
+    @JsonProperty("gender")
     private String gender;
-
-    @SerializedName("age")
-    private int age;
-
-    @SerializedName("contact_client")
-    private int contactClient;
-
-    @SerializedName("care_present")
+    @JsonProperty("age")
+    private Integer age;
+    @JsonProperty("contact_client")
+    private Integer contactClient;
+    @JsonProperty("care_present")
     private String carePresent;
-
-    @SerializedName("contact_care")
-    private int contactCare;
-
-    @SerializedName("photo")
+    @JsonProperty("contact_care")
+    private Integer contactCare;
+    @JsonProperty("photo")
     private String photo;
-
-    @SerializedName("disability")
+    @JsonProperty("disability")
     private String disability;
-
-    @SerializedName("health_risk")
-    private int healthRisk;
-
-    @SerializedName("health_require")
+    @JsonProperty("health_risk")
+    private Integer healthRisk;
+    @JsonProperty("health_require")
     private String healthRequire;
-
-    @SerializedName("health_goal")
+    @JsonProperty("health_goal")
     private String healthGoal;
-
-    @SerializedName("education_risk")
-    private int educationRisk;
-
-    @SerializedName("education_require")
+    @JsonProperty("education_risk")
+    private Integer educationRisk;
+    @JsonProperty("education_require")
     private String educationRequire;
-
-    @SerializedName("education_goal")
+    @JsonProperty("education_goal")
     private String educationGoal;
-
-    @SerializedName("social_risk")
-    private int socialRisk;
-
-    @SerializedName("social_require")
+    @JsonProperty("social_risk")
+    private Integer socialRisk;
+    @JsonProperty("social_require")
     private String socialRequire;
-
-    @SerializedName("social_goal")
+    @JsonProperty("social_goal")
     private String socialGoal;
 
-    public Client(String firstName, String lastName, int id) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.id = id;
-    }
-
-    public int getId() {
+    @JsonProperty("id")
+    public Integer getId() {
         return id;
     }
 
-    public String getFullName() {
-        return this.getFirstName() + " " + this.getLastName();
+    @JsonProperty("id")
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getRiskScore() {
+    @JsonProperty("risk_score")
+    public Integer getRiskScore() {
         return riskScore;
     }
 
-    public void setRiskScore(int riskScore) {
+    @JsonProperty("risk_score")
+    public void setRiskScore(Integer riskScore) {
         this.riskScore = riskScore;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getGpsLocation() {
-        return gpsLocation;
-    }
-
-    public void setGpsLocation(String gpsLocation) {
-        this.gpsLocation = gpsLocation;
-    }
-
-    public String getConsent() {
-        return consent;
-    }
-
-    public void setConsent(String consent) {
-        this.consent = consent;
-    }
-
-    public int getVillageNo() {
-        return villageNo;
-    }
-
-    public void setVillageNo(int villageNo) {
-        this.villageNo = villageNo;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getContactClient() {
-        return contactClient;
-    }
-
-    public void setContactClient(int contactClient) {
-        this.contactClient = contactClient;
-    }
-
-    public String getCarePresent() {
-        return carePresent;
-    }
-
-    public void setCarePresent(String carePresent) {
-        this.carePresent = carePresent;
-    }
-
-    public int getContactCare() {
-        return contactCare;
-    }
-
-    public void setContactCare(int contactCare) {
-        this.contactCare = contactCare;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public String getDisability() {
-        return disability;
-    }
-
-    public void setDisability(String disability) {
-        this.disability = disability;
-    }
-
-    public int getHealthRisk() {
-        return healthRisk;
-    }
-
-    public void setHealthRisk(int healthRisk) {
-        this.healthRisk = healthRisk;
-    }
-
-    public String getHealthRequire() {
-        return healthRequire;
-    }
-
-    public void setHealthRequire(String healthRequire) {
-        this.healthRequire = healthRequire;
-    }
-
-    public String getHealthGoal() {
-        return healthGoal;
-    }
-
-    public void setHealthGoal(String healthGoal) {
-        this.healthGoal = healthGoal;
-    }
-
-    public int getEducationRisk() {
-        return educationRisk;
-    }
-
-    public void setEducationRisk(int educationRisk) {
-        this.educationRisk = educationRisk;
-    }
-
-    public String getEducationRequire() {
-        return educationRequire;
-    }
-
-    public void setEducationRequire(String educationRequire) {
-        this.educationRequire = educationRequire;
-    }
-
-    public String getEducationGoal() {
-        return educationGoal;
-    }
-
-    public void setEducationGoal(String educationGoal) {
-        this.educationGoal = educationGoal;
-    }
-
-    public int getSocialRisk() {
-        return socialRisk;
-    }
-
-    public void setSocialRisk(int socialRisk) {
-        this.socialRisk = socialRisk;
-    }
-
-    public String getSocialRequire() {
-        return socialRequire;
-    }
-
-    public void setSocialRequire(String socialRequire) {
-        this.socialRequire = socialRequire;
-    }
-
-    public String getSocialGoal() {
-        return socialGoal;
-    }
-
-    public void setSocialGoal(String socialGoal) {
-        this.socialGoal = socialGoal;
-    }
-
+    @JsonProperty("first_name")
     public String getFirstName() {
         return firstName;
     }
 
+    @JsonProperty("first_name")
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @JsonProperty("last_name")
     public String getLastName() {
         return lastName;
     }
 
+    @JsonProperty("last_name")
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @JsonProperty("location")
+    public String getLocation() {
+        return location;
+    }
+
+    @JsonProperty("location")
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @JsonProperty("gps_location")
+    public String getGpsLocation() {
+        return gpsLocation;
+    }
+
+    @JsonProperty("gps_location")
+    public void setGpsLocation(String gpsLocation) {
+        this.gpsLocation = gpsLocation;
+    }
+
+    @JsonProperty("consent")
+    public String getConsent() {
+        return consent;
+    }
+
+    @JsonProperty("consent")
+    public void setConsent(String consent) {
+        this.consent = consent;
+    }
+
+    @JsonProperty("village_no")
+    public Integer getVillageNo() {
+        return villageNo;
+    }
+
+    @JsonProperty("village_no")
+    public void setVillageNo(Integer villageNo) {
+        this.villageNo = villageNo;
+    }
+
+    @JsonProperty("date")
+    public String getDate() {
+        return date;
+    }
+
+    @JsonProperty("date")
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @JsonProperty("gender")
+    public String getGender() {
+        return gender;
+    }
+
+    @JsonProperty("gender")
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    @JsonProperty("age")
+    public Integer getAge() {
+        return age;
+    }
+
+    @JsonProperty("age")
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @JsonProperty("contact_client")
+    public Integer getContactClient() {
+        return contactClient;
+    }
+
+    @JsonProperty("contact_client")
+    public void setContactClient(Integer contactClient) {
+        this.contactClient = contactClient;
+    }
+
+    @JsonProperty("care_present")
+    public String getCarePresent() {
+        return carePresent;
+    }
+
+    @JsonProperty("care_present")
+    public void setCarePresent(String carePresent) {
+        this.carePresent = carePresent;
+    }
+
+    @JsonProperty("contact_care")
+    public Integer getContactCare() {
+        return contactCare;
+    }
+
+    @JsonProperty("contact_care")
+    public void setContactCare(Integer contactCare) {
+        this.contactCare = contactCare;
+    }
+
+    @JsonProperty("photo")
+    public String getPhoto() {
+        return photo;
+    }
+
+    @JsonProperty("photo")
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    @JsonProperty("disability")
+    public String getDisability() {
+        return disability;
+    }
+
+    @JsonProperty("disability")
+    public void setDisability(String disability) {
+        this.disability = disability;
+    }
+
+    @JsonProperty("health_risk")
+    public Integer getHealthRisk() {
+        return healthRisk;
+    }
+
+    @JsonProperty("health_risk")
+    public void setHealthRisk(Integer healthRisk) {
+        this.healthRisk = healthRisk;
+    }
+
+    @JsonProperty("health_require")
+    public String getHealthRequire() {
+        return healthRequire;
+    }
+
+    @JsonProperty("health_require")
+    public void setHealthRequire(String healthRequire) {
+        this.healthRequire = healthRequire;
+    }
+
+    @JsonProperty("health_goal")
+    public String getHealthGoal() {
+        return healthGoal;
+    }
+
+    @JsonProperty("health_goal")
+    public void setHealthGoal(String healthGoal) {
+        this.healthGoal = healthGoal;
+    }
+
+    @JsonProperty("education_risk")
+    public Integer getEducationRisk() {
+        return educationRisk;
+    }
+
+    @JsonProperty("education_risk")
+    public void setEducationRisk(Integer educationRisk) {
+        this.educationRisk = educationRisk;
+    }
+
+    @JsonProperty("education_require")
+    public String getEducationRequire() {
+        return educationRequire;
+    }
+
+    @JsonProperty("education_require")
+    public void setEducationRequire(String educationRequire) {
+        this.educationRequire = educationRequire;
+    }
+
+    @JsonProperty("education_goal")
+    public String getEducationGoal() {
+        return educationGoal;
+    }
+
+    @JsonProperty("education_goal")
+    public void setEducationGoal(String educationGoal) {
+        this.educationGoal = educationGoal;
+    }
+
+    @JsonProperty("social_risk")
+    public Integer getSocialRisk() {
+        return socialRisk;
+    }
+
+    @JsonProperty("social_risk")
+    public void setSocialRisk(Integer socialRisk) {
+        this.socialRisk = socialRisk;
+    }
+
+    @JsonProperty("social_require")
+    public String getSocialRequire() {
+        return socialRequire;
+    }
+
+    @JsonProperty("social_require")
+    public void setSocialRequire(String socialRequire) {
+        this.socialRequire = socialRequire;
+    }
+
+    @JsonProperty("social_goal")
+    public String getSocialGoal() {
+        return socialGoal;
+    }
+
+    @JsonProperty("social_goal")
+    public void setSocialGoal(String socialGoal) {
+        this.socialGoal = socialGoal;
+    }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
     }
 }

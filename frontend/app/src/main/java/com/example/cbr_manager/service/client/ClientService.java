@@ -8,7 +8,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class ClientService {
 
@@ -31,7 +31,7 @@ public class ClientService {
     private ClientAPI getClientAPI() {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
                 .build().create(ClientAPI.class);
     }
 

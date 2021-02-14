@@ -45,16 +45,14 @@ public class ClientService {
         return this.clientAPI.modifyClient(authHeader, client.getId(), client);
     }
 
-    public Call<Client> createClient(Client client) {
-        // note: client id for the client object can be anything. default it manually to -1.
-        return this.clientAPI.createClient(authHeader, client);
-    }
-
     public Call<Client> getClient(int clientId) {
         return this.clientAPI.getClient(authHeader, clientId);
     }
 
-    public Call<Client> createClientManual(Client client) {
+    public Call<Client> createClient(Client client) {
+        // TODO: Add more client fields when finalized. Restricted to manual fields for now.
+        // Need to manually build client request object because of its image field
+
         RequestBody firstName = RequestBody.create(client.getFirstName(), MediaType.parse("text/plain"));
         RequestBody lastName = RequestBody.create(client.getLastName(), MediaType.parse("text/plain"));
         RequestBody location = RequestBody.create(client.getLocation(), MediaType.parse("text/plain"));

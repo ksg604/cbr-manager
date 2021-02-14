@@ -49,7 +49,7 @@ public class Client {
     private Integer contactCare;
 
     @JsonProperty("photo")
-    private String photo;
+    private String photoURL;
 
     @JsonProperty("disability")
     private String disability;
@@ -225,13 +225,13 @@ public class Client {
     }
 
     @JsonGetter("photo")
-    public String getPhoto() {
-        return photo;
+    public String getPhotoURL() {
+        return photoURL;
     }
 
     @JsonSetter("photo")
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
 
     @JsonProperty("disability")

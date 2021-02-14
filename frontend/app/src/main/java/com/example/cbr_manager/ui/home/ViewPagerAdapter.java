@@ -52,7 +52,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         Client client = clients.get(position);
 
         ImageView imageView = view.findViewById(R.id.imageClient);
-        Helper.setImageViewFromURL(client.getPhoto(), imageView);
+        Helper.setImageViewFromURL(client.getPhotoURL(), imageView);
 
         TextView fullName = view.findViewById(R.id.textFullName);
         fullName.setText(client.getFullName());

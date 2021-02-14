@@ -3,6 +3,8 @@ package com.example.cbr_manager.service.client;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 // Todo: figure out image upload
 public class Client {
@@ -135,7 +137,69 @@ public class Client {
     @JsonProperty("encouragement_health_provision")
     private boolean encouragementHealthProvision;
 
+    @SerializedName("wheelchair_health_provision_text")
+    @Expose
+    private String wheelchairHealthProvisionText;
 
+    @SerializedName("prosthetic_health_provision_text")
+    @Expose
+    private String prostheticHealthProvisionText;
+
+    @SerializedName("orthotic_health_provision_text")
+    @Expose
+    private String orthoticHealthProvisionText;
+
+    @SerializedName("repairs_health_provision_text")
+    @Expose
+    private String repairsHealthProvisionText;
+
+    @SerializedName("referral_health_provision_text")
+    @Expose
+    private String referralHealthProvisionText;
+
+    @SerializedName("advice_health_provision_text")
+    @Expose
+    private String adviceHealthProvisionText;
+
+    @SerializedName("advocacy_health_provision_text")
+    @Expose
+    private String advocacyHealthProvisionText;
+
+    @SerializedName("encouragement_health_provision_text")
+    @Expose
+    private String encouragementHealthProvisionText;
+
+    @SerializedName("goal_met_health_provision")
+    @Expose
+    private String goalMetHealthProvision;
+
+    @SerializedName("conclusion_health_provision")
+    @Expose
+    private String conclusionHealthProvision;
+
+    @SerializedName("advice_education_provision")
+    @Expose
+    private boolean adviceEducationProvision;
+
+    @SerializedName("advocacy_education_provision")
+    @Expose
+    private boolean advocacyEducationProvision;
+
+    @SerializedName("referral_education_provision")
+    @Expose
+    private boolean referralEducationProvision;
+
+    @SerializedName("encouragement_education_provision")
+    @Expose
+    private boolean encouragementEducationProvision;
+
+    @SerializedName("advice_education_provision_text")
+    @Expose
+    private String adviceEducationProvisionText;
+
+    @SerializedName("advocacy_education_provision_text")
+    @Expose
+    private String advocacyEducationProvisionText;
 
     public Client() {
     }

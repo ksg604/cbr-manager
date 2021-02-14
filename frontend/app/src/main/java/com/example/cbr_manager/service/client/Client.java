@@ -201,6 +201,62 @@ public class Client {
     @Expose
     private String advocacyEducationProvisionText;
 
+    @SerializedName("referral_education_provision_text")
+    @Expose
+    private String referralEducationProvisionText;
+
+    @SerializedName("encouragement_education_provision_text")
+    @Expose
+    private String encouragementEducationProvisionText;
+
+    @SerializedName("goal_met_education_provision")
+    @Expose
+    private String goalMetEducationProvision;
+
+    @SerializedName("conclusion_education_provision")
+    @Expose
+    private String conclusionEducationProvision;
+
+    @SerializedName("advice_social_provision")
+    @Expose
+    private boolean adviceSocialProvision;
+
+    @SerializedName("advocacy_social_provision")
+    @Expose
+    private boolean advocacySocialProvision;
+
+    @SerializedName("referral_social_provision")
+    @Expose
+    private boolean referralSocialProvision;
+
+    @SerializedName("encouragement_social_provision")
+    @Expose
+    private boolean encouragementSocialProvision;
+
+    @SerializedName("advice_social_provision_text")
+    @Expose
+    private String adviceSocialProvisionText;
+
+    @SerializedName("advocacy_social_provision_text")
+    @Expose
+    private String advocacySocialProvisionText;
+
+    @SerializedName("referral_social_provision_text")
+    @Expose
+    private String referralSocialProvisionText;
+
+    @SerializedName("encouragement_social_provision_text")
+    @Expose
+    private String encouragementSocialProvisionText;
+
+    @SerializedName("goal_met_social_provision")
+    @Expose
+    private String goalMetSocialProvision;
+
+    @SerializedName("conclusion_social_provision")
+    @Expose
+    private String conclusionSocialProvision;
+
     public Client() {
     }
 

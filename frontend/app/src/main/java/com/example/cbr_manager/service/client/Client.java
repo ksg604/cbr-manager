@@ -81,6 +81,62 @@ public class Client {
     @JsonProperty("social_goal")
     private String socialGoal;
 
+    @JsonProperty("is_cbr_purpose")
+    private boolean isCBRPurpose;
+
+    @JsonProperty("is_disability_referral_purpose")
+    private boolean isDisabilityReferralPurpose;
+
+    @JsonProperty("is_disability_follow_up_purpose")
+    private boolean isDisabilityFollowUpPurpose;
+
+    @JsonProperty("is_health_provision")
+    private boolean isHealthProvision;
+
+    @JsonProperty("is_education_provision")
+    private boolean isEducationProvision;
+
+    @JsonProperty("is_social_provision")
+    private boolean isSocialProvision;
+
+    @JsonProperty("cbr_worker_name")
+    private String cbrWorkerName;
+
+    @JsonProperty("location_visit_gps")
+    private String locationVisitGPS;
+
+    @JsonProperty("location_drop_down")
+    private String locationDropDown;
+
+    @JsonProperty("village_no_visit")
+    private Integer villageNoVisit;
+
+    @JsonProperty("wheelchair_health_provision")
+    private boolean wheelchairHealthProvision;
+
+    @JsonProperty("prosthetic_health_provision")
+    private boolean prostheticHealthProvision;
+
+    @JsonProperty("orthotic_health_provision")
+    private boolean orthoticHealthProvision;
+
+    @JsonProperty("repairs_health_provision")
+    private boolean repairsHealthProvision;
+
+    @JsonProperty("referral_health_provision")
+    private boolean referralHealthProvision;
+
+    @JsonProperty("advice_health_provision")
+    private boolean adviceHealthProvision;
+
+    @JsonProperty("advocacy_health_provision")
+    private boolean advocacyHealthProvision;
+
+    @JsonProperty("encouragement_health_provision")
+    private boolean encouragementHealthProvision;
+
+
+
     public Client() {
     }
 

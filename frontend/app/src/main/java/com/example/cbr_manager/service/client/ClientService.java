@@ -3,6 +3,8 @@ package com.example.cbr_manager.service.client;
 import com.example.cbr_manager.BuildConfig;
 import com.example.cbr_manager.helper.Helper;
 import com.example.cbr_manager.service.auth.AuthToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -10,6 +12,7 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class ClientService {
@@ -31,9 +34,10 @@ public class ClientService {
     }
 
     private ClientAPI getClientAPI() {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build().create(ClientAPI.class);
     }
 
@@ -49,7 +53,7 @@ public class ClientService {
         return this.clientAPI.getClient(authHeader, clientId);
     }
 
-    public Call<Client> createClient(Client client) {
+    public Call<Client> createClientManual(Client client) {
         // TODO: Add more client fields when finalized. Restricted to manual fields for now.
         // Need to manually build client request object because of its image field
 
@@ -77,6 +81,10 @@ public class ClientService {
                 socialRisk,
                 educationRisk
         );
+    }
+
+    public Call<Client> createClient(Client client){
+        return this.clientAPI.createClient(authHeader, client);
     }
 
 }

@@ -1,61 +1,88 @@
 package com.example.cbr_manager.service.client;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 // Todo: figure out image upload
-@JsonIgnoreProperties({"photo"})
 public class Client {
     @JsonProperty("id")
     private Integer id;
+
     @JsonProperty("risk_score")
     private Integer riskScore;
+
     @JsonProperty("first_name")
     private String firstName;
+
     @JsonProperty("last_name")
     private String lastName;
+
     @JsonProperty("location")
     private String location;
+
     @JsonProperty("gps_location")
     private String gpsLocation;
+
     @JsonProperty("consent")
     private String consent;
+
     @JsonProperty("village_no")
     private Integer villageNo;
+
     @JsonProperty("date")
     private String date;
+
     @JsonProperty("gender")
     private String gender;
+
     @JsonProperty("age")
     private Integer age;
+
     @JsonProperty("contact_client")
     private Integer contactClient;
+
     @JsonProperty("care_present")
     private String carePresent;
+
     @JsonProperty("contact_care")
     private Integer contactCare;
+
     @JsonProperty("photo")
     private String photo;
+
     @JsonProperty("disability")
     private String disability;
+
     @JsonProperty("health_risk")
     private Integer healthRisk;
+
     @JsonProperty("health_require")
     private String healthRequire;
+
     @JsonProperty("health_goal")
     private String healthGoal;
+
     @JsonProperty("education_risk")
     private Integer educationRisk;
+
     @JsonProperty("education_require")
     private String educationRequire;
+
     @JsonProperty("education_goal")
     private String educationGoal;
+
     @JsonProperty("social_risk")
     private Integer socialRisk;
+
     @JsonProperty("social_require")
     private String socialRequire;
+
     @JsonProperty("social_goal")
     private String socialGoal;
+
+    public Client() {
+    }
 
     @JsonProperty("id")
     public Integer getId() {
@@ -197,12 +224,12 @@ public class Client {
         this.contactCare = contactCare;
     }
 
-    @JsonProperty("photo")
+    @JsonGetter("photo")
     public String getPhoto() {
         return photo;
     }
 
-    @JsonProperty("photo")
+    @JsonSetter("photo")
     public void setPhoto(String photo) {
         this.photo = photo;
     }

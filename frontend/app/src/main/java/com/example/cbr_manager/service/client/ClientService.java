@@ -6,6 +6,8 @@ import com.example.cbr_manager.service.auth.AuthToken;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -43,13 +45,18 @@ public class ClientService {
         return this.clientAPI.modifyClient(authHeader, client.getId(), client);
     }
 
-    public Call<Client> createClient(Client client){
+    public Call<Client> createClient(Client client) {
         // note: client id for the client object can be anything. default it manually to -1.
         return this.clientAPI.createClient(authHeader, client);
     }
 
     public Call<Client> getClient(int clientId) {
         return this.clientAPI.getClient(authHeader, clientId);
+    }
+
+    public Call<Client> createClient2(Client client) {
+        RequestBody firstName = RequestBody.create(client.getFirstName(), MediaType.parse("text/plain"));
+        return this.clientAPI.createClient2(authHeader, firstName);
     }
 
 }

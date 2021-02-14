@@ -91,8 +91,21 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ConsentActivity.class);
-                startActivity(intent);
+                Client client = new Client();
+                client.setFirstName("Bob");
+                apiService.clientService.createClient2(client).enqueue(new Callback<Client>() {
+                    @Override
+                    public void onResponse(Call<Client> call, Response<Client> response) {
+                        System.out.println("ok");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Client> call, Throwable t) {
+
+                    }
+                });
+//                Intent intent = new Intent(getContext(), ConsentActivity.class);
+//                startActivity(intent);
             }
         });
     }

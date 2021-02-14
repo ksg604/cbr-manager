@@ -31,5 +31,15 @@ public interface ClientAPI {
 
     @Multipart
     @POST("api/clients/")
-    Call<Client> createClient2(@Header("Authorization") String authHeader, @Part("first_name") RequestBody firstName);
+    Call<Client> createClientManual(@Header("Authorization") String authHeader,
+                                    @Part("first_name") RequestBody firstName,
+                                    @Part("last_name") RequestBody lastName,
+                                    @Part("location") RequestBody location,
+                                    @Part("consent") RequestBody consent,
+                                    @Part("gender") RequestBody gender,
+                                    @Part("care_present") RequestBody carePresent,
+                                    @Part("disability") RequestBody disability,
+                                    @Part("health_risk") RequestBody healthRisk,
+                                    @Part("social_risk") RequestBody socialRisk,
+                                    @Part("education_risk") RequestBody educationRisk);
 }

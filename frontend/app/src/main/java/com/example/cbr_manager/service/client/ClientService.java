@@ -54,9 +54,31 @@ public class ClientService {
         return this.clientAPI.getClient(authHeader, clientId);
     }
 
-    public Call<Client> createClient2(Client client) {
+    public Call<Client> createClientManual(Client client) {
         RequestBody firstName = RequestBody.create(client.getFirstName(), MediaType.parse("text/plain"));
-        return this.clientAPI.createClient2(authHeader, firstName);
+        RequestBody lastName = RequestBody.create(client.getLastName(), MediaType.parse("text/plain"));
+        RequestBody location = RequestBody.create(client.getLocation(), MediaType.parse("text/plain"));
+        RequestBody consent = RequestBody.create(client.getConsent(), MediaType.parse("text/plain"));
+        RequestBody gender = RequestBody.create(client.getGender(), MediaType.parse("text/plain"));
+        RequestBody carePresent = RequestBody.create(client.getCarePresent(), MediaType.parse("text/plain"));
+        RequestBody disability = RequestBody.create(client.getDisability(), MediaType.parse("text/plain"));
+        RequestBody healthRisk = RequestBody.create(client.getHealthRisk().toString(), MediaType.parse("text/plain"));
+        RequestBody socialRisk = RequestBody.create(client.getSocialRisk().toString(), MediaType.parse("text/plain"));
+        RequestBody educationRisk = RequestBody.create(client.getEducationRisk().toString(), MediaType.parse("text/plain"));
+
+        return this.clientAPI.createClientManual(
+                authHeader,
+                firstName,
+                lastName,
+                location,
+                consent,
+                gender,
+                carePresent,
+                disability,
+                healthRisk,
+                socialRisk,
+                educationRisk
+        );
     }
 
 }

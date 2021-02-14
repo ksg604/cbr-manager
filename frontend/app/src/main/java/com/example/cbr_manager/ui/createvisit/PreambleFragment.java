@@ -82,10 +82,11 @@ public class PreambleFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Submitted.", Toast.LENGTH_SHORT).show();
 //                ((CreateVisitActivity) getActivity()).onBackPressed();
+                gatherAllData(view);
             }
         });
 
-        gatherAllData(view);
+
     }
 
     private void gatherAllData(View view) {
@@ -93,12 +94,22 @@ public class PreambleFragment extends Fragment {
         purposeChipGroup.getCheckedChipIds();
 
         Chip cbrChip = view.findViewById(R.id.cbrChip);
+        boolean isCBR = cbrChip.isChecked();
+
         Chip disabilityReferralChip = view.findViewById(R.id.purposeReferralChip);
+        boolean isDisabilityReferral = disabilityReferralChip.isChecked();
+
         Chip disabilityFollowupChip = view.findViewById(R.id.purposeFollowUpChip);
+        boolean isDisabilityFollowUp = disabilityFollowupChip.isChecked();
 
         Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
+        boolean isHealthProvision = healthProvisionChip.isChecked();
+
         Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
+        boolean isEducationProvision = educationProvisionChip.isChecked();
+
         Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
+        boolean isSocialProvision = socialProvisionChip.isChecked();
 
         EditText cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
         String name = cbrWorkerName.getText().toString();
@@ -157,6 +168,44 @@ public class PreambleFragment extends Fragment {
         boolean isEncouragementHealth = encouragementHealth.isChecked();
         EditText encouragementEditText = view.findViewById(R.id.encouragementTextMultiLine);
         String encouragementDescription = encouragementEditText.getText().toString();
+
+        RadioGroup healthGoalMet = view.findViewById(R.id.healthProvisionsRadioGroup);
+        int id = healthGoalMet.getCheckedRadioButtonId();
+        if (id != -1) {
+            RadioButton selectedHealthGoal = (RadioButton) view.findViewById(id);
+            String healthGoalText = selectedHealthGoal.getText().toString();
+        }
+
+        EditText healthConclusionEditText = view.findViewById(R.id.healthProvisionConclusionTextMultiLine);
+        String healthConclusionDescription = healthConclusionEditText.getText().toString();
+
+        // Education
+        Chip educationAdviceChip = view.findViewById(R.id.educationProvisionsAdviceChip);
+        boolean isEducationAdvice = educationAdviceChip.isChecked();
+        EditText educationAdviceText = view.findViewById(R.id.educationProvisionAdviceTextMultiLine);
+        String educationAdviceDescription = educationAdviceText.getText().toString();
+
+        Chip educationAdvocacyChip = view.findViewById(R.id.educationProvisionsAdvocacyChip);
+        boolean isEducationAdvocacy = educationAdvocacyChip.isChecked();
+        EditText educationAdvocacyEditText = view.findViewById(R.id.educationProvisionAdvocacyTextMultiLine);
+        String educationAdvocacyDescription = educationAdvocacyEditText.getText().toString();
+
+        Chip educationReferralChip = view.findViewById(R.id.educationProvisionsReferralChip);
+        boolean isEducationReferral = educationReferralChip.isChecked();
+        EditText educationReferralEditText = view.findViewById(R.id.educationProvisionReferralTextMultiLine);
+        String educationReferralDescription = educationReferralEditText.getText().toString();
+
+        Chip educationEncouragementChip = view.findViewById(R.id.educationProvisionsEncouragementChip);
+        boolean isEducationEncouragement = educationEncouragementChip.isChecked();
+        EditText educationEncouragementEditText = view.findViewById(R.id.encouragementTextMultiLine);
+        String educationEncouragementDescription = educationEncouragementEditText.getText().toString();
+
+        RadioGroup educationGoalMet = view.findViewById(R.id.educationProvisionRadioGroup);
+        int idEducationRadio = educationGoalMet.getCheckedRadioButtonId();
+        if (idEducationRadio != 1) {
+            RadioButton selectedEducationGoal = (RadioButton) view.findViewById(idEducationRadio);
+            String educationGoalText = selectedEducationGoal.getText().toString();
+        }
     }
 
     private void setupLocationSpinner(View view) {

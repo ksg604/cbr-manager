@@ -24,7 +24,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="1dp"
                 android:background="#FFF"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/fragmentPreambleTitleTextView"
@@ -180,7 +181,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="#FFF"
-                android:layout_marginBottom="1dp">
+                android:layout_marginBottom="1dp"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/fragmentLocationTitleTextView"
@@ -260,7 +262,8 @@
                 android:layout_marginBottom="1dp"
                 android:background="#FFF"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/healthProvisionsTitleTextView"
@@ -595,7 +598,8 @@
                 android:layout_marginBottom="1dp"
                 android:background="#FFF"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/educationProvisionsTitleTextView"
@@ -802,7 +806,8 @@
                 android:layout_height="wrap_content"
                 android:background="#FFF"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/socialProvisionTitleTextView"

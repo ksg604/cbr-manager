@@ -206,6 +206,23 @@ public class PreambleFragment extends Fragment {
             RadioButton selectedEducationGoal = (RadioButton) view.findViewById(idEducationRadio);
             String educationGoalText = selectedEducationGoal.getText().toString();
         }
+
+        // Social
+        Chip socialAdviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
+        boolean isSocialAdvice = socialAdviceChip.isChecked();
+        EditText socialAdviceEditText = view.findViewById(R.id.socialProvisionAdviceTextMultiLine);
+
+        Chip socialAdvocacyChip = view.findViewById(R.id.socialProvisionAdvocacyChip);
+        boolean isSocialAdvocacy = socialAdvocacyChip.isChecked();
+        EditText socialAdvocacyEditText = view.findViewById(R.id.socialProvisionAdvocacyMultiLineText);
+
+        Chip socialReferralChip = view.findViewById(R.id.socialProvisionReferralChip);
+        boolean isSocialReferral = socialReferralChip.isChecked();
+        EditText socialReferralEditText = view.findViewById(R.id.socialProvisionReferralTextMultiLine);
+
+        Chip socialEncouragementChip = view.findViewById(R.id.socialProvisionEncouragementChip);
+        boolean isSocialEncouragement = socialEncouragementChip.isChecked();
+        EditText socialEncouragementEditText = view.findViewById(R.id.socialProvisionEncouragementTextMultiLine);
     }
 
     private void setupLocationSpinner(View view) {

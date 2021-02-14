@@ -41,18 +41,16 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
 
-        getTopFiveRiskiestClients(clientViewPagerList);
-
+        fetchTopFiveRiskiestClients(clientViewPagerList);
 
         return root;
     }
 
 
-    public void getTopFiveRiskiestClients(List<Client> clientList) {
+    public void fetchTopFiveRiskiestClients(List<Client> clientList) {
         if (apiService.isAuthenticated()) {
             apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
                 @Override
@@ -100,7 +98,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupViewPager(View root, List<Client> clientList) {
-        adapter = new ViewPagerAdapter(this.getActivity(), clientList);
+        adapter = new ViewPagerAdapter(getContext(), this.getActivity(), clientList);
         viewPager = root.findViewById(R.id.clientPriorityList);
         viewPager.setAdapter(adapter);
         viewPager.setClipToPadding(false);

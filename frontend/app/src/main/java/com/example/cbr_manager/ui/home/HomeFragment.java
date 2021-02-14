@@ -1,6 +1,5 @@
 package com.example.cbr_manager.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
-import com.example.cbr_manager.ui.create_client.ConsentActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,8 +89,30 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ConsentActivity.class);
-                startActivity(intent);
+                Client client = new Client();
+                client.setFirstName("123");
+                client.setLastName("123");
+                client.setLocation("123");
+                client.setConsent("123");
+                client.setGender("123");
+                client.setCarePresent("123");
+                client.setDisability("123");
+                client.setHealthRisk(123);
+                client.setSocialRisk(123);
+                client.setEducationRisk(123);
+                apiService.clientService.createClientManual(client).enqueue(new Callback<Client>() {
+                    @Override
+                    public void onResponse(Call<Client> call, Response<Client> response) {
+                        System.out.println("ok");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Client> call, Throwable t) {
+
+                    }
+                });
+//                Intent intent = new Intent(getContext(), ConsentActivity.class);
+//                startActivity(intent);
             }
         });
     }

@@ -81,7 +81,7 @@
             android:text="Village Number" />
 
         <EditText
-            android:id="@+id/editTextNumber"
+            android:id="@+id/villageNumberEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

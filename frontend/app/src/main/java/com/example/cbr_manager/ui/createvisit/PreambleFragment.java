@@ -59,15 +59,6 @@ public class PreambleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.preambleSubmitButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                NavHostFragment.findNavController(PreambleFragment.this)
-//                        .navigate(R.id.action_preambleFragment_to_locationFragment);
-                Toast.makeText(getContext(), "Submitted.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String todayString = format.format(today);
@@ -77,7 +68,7 @@ public class PreambleFragment extends Fragment {
 
        setupLocationSpinner(view);
 
-        setupProvisionChipListeners(view);
+       setupProvisionChipListeners(view);
         setupProvisionLayoutVisibility(view);
 
         setupVisibilityHealthProvisions(view);
@@ -85,6 +76,87 @@ public class PreambleFragment extends Fragment {
         setupVisibilitySocialProvisions(view);
 
         setupRadioGroupProvisionListeners(view);
+
+        view.findViewById(R.id.preambleSubmitButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Submitted.", Toast.LENGTH_SHORT).show();
+//                ((CreateVisitActivity) getActivity()).onBackPressed();
+            }
+        });
+
+        gatherAllData(view);
+    }
+
+    private void gatherAllData(View view) {
+        ChipGroup purposeChipGroup = view.findViewById(R.id.purposeChipGroup);
+        purposeChipGroup.getCheckedChipIds();
+
+        Chip cbrChip = view.findViewById(R.id.cbrChip);
+        Chip disabilityReferralChip = view.findViewById(R.id.purposeReferralChip);
+        Chip disabilityFollowupChip = view.findViewById(R.id.purposeFollowUpChip);
+
+        Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
+        Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
+        Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
+
+        EditText cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
+        String name = cbrWorkerName.getText().toString();
+
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String todayString = format.format(today);
+
+        // Location
+        EditText locationOfVisit = view.findViewById(R.id.editTextTextLocation);
+        String locationVisit = locationOfVisit.getText().toString();
+
+        Spinner locationSpinner = view.findViewById(R.id.locationFragmentSpinner);
+        String locationDDL = locationSpinner.getSelectedItem().toString();
+
+        EditText villageNumber = view.findViewById(R.id.villageNumberEditText);
+        String villageNumberString = villageNumber.getText().toString();
+
+        // Health provision
+        Chip wheelchairHealth = view.findViewById(R.id.wheelchairChip);
+        boolean isWheelChairHealth = wheelchairHealth.isChecked();
+        EditText wheelchairEditText = view.findViewById(R.id.wheelchairTextMultiLine);
+        String wheelchairDescription = wheelchairEditText.getText().toString();
+
+        Chip prostheticHealth = view.findViewById(R.id.prostheticChip);
+        boolean isProtheticHealth = prostheticHealth.isChecked();
+        EditText protheticEditText = view.findViewById(R.id.protheticTextMultiLine);
+        String protheticDescription = protheticEditText.getText().toString();
+
+        Chip ortheticHealth = view.findViewById(R.id.orthoticChip);
+        boolean isOrtheticHealth = ortheticHealth.isChecked();
+        EditText ortheticEditText = view.findViewById(R.id.orthoticTextMultiLine);
+        String ortheticDescription = ortheticEditText.getText().toString();
+
+        Chip repairsHealth = view.findViewById(R.id.wheelchairRepairsChip);
+        boolean isRepairHealth = repairsHealth.isChecked();
+        EditText repairEditText = view.findViewById(R.id.wheelchairRepairsTextMultiLine);
+        String repairDescription = repairEditText.getText().toString();
+
+        Chip referralHealth = view.findViewById(R.id.referralChip);
+        boolean isReferralHealth = referralHealth.isChecked();
+        EditText referralEditText = view.findViewById(R.id.referralTextMultiLine5);
+        String referralDescription = referralEditText.getText().toString();
+
+        Chip adviceHealth = view.findViewById(R.id.adviceChip);
+        boolean isAdviceHealth = adviceHealth.isChecked();
+        EditText adviceEditText = view.findViewById(R.id.adviceTextMultiLine);
+        String adviceDescription = adviceEditText.getText().toString();
+
+        Chip advocacyHealth = view.findViewById(R.id.advocacyChip);
+        boolean isAdvocacyHealth = advocacyHealth.isChecked();
+        EditText advocacyEditText = view.findViewById(R.id.advocacyTextMultiLine);
+        String advocacyDescription = advocacyEditText.getText().toString();
+
+        Chip encouragementHealth = view.findViewById(R.id.encouragementChip);
+        boolean isEncouragementHealth = encouragementHealth.isChecked();
+        EditText encouragementEditText = view.findViewById(R.id.encouragementTextMultiLine);
+        String encouragementDescription = encouragementEditText.getText().toString();
     }
 
     private void setupLocationSpinner(View view) {

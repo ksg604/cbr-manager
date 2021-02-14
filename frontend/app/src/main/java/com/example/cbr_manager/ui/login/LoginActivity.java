@@ -28,7 +28,6 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

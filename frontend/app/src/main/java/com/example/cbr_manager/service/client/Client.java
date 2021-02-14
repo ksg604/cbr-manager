@@ -81,58 +81,76 @@ public class Client {
     @Expose
     private String socialGoal;
 
-    @JsonProperty("is_cbr_purpose")
+    @SerializedName("is_cbr_purpose")
+    @Expose
     private boolean isCBRPurpose;
 
-    @JsonProperty("is_disability_referral_purpose")
+    @SerializedName("is_disability_referral_purpose")
+    @Expose
     private boolean isDisabilityReferralPurpose;
 
-    @JsonProperty("is_disability_follow_up_purpose")
+    @SerializedName("is_disability_follow_up_purpose")
+    @Expose
     private boolean isDisabilityFollowUpPurpose;
 
-    @JsonProperty("is_health_provision")
+    @SerializedName("is_health_provision")
+    @Expose
     private boolean isHealthProvision;
 
-    @JsonProperty("is_education_provision")
+    @SerializedName("is_education_provision")
+    @Expose
     private boolean isEducationProvision;
 
-    @JsonProperty("is_social_provision")
+    @SerializedName("is_social_provision")
+    @Expose
     private boolean isSocialProvision;
 
-    @JsonProperty("cbr_worker_name")
+    @SerializedName("cbr_worker_name")
+    @Expose
     private String cbrWorkerName;
 
-    @JsonProperty("location_visit_gps")
+    @SerializedName("location_visit_gps")
+    @Expose
     private String locationVisitGPS;
 
-    @JsonProperty("location_drop_down")
+    @SerializedName("location_drop_down")
+    @Expose
     private String locationDropDown;
 
-    @JsonProperty("village_no_visit")
+    @SerializedName("village_no_visit")
+    @Expose
     private Integer villageNoVisit;
 
-    @JsonProperty("wheelchair_health_provision")
+    @SerializedName("wheelchair_health_provision")
+    @Expose
     private boolean wheelchairHealthProvision;
 
-    @JsonProperty("prosthetic_health_provision")
+    @SerializedName("prosthetic_health_provision")
+    @Expose
     private boolean prostheticHealthProvision;
 
-    @JsonProperty("orthotic_health_provision")
+    @SerializedName("orthotic_health_provision")
+    @Expose
     private boolean orthoticHealthProvision;
 
-    @JsonProperty("repairs_health_provision")
+    @SerializedName("repairs_health_provision")
+    @Expose
     private boolean repairsHealthProvision;
 
-    @JsonProperty("referral_health_provision")
+    @SerializedName("referral_health_provision")
+    @Expose
     private boolean referralHealthProvision;
 
-    @JsonProperty("advice_health_provision")
+    @SerializedName("advice_health_provision")
+    @Expose
     private boolean adviceHealthProvision;
 
-    @JsonProperty("advocacy_health_provision")
+    @SerializedName("advocacy_health_provision")
+    @Expose
     private boolean advocacyHealthProvision;
 
-    @JsonProperty("encouragement_health_provision")
+    @SerializedName("encouragement_health_provision")
+    @Expose
     private boolean encouragementHealthProvision;
 
     @SerializedName("wheelchair_health_provision_text")
@@ -258,7 +276,6 @@ public class Client {
     public Client() {
     }
 
-    @JsonProperty("id")
     public Integer getId() {
         return id;
     }

@@ -90,6 +90,28 @@ public class PreambleFragment extends Fragment {
     }
 
     private void gatherAllData(View view) {
+
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                if (response.isSuccessful()) {
+                    Client client = response.body();
+                    fillClientWithVisitData(client, view);
+                    // TODO: do stuff here
+                } else {
+                    Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+                Toast.makeText(getContext(), "Error finding client.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void fillClientWithVisitData(Client client, View view) {
         ChipGroup purposeChipGroup = view.findViewById(R.id.purposeChipGroup);
         purposeChipGroup.getCheckedChipIds();
 
@@ -231,23 +253,35 @@ public class PreambleFragment extends Fragment {
             String socialGoalText = selectedSocialGoal.getText().toString();
         }
 
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                if (response.isSuccessful()) {
-                    Client client = response.body();
+        // Setting Preamble
+        client.setCBRPurpose(isCBR);
+        client.setDisabilityFollowUpPurpose(isDisabilityFollowUp);
+        client.setDisabilityReferralPurpose(isDisabilityReferral);
 
-                    // TODO: do stuff here
-                } else {
-                    Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
-                }
-            }
+        client.setHealthProvision(isHealthProvision);
+        client.setEducationProvision(isEducationProvision);
+        client.setSocialProvision(isSocialProvision);
 
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Toast.makeText(getContext(), "Error finding client.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        client.setCbrWorkerName(name);
+
+        // Setting locations
+        client.setLocationVisitGPS(locationVisit);
+        client.setLocationDropDown(locationDDL);
+        client.setVillageNoVisit(Integer.parseInt(villageNumberString));
+
+        // Health provision
+        client.setWheelchairHealthProvision(isWheelChairHealth);
+        client.setProstheticHealthProvision(isProtheticHealth);
+        client.setOrthoticHealthProvision(isOrtheticHealth);
+        client.setRepairsHealthProvision(isRepairHealth);
+        client.setReferralHealthProvision(isReferralHealth);
+        client.setAdviceHealthProvision(isAdviceHealth);
+        client.setAdvocacyHealthProvision(isAdvocacyHealth);
+        client.setEncouragementHealthProvision(isEncouragementHealth);
+
+        client.setWheelchairHealthProvisionText(wheelchairDescription);
+        client.setProstheticHealthProvisionText(protheticDescription);
+
 
     }
 

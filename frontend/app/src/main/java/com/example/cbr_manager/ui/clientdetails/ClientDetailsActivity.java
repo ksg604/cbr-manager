@@ -23,7 +23,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
 
 
     private APIService apiService = APIService.getInstance();
-
+    private int clientId = -1;
     private View parentLayout;
 
     @Override
@@ -35,6 +35,8 @@ public class ClientDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
+
+        this.clientId = clientId;
 
         setupButtons();
         setupTextViews();
@@ -141,6 +143,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                 TextView nameTextView = (TextView) findViewById(R.id.clientDetailsNameTextView);
                 String name = nameTextView.getText().toString();
                 Intent intent = new Intent(ClientDetailsActivity.this, CreateVisitActivity.class);
+                intent.putExtra("clientId", clientId);
                 startActivity(intent);
             }
         });

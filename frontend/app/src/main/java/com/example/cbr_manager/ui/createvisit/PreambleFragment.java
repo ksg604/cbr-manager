@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -27,11 +28,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static android.view.View.GONE;
 
 public class PreambleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
+    private int clientId = ((CreateVisitActivity) getActivity()).clientId;
     private APIService apiService = APIService.getInstance();
 
     public PreambleFragment() {
@@ -197,7 +202,7 @@ public class PreambleFragment extends Fragment {
 
         RadioGroup educationGoalMet = view.findViewById(R.id.educationProvisionRadioGroup);
         int idEducationRadio = educationGoalMet.getCheckedRadioButtonId();
-        if (idEducationRadio != 1) {
+        if (idEducationRadio != -1) {
             RadioButton selectedEducationGoal = (RadioButton) view.findViewById(idEducationRadio);
             String educationGoalText = selectedEducationGoal.getText().toString();
         }
@@ -218,6 +223,32 @@ public class PreambleFragment extends Fragment {
         Chip socialEncouragementChip = view.findViewById(R.id.socialProvisionEncouragementChip);
         boolean isSocialEncouragement = socialEncouragementChip.isChecked();
         EditText socialEncouragementEditText = view.findViewById(R.id.socialProvisionEncouragementTextMultiLine);
+
+        RadioGroup socialGoalMet = view.findViewById(R.id.socialProvisionRadioGroup);
+        int idSocialRadio = socialGoalMet.getCheckedRadioButtonId();
+        if (idSocialRadio != -1) {
+            RadioButton selectedSocialGoal = (RadioButton) view.findViewById(idSocialRadio);
+            String socialGoalText = selectedSocialGoal.getText().toString();
+        }
+
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                if (response.isSuccessful()) {
+                    Client client = response.body();
+
+                    // TODO: do stuff here
+                } else {
+                    Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+                Toast.makeText(getContext(), "Error finding client.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void setupLocationSpinner(View view) {

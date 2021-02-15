@@ -140,3 +140,10 @@ cython_debug/
 # IDEs
 .idea
 .vscode
+
+# Temp images generated from scripts
+scripts/temp/
+
+# Ignore images that get uploaded, don't ignore default image
+media/images/temp
+!media/images/default.png

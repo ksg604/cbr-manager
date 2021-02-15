@@ -233,18 +233,22 @@ public class PreambleFragment extends Fragment {
         Chip socialAdviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
         boolean isSocialAdvice = socialAdviceChip.isChecked();
         EditText socialAdviceEditText = view.findViewById(R.id.socialProvisionAdviceTextMultiLine);
+        String socialAdviceDescription = socialAdviceEditText.getText().toString();
 
         Chip socialAdvocacyChip = view.findViewById(R.id.socialProvisionAdvocacyChip);
         boolean isSocialAdvocacy = socialAdvocacyChip.isChecked();
         EditText socialAdvocacyEditText = view.findViewById(R.id.socialProvisionAdvocacyMultiLineText);
+        String socialAdvocacyDescription = socialAdvocacyEditText.getText().toString();
 
         Chip socialReferralChip = view.findViewById(R.id.socialProvisionReferralChip);
         boolean isSocialReferral = socialReferralChip.isChecked();
         EditText socialReferralEditText = view.findViewById(R.id.socialProvisionReferralTextMultiLine);
+        String socialReferralDescription = socialReferralEditText.getText().toString();
 
         Chip socialEncouragementChip = view.findViewById(R.id.socialProvisionEncouragementChip);
         boolean isSocialEncouragement = socialEncouragementChip.isChecked();
         EditText socialEncouragementEditText = view.findViewById(R.id.socialProvisionEncouragementTextMultiLine);
+        String socialEncouragementDescription = socialEncouragementEditText.getText().toString();
 
         RadioGroup socialGoalMet = view.findViewById(R.id.socialProvisionRadioGroup);
         int idSocialRadio = socialGoalMet.getCheckedRadioButtonId();
@@ -281,8 +285,42 @@ public class PreambleFragment extends Fragment {
 
         client.setWheelchairHealthProvisionText(wheelchairDescription);
         client.setProstheticHealthProvisionText(protheticDescription);
+        client.setOrthoticHealthProvisionText(ortheticDescription);
+        client.setRepairsHealthProvisionText(repairDescription);
+        client.setReferralHealthProvisionText(referralDescription);
+        client.setAdviceHealthProvisionText(adviceDescription);
+        client.setAdvocacyHealthProvisionText(advocacyDescription);
+        client.setEncouragementHealthProvisionText(encouragementDescription);
 
+//        client.setGoalMetHealthProvision(); TODO
+        client.setConclusionHealthProvision(healthConclusionDescription);
 
+        // Education provision
+        client.setAdviceEducationProvision(isEducationAdvice);
+        client.setAdvocacyEducationProvision(isEducationAdvocacy);
+        client.setReferralEducationProvision(isEducationReferral);
+        client.setEncouragementEducationProvision(isEducationEncouragement);
+
+        client.setAdviceEducationProvisionText(educationAdviceDescription);
+        client.setAdvocacyEducationProvisionText(educationAdvocacyDescription);
+        client.setReferralEducationProvisionText(educationReferralDescription);
+        client.setEncouragementEducationProvisionText(educationEncouragementDescription);
+//        client.setGoalMetEducationProvision(); TODO
+//        client.setConclusionEducationProvision(); TODO
+
+        // Social provision
+        client.setAdviceSocialProvision(isSocialAdvice);
+        client.setAdvocacySocialProvision(isSocialAdvocacy);
+        client.setReferralSocialProvision(isSocialReferral);
+        client.setEncouragementSocialProvision(isSocialEncouragement);
+
+        client.setAdviceSocialProvisionText(socialAdviceDescription);
+        client.setAdvocacyHealthProvisionText(socialAdvocacyDescription);
+        client.setReferralSocialProvisionText(socialReferralDescription);
+        client.setEncouragementSocialProvisionText(socialEncouragementDescription);
+
+//        client.setGoalMetSocialProvision(); TODO
+//        client.setConclusionEducationProvision(); TODO
     }
 
     private void setupLocationSpinner(View view) {

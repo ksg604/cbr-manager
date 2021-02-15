@@ -15,7 +15,7 @@ public interface VisitAPI {
     Call<List<Visit>> getVisits(@Header("Authorization") String authHeader);
 
     @GET("api/visits/{id}")
-    Call<Visit> getVisit(@Header("Authorization") String authHeader, @Path("id") int id, @Body Visit visit);
+    Call<Visit> getVisit(@Header("Authorization") String authHeader, @Path("id") int id);
 
     @POST("api/visits/")
     Call<Visit> createVisit(@Header("Authorization") String authHeader, @Body Visit visit);

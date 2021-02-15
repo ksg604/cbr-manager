@@ -6,4 +6,5 @@ from clients.models import Client
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("id", "first_name", "last_name", "risk_score")
+    readonly_fields = ('risk_score',)

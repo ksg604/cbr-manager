@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,7 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.auth.AuthToken;
+import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.google.android.material.snackbar.Snackbar;
@@ -123,14 +124,12 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
 
                 LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-                apiService.authenticate(credential, new Callback<AuthToken>() {
+                apiService.authenticate(credential, new Callback<AuthResponse>() {
                     @Override
-                    public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
+                    public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (apiService.isAuthenticated()) {
-
                             loginViewModel.login(credential.username,
                                     credential.password);
-
                             Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                             startActivity(intent);
                         } else {
@@ -141,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<AuthToken> call, Throwable t) {
+                    public void onFailure(Call<AuthResponse> call, Throwable t) {
                         // TODO: handle a critical failure
                         loadingProgressBar.setVisibility(View.INVISIBLE);
                     }

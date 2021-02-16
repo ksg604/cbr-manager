@@ -1,9 +1,10 @@
 package com.example.cbr_manager.service;
 
 import com.example.cbr_manager.service.auth.AuthService;
-import com.example.cbr_manager.service.auth.AuthToken;
+import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.service.client.ClientService;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserService;
 import com.example.cbr_manager.service.visit.VisitService;
 
@@ -20,6 +21,8 @@ public class APIService {
     public UserService userService;
     public VisitService visitService;
 
+    public User currentUser;
+
     private APIService() {
     }
 
@@ -30,21 +33,23 @@ public class APIService {
         return (INSTANCE);
     }
 
-    public void authenticate(LoginUserPass loginUserPass, Callback<AuthToken> listener) {
+    public void authenticate(LoginUserPass loginUserPass, Callback<AuthResponse> listener) {
         authService = new AuthService(loginUserPass);
-        authService.fetchAuthToken().enqueue(new Callback<AuthToken>() {
+        authService.fetchAuthToken().enqueue(new Callback<AuthResponse>() {
             @Override
-            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if (response.isSuccessful()) {
-                    AuthToken token = response.body();
-                    authService.setAuthToken(token);
-                    initializeServices(token);
+                    AuthResponse authResponse = response.body();
+                    authService.setAuthToken(authResponse);
+                    initializeServices(authResponse);
+
+                    setCurrentUser(authResponse.user);
                 }
                 listener.onResponse(call, response);
             }
 
             @Override
-            public void onFailure(Call<AuthToken> call, Throwable t) {
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
                 // Todo: not sure proper method of error handling
 
                 listener.onFailure(call, t);
@@ -52,7 +57,7 @@ public class APIService {
         });
     }
 
-    public void initializeServices(AuthToken token) {
+    public void initializeServices(AuthResponse token) {
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
         this.visitService = new VisitService(token);
@@ -66,4 +71,13 @@ public class APIService {
     public void testInitializeUserService() {
         this.userService = new UserService();
     }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
 }

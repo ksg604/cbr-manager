@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -38,6 +39,7 @@ import static android.view.View.GONE;
 public class PreambleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private int clientId = -1;
+    private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
 
@@ -62,6 +64,23 @@ public class PreambleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         clientId = ((CreateVisitActivity) getActivity()).clientId;
+
+        apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User user = response.body();
+                    userId = user.getId();
+                } else {
+                    Toast.makeText(getContext(), "User response error.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getContext(), "User failure error.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -103,8 +122,7 @@ public class PreambleFragment extends Fragment {
                     if (response.isSuccessful()) {
                         client = response.body();
                         fillClientWithVisitData(client, view);
-
-                        Visit visit = new Visit("", clientId, "test", client);
+                        Visit visit = new Visit("", clientId, userId, client);
 
                         Call<Visit> call1 = apiService.visitService.createVisit(visit);
                         call1.enqueue(new Callback<Visit>() {
@@ -122,21 +140,6 @@ public class PreambleFragment extends Fragment {
                                 Toast.makeText(getContext(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-//                        apiService.visitService.createVisit(visit).enqueue(new Callback<Visit>() {
-//                            @Override
-//                            public void onResponse(Call<Visit> call, Response<Visit> response) {
-//                                if (response.isSuccessful()) {
-//                                    Toast.makeText(getContext(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                            @Override
-//                            public void onFailure(Call<Visit> call, Throwable t) {
-//                                Toast.makeText(getContext(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
                     } else {
                         Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
                     }

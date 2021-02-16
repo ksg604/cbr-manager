@@ -12,7 +12,7 @@ public class Visit {
     private int clientID;
     @SerializedName("user_creator")
     @Expose
-    private String userID;
+    private int userID;
     @SerializedName("additional_notes")
     @Expose
     private String additionalInfo;
@@ -20,7 +20,7 @@ public class Visit {
     @Expose
     private Client client = new Client();
 
-    public Visit(String additionalInfo, int clientID, String userID, Client client) {
+    public Visit(String additionalInfo, int clientID, int userID, Client client) {
         this.additionalInfo = additionalInfo;
         this.clientID = clientID;
         this.userID = userID;
@@ -47,11 +47,11 @@ public class Visit {
         this.clientID = clientID;
     }
 
-    public String getUserID() {
+    public int getUserID() {
         return userID;
     }
 
-    public String setUserID(String userID) {
+    public int setUserID(int userID) {
         return this.userID = userID;
     }
 

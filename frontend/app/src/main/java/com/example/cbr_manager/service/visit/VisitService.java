@@ -44,6 +44,10 @@ public class VisitService {
         return this.visitAPI.getVisit(authHeader, visitID);
     }
 
+    public Call<Visit> createVisit(Visit visit) {
+        return this.visitAPI.createVisit(authHeader, visit);
+    }
+
 
 
 

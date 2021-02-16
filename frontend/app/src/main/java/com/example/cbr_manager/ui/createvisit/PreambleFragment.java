@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -97,7 +98,27 @@ public class PreambleFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Client client = response.body();
                     fillClientWithVisitData(client, view);
-                    // TODO: do stuff here
+
+                    Visit visit = new Visit();
+                    visit.setClient(client);
+                    visit.setClientID(clientId);
+
+                    visit.setUserID(-1); // TODO: Remove dummy value
+                    visit.setAdditionalInfo(" "); // TODO: See if field is necessary.
+                    apiService.visitService.createVisit(visit).enqueue(new Callback<Visit>() {
+                        @Override
+                        public void onResponse(Call<Visit> call, Response<Visit> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getContext(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Visit> call, Throwable t) {
+                            Toast.makeText(getContext(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
                     Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
                 }
@@ -193,9 +214,10 @@ public class PreambleFragment extends Fragment {
 
         RadioGroup healthGoalMet = view.findViewById(R.id.healthProvisionsRadioGroup);
         int id = healthGoalMet.getCheckedRadioButtonId();
+        String healthGoalText = "";
         if (id != -1) {
             RadioButton selectedHealthGoal = (RadioButton) view.findViewById(id);
-            String healthGoalText = selectedHealthGoal.getText().toString();
+            healthGoalText = selectedHealthGoal.getText().toString();
         }
 
         EditText healthConclusionEditText = view.findViewById(R.id.healthProvisionConclusionTextMultiLine);
@@ -224,10 +246,13 @@ public class PreambleFragment extends Fragment {
 
         RadioGroup educationGoalMet = view.findViewById(R.id.educationProvisionRadioGroup);
         int idEducationRadio = educationGoalMet.getCheckedRadioButtonId();
+        String educationGoalText = "";
         if (idEducationRadio != -1) {
             RadioButton selectedEducationGoal = (RadioButton) view.findViewById(idEducationRadio);
-            String educationGoalText = selectedEducationGoal.getText().toString();
+            educationGoalText = selectedEducationGoal.getText().toString();
         }
+        EditText educationConclusionEditText = view.findViewById(R.id.educationProvisionConclusionTextMultiLine);
+        String educationConclusion = educationConclusionEditText.getText().toString();
 
         // Social
         Chip socialAdviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
@@ -252,10 +277,13 @@ public class PreambleFragment extends Fragment {
 
         RadioGroup socialGoalMet = view.findViewById(R.id.socialProvisionRadioGroup);
         int idSocialRadio = socialGoalMet.getCheckedRadioButtonId();
+        String socialGoalText = "";
         if (idSocialRadio != -1) {
             RadioButton selectedSocialGoal = (RadioButton) view.findViewById(idSocialRadio);
-            String socialGoalText = selectedSocialGoal.getText().toString();
+            socialGoalText = selectedSocialGoal.getText().toString();
         }
+        EditText socialConclusionEditText = view.findViewById(R.id.socialProvisionConclusionTextMultiLine);
+        String socialConclusion = socialConclusionEditText.getText().toString();
 
         // Setting Preamble
         client.setCBRPurpose(isCBR);
@@ -292,7 +320,7 @@ public class PreambleFragment extends Fragment {
         client.setAdvocacyHealthProvisionText(advocacyDescription);
         client.setEncouragementHealthProvisionText(encouragementDescription);
 
-//        client.setGoalMetHealthProvision(); TODO
+        client.setGoalMetHealthProvision(healthGoalText);
         client.setConclusionHealthProvision(healthConclusionDescription);
 
         // Education provision
@@ -305,8 +333,8 @@ public class PreambleFragment extends Fragment {
         client.setAdvocacyEducationProvisionText(educationAdvocacyDescription);
         client.setReferralEducationProvisionText(educationReferralDescription);
         client.setEncouragementEducationProvisionText(educationEncouragementDescription);
-//        client.setGoalMetEducationProvision(); TODO
-//        client.setConclusionEducationProvision(); TODO
+        client.setGoalMetEducationProvision(educationGoalText);
+        client.setConclusionEducationProvision(educationConclusion);
 
         // Social provision
         client.setAdviceSocialProvision(isSocialAdvice);
@@ -319,8 +347,8 @@ public class PreambleFragment extends Fragment {
         client.setReferralSocialProvisionText(socialReferralDescription);
         client.setEncouragementSocialProvisionText(socialEncouragementDescription);
 
-//        client.setGoalMetSocialProvision(); TODO
-//        client.setConclusionEducationProvision(); TODO
+        client.setGoalMetSocialProvision(socialGoalText);
+        client.setConclusionEducationProvision(socialConclusion);
     }
 
     private void setupLocationSpinner(View view) {

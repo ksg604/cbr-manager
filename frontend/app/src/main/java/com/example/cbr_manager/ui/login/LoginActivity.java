@@ -127,10 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (apiService.isAuthenticated()) {
-                            apiService.username = credential.username;
                             loginViewModel.login(credential.username,
                                     credential.password);
-                            apiService.storeUserInfo();
                             Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                             startActivity(intent);
                         } else {

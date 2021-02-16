@@ -6,4 +6,4 @@ from django.contrib.auth.models import User
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['__all__']
+        fields = ['username', 'password', 'email', 'first_name', 'last_name', 'id']

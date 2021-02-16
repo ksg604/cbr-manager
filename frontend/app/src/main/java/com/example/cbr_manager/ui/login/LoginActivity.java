@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -126,10 +127,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
                         if (apiService.isAuthenticated()) {
-
+                            apiService.username = credential.username;
                             loginViewModel.login(credential.username,
                                     credential.password);
-
+                            apiService.storeUserInfo();
                             Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                             startActivity(intent);
                         } else {

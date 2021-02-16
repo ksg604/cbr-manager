@@ -36,15 +36,13 @@ import retrofit2.Response;
 
 import static android.view.View.GONE;
 
-public class PreambleFragment extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class NewVisitFragment extends Fragment {
     private int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
 
-    public PreambleFragment() {
-        // Required empty public constructor
+    public NewVisitFragment() {
     }
 
     @Override
@@ -56,7 +54,7 @@ public class PreambleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_preamble, container, false);
+        return inflater.inflate(R.layout.fragment_new_visit, container, false);
     }
 
     @Override
@@ -86,12 +84,10 @@ public class PreambleFragment extends Fragment {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String todayString = format.format(today);
 
-       EditText textView = (EditText) view.findViewById(R.id.fragmentPreambleEditTextDate);
-       textView.setText(todayString);
+        EditText textView = (EditText) view.findViewById(R.id.fragmentPreambleEditTextDate);
+        textView.setText(todayString);
 
-       setupLocationSpinner(view);
-
-       setupProvisionChipListeners(view);
+        setupLocationSpinner(view);
         setupProvisionLayoutVisibility(view);
 
         setupVisibilityHealthProvisions(view);
@@ -103,15 +99,10 @@ public class PreambleFragment extends Fragment {
         view.findViewById(R.id.preambleSubmitButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Submitted.", Toast.LENGTH_SHORT).show();
-//                ((CreateVisitActivity) getActivity()).onBackPressed();
                 gatherAllData(view);
-
                 ((CreateVisitActivity) getActivity()).onBackPressed();
             }
         });
-
-
     }
 
     private void gatherAllData(View view) {
@@ -433,49 +424,6 @@ public class PreambleFragment extends Fragment {
                         }
                     }
                 });
-            }
-        });
-    }
-
-    private void setupProvisionChipListeners(View view) {
-        Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
-        Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
-        Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
-
-        if (!healthProvisionChip.isChecked()) {
-            ((CreateVisitActivity) getActivity()).setCheckedHealthProvision(false);
-        }
-        if (!educationProvisionChip.isChecked()) {
-            ((CreateVisitActivity) getActivity()).setCheckedEducationProvision(false);
-        }
-        if (!socialProvisionChip.isChecked()) {
-            ((CreateVisitActivity) getActivity()).setCheckedSocialProvision(false);
-        }
-
-        healthProvisionChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (healthProvisionChip.isChecked()) {
-                    ((CreateVisitActivity) getActivity()).setCheckedHealthProvision(true);
-                }
-            }
-        });
-
-        educationProvisionChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (educationProvisionChip.isChecked()) {
-                    ((CreateVisitActivity) getActivity()).setCheckedEducationProvision(true);
-                }
-            }
-        });
-
-        socialProvisionChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (socialProvisionChip.isChecked()) {
-                    ((CreateVisitActivity) getActivity()).setCheckedSocialProvision(true);
-                }
             }
         });
     }

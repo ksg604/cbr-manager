@@ -5,33 +5,273 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".ui.createvisit.HealthProvisionFragment">
+    tools:context=".ui.createvisit.NewVisitFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginBottom="70dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="70dp">
+            android:background="#7b8087"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/preambleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="#FFF"
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/fragmentPreambleTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/create_visit"
+                    android:textColor="@color/purple_700"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/purposeVisitTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/purpose_for_visit"
+                    android:textColor="@color/teal_700" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/purposeChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/cbrChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/cbr" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/purposeReferralChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/disability_centre_referral" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/purposeFollowUpChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/disability_centre_referral_follow_up" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:id="@+id/cbrTypeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/cbr_type"
+                    android:textColor="@color/teal_700" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cbrTypeChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/healthProvisionChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/health" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/educationProvisionChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/education" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/socialProvisionChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/social" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/date_of_visit"
+                    android:textColor="@color/teal_700" />
+
+                <EditText
+                    android:id="@+id/fragmentPreambleEditTextDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+
+                    android:ems="10"
+                    android:inputType="date" />
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/name_of_client"
+                    android:textColor="@color/teal_700" />
+
+                <EditText
+                    android:id="@+id/fragmentPreambleClientEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:ems="10"
+                    android:hint="@string/client_name"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/textView38"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/name_of_cbr_worker"
+                    android:textColor="@color/teal_700" />
+
+                <EditText
+                    android:id="@+id/fragmentPreambleCBRNameEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:ems="10"
+                    android:hint="@string/cbr_worker_name"
+                    android:inputType="textPersonName" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/locationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#FFF"
+                android:layout_marginBottom="1dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/fragmentLocationTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Location"
+                    android:textColor="@color/purple_700"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView39"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="GPS Location of Visit"
+                    android:textColor="@color/teal_700" />
+
+                <EditText
+                    android:id="@+id/editTextTextLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:ems="10"
+                    android:hint="Location"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/textView40"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Drop down list location"
+                    android:textColor="@color/teal_700" />
+
+                <Spinner
+                    android:id="@+id/locationFragmentSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/textView41"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Village Number"
+                    android:textColor="@color/teal_700" />
+
+                <EditText
+                    android:id="@+id/villageNumberEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+
+                    android:ems="10"
+                    android:hint="Enter Village Number"
+                    android:inputType="number" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/healthProvisionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <SeekBar
-                    android:id="@+id/seekBar2"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="2"
-                    android:progress="2" />
+                android:layout_marginBottom="1dp"
+                android:background="#FFF"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/healthProvisionsTitleTextView"
@@ -53,7 +293,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
-                    android:text="@string/what_was_provided" />
+                    android:text="@string/what_was_provided"
+                    android:textColor="@color/teal_700" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/healthProvisionsChipGroup"
@@ -129,6 +370,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of wheelchair"
+                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -151,6 +393,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of prosthetic"
+                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -164,7 +407,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/orthoticTextView"
@@ -173,7 +416,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of orthotic"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/orthoticTextMultiLine"
@@ -186,7 +430,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/wheelchairRepairsTextView"
@@ -195,7 +439,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of wheelchair repairs"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/wheelchairRepairsTextMultiLine"
@@ -208,7 +453,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/referralTextView"
@@ -217,7 +462,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of referral"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/referralTextMultiLine5"
@@ -230,7 +476,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/adviceTextView"
@@ -239,7 +485,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of advice"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/adviceTextMultiLine"
@@ -252,7 +499,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/advocacyTextView"
@@ -261,7 +508,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of advocacy"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/advocacyTextMultiLine"
@@ -274,7 +522,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/encouragementTextView"
@@ -283,7 +531,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of encouragement"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/encouragementTextMultiLine"
@@ -296,7 +545,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/textView16"
@@ -306,7 +555,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="Goal met?" />
+                    android:text="Goal met?"
+                    android:textColor="@color/teal_700" />
 
                 <RadioGroup
                     android:id="@+id/healthProvisionsRadioGroup"
@@ -343,7 +593,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Conclusion"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/healthProvisionConclusionTextMultiLine"
@@ -356,14 +607,18 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/educationProvisionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="1dp"
+                android:background="#FFF"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/educationProvisionsTitleTextView"
@@ -384,7 +639,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:text="What was provided?" />
+                    android:text="What was provided?"
+                    android:textColor="@color/teal_700" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/educationProvisionsChipGroup"
@@ -430,6 +686,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of advice"
+                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -441,7 +698,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionAdvocacyTextView"
@@ -451,7 +708,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of advocacy"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/educationProvisionAdvocacyTextMultiLine"
@@ -462,7 +720,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionReferralTextView"
@@ -472,7 +730,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of referral"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/educationProvisionReferralTextMultiLine"
@@ -483,7 +742,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionEncouragementTextView"
@@ -493,7 +752,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of encouragement"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/educationProvisionEncouragementTextMultiLine"
@@ -504,7 +764,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/educationProvisionRadioGroupTextView"
@@ -514,7 +774,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="16dp"
                     android:text="Goals met?"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700" />
 
                 <RadioGroup
                     android:id="@+id/educationProvisionRadioGroup"
@@ -550,6 +810,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="16dp"
                     android:text="Conclusion"
+                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -568,7 +829,10 @@
                 android:id="@+id/socialProvisionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="#FFF"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/socialProvisionTitleTextView"
@@ -589,7 +853,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
-                    android:text="What was provided?" />
+                    android:text="What was provided?"
+                    android:textColor="@color/teal_700" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/socialProvisionChipGroup"
@@ -637,7 +902,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of advice"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionAdviceTextMultiLine"
@@ -648,7 +914,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionAdvocacyTextView"
@@ -658,7 +924,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of advocacy"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionAdvocacyMultiLineText"
@@ -669,7 +936,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionReferralTextView"
@@ -679,7 +946,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of referral"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionReferralTextMultiLine"
@@ -690,7 +958,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionEncouragementTextView"
@@ -700,7 +968,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of encouragement"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/socialProvisionEncouragementTextMultiLine"
@@ -711,7 +980,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/socialProvisionGoalMetTextView"
@@ -721,7 +990,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Goal met?"
-                    android:visibility="gone"/>
+                    android:textColor="@color/teal_700" />
 
                 <RadioGroup
                     android:id="@+id/socialProvisionRadioGroup"
@@ -757,7 +1026,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Conclusion?"
+                    android:text="Conclusion"
+                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -775,35 +1045,20 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
     </ScrollView>
 
-
     <Button
-        android:id="@+id/healthFragmentNextButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/preambleSubmitButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/submit"
-        android:textColor="@color/purple_700"
-        app:backgroundTint="#FFF"
+        android:text="Submit"
+        android:textColor="@color/teal_700"
+        app:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/healthFragmentPreviousButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/previous"
-        android:textColor="@color/purple_700"
-        app:backgroundTint="#FFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

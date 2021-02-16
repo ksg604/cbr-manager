@@ -7,56 +7,7 @@
 
     <fragment
         android:id="@+id/preambleFragment"
-        android:name="com.example.cbr_manager.ui.createvisit.PreambleFragment"
+        android:name="com.example.cbr_manager.ui.createvisit.NewVisitFragment"
         android:label="fragment_preamble"
-        tools:layout="@layout/fragment_preamble" >
-        <action
-            android:id="@+id/action_preambleFragment_to_locationFragment"
-            app:destination="@id/locationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/locationFragment"
-        android:name="com.example.cbr_manager.ui.createvisit.LocationFragment"
-        android:label="fragment_location"
-        tools:layout="@layout/fragment_location" >
-        <action
-            android:id="@+id/action_locationFragment_to_healthProvisionFragment"
-            app:destination="@id/healthProvisionFragment" />
-        <action
-            android:id="@+id/action_locationFragment_to_preambleFragment"
-            app:destination="@id/preambleFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/healthProvisionFragment"
-        android:name="com.example.cbr_manager.ui.createvisit.HealthProvisionFragment"
-        android:label="fragment_health_provision"
-        tools:layout="@layout/fragment_health_provision" >
-        <action
-            android:id="@+id/action_healthProvisionFragment_to_educationProvisionFragment"
-            app:destination="@id/educationProvisionFragment" />
-        <action
-            android:id="@+id/action_healthProvisionFragment_to_locationFragment"
-            app:destination="@id/locationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/educationProvisionFragment"
-        android:name="com.example.cbr_manager.ui.createvisit.EducationProvisionFragment"
-        android:label="fragment_education_provision"
-        tools:layout="@layout/fragment_education_provision" >
-        <action
-            android:id="@+id/action_educationProvisionFragment_to_socialProvisionFragment"
-            app:destination="@id/socialProvisionFragment" />
-        <action
-            android:id="@+id/action_educationProvisionFragment_to_healthProvisionFragment"
-            app:destination="@id/healthProvisionFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/socialProvisionFragment"
-        android:name="com.example.cbr_manager.ui.createvisit.SocialProvisionFragment"
-        android:label="fragment_social_provision"
-        tools:layout="@layout/fragment_social_provision" >
-        <action
-            android:id="@+id/action_socialProvisionFragment_to_educationProvisionFragment"
-            app:destination="@id/educationProvisionFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_new_visit" />
 </navigation>

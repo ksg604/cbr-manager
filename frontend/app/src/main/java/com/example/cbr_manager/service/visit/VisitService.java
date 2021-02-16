@@ -2,7 +2,7 @@ package com.example.cbr_manager.service.visit;
 
 import com.example.cbr_manager.BuildConfig;
 import com.example.cbr_manager.helper.Helper;
-import com.example.cbr_manager.service.auth.AuthToken;
+import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,13 +16,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class VisitService {
     private static final String BASE_URL = BuildConfig.API_URL;
 
-    private final AuthToken authToken;
+    private final AuthResponse authToken;
 
     private final String authHeader;
 
     private VisitAPI visitAPI;
 
-    public VisitService(AuthToken authToken) {
+    public VisitService(AuthResponse authToken) {
         this.authToken = authToken;
         this.authHeader = Helper.formatTokenHeader(this.authToken);
         this.visitAPI = getVisitAPI();

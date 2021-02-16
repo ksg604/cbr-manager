@@ -105,9 +105,7 @@ public class PreambleFragment extends Fragment {
                         fillClientWithVisitData(client, view);
 
                         Visit visit = new Visit("", clientId, "test", client);
-//                        visit.setClient(client);
-//                        visit.setClientID(clientId);
-//
+
                         Call<Visit> call1 = apiService.visitService.createVisit(visit);
                         call1.enqueue(new Callback<Visit>() {
                             @Override

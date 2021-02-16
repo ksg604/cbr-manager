@@ -41,8 +41,8 @@ public class NavigationActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navFirstName = headerView.findViewById(R.id.nav_first_name);
         TextView navEmail= headerView.findViewById(R.id.nav_email);
-        navFirstName.setText(apiService.getUserFirstName());
-        navEmail.setText(apiService.getEmail());
+        navFirstName.setText(apiService.currentUser.getFirstName());
+        navEmail.setText(apiService.currentUser.getEmail());
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

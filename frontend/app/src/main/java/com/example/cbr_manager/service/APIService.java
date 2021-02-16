@@ -1,18 +1,11 @@
 package com.example.cbr_manager.service;
 
-import android.util.Log;
-
-import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.auth.AuthService;
-import com.example.cbr_manager.service.auth.AuthToken;
+import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
-import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientService;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserService;
-import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItem;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,10 +18,8 @@ public class APIService {
     public AuthService authService;
     public ClientService clientService;
     public UserService userService;
-    public String username;
-    public int userid;
-    public String userEmail;
-    public String userFirstName;
+
+    public User currentUser;
 
     private APIService() {
     }
@@ -40,21 +31,23 @@ public class APIService {
         return (INSTANCE);
     }
 
-    public void authenticate(LoginUserPass loginUserPass, Callback<AuthToken> listener) {
+    public void authenticate(LoginUserPass loginUserPass, Callback<AuthResponse> listener) {
         authService = new AuthService(loginUserPass);
-        authService.fetchAuthToken().enqueue(new Callback<AuthToken>() {
+        authService.fetchAuthToken().enqueue(new Callback<AuthResponse>() {
             @Override
-            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if (response.isSuccessful()) {
-                    AuthToken token = response.body();
-                    authService.setAuthToken(token);
-                    initializeServices(token);
+                    AuthResponse authResponse = response.body();
+                    authService.setAuthToken(authResponse);
+                    initializeServices(authResponse);
+
+                    setCurrentUser(authResponse.user);
                 }
                 listener.onResponse(call, response);
             }
 
             @Override
-            public void onFailure(Call<AuthToken> call, Throwable t) {
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
                 // Todo: not sure proper method of error handling
 
                 listener.onFailure(call, t);
@@ -62,45 +55,7 @@ public class APIService {
         });
     }
 
-    public void storeUserInfo(){
-        userService.getUsers().enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if (response.isSuccessful()) {
-                    List<User> userList = response.body();
-                    for (User user : userList) {
-                        if (username.equals(user.getUsername())){
-                            userEmail = user.getEmail();
-                            userid = user.getId();
-                            userFirstName= user.getFirstName();
-                            break;
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public int getUserid(){
-        return userid;
-    }
-
-    public String getUsername(){
-        return username;
-    }
-
-    public String getEmail(){
-        return userEmail;
-    }
-
-    public String getUserFirstName(){return userFirstName;}
-
-    public void initializeServices(AuthToken token) {
+    public void initializeServices(AuthResponse token) {
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
     }
@@ -113,4 +68,13 @@ public class APIService {
     public void testInitializeUserService() {
         this.userService = new UserService();
     }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
 }

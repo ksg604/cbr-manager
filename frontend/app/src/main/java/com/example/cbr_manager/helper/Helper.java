@@ -4,12 +4,11 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.service.auth.AuthToken;
+import com.example.cbr_manager.service.auth.AuthResponse;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -18,7 +17,7 @@ public class Helper {
         return BuildConfig.API_URL;
     }
 
-    public static String formatTokenHeader(AuthToken authToken) {
+    public static String formatTokenHeader(AuthResponse authToken) {
         return "Token " + authToken.token;
     }
 

@@ -2,7 +2,7 @@ package com.example.cbr_manager.service.client;
 
 import com.example.cbr_manager.BuildConfig;
 import com.example.cbr_manager.helper.Helper;
-import com.example.cbr_manager.service.auth.AuthToken;
+import com.example.cbr_manager.service.auth.AuthResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,19 +13,18 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class ClientService {
 
     private static final String BASE_URL = BuildConfig.API_URL;
 
-    private final AuthToken authToken;
+    private final AuthResponse authToken;
 
     private final String authHeader;
 
     private ClientAPI clientAPI;
 
-    public ClientService(AuthToken auth) {
+    public ClientService(AuthResponse auth) {
         this.authToken = auth;
 
         this.authHeader = Helper.formatTokenHeader(this.authToken);

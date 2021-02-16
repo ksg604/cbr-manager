@@ -56,4 +56,8 @@ public class UserService {
         return this.userAPI.getUser(authHeader, userId);
     }
 
+    public Call<User> getCurrentUser(){
+        return this.userAPI.getCurrentUser(authHeader);
+    }
+
 }

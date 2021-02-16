@@ -27,7 +27,8 @@ public class APIService {
     public UserService userService;
     public String username;
     public int userid;
-    public String email;
+    public String userEmail;
+    public String userFirstName;
 
     private APIService() {
     }
@@ -69,8 +70,9 @@ public class APIService {
                     List<User> userList = response.body();
                     for (User user : userList) {
                         if (username.equals(user.getUsername())){
-                            email = user.getEmail();
+                            userEmail = user.getEmail();
                             userid = user.getId();
+                            userFirstName= user.getFirstName();
                             break;
                         }
                     }
@@ -93,8 +95,10 @@ public class APIService {
     }
 
     public String getEmail(){
-        return email;
+        return userEmail;
     }
+
+    public String getUserFirstName(){return userFirstName;}
 
     public void initializeServices(AuthToken token) {
         this.clientService = new ClientService(token);

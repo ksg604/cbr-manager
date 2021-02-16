@@ -25,6 +25,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.AuthToken;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.example.cbr_manager.service.user.User;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;

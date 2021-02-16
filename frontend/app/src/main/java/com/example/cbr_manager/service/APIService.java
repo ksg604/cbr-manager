@@ -4,6 +4,7 @@ import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.AuthToken;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.service.client.ClientService;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserService;
 
 import retrofit2.Call;
@@ -17,6 +18,8 @@ public class APIService {
     public AuthService authService;
     public ClientService clientService;
     public UserService userService;
+
+    public User currentUser;
 
     private APIService() {
     }
@@ -37,6 +40,8 @@ public class APIService {
                     AuthToken token = response.body();
                     authService.setAuthToken(token);
                     initializeServices(token);
+
+                    setCurrentUser(token.user);
                 }
                 listener.onResponse(call, response);
             }
@@ -63,4 +68,13 @@ public class APIService {
     public void testInitializeUserService() {
         this.userService = new UserService();
     }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
 }

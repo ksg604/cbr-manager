@@ -37,7 +37,7 @@ import static android.view.View.GONE;
 
 public class PreambleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private int clientId = 1;
+    private int clientId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
 
@@ -60,6 +60,8 @@ public class PreambleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        clientId = ((CreateVisitActivity) getActivity()).clientId;
 
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -100,7 +102,7 @@ public class PreambleFragment extends Fragment {
                         client = response.body();
                         fillClientWithVisitData(client, view);
 
-                        Visit visit = new Visit("", 1, "petertran", client);
+                        Visit visit = new Visit("", clientId, "petertran", client);
 //                        visit.setClient(client);
 //                        visit.setClientID(clientId);
 //

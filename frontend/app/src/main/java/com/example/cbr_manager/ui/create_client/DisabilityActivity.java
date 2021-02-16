@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.create_client;
+    package com.example.cbr_manager.ui.create_client;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,15 +25,6 @@ public class DisabilityActivity extends AppCompatActivity {
             txt = "checkBox" + i;
             int resourceId = this.getResources().getIdentifier(txt, "id", this.getPackageName());
             checkBoxes[i] = (CheckBox) findViewById(resourceId);
-            checkBoxes[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int num = Integer.parseInt(v.getResources().getResourceName(v.getId()).substring(8));
-                    if(checkBoxes[num].isChecked()) {
-                        checkBoxes[num].toggle();
-                    }
-                }
-            });
         }
 
         Button nextButton = findViewById(R.id.nextButton);

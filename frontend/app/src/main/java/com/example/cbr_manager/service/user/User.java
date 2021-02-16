@@ -23,13 +23,12 @@ public class User {
     @Expose
     private String lastName = null;
 
-    public User(String username, String password, String email, String firstName, String lastName, Integer id ) {
+    public User(String username, String password, String email, String firstName, String lastName ) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
     }
 
     public Integer getId() {

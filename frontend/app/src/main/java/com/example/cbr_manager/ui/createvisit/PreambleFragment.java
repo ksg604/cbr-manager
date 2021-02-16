@@ -37,8 +37,9 @@ import static android.view.View.GONE;
 
 public class PreambleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private int clientId = ((CreateVisitActivity) getActivity()).clientId;
+    private int clientId = 1;
     private APIService apiService = APIService.getInstance();
+    private Client client = new Client();
 
     public PreambleFragment() {
         // Required empty public constructor
@@ -91,45 +92,60 @@ public class PreambleFragment extends Fragment {
     }
 
     private void gatherAllData(View view) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+                        client = response.body();
+                        fillClientWithVisitData(client, view);
 
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                if (response.isSuccessful()) {
-                    Client client = response.body();
-                    fillClientWithVisitData(client, view);
-
-                    Visit visit = new Visit();
-                    visit.setClient(client);
-                    visit.setClientID(clientId);
-
-                    visit.setUserID(-1); // TODO: Remove dummy value
-                    visit.setAdditionalInfo(" "); // TODO: See if field is necessary.
-                    apiService.visitService.createVisit(visit).enqueue(new Callback<Visit>() {
-                        @Override
-                        public void onResponse(Call<Visit> call, Response<Visit> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(getContext(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_SHORT).show();
+                        Visit visit = new Visit("", 1, "petertran", client);
+//                        visit.setClient(client);
+//                        visit.setClientID(clientId);
+//
+                        Call<Visit> call1 = apiService.visitService.createVisit(visit);
+                        call1.enqueue(new Callback<Visit>() {
+                            @Override
+                            public void onResponse(Call<Visit> call, Response<Visit> response) {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(getContext(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                        @Override
-                        public void onFailure(Call<Visit> call, Throwable t) {
-                            Toast.makeText(getContext(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
+
+                            @Override
+                            public void onFailure(Call<Visit> call, Throwable t) {
+                                Toast.makeText(getContext(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+//                        apiService.visitService.createVisit(visit).enqueue(new Callback<Visit>() {
+//                            @Override
+//                            public void onResponse(Call<Visit> call, Response<Visit> response) {
+//                                if (response.isSuccessful()) {
+//                                    Toast.makeText(getContext(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                            @Override
+//                            public void onFailure(Call<Visit> call, Throwable t) {
+//                                Toast.makeText(getContext(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+                    } else {
+                        Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Toast.makeText(getContext(), "Error finding client.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+                    Toast.makeText(getContext(), "Error finding client.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void fillClientWithVisitData(Client client, View view) {
@@ -299,8 +315,9 @@ public class PreambleFragment extends Fragment {
         // Setting locations
         client.setLocationVisitGPS(locationVisit);
         client.setLocationDropDown(locationDDL);
-        client.setVillageNoVisit(Integer.parseInt(villageNumberString));
-
+        if (!villageNumberString.isEmpty()) {
+            client.setVillageNoVisit(Integer.parseInt(villageNumberString));
+        }
         // Health provision
         client.setWheelchairHealthProvision(isWheelChairHealth);
         client.setProstheticHealthProvision(isProtheticHealth);

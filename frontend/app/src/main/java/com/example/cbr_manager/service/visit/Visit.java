@@ -7,21 +7,25 @@ import com.google.gson.annotations.SerializedName;
 
 public class Visit {
 
-    @SerializedName("additional_info")
-    @Expose
-    private String additionalInfo;
-
     @SerializedName("client_id")
     @Expose
     private int clientID;
-
-    @SerializedName("user_id")
+    @SerializedName("user_creator")
     @Expose
-    private int userID;
-
+    private String userID;
+    @SerializedName("additional_notes")
+    @Expose
+    private String additionalInfo;
     @SerializedName("client")
     @Expose
-    private Client client;
+    private Client client = new Client();
+
+    public Visit(String additionalInfo, int clientID, String userID, Client client) {
+        this.additionalInfo = additionalInfo;
+        this.clientID = clientID;
+        this.userID = userID;
+        this.client = client;
+    }
 
     public Visit() {
 
@@ -43,12 +47,12 @@ public class Visit {
         this.clientID = clientID;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public String setUserID(String userID) {
+        return this.userID = userID;
     }
 
     public Client getClient() {

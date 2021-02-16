@@ -15,11 +15,6 @@
         android:theme="@style/Theme.Cbr_manager"
         tools:targetApi="n">
         <activity android:name=".ui.createvisit.CreateVisitActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".NavigationActivity"
@@ -38,7 +33,11 @@
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.Cbr_manager.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.create_client.ConsentActivity"

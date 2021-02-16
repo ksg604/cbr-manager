@@ -55,6 +55,7 @@ public class APIService {
     public void initializeServices(AuthToken token) {
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
+        this.visitService = new VisitService(token);
     }
 
     public boolean isAuthenticated() {

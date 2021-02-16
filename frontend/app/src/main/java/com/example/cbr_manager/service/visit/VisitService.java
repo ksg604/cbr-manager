@@ -28,6 +28,13 @@ public class VisitService {
         this.visitAPI = getVisitAPI();
     }
 
+    public VisitService() {
+        this.authToken = null;
+        this.authHeader = null;
+        this.visitAPI = getVisitAPI();
+    }
+
+
     private VisitAPI getVisitAPI() {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return new Retrofit.Builder()

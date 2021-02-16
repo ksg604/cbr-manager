@@ -87,6 +87,8 @@ public class PreambleFragment extends Fragment {
                 Toast.makeText(getContext(), "Submitted.", Toast.LENGTH_SHORT).show();
 //                ((CreateVisitActivity) getActivity()).onBackPressed();
                 gatherAllData(view);
+
+                ((CreateVisitActivity) getActivity()).onBackPressed();
             }
         });
 
@@ -102,7 +104,7 @@ public class PreambleFragment extends Fragment {
                         client = response.body();
                         fillClientWithVisitData(client, view);
 
-                        Visit visit = new Visit("", clientId, "petertran", client);
+                        Visit visit = new Visit("", clientId, "test", client);
 //                        visit.setClient(client);
 //                        visit.setClientID(clientId);
 //
@@ -113,7 +115,7 @@ public class PreambleFragment extends Fragment {
                                 if (response.isSuccessful()) {
                                     Toast.makeText(getContext(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_LONG).show();
                                 }
                             }
 

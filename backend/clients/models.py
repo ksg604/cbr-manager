@@ -15,7 +15,6 @@ class Client(models.Model):
     gps_location = models.CharField(max_length=100, blank=True)
     consent = models.CharField(max_length=5)
     village_no = models.IntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
     gender = models.CharField(max_length=20)
     age = models.IntegerField(default=0)
     contact_client = models.IntegerField(default=0)

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,8 +29,9 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
     private ClientListViewModel clientListViewModel;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter adapter;
+    private ClientListRecyclerItemAdapter adapter; // TODO
     private RecyclerView.LayoutManager mLayoutManager;
+    private SearchView searchView;
     ArrayList<ClientListRecyclerItem> clientRecyclerItems = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
@@ -46,9 +48,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         adapter = new ClientListRecyclerItemAdapter(clientRecyclerItems, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
-
         fetchClientsToList(clientRecyclerItems);
-
         return root;
     }
 
@@ -60,7 +60,9 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
                     if (response.isSuccessful()) {
                         List<Client> clientList = response.body();
                         for (Client client : clientList) {
-                            clientUIList.add(new ClientListRecyclerItem(R.drawable.dog, client.getFullName(), client.getLocation(), client));
+                            Integer riskScore = client.getRiskScore();
+                            String stringRiskScore = riskScore.toString();
+                            clientUIList.add(new ClientListRecyclerItem(R.drawable.client_details_placeholder, client.getFullName(), client.getLocation(), client, stringRiskScore));
                         }
                     }
                     adapter.notifyDataSetChanged();

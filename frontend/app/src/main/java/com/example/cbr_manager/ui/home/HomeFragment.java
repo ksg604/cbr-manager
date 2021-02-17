@@ -17,7 +17,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
-import com.example.cbr_manager.ui.create_client.ConsentActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,9 +46,9 @@ public class HomeFragment extends Fragment {
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
+
         return root;
     }
-
 
     public void fetchTopFiveRiskiestClients(List<Client> clientList) {
         if (apiService.isAuthenticated()) {
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ConsentActivity.class);
+                Intent intent = new Intent(getContext(), CreateClientActivity.class);
                 startActivity(intent);
             }
         });

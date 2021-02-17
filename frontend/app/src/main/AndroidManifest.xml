@@ -39,22 +39,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.create_client.ConsentActivity"
+            android:name=".ui.create_client.ConsentFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.create_client.VillageInfoActivity"
+            android:name=".ui.create_client.VillageInfoFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.create_client.PersonalInfoActivity"
+            android:name=".ui.create_client.PersonalInfoFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.create_client.DisabilityActivity"
+            android:name=".ui.create_client.DisabilityFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.create_client.CaregiverInfoActivity"
+            android:name=".ui.create_client.CaregiverInfoFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.create_client.PhotoActivity"
+            android:name=".ui.create_client.PhotoFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_client.CreateClientActivity"
             android:screenOrientation="portrait" />
     </application>
 

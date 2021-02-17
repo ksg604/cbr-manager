@@ -1,19 +1,20 @@
 package com.example.cbr_manager.ui.create_client;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 
-public class PersonalInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class PersonalInfoFragment extends Fragment implements AdapterView.OnItemSelectedListener{
     EditText editTextFirstName, editTextLastName, editTextAge, editTextContactNumber;
     Spinner spinner;
     String firstName, lastName, contactNumber;
@@ -22,39 +23,41 @@ public class PersonalInfoActivity extends AppCompatActivity implements AdapterVi
     private static final String[] paths = {"Male", "Female"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_client_personal_info);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.activity_create_client_personal_info, container, false);
 
-        editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
-        editTextLastName = (EditText) findViewById(R.id.editTextLastName);
+        editTextFirstName = (EditText) view.findViewById(R.id.editTextFirstName);
+        editTextLastName = (EditText) view.findViewById(R.id.editTextLastName);
 
-        spinner = (Spinner)findViewById(R.id.gender_dropdown);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PersonalInfoActivity.this,
+        spinner = (Spinner) view.findViewById(R.id.gender_dropdown);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item,paths);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        editTextAge = (EditText) findViewById(R.id.editTextAge);
-        editTextContactNumber = (EditText) findViewById(R.id.editTextContactNumber);
+        editTextAge = (EditText) view.findViewById(R.id.editTextAge);
+        editTextContactNumber = (EditText) view.findViewById(R.id.editTextContactNumber);
 
-        Button nextButton = findViewById(R.id.nextButton);
+        Button nextButton = view.findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateInfo(v);
-                nextSurveyPage();
+                ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.DISABILITY.ordinal());
             }
         });
-        Button prevButton = findViewById(R.id.prevButton);
+        Button prevButton = view.findViewById(R.id.prevButton);
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prevSurveyPage();
+                ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.VILLAGE_INFO.ordinal());
             }
         });
+
+        return view;
     }
 
     @Override
@@ -66,6 +69,7 @@ public class PersonalInfoActivity extends AppCompatActivity implements AdapterVi
     public void onNothingSelected(AdapterView<?> parent) {
         gender = paths[0].charAt(0);
     }
+
     public void updateInfo(View v) {
         firstName = editTextFirstName.getText().toString();
         lastName = editTextLastName.getText().toString();
@@ -77,12 +81,5 @@ public class PersonalInfoActivity extends AppCompatActivity implements AdapterVi
         }
         contactNumber = editTextContactNumber.getText().toString();
     }
-    private void nextSurveyPage() {
-        Intent intent = new Intent(this, DisabilityActivity.class);
-        startActivity(intent);
-    }
-    private void prevSurveyPage() {
-        Intent intent = new Intent(this, VillageInfoActivity.class);
-        startActivity(intent);
-    }
+
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cbr_manager">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,14 +12,26 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Cbr_manager">
-        <activity android:name=".ClientDetailsActivity"></activity>
+        android:theme="@style/Theme.Cbr_manager"
+        tools:targetApi="n">
+        <activity android:name=".ui.createvisit.CreateVisitActivity" >
+        </activity>
+        <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Theme.Cbr_manager.NoActionBar" />
+        <activity
+            android:name=".ui.clientdetails.ClientDetailsActivity"
+            android:label=".ClientDetailsActivity"
+            android:theme="@style/Theme.Cbr_manager.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ui.usercreation.UserCreationActivity"
+            android:label=".UserCreationActivity"
+            android:theme="@style/Theme.Cbr_manager.NoActionBar" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="@string/title_activity_login"
             android:theme="@style/Theme.Cbr_manager.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +39,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.create_client.ConsentFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_client.VillageInfoFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_client.PersonalInfoFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_client.DisabilityFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_client.CaregiverInfoFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_client.PhotoFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create_client.CreateClientActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

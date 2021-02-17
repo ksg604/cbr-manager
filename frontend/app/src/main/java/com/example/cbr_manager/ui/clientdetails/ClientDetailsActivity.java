@@ -1,4 +1,4 @@
-package com.example.cbr_manager;
+package com.example.cbr_manager.ui.clientdetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,16 +9,63 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
+import com.google.android.material.snackbar.Snackbar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ClientDetailsActivity extends AppCompatActivity {
+
+
+    private APIService apiService = APIService.getInstance();
+    private int clientId = -1;
+    private View parentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_details);
+        parentLayout = findViewById(android.R.id.content);
+
+        Intent intent = getIntent();
+        int clientId = intent.getIntExtra("clientId", -1);
+        getClientInfo(clientId);
+
+        this.clientId = clientId;
+
         setupButtons();
         setupTextViews();
         setupImageViews();
 
+    }
+
+    private void getClientInfo(int clientId){
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+
+                if(response.isSuccessful()){
+                    Client client = response.body();
+
+                    // Todo: dynamically set the client info here
+                    setupNameTextView(client.getFullName());
+                } else{
+                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+                Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     private void setupImageViews() {
@@ -27,7 +74,6 @@ public class ClientDetailsActivity extends AppCompatActivity {
     }
 
     private void setupTextViews() {
-        setupNameTextView();
         setupGenderTextView();
         setupLocationTextView();
         setupAgeTextView();
@@ -38,10 +84,10 @@ public class ClientDetailsActivity extends AppCompatActivity {
         setupSocialTextView();
     }
 
-    private void setupNameTextView() {
+    private void setupNameTextView(String fullName) {
         TextView nameTextView = findViewById(R.id.clientDetailsNameTextView);
         // TODO: Fill this TextView with information from the backend
-        nameTextView.setText("Isaac Wolyan");
+        nameTextView.setText(fullName);
     }
 
     private void setupLocationTextView() {
@@ -86,6 +132,21 @@ public class ClientDetailsActivity extends AppCompatActivity {
 
     private void setupButtons() {
         setupBackButton();
+        setupNewVisitButton();
+    }
+
+    private void setupNewVisitButton() {
+        Button newVisitButton = findViewById(R.id.clientDetailsNewVisitButton);
+        newVisitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView nameTextView = (TextView) findViewById(R.id.clientDetailsNameTextView);
+                String name = nameTextView.getText().toString();
+                Intent intent = new Intent(ClientDetailsActivity.this, CreateVisitActivity.class);
+                intent.putExtra("clientId", clientId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupBackButton() {

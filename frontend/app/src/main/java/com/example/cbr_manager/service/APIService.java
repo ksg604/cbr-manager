@@ -6,6 +6,7 @@ import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.service.client.ClientService;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserService;
+import com.example.cbr_manager.service.visit.VisitService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +19,7 @@ public class APIService {
     public AuthService authService;
     public ClientService clientService;
     public UserService userService;
+    public VisitService visitService;
 
     public User currentUser;
 
@@ -58,6 +60,7 @@ public class APIService {
     public void initializeServices(AuthResponse token) {
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
+        this.visitService = new VisitService(token);
     }
 
     public boolean isAuthenticated() {

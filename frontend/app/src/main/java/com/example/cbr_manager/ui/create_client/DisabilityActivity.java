@@ -1,4 +1,4 @@
-    package com.example.cbr_manager.ui.create_client;
+package com.example.cbr_manager.ui.create_client;
 
 import android.content.Intent;
 import android.os.Bundle;

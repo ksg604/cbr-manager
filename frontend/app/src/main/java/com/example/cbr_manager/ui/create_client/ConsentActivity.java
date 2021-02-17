@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +19,9 @@ public class ConsentActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText year, month, day;
+    private TextView test;
     private boolean consent;
-    private String date;
+    private String date="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -28,6 +30,9 @@ public class ConsentActivity extends AppCompatActivity {
 
         radioGroup = findViewById(R.id.radioGroup);
         Button nextButton = findViewById(R.id.nextButton);
+
+        test = findViewById(R.id.test);
+        test.setText(date);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +59,7 @@ public class ConsentActivity extends AppCompatActivity {
         month = findViewById(R.id.editTextMonth);
         day = findViewById(R.id.editTextDay);
         date = year.getText().toString() + "/" + month.getText().toString() + "/" + day.getText().toString();
+        test.setText(date);
     }
 
     private void nextSurveyPage() {

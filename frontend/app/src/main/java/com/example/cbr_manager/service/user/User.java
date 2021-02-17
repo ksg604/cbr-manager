@@ -9,19 +9,19 @@ public class User {
     private Integer id;
     @SerializedName("username")
     @Expose
-    private String username = null;
+    private String username;
     @SerializedName("password")
     @Expose
-    private String password = null;
+    private String password;
     @SerializedName("email")
     @Expose
-    private String email = null;
+    private String email;
     @SerializedName("first_name")
     @Expose
-    private String firstName = null;
+    private String firstName;
     @SerializedName("last_name")
     @Expose
-    private String lastName = null;
+    private String lastName;
 
     public User(String username, String password, String email, String firstName, String lastName ) {
         this.username = username;

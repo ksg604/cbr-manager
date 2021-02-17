@@ -1,11 +1,11 @@
-package com.example.cbr_manager.ui.create_client;
+    package com.example.cbr_manager.ui.create_client;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioButton;
+import android.widget.CheckBox;
 
 import androidx.fragment.app.Fragment;
 
@@ -13,7 +13,7 @@ import com.example.cbr_manager.R;
 
 public class DisabilityFragment extends Fragment {
 
-    RadioButton[] buttons = new RadioButton[10];
+    CheckBox[] checkBoxes = new CheckBox[10];
     boolean[] disabilities_check = new boolean[10];
 
     @Override
@@ -25,9 +25,9 @@ public class DisabilityFragment extends Fragment {
         String txt;
 
         for(int i=0 ; i<10 ; i++) {
-            txt = "radioButton" + i;
+            txt = "checkBox" + i;
             int resourceId = this.getResources().getIdentifier(txt, "id", getActivity().getPackageName());
-            buttons[i] = (RadioButton) view.findViewById(resourceId);
+            checkBoxes[i] = (CheckBox) view.findViewById(resourceId);
         }
 
         Button nextButton = view.findViewById(R.id.nextButton);
@@ -51,7 +51,7 @@ public class DisabilityFragment extends Fragment {
 
     public void updateInfo(View v) {
         for(int i=0 ; i<10 ; i++) {
-            if(buttons[i].isChecked()) {
+            if(checkBoxes[i].isChecked()) {
                 disabilities_check[i] = true;
             } else {
                 disabilities_check[i] = false;

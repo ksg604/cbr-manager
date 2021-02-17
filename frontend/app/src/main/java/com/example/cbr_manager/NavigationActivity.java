@@ -4,22 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
-import com.google.android.material.navigation.NavigationView;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.ui.create_client.CreateClientActivity;
+import com.google.android.material.navigation.NavigationView;
+
 
 public class NavigationActivity extends AppCompatActivity {
-
+    private APIService apiService = APIService.getInstance();
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -29,8 +33,16 @@ public class NavigationActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navFirstName = headerView.findViewById(R.id.nav_first_name);
+        TextView navEmail= headerView.findViewById(R.id.nav_email);
+        navFirstName.setText(apiService.currentUser.getFirstName());
+        navEmail.setText(apiService.currentUser.getEmail());
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -69,4 +81,8 @@ public class NavigationActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+
 }
+

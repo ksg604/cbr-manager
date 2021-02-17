@@ -7,13 +7,16 @@ public class ClientListRecyclerItem {
     private String mText1;
     private String mText2;
 
+    private String riskScore;
+
     private Client client;
 
-    public ClientListRecyclerItem(int mImageResource, String name, String location, Client client) {
+    public ClientListRecyclerItem(int mImageResource, String name, String location, Client client, String riskScore) {
         this.mImageResource = mImageResource;
         this.mText1 = name;
         this.mText2 = location;
         this.client = client;
+        this.riskScore = riskScore;
     }
 
     public int getmImageResource() {
@@ -30,5 +33,9 @@ public class ClientListRecyclerItem {
 
     public Client getClient() {
         return client;
+    }
+
+    public String getRiskScore() {
+        return riskScore;
     }
 }

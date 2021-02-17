@@ -22,7 +22,7 @@ class Client(models.Model):
     contact_care = models.IntegerField(default=0)
     photo = models.ImageField(upload_to='images/', default='images/default.png')
     disability = models.CharField(max_length=50)
-
+    date = models.DateTimeField(auto_now_add=True)
     # Extra text field for Client information(Health/Education... etc)
     health_risk = models.IntegerField(max_length=30)
     health_require = models.TextField(blank=True)
@@ -47,7 +47,6 @@ class Client(models.Model):
     is_education_provision = models.BooleanField(blank=True, default=False)
     is_social_provision = models.BooleanField(blank=True, default=False)
 
-    visit_date = models.DateField(auto_now_add=True)
     cbr_worker_name = models.TextField(blank=True, max_length=30)
 
     location_visit_gps = models.TextField(blank=True, max_length=30)

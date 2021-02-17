@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.cbr_manager.ui.create_client.ConsentActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -48,7 +46,7 @@ public class NavigationActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.nav_new_client) {
-                    Intent intent = new Intent(NavigationActivity.this, ConsentActivity.class);
+                    Intent intent = new Intent(NavigationActivity.this, CreateClientActivity.class);
                     startActivity(intent);
                 }
                 NavigationUI.onNavDestinationSelected(item, navController);

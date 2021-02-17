@@ -14,41 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> implements Filterable {
+public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> {
 
     private ArrayList<ClientListRecyclerItem> clientListRecyclerItems;
-    private ArrayList<ClientListRecyclerItem> clientListRecyclerItemsFull;
+    private List<ClientListRecyclerItem> clientListRecyclerItemsFull;
     private OnItemListener onItemListener;
-
-    private Filter itemFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<ClientListRecyclerItem> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(clientListRecyclerItemsFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (ClientListRecyclerItem item : clientListRecyclerItemsFull) {
-                    if (item.getmText1().toLowerCase().contains(filterPattern)) { // or contains
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            clientListRecyclerItems.clear();
-            clientListRecyclerItems.addAll((ArrayList) results.values);
-            notifyDataSetChanged();
-        }
-    };
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
@@ -81,7 +54,8 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     public ClientListRecyclerItemAdapter(ArrayList<ClientListRecyclerItem> clientListRecyclerItems, OnItemListener onItemListener) {
         this.clientListRecyclerItems = clientListRecyclerItems;
-        clientListRecyclerItemsFull = new ArrayList<>(clientListRecyclerItems);
+        this.clientListRecyclerItemsFull = new ArrayList<>();
+        this.clientListRecyclerItemsFull.addAll(clientListRecyclerItems);
         this.onItemListener = onItemListener;
     }
 
@@ -108,10 +82,6 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         return clientListRecyclerItems.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return itemFilter;
-    }
 
 
 

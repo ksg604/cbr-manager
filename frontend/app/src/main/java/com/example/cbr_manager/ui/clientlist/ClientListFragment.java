@@ -49,21 +49,6 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
         fetchClientsToList(clientRecyclerItems);
-
-        searchView = root.findViewById(R.id.clientSearchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-
         return root;
     }
 

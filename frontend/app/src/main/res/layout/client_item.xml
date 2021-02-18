@@ -28,9 +28,8 @@
                 android:layout_height="match_parent"
                 android:padding="0dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/dog" />
+                app:srcCompat="@drawable/client_details_placeholder" />
         </androidx.cardview.widget.CardView>
-
 
 
         <TextView
@@ -44,7 +43,7 @@
             android:layout_marginLeft="125dp"
             android:layout_marginTop="22dp"
             android:text="Peter"
-            android:textColor="#000000"
+            android:textColor="@color/purple_700"
             android:textSize="20sp" />
 
         <TextView
@@ -61,16 +60,19 @@
             android:text="Burnaby Region" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/riskTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="311dp"
-            android:layout_marginLeft="311dp"
-            android:layout_marginTop="27dp"
-            android:text="Priority: High" />
+            android:layout_marginStart="322dp"
+            android:layout_marginLeft="322dp"
+            android:layout_marginTop="31dp"
+            android:text="5"
+            android:textColor="#b02323"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

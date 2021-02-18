@@ -6,21 +6,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.ui.create_client.ConsentActivity;
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.ui.create_client.CreateClientActivity;
+import com.google.android.material.navigation.NavigationView;
 
 
 public class NavigationActivity extends AppCompatActivity {
@@ -59,7 +58,7 @@ public class NavigationActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.nav_new_client) {
-                    Intent intent = new Intent(NavigationActivity.this, ConsentActivity.class);
+                    Intent intent = new Intent(NavigationActivity.this, CreateClientActivity.class);
                     startActivity(intent);
                 }
                 NavigationUI.onNavDestinationSelected(item, navController);

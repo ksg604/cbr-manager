@@ -59,7 +59,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
-                            visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), visit.getClient().getLocation(), visit));
+                            visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
                         }
                     }
                     adapter.notifyDataSetChanged();

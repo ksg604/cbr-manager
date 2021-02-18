@@ -127,12 +127,12 @@
         android:id="@+id/clientDetailsBackButton"
         android:layout_width="130dp"
         android:layout_height="80dp"
-        android:layout_marginTop="420dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientDetailsDisplayPictureImageView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/clientDetailsNewVisitButton"
@@ -140,9 +140,9 @@
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginBottom="16dp"
         android:text="New Visit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientDetailsRiskLevelTextView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

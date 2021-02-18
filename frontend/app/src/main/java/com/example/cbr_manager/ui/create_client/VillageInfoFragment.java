@@ -1,19 +1,20 @@
 package com.example.cbr_manager.ui.create_client;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 
-public class VillageInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class VillageInfoFragment extends Fragment implements AdapterView.OnItemSelectedListener{
     private Spinner spinner;
     private static final String[] paths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
             "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
@@ -22,36 +23,39 @@ public class VillageInfoActivity extends AppCompatActivity implements AdapterVie
     String id="", location="", villageNumber="";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_client_village_info);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
 
-        editTextId = (EditText)findViewById(R.id.editTextFirstName);
+        View view = inflater.inflate(R.layout.activity_create_client_village_info, container, false);
 
-        spinner = (Spinner)findViewById(R.id.location_dropdown);
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(VillageInfoActivity.this,
+        editTextId = (EditText) view.findViewById(R.id.editTextFirstName);
+
+        spinner = (Spinner) view.findViewById(R.id.location_dropdown);
+        ArrayAdapter<String>adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item,paths);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        editTextVillageNum = (EditText)findViewById(R.id.editTextVillageNum);
+        editTextVillageNum = (EditText) view.findViewById(R.id.editTextVillageNum);
 
-        Button nextButton = findViewById(R.id.nextButton);
+        Button nextButton = view.findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInfo(v);
-                nextSurveyPage();
+                updateInfo(getView());
+                ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.PERSONAL_INFO.ordinal());
             }
         });
-        Button prevButton = findViewById(R.id.prevButton);
+        Button prevButton = view.findViewById(R.id.prevButton);
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prevSurveyPage();
+                ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.CONSENT.ordinal());
             }
         });
+
+        return view;
     }
 
     @Override
@@ -69,12 +73,4 @@ public class VillageInfoActivity extends AppCompatActivity implements AdapterVie
         villageNumber = editTextVillageNum.getText().toString();
     }
 
-    private void nextSurveyPage() {
-        Intent intent = new Intent(this, PersonalInfoActivity.class);
-        startActivity(intent);
-    }
-    private void prevSurveyPage() {
-        Intent intent = new Intent(this, ConsentActivity.class);
-        startActivity(intent);
-    }
 }

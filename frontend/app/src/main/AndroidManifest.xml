@@ -16,7 +16,6 @@
         tools:targetApi="n">
         <activity android:name=".ui.visitdetails.VisitDetailsActivity"></activity>
         <activity android:name=".ui.createvisit.CreateVisitActivity"></activity>
-        <activity android:name=".helper.VisitsPerClientFragmentHelper"></activity>
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"

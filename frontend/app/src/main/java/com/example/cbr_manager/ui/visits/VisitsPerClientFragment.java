@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.helper.VisitsPerClientFragmentHelper;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
 import java.util.ArrayList;
@@ -41,11 +41,10 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         int clientId = -1;
-        VisitsPerClientFragmentHelper activity = (VisitsPerClientFragmentHelper) getActivity();
+        ClientDetailsActivity activity = (ClientDetailsActivity) getActivity();
         if (activity != null)
-            clientId = activity.clientId;
-//        if(this.getArguments() != null)
-//            clientId = getArguments().getInt("clientId", -1);
+            clientId = activity.getClientId();
+
         this.clientId = clientId;
         visitsViewModel =
                 new ViewModelProvider(this).get(VisitsViewModel.class);

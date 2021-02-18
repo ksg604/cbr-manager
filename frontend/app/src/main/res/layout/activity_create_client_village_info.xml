@@ -69,7 +69,7 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
-        android:text="@string/location"
+        android:text="4. What is your location?"
         app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
         tools:layout_editor_absoluteX="0dp" />
 

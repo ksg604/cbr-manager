@@ -177,7 +177,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/outstanding_visits"
+                android:text="@string/visits"
                 android:textColor="@color/purple_700"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"

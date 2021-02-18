@@ -146,7 +146,7 @@
         app:layout_constraintTop_toBottomOf="@+id/clientDetailsRiskLevelTextView" />
 
     <Button
-        android:id="@+id/SeeVisitsButton"
+        android:id="@+id/clientDetailsSeeVisitsButton"
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:text="See Visits"

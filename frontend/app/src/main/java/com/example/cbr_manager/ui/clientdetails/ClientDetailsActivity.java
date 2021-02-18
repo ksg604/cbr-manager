@@ -10,9 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.helper.VisitsPerClientFragmentHelper;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
+import com.example.cbr_manager.ui.visits.VisitsPerClientFragment;
+import com.example.cbr_manager.ui.visits.VisitsRecyclerItem;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -133,6 +137,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
     private void setupButtons() {
         setupBackButton();
         setupNewVisitButton();
+        setupSeeVisitsButton();
     }
 
     private void setupNewVisitButton() {
@@ -143,6 +148,23 @@ public class ClientDetailsActivity extends AppCompatActivity {
                 TextView nameTextView = (TextView) findViewById(R.id.clientDetailsNameTextView);
                 String name = nameTextView.getText().toString();
                 Intent intent = new Intent(ClientDetailsActivity.this, CreateVisitActivity.class);
+                intent.putExtra("clientId", clientId);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupSeeVisitsButton() {
+        Button newVisitButton = findViewById(R.id.clientDetailsSeeVisitsButton);
+        newVisitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("clientId", clientId);
+//                VisitsPerClientFragment fragment = new VisitsPerClientFragment();
+//                fragment.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.visitPerClient, fragment).commit();
+                Intent intent = new Intent(ClientDetailsActivity.this, VisitsPerClientFragmentHelper.class);
                 intent.putExtra("clientId", clientId);
                 startActivity(intent);
             }

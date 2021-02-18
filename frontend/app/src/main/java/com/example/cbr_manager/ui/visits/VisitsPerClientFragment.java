@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.helper.VisitsPerClientFragmentHelper;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
@@ -31,14 +32,20 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Integer clientId = -1;
+    private int clientId = -1;
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Integer clientId = getArguments().getInt("clientId", -1);
+        int clientId = -1;
+        VisitsPerClientFragmentHelper activity = (VisitsPerClientFragmentHelper) getActivity();
+        if (activity != null)
+            clientId = activity.clientId;
+//        if(this.getArguments() != null)
+//            clientId = getArguments().getInt("clientId", -1);
         this.clientId = clientId;
         visitsViewModel =
                 new ViewModelProvider(this).get(VisitsViewModel.class);

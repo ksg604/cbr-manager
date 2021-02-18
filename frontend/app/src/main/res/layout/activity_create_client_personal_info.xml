@@ -108,10 +108,11 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:ems="10"
+        android:hint="First Name"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/editTextLastName"
@@ -120,6 +121,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:ems="10"
+        android:hint="Last Name"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +134,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:ems="10"
+        android:hint="Age"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,6 +147,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:ems="10"
+        android:hint="Contact Number"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"

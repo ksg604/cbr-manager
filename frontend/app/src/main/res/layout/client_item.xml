@@ -43,8 +43,9 @@
             android:layout_marginLeft="125dp"
             android:layout_marginTop="22dp"
             android:text="Peter"
-            android:textColor="@color/purple_700"
-            android:textSize="20sp" />
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView7"

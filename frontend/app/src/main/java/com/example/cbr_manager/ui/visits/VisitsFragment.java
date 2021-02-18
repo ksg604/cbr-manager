@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 
 import java.util.ArrayList;
@@ -59,10 +60,24 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
+                            Call<Client> call1 = apiService.clientService.getClient(visit.getClientID());
+                            call1.enqueue(new Callback<Client>() {
+                                @Override
+                                public void onResponse(Call<Client> call, Response<Client> response) {
+                                    if (response.isSuccessful()) {
+                                        Client client = response.body();
+                                        visit.setClient(client);
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Client> call, Throwable t) {
+
+                                }
+                            });
                             visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
                         }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 }
 
                 @Override

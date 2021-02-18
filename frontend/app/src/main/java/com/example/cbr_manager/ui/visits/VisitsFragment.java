@@ -67,16 +67,17 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                                     if (response.isSuccessful()) {
                                         Client client = response.body();
                                         visit.setClient(client);
+                                        visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
                                     }
+
+                                    adapter.notifyDataSetChanged();
                                 }
                                 @Override
                                 public void onFailure(Call<Client> call, Throwable t) {
 
                                 }
                             });
-                            visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
                         }
-                        adapter.notifyDataSetChanged();
                     }
                 }
 
@@ -94,7 +95,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         Intent visitInfoIntent = new Intent(getContext(), VisitDetailsActivity.class);
 
         VisitsRecyclerItem visitsRecyclerItem = visitsRecyclerItems.get(position);
-        visitInfoIntent.putExtra("clientId", visitsRecyclerItem.getVisit().getClient().getId());
+        visitInfoIntent.putExtra("additionalInfo", visitsRecyclerItem.getVisit().getAdditionalInfo());
 
         startActivity(visitInfoIntent);
     }

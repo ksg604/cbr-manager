@@ -25,6 +25,8 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
     private View parentLayout;
 
+    private String additionalInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,37 +34,13 @@ public class VisitDetailsActivity extends AppCompatActivity {
         parentLayout = findViewById(android.R.id.content);
 
         Intent intent = getIntent();
-        int visitId = intent.getIntExtra("visitId", -1);
-        getVisitInfo(visitId);
+        String additionalInfo = intent.getStringExtra("additionalInfo");
+        this.additionalInfo = additionalInfo;
 
         setupButtons();
         setupTextViews();
         setupImageViews();
 
-    }
-
-    private void getVisitInfo(int visitId){
-        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
-            @Override
-            public void onResponse(Call<Visit> call, Response<Visit> response) {
-
-                if(response.isSuccessful()){
-                    Visit visit = response.body();
-
-                    // Todo: dynamically set the visit info here
-                    setupNameTextView(visit.getClient().getFullName());
-                } else{
-                    Snackbar.make(parentLayout, "Failed to get the visit. Please try again", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Visit> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the visit. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void setupImageViews() {
@@ -79,12 +57,13 @@ public class VisitDetailsActivity extends AppCompatActivity {
         setupHealthTextView();
         setupEducationTextView();
         setupSocialTextView();
+        setupNameTextView(additionalInfo);
     }
 
-    private void setupNameTextView(String fullName) {
+    private void setupNameTextView(String additionalInfo) {
         TextView nameTextView = findViewById(R.id.visitDetailsNameTextView);
         // TODO: Fill this TextView with information from the backend
-        nameTextView.setText(fullName);
+        nameTextView.setText(additionalInfo);
     }
 
     private void setupLocationTextView() {

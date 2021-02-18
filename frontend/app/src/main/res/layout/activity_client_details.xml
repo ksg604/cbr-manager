@@ -131,6 +131,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="Back"
+        android:textColor="@color/teal_700"
+        app:backgroundTint="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -142,6 +144,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
         android:text="New Visit"
+        android:textColor="@color/teal_700"
+        app:backgroundTint="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

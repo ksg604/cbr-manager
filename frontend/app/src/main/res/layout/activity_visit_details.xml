@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.visits.VisitDetailsActivity">
+    tools:context=".ui.visitdetails.VisitDetailsActivity">
 
     <ImageView
         android:id="@+id/visitDetailsDisplayPictureImageView"
@@ -28,7 +28,7 @@
         android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="Visit Name"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,87 +46,32 @@
         app:layout_constraintTop_toBottomOf="@+id/visitDetailsNameTextView" />
 
     <TextView
-        android:id="@+id/visitDetailsGenderTextView"
+        android:id="@+id/visitDetailsDateTextView"
         android:layout_width="190dp"
         android:layout_height="55dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="4dp"
-        android:text="Gender"
+        android:text="Date"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/visitDetailsLocationTextView" />
 
     <TextView
-        android:id="@+id/visitDetailsAgeTextView"
+        android:id="@+id/visitDetailsAdditionalInfoTextView"
         android:layout_width="190dp"
         android:layout_height="55dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
-        android:text="Age"
+        android:text="Additional Info"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsGenderTextView" />
-
-    <TextView
-        android:id="@+id/visitDetailsDisabilityTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:text="Disability"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsAgeTextView" />
-
-    <TextView
-        android:id="@+id/visitDetailsRiskLevelTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:text="Risk Level"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsSocialTextView" />
-
-    <TextView
-        android:id="@+id/visitDetailsHealthTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:text="Health"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsDisabilityTextView" />
-
-    <TextView
-        android:id="@+id/visitDetailsEducationTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:text="Education"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsHealthTextView" />
-
-    <TextView
-        android:id="@+id/visitDetailsSocialTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:text="Social"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsEducationTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/visitDetailsDateTextView" />
 
     <Button
         android:id="@+id/visitDetailsBackButton"
         android:layout_width="130dp"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="420dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"

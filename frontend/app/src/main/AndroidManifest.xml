@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cbr_manager"
         tools:targetApi="n">
-        <activity android:name=".ui.visits.VisitDetailsActivity"></activity>
+        <activity android:name=".ui.visitdetails.VisitDetailsActivity"></activity>
         <activity android:name=".ui.createvisit.CreateVisitActivity"></activity>
         <activity
             android:name=".NavigationActivity"

@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.visits;
+package com.example.cbr_manager.ui.visitdetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,10 +23,9 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
 
     private APIService apiService = APIService.getInstance();
-
     private View parentLayout;
-
     private String additionalInfo;
+    private int clientId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +35,38 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String additionalInfo = intent.getStringExtra("additionalInfo");
+        int clientId = intent.getIntExtra("clientId", -1);
+        getClientInfo(clientId);
+        this.clientId = clientId;
         this.additionalInfo = additionalInfo;
-
         setupButtons();
         setupTextViews();
         setupImageViews();
 
+    }
+
+    private void getClientInfo(int clientId){
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+
+                if(response.isSuccessful()){
+                    Client client = response.body();
+
+                    // Todo: dynamically set the client info here
+                    setupNameTextView(client.getFullName());
+                } else{
+                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+                Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     private void setupImageViews() {
@@ -49,21 +75,15 @@ public class VisitDetailsActivity extends AppCompatActivity {
     }
 
     private void setupTextViews() {
-        setupGenderTextView();
         setupLocationTextView();
-        setupAgeTextView();
-        setupDisabilityTextView();
-        setupRiskLevelTextView();
-        setupHealthTextView();
-        setupEducationTextView();
-        setupSocialTextView();
-        setupNameTextView(additionalInfo);
+        setupAdditionalInfoTextView(additionalInfo);
+        setupDateTextView();
+        setupLocationTextView();
     }
 
-    private void setupNameTextView(String additionalInfo) {
+    private void setupNameTextView(String fullName) {
         TextView nameTextView = findViewById(R.id.visitDetailsNameTextView);
-        // TODO: Fill this TextView with information from the backend
-        nameTextView.setText(additionalInfo);
+        nameTextView.setText(fullName);
     }
 
     private void setupLocationTextView() {
@@ -71,39 +91,15 @@ public class VisitDetailsActivity extends AppCompatActivity {
         locationTextView.setText("Location: BidiBidi Zone 1");
     }
 
-    private void setupGenderTextView() {
-        TextView genderTextView = findViewById(R.id.visitDetailsGenderTextView);
-        genderTextView.setText("Gender: Male");
+
+    private void setupDateTextView() {
+        TextView ageTextView = findViewById(R.id.visitDetailsDateTextView);
+        ageTextView.setText("Date: 12-07-1992");
     }
 
-    private void setupAgeTextView() {
-        TextView ageTextView = findViewById(R.id.visitDetailsAgeTextView);
-        ageTextView.setText("Age: 50");
-    }
-
-    private void setupDisabilityTextView() {
-        TextView disabilityTextView = findViewById(R.id.visitDetailsDisabilityTextView);
-        disabilityTextView.setText("Disability: Unable to walk");
-    }
-
-    private void setupRiskLevelTextView() {
-        TextView riskLevelTextView = findViewById(R.id.visitDetailsRiskLevelTextView);
-        riskLevelTextView.setText("Risk Level: Critical");
-    }
-
-    private void setupHealthTextView() {
-        TextView healthTextView = findViewById(R.id.visitDetailsHealthTextView);
-        healthTextView.setText("Health: Critical");
-    }
-
-    private void setupEducationTextView() {
-        TextView educationTextView = findViewById(R.id.visitDetailsEducationTextView);
-        educationTextView.setText("Education: Bachelors Degree");
-    }
-
-    private void setupSocialTextView() {
-        TextView socialTextView = findViewById(R.id.visitDetailsSocialTextView);
-        socialTextView.setText("Social: Very Active");
+    private void setupAdditionalInfoTextView(String additionalInfo) {
+        TextView additionalInfoTextView = findViewById(R.id.visitDetailsAdditionalInfoTextView);
+        additionalInfoTextView.setText(additionalInfo);
     }
 
     private void setupButtons() {

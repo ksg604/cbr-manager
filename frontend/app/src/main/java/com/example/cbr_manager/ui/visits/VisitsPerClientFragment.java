@@ -25,18 +25,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener{
+public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener{
 
     private VisitsViewModel visitsViewModel;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Integer clientId = -1;
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
-
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Integer clientId = getArguments().getInt("clientId", -1);
+        this.clientId = clientId;
         visitsViewModel =
                 new ViewModelProvider(this).get(VisitsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_visits, container, false);
@@ -61,23 +64,23 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
-                            Call<Client> call1 = apiService.clientService.getClient(visit.getClientID());
-                            call1.enqueue(new Callback<Client>() {
-                                @Override
-                                public void onResponse(Call<Client> call, Response<Client> response) {
-                                    if (response.isSuccessful()) {
-                                        Client client = response.body();
-                                        visit.setClient(client);
-                                        visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
+                            if (visit.getClientID() == clientId) {
+                                Call<Client> call1 = apiService.clientService.getClient(clientId);
+                                call1.enqueue(new Callback<Client>() {
+                                    @Override
+                                    public void onResponse(Call<Client> call, Response<Client> response) {
+                                        if (response.isSuccessful()) {
+                                            Client client = response.body();
+                                            visit.setClient(client);
+                                            visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
+                                        }
+                                        adapter.notifyDataSetChanged();
                                     }
-
-                                    adapter.notifyDataSetChanged();
-                                }
-                                @Override
-                                public void onFailure(Call<Client> call, Throwable t) {
-
-                                }
-                            });
+                                    @Override
+                                    public void onFailure(Call<Client> call, Throwable t) {
+                                    }
+                                });
+                            }
                         }
                     }
                 }

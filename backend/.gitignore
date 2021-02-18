@@ -147,3 +147,6 @@ scripts/temp/
 # Ignore images that get uploaded, don't ignore default image
 media/images/temp
 !media/images/default.png
+
+#Mac stuff
+.DS_Store

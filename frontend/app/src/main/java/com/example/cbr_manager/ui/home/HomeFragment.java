@@ -64,6 +64,22 @@ public class HomeFragment extends Fragment {
 
                         TextView totalNumberVisits = root.findViewById(R.id.totalVisitsNumberTextView);
                         totalNumberVisits.setText(Integer.toString(totalVisits));
+                        List<String> differentLocations = new ArrayList<>();
+                        List<Integer> differentClients = new ArrayList<>();
+                        for (Visit eachVisit : visits) {
+                            if (!differentClients.contains(eachVisit.getClientID())) {
+                                differentClients.add(eachVisit.getClientID());
+                            }
+                            if (!differentLocations.contains(eachVisit.getClient().getLocationDropDown())) {
+                                differentLocations.add(eachVisit.getClient().getLocationDropDown());
+                            }
+                        }
+
+                        TextView totalClientsVisited = root.findViewById(R.id.clientsVisitedNumberTextView);
+                        totalClientsVisited.setText(Integer.toString(differentClients.size()));
+
+                        TextView totalLocationsVisited = root.findViewById(R.id.regionsVisitedNumberTextView);
+                        totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
                     }
                 }
 

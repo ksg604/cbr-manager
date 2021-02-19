@@ -11,49 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.utils.Helper;
+import com.example.cbr_manager.service.client.Client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> {
 
-    private ArrayList<ClientListRecyclerItem> clientListRecyclerItems;
-    private List<ClientListRecyclerItem> clientListRecyclerItemsFull;
+    private List<Client> clients;
     private OnItemListener onItemListener;
 
-    public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView imageView;
-        public TextView textView1;
-        public TextView textView2;
-        public TextView riskTextView;
-        OnItemListener onItemListener;
-
-        public ClientItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
-            textView1 = itemView.findViewById(R.id.textListTitle);
-            textView2 = itemView.findViewById(R.id.textListBody);
-            riskTextView = itemView.findViewById(R.id.textListDate);
-            this.onItemListener = onItemListener;
-
-            itemView.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View v) {
-            onItemListener.onItemClick(getAdapterPosition());
-        }
-    }
-
-    public interface OnItemListener {
-        void onItemClick(int position);
-    }
-
-    public ClientListRecyclerItemAdapter(ArrayList<ClientListRecyclerItem> clientListRecyclerItems, OnItemListener onItemListener) {
-        this.clientListRecyclerItems = clientListRecyclerItems;
-        this.clientListRecyclerItemsFull = new ArrayList<>();
-        this.clientListRecyclerItemsFull.addAll(clientListRecyclerItems);
+    public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
+        this.clients = clientList;
         this.onItemListener = onItemListener;
     }
 
@@ -67,29 +36,50 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     @Override
     public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
-        ClientListRecyclerItem currentItem = clientListRecyclerItems.get(position);
+        Client currentClient = clients.get(position);
+        Helper.setImageViewFromURL(currentClient.getPhotoURL(), holder.imageView);
 
-        holder.imageView.setImageResource(currentItem.getmImageResource());
-        holder.textView1.setText(currentItem.getmText1());
-        holder.textView2.setText(currentItem.getmText2());
-        holder.riskTextView.setText(currentItem.getRiskScore());
-        int intRiskScore = Integer.parseInt(currentItem.getRiskScore());
-        if (intRiskScore >= 10) {
-            holder.riskTextView.setTextColor(Color.parseColor("#b02323"));
-        } else if (intRiskScore < 10 && intRiskScore >= 5) {
-            holder.riskTextView.setTextColor(Color.parseColor("#c45404"));
-        } else {
-            holder.riskTextView.setTextColor(Color.parseColor("#c49704"));
-        }
+        holder.textViewFullName.setText(currentClient.getFullName());
+        holder.textViewLocation.setText(currentClient.getLocation());
+        holder.riskTextView.setText(Integer.toString(currentClient.getRiskScore()));
+
+        String riskColourCode = Helper.riskToColourCode(currentClient.getRiskScore());
+        holder.riskTextView.setTextColor(Color.parseColor(riskColourCode));
     }
 
     @Override
     public int getItemCount() {
-        return clientListRecyclerItems.size();
+        return clients.size();
     }
 
+    public interface OnItemListener {
+        void onItemClick(int position);
+    }
 
+    public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imageView;
+        public TextView textViewFullName;
+        public TextView textViewLocation;
+        public TextView riskTextView;
+        OnItemListener onItemListener;
 
+        public ClientItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageViewPhoto);
+            textViewFullName = itemView.findViewById(R.id.textViewFullName);
+            textViewLocation = itemView.findViewById(R.id.textViewLocation);
+            riskTextView = itemView.findViewById(R.id.textViewRiskScore);
+            this.onItemListener = onItemListener;
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            onItemListener.onItemClick(getAdapterPosition());
+        }
+    }
 
 
 }

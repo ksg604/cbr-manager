@@ -59,14 +59,14 @@
                 <TextView
                     android:id="@+id/dateAlertTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:text="Date Posted: January 1st 2021"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/announcementTextView"
@@ -76,7 +76,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="Placeholder..."
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/seeMoreTextView"

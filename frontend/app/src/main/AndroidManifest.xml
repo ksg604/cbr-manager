@@ -25,9 +25,9 @@
             android:label=".ClientDetailsActivity"
             android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
-            android:name=".ui.usercreation.UserCreationActivity"
-            android:label=".UserCreationActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar" />
+            android:name=".ui.alert.alert_details.AlertDetailsActivity"
+            android:label=".AlertDetailsActivity"
+            android:theme="@style/Theme.Cbr_manager.NoActionBar"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
@@ -38,24 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.create_client.ConsentFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.create_client.VillageInfoFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.create_client.PersonalInfoFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.create_client.DisabilityFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.create_client.CaregiverInfoFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.create_client.PhotoFragment"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.create_client.CreateClientActivity"
             android:screenOrientation="portrait" />

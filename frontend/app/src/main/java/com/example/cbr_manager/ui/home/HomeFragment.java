@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,8 +16,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
+import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 
 import java.util.ArrayList;
@@ -33,21 +36,77 @@ public class HomeFragment extends Fragment {
     ViewPager viewPager;
     ViewPagerAdapter adapter;
     List<Client> clientViewPagerList = new ArrayList<>();
+    Alert newestAlert;
+    TextView seeMoreTextView;
+    TextView dateAlertTextView;
+    TextView titleTextView;
+    int homeAlertId;
+
     private HomeViewModel homeViewModel;
+    View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        root = inflater.inflate(R.layout.fragment_home, container, false);
+        fetchNewestAlert();
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
+        setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
 
         return root;
+    }
+
+    public void fetchNewestAlert() {
+        dateAlertTextView = root.findViewById(R.id.dateAlertTextView);
+        titleTextView = root.findViewById(R.id.announcementTextView);
+        if (apiService.isAuthenticated()) {
+            apiService.alertService.getAlerts().enqueue(new Callback<List<Alert>>() {
+                @Override
+                public void onResponse(Call<List<Alert>> call, Response<List<Alert>> response) {
+                    if (response.isSuccessful()) {
+                        List<Alert> alerts = response.body();
+
+                        if (alerts != null & !alerts.isEmpty()) {
+                            newestAlert = alerts.get(0);
+                            dateAlertTextView.setText("Date posted: " +newestAlert.getDate());
+                            titleTextView.setText(newestAlert.getTitle());
+                            homeAlertId = newestAlert.getId();
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Alert>> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+
+    public void setAlertButtons(){
+        seeMoreTextView = root.findViewById(R.id.seeMoreTextView);
+        titleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AlertDetailsActivity.class);
+                intent.putExtra("alertId", homeAlertId);
+                startActivity(intent);
+            }
+        });
+        seeMoreTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_nav_dashboard_to_nav_alert_list);
+            }
+        });
     }
 
     public void fetchTopFiveRiskiestClients(List<Client> clientList) {

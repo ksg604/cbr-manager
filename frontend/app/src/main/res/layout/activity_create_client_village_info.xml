@@ -35,7 +35,9 @@
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:text="@string/what_is_your_id"
-                android:textColor="@color/teal_700" />
+                android:textColor="@color/teal_700"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editTextFirstName"
@@ -61,7 +63,9 @@
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:text="4. What is your location?"
-                android:textColor="@color/teal_700" />
+                android:textColor="@color/teal_700"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/location_dropdown"
@@ -75,15 +79,17 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:text="@string/what_is_your_village_number"
-                android:textColor="@color/teal_700" />
+                android:textColor="@color/teal_700"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editTextVillageNum"
@@ -108,8 +114,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/next"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#FFF"
+        android:textColor="#FFF"
+        app:backgroundTint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -121,8 +127,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/previous"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#FFF"
+        android:textColor="#FFF"
+        app:backgroundTint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

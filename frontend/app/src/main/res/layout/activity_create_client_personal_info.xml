@@ -34,6 +34,8 @@
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:text="@string/first_name"
                 android:textColor="@color/teal_700" />
 
@@ -59,6 +61,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:text="@string/last_name"
                 android:textColor="@color/teal_700" />
 
@@ -84,6 +88,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:text="@string/gender"
                 android:textColor="@color/teal_700" />
 
@@ -104,6 +110,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:text="@string/age"
                 android:textColor="@color/teal_700" />
 
@@ -129,6 +137,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:text="@string/contact_number"
                 android:textColor="@color/teal_700" />
 
@@ -155,8 +165,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/next"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#FFF"
+        android:textColor="#FFF"
+        app:backgroundTint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -168,8 +178,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/previous"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#FFF"
+        android:textColor="#FFF"
+        app:backgroundTint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

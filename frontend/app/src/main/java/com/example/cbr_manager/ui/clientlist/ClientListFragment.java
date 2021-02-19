@@ -81,7 +81,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         Intent clientInfoIntent = new Intent(getContext(), ClientDetailsActivity.class);
 
         Client client = clientList.get(position);
-        clientInfoIntent.putExtra("clientId", client.getId().toString());
+        clientInfoIntent.putExtra("clientId", client.getId());
 
         startActivity(clientInfoIntent);
     }

@@ -39,8 +39,8 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         Client currentClient = clients.get(position);
         Helper.setImageViewFromURL(currentClient.getPhotoURL(), holder.imageView);
 
-        holder.textView1.setText(currentClient.getFullName());
-        holder.textView2.setText(currentClient.getLocation());
+        holder.textViewFullName.setText(currentClient.getFullName());
+        holder.textViewLocation.setText(currentClient.getLocation());
         holder.riskTextView.setText(Integer.toString(currentClient.getRiskScore()));
 
         String riskColourCode = Helper.riskToColourCode(currentClient.getRiskScore());
@@ -58,16 +58,16 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
-        public TextView textView1;
-        public TextView textView2;
+        public TextView textViewFullName;
+        public TextView textViewLocation;
         public TextView riskTextView;
         OnItemListener onItemListener;
 
         public ClientItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-            textView1 = itemView.findViewById(R.id.textListTitle);
-            textView2 = itemView.findViewById(R.id.textListBody);
+            textViewFullName = itemView.findViewById(R.id.textListTitle);
+            textViewLocation = itemView.findViewById(R.id.textListBody);
             riskTextView = itemView.findViewById(R.id.textListDate);
             this.onItemListener = onItemListener;
 

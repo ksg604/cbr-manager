@@ -1,13 +1,13 @@
 package com.example.cbr_manager.ui.clientdetails;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.helper.Helper;
@@ -44,18 +44,18 @@ public class ClientDetailsActivity extends AppCompatActivity {
         setupTextViews();
     }
 
-    private void getClientInfo(int clientId){
+    private void getClientInfo(int clientId) {
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Client client = response.body();
 
                     // Todo: dynamically set the client info here
                     setupNameTextView(client.getFullName());
                     setupImageViews(client.getPhotoURL());
-                } else{
+                } else {
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }

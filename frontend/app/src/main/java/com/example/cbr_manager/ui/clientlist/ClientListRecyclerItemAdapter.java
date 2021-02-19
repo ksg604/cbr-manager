@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.helper.Helper;
+import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.client.Client;
 
 import java.util.List;

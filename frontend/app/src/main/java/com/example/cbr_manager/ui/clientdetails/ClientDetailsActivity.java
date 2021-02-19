@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.helper.Helper;
+import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;

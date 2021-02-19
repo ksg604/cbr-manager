@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.helper.Helper;
+import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 

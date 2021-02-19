@@ -1,6 +1,5 @@
-package com.example.cbr_manager.helper;
+package com.example.cbr_manager.utils;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 

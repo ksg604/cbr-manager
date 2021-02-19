@@ -13,6 +13,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
+import com.example.cbr_manager.ui.visits.VisitsPerClientFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -133,6 +134,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
     private void setupButtons() {
         setupBackButton();
         setupNewVisitButton();
+        setupSeeVisitsButton();
     }
 
     private void setupNewVisitButton() {
@@ -149,6 +151,17 @@ public class ClientDetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void setupSeeVisitsButton() {
+        Button newVisitButton = findViewById(R.id.clientDetailsSeeVisitsButton);
+        newVisitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(android.R.id.content, new VisitsPerClientFragment()).commit();
+            }
+        });
+    }
+
     private void setupBackButton() {
         Button backButton = findViewById(R.id.clientDetailsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +170,10 @@ public class ClientDetailsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    public int getClientId() {
+        return clientId;
     }
 
 

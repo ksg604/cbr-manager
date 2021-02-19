@@ -23,11 +23,17 @@
                 android:background="@drawable/bg_item"
                 android:layout_marginBottom="16dp">
 
+                <ImageView
+                    android:id="@+id/clientDetailsBackImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_back2" />
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="32dp"
                     app:cardCornerRadius="75dp">
 
                     <ImageView

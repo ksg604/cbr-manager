@@ -163,6 +163,14 @@ public class ClientDetailsActivity extends AppCompatActivity {
         setupBackButton();
         setupNewVisitButton();
         setupSeeVisitsButton();
+
+        ImageView backImageView = findViewById(R.id.clientDetailsBackImageView);
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void setupNewVisitButton() {

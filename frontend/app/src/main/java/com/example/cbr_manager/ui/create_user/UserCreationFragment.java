@@ -1,26 +1,20 @@
-package com.example.cbr_manager.ui.usercreation;
+package com.example.cbr_manager.ui.create_user;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.user.User;
 
-import com.example.cbr_manager.ui.login.LoginActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -41,9 +35,9 @@ public class UserCreationFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_user_creation, container, false);
 
-        editTextUserName = root.findViewById(R.id.editTextUserName);
+        editTextUserName = root.findViewById(R.id.editTextTitle);
         editTextPassword = root.findViewById(R.id.editTextPassword);
-        editTextEmail = root.findViewById(R.id.editTextEmail);
+        editTextEmail = root.findViewById(R.id.editTextBody);
         editTextPasswordConfirm = root.findViewById(R.id.editTextPasswordConfirm);
         buttonSubmit = root.findViewById(R.id.buttonSubmit);
         textInputWarning = root.findViewById(R.id.textInputWarning);

@@ -1,5 +1,6 @@
 package com.example.cbr_manager.service;
 
+import com.example.cbr_manager.service.alert.AlertService;
 import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
@@ -20,6 +21,7 @@ public class APIService {
     public ClientService clientService;
     public UserService userService;
     public VisitService visitService;
+    public AlertService alertService;
 
     public User currentUser;
 
@@ -61,15 +63,12 @@ public class APIService {
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
         this.visitService = new VisitService(token);
+        this.alertService = new AlertService(token);
     }
 
     public boolean isAuthenticated() {
         // Todo needs a better check, maybe a specific endpoint to check validity of auth token
         return authService.getAuthToken() != null;
-    }
-
-    public void testInitializeUserService() {
-        this.userService = new UserService();
     }
 
     public User getCurrentUser() {

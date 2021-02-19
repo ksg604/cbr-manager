@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +14,6 @@ import com.example.cbr_manager.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> {
 
@@ -34,9 +31,9 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         public ClientItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-            textView1 = itemView.findViewById(R.id.textView6);
-            textView2 = itemView.findViewById(R.id.textView7);
-            riskTextView = itemView.findViewById(R.id.riskTextView);
+            textView1 = itemView.findViewById(R.id.textListTitle);
+            textView2 = itemView.findViewById(R.id.textListBody);
+            riskTextView = itemView.findViewById(R.id.textListDate);
             this.onItemListener = onItemListener;
 
             itemView.setOnClickListener(this);

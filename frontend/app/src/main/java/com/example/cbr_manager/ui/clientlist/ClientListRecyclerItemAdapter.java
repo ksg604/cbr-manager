@@ -65,10 +65,10 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
         public ClientItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
-            textViewFullName = itemView.findViewById(R.id.textListTitle);
-            textViewLocation = itemView.findViewById(R.id.textListBody);
-            riskTextView = itemView.findViewById(R.id.textListDate);
+            imageView = itemView.findViewById(R.id.imageViewPhoto);
+            textViewFullName = itemView.findViewById(R.id.textViewFullName);
+            textViewLocation = itemView.findViewById(R.id.textViewLocation);
+            riskTextView = itemView.findViewById(R.id.textViewRiskScore);
             this.onItemListener = onItemListener;
 
             itemView.setOnClickListener(this);

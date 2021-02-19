@@ -32,12 +32,16 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     private ClientListRecyclerItemAdapter adapter; // TODO
     private RecyclerView.LayoutManager mLayoutManager;
     private SearchView searchView;
-    ArrayList<ClientListRecyclerItem> clientRecyclerItems = new ArrayList<>();
+    List<Client> clientList = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
+        fetchClientsToList(clientList);
+
         clientListViewModel =
                 new ViewModelProvider(this).get(ClientListViewModel.class);
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
@@ -45,25 +49,20 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         mRecyclerView = root.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(getContext());
-        adapter = new ClientListRecyclerItemAdapter(clientRecyclerItems, this);
+        adapter = new ClientListRecyclerItemAdapter(clientList, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
-        fetchClientsToList(clientRecyclerItems);
         return root;
     }
 
-    public void fetchClientsToList(List<ClientListRecyclerItem> clientUIList) {
+    public void fetchClientsToList(List<Client> clientList) {
         if (apiService.isAuthenticated()) {
             apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
                 @Override
                 public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
                     if (response.isSuccessful()) {
-                        List<Client> clientList = response.body();
-                        for (Client client : clientList) {
-                            Integer riskScore = client.getRiskScore();
-                            String stringRiskScore = riskScore.toString();
-                            clientUIList.add(new ClientListRecyclerItem(R.drawable.client_details_placeholder, client.getFullName(), client.getLocation(), client, stringRiskScore));
-                        }
+                        List<Client> clients = response.body();
+                        clientList.addAll(clients);
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -81,8 +80,8 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         Intent clientInfoIntent = new Intent(getContext(), ClientDetailsActivity.class);
 
-        ClientListRecyclerItem clientListRecyclerItem = clientRecyclerItems.get(position);
-        clientInfoIntent.putExtra("clientId", clientListRecyclerItem.getClient().getId());
+        Client client = clientList.get(position);
+        clientInfoIntent.putExtra("clientId", client.getId().toString());
 
         startActivity(clientInfoIntent);
     }

@@ -11,15 +11,55 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.helper.Helper;
+import com.example.cbr_manager.service.client.Client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> {
 
-    private ArrayList<ClientListRecyclerItem> clientListRecyclerItems;
-    private List<ClientListRecyclerItem> clientListRecyclerItemsFull;
+    private List<Client> clients;
     private OnItemListener onItemListener;
+
+    public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
+        this.clients = clientList;
+        this.onItemListener = onItemListener;
+    }
+
+    @NonNull
+    @Override
+    public ClientItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.client_item, parent, false);
+        ClientItemViewHolder evh = new ClientItemViewHolder(v, onItemListener);
+        return evh;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
+        Client currentClient = clients.get(position);
+        Helper.setImageViewFromURL(currentClient.getPhotoURL(), holder.imageView);
+
+        holder.textView1.setText(currentClient.getFullName());
+        holder.textView2.setText(currentClient.getLocation());
+        holder.riskTextView.setText(Integer.toString(currentClient.getRiskScore()));
+        int intRiskScore = currentClient.getRiskScore();
+        if (intRiskScore >= 10) {
+            holder.riskTextView.setTextColor(Color.parseColor("#b02323"));
+        } else if (intRiskScore < 10 && intRiskScore >= 5) {
+            holder.riskTextView.setTextColor(Color.parseColor("#c45404"));
+        } else {
+            holder.riskTextView.setTextColor(Color.parseColor("#c49704"));
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return clients.size();
+    }
+
+    public interface OnItemListener {
+        void onItemClick(int position);
+    }
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
@@ -45,51 +85,6 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
             onItemListener.onItemClick(getAdapterPosition());
         }
     }
-
-    public interface OnItemListener {
-        void onItemClick(int position);
-    }
-
-    public ClientListRecyclerItemAdapter(ArrayList<ClientListRecyclerItem> clientListRecyclerItems, OnItemListener onItemListener) {
-        this.clientListRecyclerItems = clientListRecyclerItems;
-        this.clientListRecyclerItemsFull = new ArrayList<>();
-        this.clientListRecyclerItemsFull.addAll(clientListRecyclerItems);
-        this.onItemListener = onItemListener;
-    }
-
-    @NonNull
-    @Override
-    public ClientItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.client_item, parent, false);
-        ClientItemViewHolder evh = new ClientItemViewHolder(v, onItemListener);
-        return evh;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
-        ClientListRecyclerItem currentItem = clientListRecyclerItems.get(position);
-
-        holder.imageView.setImageResource(currentItem.getmImageResource());
-        holder.textView1.setText(currentItem.getmText1());
-        holder.textView2.setText(currentItem.getmText2());
-        holder.riskTextView.setText(currentItem.getRiskScore());
-        int intRiskScore = Integer.parseInt(currentItem.getRiskScore());
-        if (intRiskScore >= 10) {
-            holder.riskTextView.setTextColor(Color.parseColor("#b02323"));
-        } else if (intRiskScore < 10 && intRiskScore >= 5) {
-            holder.riskTextView.setTextColor(Color.parseColor("#c45404"));
-        } else {
-            holder.riskTextView.setTextColor(Color.parseColor("#c49704"));
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return clientListRecyclerItems.size();
-    }
-
-
-
 
 
 }

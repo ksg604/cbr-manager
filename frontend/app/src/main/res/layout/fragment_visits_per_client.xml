@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/visitPerClient"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAEDF4"
-    tools:context=".ui.visits.VisitsFragment">
+    tools:context=".ui.visits.VisitsPerClientFragment">
 
     <SearchView
-        android:id="@+id/visitSearchView"
+        android:id="@+id/visitPerClientSearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

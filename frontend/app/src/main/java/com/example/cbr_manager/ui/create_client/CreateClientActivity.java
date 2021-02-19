@@ -1,7 +1,9 @@
 package com.example.cbr_manager.ui.create_client;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -27,9 +29,18 @@ public class CreateClientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_client);
         setTitle("Create Client");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         clientCreatePagerAdapter = new ClientCreatePagerAdapter(getSupportFragmentManager(), 0);
         createClientViewPager = findViewById(R.id.container);
         setupViewPager(createClientViewPager);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupViewPager(ViewPager viewPager) {

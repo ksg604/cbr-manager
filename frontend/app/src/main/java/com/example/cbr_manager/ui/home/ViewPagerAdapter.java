@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         location.setText(client.getLocation());
 
         TextView riskScore = view.findViewById(R.id.textScore);
+        String riskColourCode = Helper.riskToColourCode(client.getRiskScore());
+        riskScore.setTextColor(Color.parseColor(riskColourCode));
         riskScore.setText(Integer.toString(client.getRiskScore()));
 
         view.setOnClickListener(new View.OnClickListener() {

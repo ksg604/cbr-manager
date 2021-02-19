@@ -42,14 +42,9 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         holder.textView1.setText(currentClient.getFullName());
         holder.textView2.setText(currentClient.getLocation());
         holder.riskTextView.setText(Integer.toString(currentClient.getRiskScore()));
-        int intRiskScore = currentClient.getRiskScore();
-        if (intRiskScore >= 10) {
-            holder.riskTextView.setTextColor(Color.parseColor("#b02323"));
-        } else if (intRiskScore < 10 && intRiskScore >= 5) {
-            holder.riskTextView.setTextColor(Color.parseColor("#c45404"));
-        } else {
-            holder.riskTextView.setTextColor(Color.parseColor("#c49704"));
-        }
+
+        String riskColourCode = Helper.riskToColourCode(currentClient.getRiskScore());
+        holder.riskTextView.setTextColor(Color.parseColor(riskColourCode));
     }
 
     @Override

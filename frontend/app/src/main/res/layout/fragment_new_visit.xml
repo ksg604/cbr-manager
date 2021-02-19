@@ -47,7 +47,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="@string/purpose_for_visit"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/purposeChipGroup"
@@ -86,7 +88,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/cbr_type"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/cbrTypeChipGroup"
@@ -125,7 +129,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/date_of_visit"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/fragmentPreambleEditTextDate"
@@ -145,7 +151,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/name_of_client"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/fragmentPreambleClientEditText"
@@ -165,7 +173,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/name_of_cbr_worker"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/fragmentPreambleCBRNameEditText"
@@ -209,7 +219,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="GPS Location of Visit"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextTextLocation"
@@ -229,6 +241,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Drop down list location"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700" />
 
                 <Spinner
@@ -248,6 +262,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:text="Village Number"
                     android:textColor="@color/teal_700" />
 
@@ -257,7 +273,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-
                     android:ems="10"
                     android:hint="Enter Village Number"
                     android:inputType="number" />
@@ -294,6 +309,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="@string/what_was_provided"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -370,6 +387,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of wheelchair"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -393,6 +412,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of prosthetic"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -416,6 +437,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of orthotic"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -439,6 +462,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of wheelchair repairs"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -462,6 +487,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of referral"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -485,6 +512,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of advice"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -508,6 +537,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of advocacy"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -531,6 +562,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Description of encouragement"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -555,6 +588,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:text="Goal met?"
                     android:textColor="@color/teal_700" />
 
@@ -593,6 +628,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="Conclusion"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -640,6 +677,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="What was provided?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -686,6 +725,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of advice"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -708,6 +749,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of advocacy"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -730,6 +773,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of referral"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -752,6 +797,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Description of encouragement"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -774,6 +821,8 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="16dp"
                     android:text="Goals met?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700" />
 
                 <RadioGroup
@@ -810,6 +859,8 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="16dp"
                     android:text="Conclusion"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -854,6 +905,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="What was provided?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -902,6 +955,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of advice"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -924,6 +979,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of advocacy"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -946,6 +1003,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of referral"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -968,6 +1027,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Description of encouragement"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -990,6 +1051,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Goal met?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700" />
 
                 <RadioGroup
@@ -1027,6 +1090,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Conclusion"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
@@ -1056,8 +1121,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         android:text="Submit"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#FFFFFF"
+        android:textColor="#FFF"
+        app:backgroundTint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -19,6 +19,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
+import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment {
         fetchNewestAlert();
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
+        setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
@@ -87,13 +89,22 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void setAlertMoreButtons(){
+
+    public void setAlertButtons(){
         seeMoreTextView = root.findViewById(R.id.seeMoreTextView);
         titleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                Intent intent = new Intent(getContext(), AlertDetailsActivity.class);
+                intent.putExtra("alertId", homeAlertId);
+                startActivity(intent);
+            }
+        });
+        seeMoreTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_nav_dashboard_to_nav_alert_list);
             }
         });
     }

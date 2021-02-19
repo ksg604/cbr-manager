@@ -39,7 +39,7 @@ public class UserCreationFragment extends Fragment {
         editTextPassword = root.findViewById(R.id.editTextPassword);
         editTextEmail = root.findViewById(R.id.editTextBody);
         editTextPasswordConfirm = root.findViewById(R.id.editTextPasswordConfirm);
-        buttonSubmit = root.findViewById(R.id.buttonSubmit);
+        buttonSubmit = root.findViewById(R.id.buttonBack);
         textInputWarning = root.findViewById(R.id.textInputWarning);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

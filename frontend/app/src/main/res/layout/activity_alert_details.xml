@@ -7,49 +7,71 @@
     tools:context=".ui.create_user.UserCreationFragment">
 
     <TextView
-        android:id="@+id/textBody"
+        android:id="@+id/textDate"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="10dp"
+        android:ems="13"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/textTitleHeader"
+        app:layout_constraintStart_toStartOf="@+id/textTitleHeader" />
+
+    <TextView
+        android:id="@+id/textBodyHeader"
         android:layout_width="76dp"
         android:layout_height="20dp"
         android:text="Body:"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@+id/editTextTitle"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
+        app:layout_constraintStart_toStartOf="@+id/textTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
 
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="Submit"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="48dp"
+        android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonMarkAsRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginBottom="48dp"
+        android:text="Mark As Read"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextTitle"
+    <TextView
+        android:id="@+id/textTitle"
         android:layout_width="330dp"
         android:layout_height="45dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="92dp"
         android:ems="13"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textTitle"
+        android:id="@+id/textTitleHeader"
         android:layout_width="76dp"
         android:layout_height="20dp"
         android:text="Title:"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTitle"
-        app:layout_constraintStart_toStartOf="@+id/editTextTitle" />
+        app:layout_constraintBottom_toTopOf="@+id/textTitle"
+        app:layout_constraintStart_toStartOf="@+id/textTitle" />
 
-    <EditText
-        android:id="@+id/editTextBody"
+    <TextView
+        android:id="@+id/textBody"
         android:layout_width="330dp"
         android:layout_height="45dp"
         android:ems="13"
@@ -57,7 +79,7 @@
         android:lines="15"
         android:maxLines="15"
         android:singleLine="false"
-        app:layout_constraintStart_toStartOf="@+id/textBody"
-        app:layout_constraintTop_toBottomOf="@+id/textBody" />
+        app:layout_constraintStart_toStartOf="@+id/textBodyHeader"
+        app:layout_constraintTop_toBottomOf="@+id/textBodyHeader" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

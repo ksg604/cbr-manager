@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.create_alert;
+package com.example.cbr_manager.ui.alert.create_alert;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,15 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 import com.example.cbr_manager.ui.home.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,13 +36,13 @@ public class AlertCreationFragment extends Fragment {
 
         editTextTitle = root.findViewById(R.id.editTextTitle);
         editTextBody = root.findViewById(R.id.editTextBody);
-        buttonSubmit = root.findViewById(R.id.buttonSubmit);
+        buttonSubmit = root.findViewById(R.id.buttonBack);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendAlertCreateRequest();
-                Intent intent = new Intent(getContext(), HomeFragment.class);
-                startActivity(intent);
+                NavHostFragment.findNavController(AlertCreationFragment.this)
+                        .navigate(R.id.nav_alert_list_to_action_nav_dashboard);
             }
         });
         return root;
@@ -56,11 +55,9 @@ public class AlertCreationFragment extends Fragment {
             @Override
             public void onResponse(Call<Alert> call, Response<Alert> response) {
                 if(response.isSuccessful()){
-                    Snackbar.make(root, "Successfully created the alert.", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+
                 } else{
-                    Snackbar.make(root, "Failed to create the alert.", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+
                 }
             }
 

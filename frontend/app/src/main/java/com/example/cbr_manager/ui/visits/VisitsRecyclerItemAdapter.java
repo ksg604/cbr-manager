@@ -27,8 +27,8 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
         public VisitItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-            textView1 = itemView.findViewById(R.id.textView6);
-            textView2 = itemView.findViewById(R.id.textView7);
+            textView1 = itemView.findViewById(R.id.textListTitle);
+            textView2 = itemView.findViewById(R.id.textListBody);
             this.onItemListener = onItemListener;
 
             itemView.setOnClickListener(this);

@@ -202,7 +202,7 @@
                     android:layout_rowWeight="0"
                     android:layout_columnWeight="0"
                     android:layout_gravity="fill_vertical"
-                    app:cardBackgroundColor="@color/teal_200"
+                    app:cardBackgroundColor="#009DC5"
                     app:cardCornerRadius="4dp">
 
                     <LinearLayout
@@ -259,7 +259,7 @@
                     android:layout_rowWeight="0"
                     android:layout_columnWeight="0"
                     android:layout_gravity="fill"
-                    app:cardBackgroundColor="#32d15d"
+                    app:cardBackgroundColor="#56AF31"
                     app:cardCornerRadius="4dp">
 
                     <LinearLayout
@@ -314,7 +314,7 @@
                     android:layout_columnWeight="0"
                     android:layout_gravity="fill"
                     android:layout_margin="4dp"
-                    app:cardBackgroundColor="#c96ff2"
+                    app:cardBackgroundColor="#863B8F"
                     app:cardCornerRadius="4dp">
 
                     <LinearLayout

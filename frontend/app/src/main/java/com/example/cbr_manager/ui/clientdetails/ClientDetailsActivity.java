@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.helper.Helper;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
@@ -41,8 +42,6 @@ public class ClientDetailsActivity extends AppCompatActivity {
 
         setupButtons();
         setupTextViews();
-        setupImageViews();
-
     }
 
     private void getClientInfo(int clientId){
@@ -55,6 +54,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
 
                     // Todo: dynamically set the client info here
                     setupNameTextView(client.getFullName());
+                    setupImageViews(client.getPhotoURL());
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -69,9 +69,9 @@ public class ClientDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setupImageViews() {
+    private void setupImageViews(String imageURL) {
         ImageView displayPicture = findViewById(R.id.clientDetailsDisplayPictureImageView);
-        displayPicture.setImageResource(R.drawable.client_details_placeholder2);
+        Helper.setImageViewFromURL(imageURL, displayPicture);
     }
 
     private void setupTextViews() {

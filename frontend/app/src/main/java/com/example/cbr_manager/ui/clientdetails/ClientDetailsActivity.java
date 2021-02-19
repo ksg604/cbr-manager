@@ -37,6 +37,8 @@ public class ClientDetailsActivity extends AppCompatActivity {
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
+        ImageView locationImageView = findViewById(R.id.profileLocationImageView);
+        locationImageView.setImageResource(R.drawable.ic_place);
         this.clientId = clientId;
 
         setupButtons();

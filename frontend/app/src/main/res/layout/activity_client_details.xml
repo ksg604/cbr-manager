@@ -131,8 +131,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="Back"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#FFF"
+        android:textColor="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -144,8 +143,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
         android:text="New Visit"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#FFF"
+        android:textColor="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -153,12 +151,11 @@
         android:id="@+id/clientDetailsSeeVisitsButton"
         android:layout_width="100dp"
         android:layout_height="80dp"
+        android:layout_marginBottom="16dp"
         android:text="See Visits"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toEndOf="@+id/clientDetailsNewVisitButton"
-        app:layout_constraintTop_toBottomOf="@+id/clientDetailsRiskLevelTextView"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintStart_toEndOf="@+id/clientDetailsNewVisitButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@ public class CreateClientActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_client);
-
+        setTitle("Create Client");
         clientCreatePagerAdapter = new ClientCreatePagerAdapter(getSupportFragmentManager(), 0);
         createClientViewPager = findViewById(R.id.container);
         setupViewPager(createClientViewPager);

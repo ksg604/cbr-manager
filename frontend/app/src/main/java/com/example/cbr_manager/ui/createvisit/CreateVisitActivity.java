@@ -15,7 +15,7 @@ public class CreateVisitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_visit);
-
+        setTitle("Create Visit");
         Intent intent = getIntent();
         clientId = intent.getIntExtra("clientId", -1);
     }

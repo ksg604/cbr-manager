@@ -38,10 +38,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+<!--        <activity-->
+<!--            android:name=".ui.create_client.ConsentFragment"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".ui.create_client.VillageInfoFragment"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".ui.create_client.PersonalInfoFragment"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".ui.create_client.DisabilityFragment"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".ui.create_client.CaregiverInfoFragment"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".ui.create_client.PhotoFragment"-->
+<!--            android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.create_client.CreateClientActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"/>
     </application>
 
 </manifest>

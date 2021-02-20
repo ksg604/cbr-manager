@@ -1,7 +1,7 @@
 package com.example.cbr_manager.service.visit;
 
 import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.service.client.ClientService;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -62,4 +62,5 @@ public class Visit {
     public void setClient(Client client) {
         this.client = client;
     }
+
 }

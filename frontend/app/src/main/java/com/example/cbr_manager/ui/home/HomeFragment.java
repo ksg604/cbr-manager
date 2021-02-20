@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,8 +17,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
+import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 
 import java.util.ArrayList;
@@ -33,21 +38,127 @@ public class HomeFragment extends Fragment {
     ViewPager viewPager;
     ViewPagerAdapter adapter;
     List<Client> clientViewPagerList = new ArrayList<>();
+    Alert newestAlert;
+    TextView seeMoreTextView;
+    TextView dateAlertTextView;
+    TextView titleTextView;
+    int homeAlertId;
+
     private HomeViewModel homeViewModel;
+    View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        root = inflater.inflate(R.layout.fragment_home, container, false);
+        fetchNewestAlert();
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
+        setupImageViews(root);
+        setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
+        setupVisitStats(root);
 
         return root;
+    }
+
+    private void setupImageViews(View root) {
+        ImageView totalVisits = root.findViewById(R.id.dashboardTotalVisitsImageView);
+        totalVisits.setImageResource(R.drawable.ic_date);
+        ImageView clientsVisited = root.findViewById(R.id.dashboardClientsVisitedImageView);
+        clientsVisited.setImageResource(R.drawable.ic_clients);
+        ImageView regionsVisited = root.findViewById(R.id.dashboardRegionsImageView);
+        regionsVisited.setImageResource(R.drawable.ic_place);
+    }
+
+    private void setupVisitStats(View root) {
+        if (apiService.isAuthenticated()) {
+            apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
+                @Override
+                public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
+                    if (response.isSuccessful()) {
+                        List<Visit> visits = response.body();
+                        int totalVisits = visits.size();
+
+                        TextView totalNumberVisits = root.findViewById(R.id.totalVisitsNumberTextView);
+                        totalNumberVisits.setText(Integer.toString(totalVisits));
+                        List<String> differentLocations = new ArrayList<>();
+                        List<Integer> differentClients = new ArrayList<>();
+                        for (Visit eachVisit : visits) {
+                            if (!differentClients.contains(eachVisit.getClientID())) {
+                                differentClients.add(eachVisit.getClientID());
+                            }
+                            if (!differentLocations.contains(eachVisit.getClient().getLocationDropDown())) {
+                                differentLocations.add(eachVisit.getClient().getLocationDropDown());
+                            }
+                        }
+
+                        TextView totalClientsVisited = root.findViewById(R.id.clientsVisitedNumberTextView);
+                        totalClientsVisited.setText(Integer.toString(differentClients.size()));
+
+                        TextView totalLocationsVisited = root.findViewById(R.id.regionsVisitedNumberTextView);
+                        totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Visit>> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    public void fetchNewestAlert() {
+        dateAlertTextView = root.findViewById(R.id.dateAlertTextView);
+        titleTextView = root.findViewById(R.id.announcementTextView);
+        if (apiService.isAuthenticated()) {
+            apiService.alertService.getAlerts().enqueue(new Callback<List<Alert>>() {
+                @Override
+                public void onResponse(Call<List<Alert>> call, Response<List<Alert>> response) {
+                    if (response.isSuccessful()) {
+                        List<Alert> alerts = response.body();
+
+                        if (alerts != null & !alerts.isEmpty()) {
+                            newestAlert = alerts.get(0);
+                            newestAlert.formatDate();
+                            dateAlertTextView.setText("Date posted:  " +newestAlert.getDate());
+                            titleTextView.setText(newestAlert.getTitle());
+                            homeAlertId = newestAlert.getId();
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Alert>> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+
+    public void setAlertButtons(){
+        seeMoreTextView = root.findViewById(R.id.seeMoreTextView);
+        titleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AlertDetailsActivity.class);
+                intent.putExtra("alertId", homeAlertId);
+                startActivity(intent);
+            }
+        });
+        seeMoreTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_nav_dashboard_to_nav_alert_list);
+            }
+        });
     }
 
     public void fetchTopFiveRiskiestClients(List<Client> clientList) {

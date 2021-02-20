@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.usercreation.UserCreationActivity">
+    tools:context=".ui.create_user.UserCreationFragment">
 
     <TextView
-        android:id="@+id/textEmail"
+        android:id="@+id/textBody"
         android:layout_width="76dp"
         android:layout_height="20dp"
         android:text="Email:"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@+id/editTextUserName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUserName" />
+        app:layout_constraintStart_toStartOf="@+id/editTextTitle"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
 
     <TextView
         android:id="@+id/textPassword"
@@ -23,8 +23,8 @@
         android:text="Password:"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@+id/editTextEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintStart_toStartOf="@+id/editTextBody"
+        app:layout_constraintTop_toBottomOf="@+id/editTextBody" />
 
     <TextView
         android:id="@+id/textPasswordConfirm"
@@ -37,16 +37,15 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
     <Button
-        android:id="@+id/buttonSubmit"
+        android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onRegisterButtonClick"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="@+id/editTextPasswordConfirm"
         app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirm" />
 
     <EditText
-        android:id="@+id/editTextUserName"
+        android:id="@+id/editTextTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
@@ -58,23 +57,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textUserName"
+        android:id="@+id/textTitle"
         android:layout_width="76dp"
         android:layout_height="20dp"
         android:text="User Name:"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/editTextUserName"
-        app:layout_constraintStart_toStartOf="@+id/editTextUserName" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextTitle"
+        app:layout_constraintStart_toStartOf="@+id/editTextTitle" />
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/editTextBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="13"
         android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/textEmail"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+        app:layout_constraintStart_toStartOf="@+id/textBody"
+        app:layout_constraintTop_toBottomOf="@+id/textBody" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -111,6 +110,6 @@
         android:textColor="#E13D3D"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/editTextPasswordConfirm"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSubmit" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

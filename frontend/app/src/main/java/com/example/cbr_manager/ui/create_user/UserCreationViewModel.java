@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.usercreation;
+package com.example.cbr_manager.ui.create_user;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

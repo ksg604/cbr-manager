@@ -103,7 +103,7 @@ Android Emulator can be use on [Windows](#windows), [Mac](#mac) and [Linux](#lin
  
  you will need to restart your computer.
 
-3. If you are using AMD processor go ahead to [this step](#amd-processor), otherwise if you are using Intel processor continue on.
+3. If you are using AMD processor go to [this step](#amd-processor), otherwise if you are using Intel processor continue on.
 
 ##### Intel processor
 1. Open Android studio and go to Configure>SDK manager>SDK Update sites 

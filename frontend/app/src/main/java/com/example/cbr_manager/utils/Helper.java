@@ -1,4 +1,4 @@
-package com.example.cbr_manager.helper;
+package com.example.cbr_manager.utils;
 
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
@@ -30,5 +30,15 @@ public class Helper {
     public static void setImageViewFromURL(String url, ImageView view){
         Picasso picasso = Picasso.get();
         picasso.load(url).into(view);
+    }
+
+    public static String riskToColourCode(int riskScore){
+        if (riskScore >= 10) {
+            return "#b02323";
+        } else if (riskScore < 10 && riskScore >= 5) {
+            return "#c45404";
+        } else {
+            return "#c49704";
+        }
     }
 }

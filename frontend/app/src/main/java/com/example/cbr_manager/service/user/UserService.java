@@ -1,7 +1,7 @@
 package com.example.cbr_manager.service.user;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.helper.Helper;
+import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.auth.AuthResponse;
 
 import java.util.List;

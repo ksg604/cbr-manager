@@ -44,7 +44,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
 
         setupButtons();
         setupTextViews();
-        setupImageViews();
+//        setupImageViews();
         setupVectorImages();
 
     }
@@ -77,7 +77,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                     // Todo: dynamically set the client info here
                     setupNameTextView(client.getFullName());
                     setupImageViews(client.getPhotoURL());
-                } else {
+
                     setupLocationTextView(client.getLocation());
                     setupAgeTextView(client.getAge().toString());
                     setupGenderTextView(client.getGender());
@@ -86,7 +86,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                     setupEducationTextView(client.getEducationGoal());
                     setupDisabilityTextView(client.getDisability());
                     setupRiskLevelTextView(client.getRiskScore().toString());
-                } else{
+                } else {
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }

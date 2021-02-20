@@ -264,5 +264,49 @@ This was an additional task undertook to ensure that the interface has a consist
 4. Are there any comparable sections in apps that you enivision this app could look like (for example, the profile section of the Facebook app, the lists of songs in the Spotify app)? This could help us to modify the interface to look more as you imagine it to look.
 
 
+## Andrew's Contribution
+
+### Creation of New Users
+
+**User story:**  (#1) 
+As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
+
+* User creation(new user registration),including making the user creation page in android and uploading the new user info to the backend. 
+
+**Unfinished parts:**
+
+1. Implementing the different levels of permission for each type of user (admin being able to delete/create new users and send alerts while normal users should not)
+
+2. Other requirements related to management that comes up during feedback
+
+**Questions for the customer:**
+
+1. Is two levels of user permission enough? (CBR workers, admin) Or do we need a seperate user type for another class of people, e.g. Clinicians
+
+2. If so, what should the difference be in what data and functions they can access?
+
+3. Would deleting a user be of priority? Or would disabling a user be fine? (other fields such as visits/clients have dependencies on user information and would need to be deleted as well)
+
+
+### Alerts Creation, List and Details
+
+**User story:**  (#7) 
+As a user, I want to be able to see alerts from the dashboard, so I can prioritize clients/activities based on urgency
+
+* The alerts Object was created both in the backend and frontend, so the admin/user can broadcast alert messages to the server where other users will retrieve from. 
+* The alerts include a title, body and date. 
+* The newest alerts(currently 1) show up in the the dashboard
+
+**Unfinished parts:**
+
+1. Adding the ability to specify which users the alert messages are desginated to.
+
+2. Adding an urgency tag/flag and the ability to mark each message as read.
+
+**Questions for the customer:**
+
+1. Are there any additional function apart from "urgency tag/flag and mark each message as read" the customer needs?
+
+2. Any UI tinkering needed on the alert list/ alert details pages? 
 
 

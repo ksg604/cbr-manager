@@ -7,3 +7,5 @@ pytz==2020.5
 sqlparse==0.4.1
 requests
 Pillow
+gunicorn
+django-heroku

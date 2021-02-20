@@ -1,7 +1,5 @@
 package com.example.cbr_manager.ui.clientdetails;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +7,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
@@ -65,16 +66,18 @@ public class ClientDetailsActivity extends AppCompatActivity {
         riskScore.setImageResource(R.drawable.ic_risk);
     }
 
-    private void getClientInfo(int clientId){
+    private void getClientInfo(int clientId) {
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Client client = response.body();
 
                     // Todo: dynamically set the client info here
                     setupNameTextView(client.getFullName());
+                    setupImageViews(client.getPhotoURL());
+                } else {
                     setupLocationTextView(client.getLocation());
                     setupAgeTextView(client.getAge().toString());
                     setupGenderTextView(client.getGender());
@@ -97,9 +100,9 @@ public class ClientDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setupImageViews() {
+    private void setupImageViews(String imageURL) {
         ImageView displayPicture = findViewById(R.id.clientDetailsDisplayPictureImageView);
-        displayPicture.setImageResource(R.drawable.client_details_placeholder);
+        Helper.setImageViewFromURL(imageURL, displayPicture);
     }
 
     private void setupTextViews() {

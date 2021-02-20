@@ -23,7 +23,7 @@
             app:cardCornerRadius="50dp">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="0dp"
@@ -33,7 +33,7 @@
 
 
         <TextView
-            android:id="@+id/textListTitle"
+            android:id="@+id/textViewFullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -48,7 +48,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textListBody"
+            android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -61,7 +61,7 @@
             android:text="Burnaby Region" />
 
         <TextView
-            android:id="@+id/textListDate"
+            android:id="@+id/textViewRiskScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

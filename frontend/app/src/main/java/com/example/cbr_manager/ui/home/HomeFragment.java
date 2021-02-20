@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
+import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 
@@ -53,12 +55,61 @@ public class HomeFragment extends Fragment {
         fetchNewestAlert();
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
+        setupImageViews(root);
         setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
+        setupVisitStats(root);
 
         return root;
+    }
+
+    private void setupImageViews(View root) {
+        ImageView totalVisits = root.findViewById(R.id.dashboardTotalVisitsImageView);
+        totalVisits.setImageResource(R.drawable.ic_date);
+        ImageView clientsVisited = root.findViewById(R.id.dashboardClientsVisitedImageView);
+        clientsVisited.setImageResource(R.drawable.ic_clients);
+        ImageView regionsVisited = root.findViewById(R.id.dashboardRegionsImageView);
+        regionsVisited.setImageResource(R.drawable.ic_place);
+    }
+
+    private void setupVisitStats(View root) {
+        if (apiService.isAuthenticated()) {
+            apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
+                @Override
+                public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
+                    if (response.isSuccessful()) {
+                        List<Visit> visits = response.body();
+                        int totalVisits = visits.size();
+
+                        TextView totalNumberVisits = root.findViewById(R.id.totalVisitsNumberTextView);
+                        totalNumberVisits.setText(Integer.toString(totalVisits));
+                        List<String> differentLocations = new ArrayList<>();
+                        List<Integer> differentClients = new ArrayList<>();
+                        for (Visit eachVisit : visits) {
+                            if (!differentClients.contains(eachVisit.getClientID())) {
+                                differentClients.add(eachVisit.getClientID());
+                            }
+                            if (!differentLocations.contains(eachVisit.getClient().getLocationDropDown())) {
+                                differentLocations.add(eachVisit.getClient().getLocationDropDown());
+                            }
+                        }
+
+                        TextView totalClientsVisited = root.findViewById(R.id.clientsVisitedNumberTextView);
+                        totalClientsVisited.setText(Integer.toString(differentClients.size()));
+
+                        TextView totalLocationsVisited = root.findViewById(R.id.regionsVisitedNumberTextView);
+                        totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Visit>> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     public void fetchNewestAlert() {

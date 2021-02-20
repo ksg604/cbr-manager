@@ -217,11 +217,12 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:id="@+id/imageView4"
+                                android:id="@+id/dashboardTotalVisitsImageView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginTop="16dp"
+                                android:layout_marginRight="8dp"
                                 android:layout_weight="1"
                                 tools:srcCompat="@drawable/ic_date" />
 
@@ -233,7 +234,7 @@
                                 android:layout_marginRight="16dp"
                                 android:gravity="center"
                                 android:text="Total Visits"
-                                android:textAllCaps="true"
+                                android:textAllCaps="false"
                                 android:textColor="#000000"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -269,16 +270,18 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:id="@+id/imageView5"
+                                android:id="@+id/dashboardClientsVisitedImageView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginLeft="16dp"
+                                android:layout_marginRight="8dp"
                                 android:layout_weight="1"
                                 tools:srcCompat="@drawable/ic_clients" />
 
@@ -289,7 +292,7 @@
                                 android:layout_marginTop="16dp"
                                 android:layout_marginRight="16dp"
                                 android:text="Clients Visited"
-                                android:textAllCaps="true"
+                                android:textAllCaps="false"
                                 android:textColor="#000000"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -331,9 +334,10 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:id="@+id/imageView6"
+                                android:id="@+id/dashboardRegionsImageView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="8dp"
                                 android:layout_weight="1"
                                 tools:srcCompat="@drawable/ic_place" />
 
@@ -376,7 +380,7 @@
             app:layout_constraintTop_toBottomOf="@+id/outstandingVisitsConstraintLayout">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/dashboardReferralTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

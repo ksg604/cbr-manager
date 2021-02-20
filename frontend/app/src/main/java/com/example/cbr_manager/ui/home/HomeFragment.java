@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class HomeFragment extends Fragment {
         fetchNewestAlert();
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
+        setupImageViews(root);
         setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
@@ -61,6 +63,15 @@ public class HomeFragment extends Fragment {
         setupVisitStats(root);
 
         return root;
+    }
+
+    private void setupImageViews(View root) {
+        ImageView totalVisits = root.findViewById(R.id.dashboardTotalVisitsImageView);
+        totalVisits.setImageResource(R.drawable.ic_date);
+        ImageView clientsVisited = root.findViewById(R.id.dashboardClientsVisitedImageView);
+        clientsVisited.setImageResource(R.drawable.ic_clients);
+        ImageView regionsVisited = root.findViewById(R.id.dashboardRegionsImageView);
+        regionsVisited.setImageResource(R.drawable.ic_place);
     }
 
     private void setupVisitStats(View root) {

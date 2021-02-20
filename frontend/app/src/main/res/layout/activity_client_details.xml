@@ -78,7 +78,7 @@
                     tools:srcCompat="@drawable/ic_person" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/clientDetailsGenderTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -116,7 +116,7 @@
                     tools:srcCompat="@drawable/ic_age" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/clientDetailsAgeTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -230,7 +230,7 @@
                     tools:srcCompat="@drawable/ic_disable" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/clientDetailsDisabilityTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -268,7 +268,7 @@
                     tools:srcCompat="@drawable/ic_health" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/clientDetailsRiskTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -306,7 +306,7 @@
                     tools:srcCompat="@drawable/ic_social" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/clientDetailsSocialTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -344,7 +344,7 @@
                     tools:srcCompat="@drawable/ic_risk" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/clientDetailsHealthTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

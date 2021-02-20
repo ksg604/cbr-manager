@@ -73,7 +73,8 @@ public class HomeFragment extends Fragment {
 
                         if (alerts != null & !alerts.isEmpty()) {
                             newestAlert = alerts.get(0);
-                            dateAlertTextView.setText("Date posted: " +newestAlert.getDate());
+                            newestAlert.formatDate();
+                            dateAlertTextView.setText("Date posted:  " +newestAlert.getDate());
                             titleTextView.setText(newestAlert.getTitle());
                             homeAlertId = newestAlert.getId();
                         }

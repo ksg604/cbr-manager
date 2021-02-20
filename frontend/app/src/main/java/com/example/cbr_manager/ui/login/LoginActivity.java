@@ -26,7 +26,10 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
+import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
+import com.example.cbr_manager.ui.visits.VisitsActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -154,6 +157,16 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        final Button routeButton = findViewById(R.id.routeBotton);
+        routeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent visitsIntent = new Intent(LoginActivity.this, VisitsActivity.class);
+                startActivity(visitsIntent);
+            }
+        });
+
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
@@ -165,4 +178,6 @@ public class LoginActivity extends AppCompatActivity {
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
+
+
 }

@@ -30,13 +30,14 @@ public class ClientDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_details);
+        /*
         parentLayout = findViewById(android.R.id.content);
 
         Intent intent = getIntent();
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
-        this.clientId = clientId;
+        this.clientId = clientId;*/
 
         setupButtons();
         setupTextViews();

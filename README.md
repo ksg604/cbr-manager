@@ -82,5 +82,13 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
 
 `app/src/build.gradle` contains the dependencies for the application.
 
+# Project Build Requirements
+
+## Android Studio
+1. Download the latest version of Android studio from [this link](https://developer.android.com/studio), available for Windows, Mac, Linux and Chrome OS.
+2. Follow the download and installation instruction, meanwhile you can set up [Django environment](##django-virtual-environment)
+
+## Django Virtual environment
+
 
 

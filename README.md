@@ -86,7 +86,7 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
 
 ## Android Studio
 1. Download the latest version of Android studio from [this link](https://developer.android.com/studio), available for Windows, Mac, Linux and Chrome OS.
-2. Follow the download and installation instruction until you get to [this screen](/readme_images/setup_01)
+2. Follow the download and installation instruction until you get to ![this screen](/readme_images/setup_01)
 
 ## Django Virtual environment
 

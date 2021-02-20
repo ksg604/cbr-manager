@@ -95,7 +95,7 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
 Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux](####linux)
 
 #### Windows
-1. Go to Control Panel and search `windows feature` on the search box.
+1. Go to Control Panel and search `feature` on the search box.
 
 2. Click on `Turn windows feature on/off` and make sure Hyper-V/Windows Hypervisor Platform or any other virtual machine features are unchecked
 

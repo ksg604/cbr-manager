@@ -43,8 +43,6 @@ public class ClientDetailsActivity extends AppCompatActivity {
         this.clientId = clientId;
 
         setupButtons();
-        setupTextViews();
-//        setupImageViews();
         setupVectorImages();
 
     }
@@ -103,17 +101,6 @@ public class ClientDetailsActivity extends AppCompatActivity {
     private void setupImageViews(String imageURL) {
         ImageView displayPicture = findViewById(R.id.clientDetailsDisplayPictureImageView);
         Helper.setImageViewFromURL(imageURL, displayPicture);
-    }
-
-    private void setupTextViews() {
-//        setupGenderTextView();
-//        setupLocationTextView();
-//        setupAgeTextView();
-//        setupDisabilityTextView();
-//        setupRiskLevelTextView();
-//        setupHealthTextView();
-//        setupEducationTextView();
-//        setupSocialTextView();
     }
 
     private void setupNameTextView(String fullName) {

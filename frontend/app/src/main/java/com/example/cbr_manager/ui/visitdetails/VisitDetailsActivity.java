@@ -33,6 +33,8 @@ public class VisitDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visit_details);
         parentLayout = findViewById(android.R.id.content);
 
+        getSupportActionBar().hide();
+
         Intent intent = getIntent();
         String additionalInfo = intent.getStringExtra("additionalInfo");
         int clientId = intent.getIntExtra("clientId", -1);
@@ -42,7 +44,18 @@ public class VisitDetailsActivity extends AppCompatActivity {
         setupButtons();
         setupTextViews();
         setupImageViews();
+        setupBackImageViewButton();
 
+    }
+
+    private void setupBackImageViewButton() {
+        ImageView backButtonImageView = findViewById(R.id.visitDetailsBackImageView);
+        backButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void getClientInfo(int clientId){
@@ -71,7 +84,7 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
     private void setupImageViews() {
         ImageView displayPicture = findViewById(R.id.visitDetailsDisplayPictureImageView);
-        displayPicture.setImageResource(R.drawable.client_details_placeholder2);
+        displayPicture.setImageResource(R.drawable.client_details_placeholder);
     }
 
     private void setupTextViews() {

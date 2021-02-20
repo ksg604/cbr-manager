@@ -6,78 +6,101 @@
     android:layout_height="match_parent"
     tools:context=".ui.visitdetails.VisitDetailsActivity">
 
-    <ImageView
-        android:id="@+id/visitDetailsDisplayPictureImageView"
-        android:layout_width="177dp"
-        android:layout_height="207dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toEndOf="@+id/visitDetailsNameTextView"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/visitDetailsNameTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Visit Name"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/visitDetailsLocationTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="24dp"
-        android:text="Location"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsNameTextView" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/high_priority_bg"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/visitDetailsDateTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="4dp"
-        android:text="Date"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsLocationTextView" />
+                <ImageView
+                    android:id="@+id/visitDetailsBackImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_back2" />
 
-    <TextView
-        android:id="@+id/visitDetailsAdditionalInfoTextView"
-        android:layout_width="190dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:text="Additional Info"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsDateTextView" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+
+                    app:cardCornerRadius="75dp">
+
+                    <ImageView
+                        android:id="@+id/visitDetailsDisplayPictureImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/visitDetailsNameTextView"
+                    android:layout_width="190dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="Visit Name"
+                    android:textColor="#FFF"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/visitDetailsLocationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="32dp"
+                android:text="Location"
+                android:textSize="24sp"
+                app:drawableLeftCompat="@drawable/ic_place" />
+
+            <TextView
+                android:id="@+id/visitDetailsDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_date"
+                android:text="Date"
+                android:textSize="24sp"
+                android:layout_margin="32dp"
+                app:drawableStartCompat="@drawable/ic_date" />
+
+            <TextView
+                android:id="@+id/visitDetailsAdditionalInfoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Additional Info"
+                android:layout_margin="32dp"
+                android:textSize="24sp"
+                app:drawableLeftCompat="@drawable/ic_info" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/visitDetailsBackButton"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="420dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitDetailsDisplayPictureImageView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

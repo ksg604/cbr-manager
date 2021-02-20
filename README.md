@@ -185,4 +185,72 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 
 
+## Peter's Contribution
+
+### Dashboard
+**User story:** As a user, I want to be able to see alerts from the dashboard, so I can priorituze clients based on urgency
+
+**User story:** As an admin, I want to be able to view various CBR statistics, so I can monitor the CBR team's progress.
+* The dashboard is split into sections: alerts, high priority clients, visits, and referrals (for the future).  The Alerts section shows the most recent alert sent by an admin. The High Priority Clients Section shows the top 5 highest risk clients, along with two buttons to view all clients and add clients.
+* The Visits section show statistics about visits: total visits made, locations visited, total clients visited.
+
+**Unfinished parts:**
+1. The referral section of the dashboard needs to be filled out.
+2. Further statistics on clients likely to be added (Ex: total number of clients, "hotspot" locations that have many clients, ...)
+
+**Questions for the customer:**
+1. What is your impression of the dashboard? Are there any further statistics you would like the dashboard to show?
+2. Are there any sections you would like to see added to the dashboard?
+3. In slide 16, it seems that "dashboard with alert system" is different from the "home" page. Is there a difference between dashboard and home page, and would you like a "home" page separate from the dashboard?
+
+### Clients List
+**User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
+* The client list currently shows the profile picture, name, location, and risk rating for each client. The client and then be selected so the user may view additional details and create a visit.
+
+**Unfinished:**
+
+1. The Client list is currently not searchable.
+2. Determine how the list should be sorted.
+
+**Questions for the customer:**
+
+1. Would you like any additional information to be shown for each client on the list?
+2. Currently, the list is sorted by the date the client was added. How would you like the list to be sorted? (By last name, by risk level, by first name, ...)
+3. Are there any other features you would like added to the client list?
+
+### Creation of New Visits
+
+**User Story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties.
+
+The New Visit Survey follows the logic listed:
+1. If CBR is not selected as a purpose, then all provision sections are visible.
+2. If CBR is selected as a purpose, the provisions are hidden unless the user selects a provision to be visible using the chips.
+3. Descriptions of provisions and goal conclusion descriptions are hidden unless the user selects the provision chip or selects the "goal met" radio button.
+
+The flow of the survey is an adaptation of our Piazza post, question #47.
+
+**Unfinished parts:**
+
+1. Implementation of required fields is missing. User must not be able to submit a visit survey unless required fields are filled out. 
+
+**Questions for the customer:**
+
+1. Is the flow of the visit survey correct? It seems that if CBR is **NOT** selected as a purpose, then the provisions were to still be shown. They are only optionally hidden when CBR **IS** selected as a purpose.
+
+2. In terms of user interface, are there any further suggestions for how the survey should look? Would you like the font sizes to be larger? Would you like more visuals such as colours or images?
+
+
+### User Interface Consistency
+
+This was an additional task undertook to ensure that the interface has a consistency (such as the same font, same background colour for buttons).
+
+**Questions for the customer:**
+
+1. Overall, what is your impression of how the app looks? Are there any particular sections which especially do not resonate with you?
+2. Regarding the colour pallette, we have chosen purple to be the app's main colour. Do you have any other colour scheme in mind?
+3. We have tried to include a minimal amount of colours, leaving most of the app to be white. In terms of visuals, would you like the user interface to be more colourful? Or to have more images?
+4. Are there any comparable sections in apps that you enivision this app could look like (for example, the profile section of the Facebook app, the lists of songs in the Spotify app)? This could help us to modify the interface to look more as you imagine it to.
+
+
+
 

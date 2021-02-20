@@ -92,7 +92,7 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
  ![Android studio](/readme-images/build-setup01.PNG)
 
 ### Android Emulator
-Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux](####linux)
+Android Emulator can be use on [Windows](#windows), [Mac](#mac) and [Linux](#linux)
 
 #### Windows
 1. Go to Control Panel and search `feature` on the search box.
@@ -103,7 +103,7 @@ Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux
  
  you will need to restart your computer.
 
-3. If you are using AMD processor go ahead to [this step](#####amd-processor), otherwise if you are using Intel processor continue on.
+3. If you are using AMD processor go ahead to [this step](#amd-processor), otherwise if you are using Intel processor continue on.
 
 ##### Intel processor
 1. Open Android studio and go to Configure>SDK manager>SDK Update sites 
@@ -118,7 +118,7 @@ Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux
 
 if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
-4. Go to [AVD Setup](####android-virtual-device-setup)
+4. Go to [AVD Setup](#android-virtual-device-setup)
 
 ##### AMD processor
 1. Open Android studio and go to Configure>SDK manager>SDK Tool
@@ -132,8 +132,9 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 4. Go to [AVD Setup](#android-virtual-device-setup)
 
 #### Mac
-On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervisor.Framework, if your MacOS version is lower you can go to Android studio Configure>SDK Manager>SDK Update sites and install Intel HAXM
+1. On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervisor.Framework, if your MacOS version is lower you can go to Android studio Configure>SDK Manager>SDK Update sites and install Intel HAXM
 
+2. Go to [AVD Setup](#android-virtual-device-setup)
 #### Linux
 1. For both Intel and AMD processor you need to install KVM, first check whether kvm is already installed on your system by using cpu-checker and kvm-ok commmand, run these commands in order
 
@@ -155,6 +156,7 @@ On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervis
  sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils ia32-libs-multiarch
  ```
 
+3. Go to [AVD Setup](#android-virtual-device-setup)
 #### Android Virtual Device Setup
 1. Go to Android studio>Configure>AVD Manager 
 

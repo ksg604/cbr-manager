@@ -94,14 +94,18 @@ Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux
 2. Click on `Turn windows feature on/off` and make sure Hyper-V/Windows Hypervisor Platform or any other virtual machine features are ![unchecked](/readme_images/build-setup02), you will need to restart your computer.
 3. If you are using AMD graphic go ahead to [this step](#####amd-graphic-card), otherwise if you are using Intel graphic card continue on.
 ##### Intel graphic card
-1. Open Android studio and go to SDK manager>![SDK Update sites](/readme_images/build-setup05)
-
+1. Open Android studio and go to Configure>SDK manager>![SDK Update sites](/readme_images/build-setup03)
+2. Select and install Intel HAXM
+3. Follow the instruction, after installation you can check if it is installed correctly by typing `sc query intelhaxm` on the Window ![command prompt](/readme_images/build-setup04), if you can see `STATE 4 RUNNING` it mean the installation run correctly.
+4. Go to [AVD Setup](####android-virtual-device-setup)
 ##### AMD graphic card
-1. Open Android studio and go to SDK manager>![SDK Tool](/readme_images/build-setup04)
+1. Open Android studio and go to Configure>SDK manager>![SDK Tool](/readme_images/build-setup05)
 2. 
 #### Mac
 
 #### Linux
+
+#### Android Virtual Device Setup
 
 ## Django Virtual environment
 

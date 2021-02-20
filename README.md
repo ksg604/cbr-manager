@@ -82,5 +82,107 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
 
 `app/src/build.gradle` contains the dependencies for the application.
 
+# Project Build Requirements
+
+## Android Studio
+1. Download the latest version of Android studio from [this link](https://developer.android.com/studio), available for Windows, Mac, Linux and Chrome OS.
+
+2. Follow the download and installation instruction until you open Android Studio
+
+ ![Android studio](/readme-images/build-setup01.PNG)
+
+### Android Emulator
+Android Emulator can be use on [Windows](#windows), [Mac](#mac) and [Linux](#linux)
+
+#### Windows
+1. Go to Control Panel and search `feature` on the search box.
+
+2. Click on `Turn windows feature on/off` and make sure Hyper-V/Windows Hypervisor Platform or any other virtual machine features are unchecked
+
+ ![unchecked](/readme-images/build-setup02.PNG) 
+ 
+ you will need to restart your computer.
+
+3. If you are using AMD processor go to [this step](#amd-processor), otherwise if you are using Intel processor continue on.
+
+##### Intel processor
+1. Open Android studio and go to Configure>SDK manager>SDK Update sites 
+
+ ![SDK Update sites](/readme-images/build-setup03.PNG)
+
+2. Select and install Intel HAXM
+
+3. Follow the instruction, after installation you can check if it is installed correctly by typing `sc query intelhaxm` on the Window command prompt
+
+ ![command prompt](/readme-images/build-setup04.PNG)
+
+if you can see `STATE 4 RUNNING` it mean the installation run correctly
+
+4. Go to [AVD Setup](#android-virtual-device-setup)
+
+##### AMD processor
+1. Open Android studio and go to Configure>SDK manager>SDK Tool
+
+ ![SDK Tool](/readme-images/build-setup05.PNG)
+
+2. Select and install Android Emulator Hypervisor Driver for AMD Processors.
+
+3 Follow the instruction, after installation you can check if it is installed correctly by typing `sc query gvm` on the Window command prompt, if you can see `STATE 4 RUNNING` it means the installation run correctly.
+
+4. Go to [AVD Setup](#android-virtual-device-setup)
+
+#### Mac
+1. On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervisor.Framework, if your MacOS version is lower you can go to Android studio Configure>SDK Manager>SDK Update sites and install Intel HAXM
+
+2. Go to [AVD Setup](#android-virtual-device-setup)
+#### Linux
+1. For both Intel and AMD processor you need to install KVM, first check whether kvm is already installed on your system by using cpu-checker and kvm-ok commmand, run these commands in order
+
+ cpu-checker
+ ```
+ sudo apt-get install cpu-checker
+ egrep -c '(vmx|svm)' /proc/cpuinfo
+ ```
+
+ kvm-ok
+ ```
+ kvm-ok
+ ```
+
+ Final result should show `KVM acceleration can be used`
+
+2. If KVM is not installed on your system, run the following command
+ ```
+ sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils ia32-libs-multiarch
+ ```
+
+3. Go to [AVD Setup](#android-virtual-device-setup)
+#### Android Virtual Device Setup
+1. Go to Android studio>Configure>AVD Manager 
+
+ ![AVD Manager](/readme-images/build-setup06.PNG)
+
+2. Create the virtual device you want to test the application on, this application is designed for Phone type android devices. API level can be as high as you want - for reference, according to April 2020 survey, over 30% of android devices use Pie API level 28 (also called Pie 9)
+
+3. Finish the creation process and wait for download.
+
+## Django Virtual environment
+1. Download and install Python 3.9 from [this link](https://www.python.org/downloads/release/python-390/)
+
+2. Open the project backend folder [(backend directory explanation)](#backend-directory)
+
+3. Open a terminal or Windows Command prompt in this directory and run the following commands in order
+ ```
+ python3 -m venv venv
+ For Linux: source venv/bin/activate
+ For Windows: venv\Scripts\activate
+
+ pip install django
+ pip install djangorestframework
+ ```
+
+4. Follow the instruction from [How to setup local development](#how-to-setup-local-development)
+
+
 
 

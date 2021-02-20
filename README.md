@@ -87,6 +87,15 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
 ## Android Studio
 1. Download the latest version of Android studio from [this link](https://developer.android.com/studio), available for Windows, Mac, Linux and Chrome OS.
 2. Follow the download and installation instruction until you get to ![this screen](/readme_images/setup_01)
+### Android Emulator
+Android Emulator can be use on both [Windows](####windows) and [Linux](####linux)
+#### Windows
+If you are using Intel graphic go ahead to [this step](#####intel-graphic-card), otherwise if you are using AMD graphic card continue on.
+##### AMD graphic card
+
+##### Intel graphic card
+
+#### Linux
 
 ## Django Virtual environment
 

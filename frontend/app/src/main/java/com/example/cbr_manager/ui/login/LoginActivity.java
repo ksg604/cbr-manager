@@ -158,15 +158,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button routeButton = findViewById(R.id.routeBotton);
-        routeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent visitsIntent = new Intent(LoginActivity.this, VisitsActivity.class);
-                startActivity(visitsIntent);
-            }
-        });
-
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

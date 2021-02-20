@@ -103,9 +103,9 @@ Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux
  
  you will need to restart your computer.
 
-3. If you are using AMD graphic go ahead to [this step](#####amd-graphic-card), otherwise if you are using Intel graphic card continue on.
+3. If you are using AMD processor go ahead to [this step](#####amd-processor), otherwise if you are using Intel processor continue on.
 
-##### Intel graphic card
+##### Intel processor
 1. Open Android studio and go to Configure>SDK manager>SDK Update sites 
 
  ![SDK Update sites](/readme-images/build-setup03.PNG)
@@ -120,21 +120,43 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 4. Go to [AVD Setup](####android-virtual-device-setup)
 
-##### AMD graphic card
+##### AMD processor
 1. Open Android studio and go to Configure>SDK manager>SDK Tool
 
- ![SDK Tool](/readme-images/build-setup05)
+ ![SDK Tool](/readme-images/build-setup05.PNG)
 
-2. 
+2. Select and install Android Emulator Hypervisor Driver for AMD Processors.
+
+3 Follow the instruction, after installation you can check if it is installed correctly by typing `sc query gvm` on the Window command prompt, if you can see `STATE 4 RUNNING` it means the installation run correctly.
+
+4. Go to [AVD Setup](####android-virtual-device-setup)
 
 #### Mac
-
+On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervisor.Framework, if your MacOS version is lower you can go to Android studio Configure>SDK Manager>SDK Update sites and install Intel HAXM
 
 #### Linux
+1. For both Intel and AMD processor you need to install KVM, first check whether kvm is already installed on your system by using cpu-checker and kvm-ok commmand, run these commands in order
 
+ cpu-checker
+ ```
+ sudo apt-get install cpu-checker
+ egrep -c '(vmx|svm)' /proc/cpuinfo
+ ```
+
+ kvm-ok
+ ```
+ kvm-ok
+ ```
+
+ Final result should show `KVM acceleration can be used`
+
+2. If KVM is not installed on your system, run the following command
+ ```
+ sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils ia32-libs-multiarch
+ ```
 
 #### Android Virtual Device Setup
-
+1. 
 
 
 

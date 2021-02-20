@@ -188,6 +188,9 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 ## Peter's Contribution
 
 ### Dashboard
+
+The dashboard was created with the vision of something like a newsfeed, where a user can view important information such as the alerts and statistics drawn from all sections of the app. 
+
 **User story:** As a user, I want to be able to see alerts from the dashboard, so I can priorituze clients based on urgency
 
 **User story:** As an admin, I want to be able to view various CBR statistics, so I can monitor the CBR team's progress.
@@ -204,6 +207,8 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 3. In slide 16, it seems that "dashboard with alert system" is different from the "home" page. Is there a difference between dashboard and home page, and would you like a "home" page separate from the dashboard?
 
 ### Clients List
+The clients list allows the user to quickly view basic information about all clients. If necessary, the user may select a user in order to view more specific information.
+
 **User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
 * The client list currently shows the profile picture, name, location, and risk rating for each client. The client and then be selected so the user may view additional details and create a visit.
 
@@ -219,6 +224,8 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 3. Are there any other features you would like added to the client list?
 
 ### Creation of New Visits
+
+The creation of a new visit can currently be accessed through a button found in the details of a client. The survey is compiled into one scrollable activity. Once submitted, the data is uploaded to the backend.
 
 **User Story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties.
 
@@ -239,6 +246,11 @@ The flow of the survey is an adaptation of our Piazza post, question #47.
 
 2. In terms of user interface, are there any further suggestions for how the survey should look? Would you like the font sizes to be larger? Would you like more visuals such as colours or images?
 
+### Navigation Drawer
+The navigation bar acts as an index for the app, where the user can quickly jump between different sections such as client list, visit list, dashboard, and client creation.
+
+**Unfinished parts:**
+1. A logout/close button within the navigation drawer.
 
 ### User Interface Consistency
 
@@ -249,7 +261,7 @@ This was an additional task undertook to ensure that the interface has a consist
 1. Overall, what is your impression of how the app looks? Are there any particular sections which especially do not resonate with you?
 2. Regarding the colour pallette, we have chosen purple to be the app's main colour. Do you have any other colour scheme in mind?
 3. We have tried to include a minimal amount of colours, leaving most of the app to be white. In terms of visuals, would you like the user interface to be more colourful? Or to have more images?
-4. Are there any comparable sections in apps that you enivision this app could look like (for example, the profile section of the Facebook app, the lists of songs in the Spotify app)? This could help us to modify the interface to look more as you imagine it to.
+4. Are there any comparable sections in apps that you enivision this app could look like (for example, the profile section of the Facebook app, the lists of songs in the Spotify app)? This could help us to modify the interface to look more as you imagine it to look.
 
 
 

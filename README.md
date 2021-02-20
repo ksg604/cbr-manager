@@ -87,7 +87,9 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
 ## Android Studio
 1. Download the latest version of Android studio from [this link](https://developer.android.com/studio), available for Windows, Mac, Linux and Chrome OS.
 
-2. Follow the download and installation instruction until you open Android Studio ![Android studio](/readme-images/build-setup01)
+2. Follow the download and installation instruction until you open Android Studio
+
+ ![Android studio](/readme-images/build-setup01.PNG)
 
 ### Android Emulator
 Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux](####linux)
@@ -95,23 +97,33 @@ Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux
 #### Windows
 1. Go to Control Panel and search `windows feature` on the search box.
 
-2. Click on `Turn windows feature on/off` and make sure Hyper-V/Windows Hypervisor Platform or any other virtual machine features are unchecked ![unchecked](/readme-images/build-setup02), you will need to restart your computer.
+2. Click on `Turn windows feature on/off` and make sure Hyper-V/Windows Hypervisor Platform or any other virtual machine features are unchecked
+
+ ![unchecked](/readme-images/build-setup02.PNG) 
+ 
+ you will need to restart your computer.
 
 3. If you are using AMD graphic go ahead to [this step](#####amd-graphic-card), otherwise if you are using Intel graphic card continue on.
 
 ##### Intel graphic card
-1. Open Android studio and go to Configure>SDK manager>SDK Update sites ![SDK Update sites](/readme-images/build-setup03.PNG)
+1. Open Android studio and go to Configure>SDK manager>SDK Update sites 
+
+ ![SDK Update sites](/readme-images/build-setup03.PNG)
 
 2. Select and install Intel HAXM
 
-3. Follow the instruction, after installation you can check if it is installed correctly by typing `sc query intelhaxm` on the Window command prompt ![command prompt](/readme-images/build-setup04.PNG)
+3. Follow the instruction, after installation you can check if it is installed correctly by typing `sc query intelhaxm` on the Window command prompt
+
+ ![command prompt](/readme-images/build-setup04.PNG)
 
 if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 4. Go to [AVD Setup](####android-virtual-device-setup)
 
 ##### AMD graphic card
-1. Open Android studio and go to Configure>SDK manager>SDK Tool ![SDK Tool](/readme-images/build-setup05)
+1. Open Android studio and go to Configure>SDK manager>SDK Tool
+
+ ![SDK Tool](/readme-images/build-setup05)
 
 2. 
 

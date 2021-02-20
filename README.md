@@ -156,11 +156,17 @@ On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervis
  ```
 
 #### Android Virtual Device Setup
-1. 
+1. Go to Android studio>Configure>AVD Manager 
 
+ ![AVD Manager](/readme-images/build-setup06.PNG)
 
+2. Create the virtual device you want to test the application on, this application is designed for Phone type android devices. API level can be as high as you want - for reference, according to April 2020 survey, over 30% of android devices use Pie API level 28 (also called Pie 9)
+
+3. Finish the creation process and wait for download.
 
 ## Django Virtual environment
+
+
 
 
 

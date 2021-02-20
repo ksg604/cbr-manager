@@ -165,7 +165,21 @@ On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervis
 3. Finish the creation process and wait for download.
 
 ## Django Virtual environment
+1. Download and install Python 3.9 from [this link](https://www.python.org/downloads/release/python-390/)
 
+2. Open the project backend folder [(backend directory explanation)](##backend-directory)
+
+3. Open a terminal or Windows Command prompt in this directory and run the following commands in order
+ ```
+ python3 -m venv venv
+ For Linux: source venv/bin/activate
+ For Windows: venv\Scripts\activate
+
+ pip install django
+ pip install djangorestframework
+ ```
+
+4. Follow the instruction from [How to setup local development](#how-to-setup-local-development)
 
 
 

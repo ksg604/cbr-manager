@@ -25,6 +25,7 @@ from authenticate.views import CustomObtainToken
 from clients.views_api import ClientViewSet
 from users.views import UserViewSet
 from visits.views import VisitViewSet
+from alerts.views import AlertViewSet
 
 router = routers.DefaultRouter()
 
@@ -32,6 +33,7 @@ router = routers.DefaultRouter()
 router.register(r'clients', ClientViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'visits', VisitViewSet)
+router.register(r'alerts', AlertViewSet)
 
 urlpatterns = \
     [

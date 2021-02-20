@@ -28,7 +28,6 @@ import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.usercreation.UserCreationActivity;
 import com.example.cbr_manager.ui.visits.VisitsActivity;
 import com.google.android.material.snackbar.Snackbar;
 

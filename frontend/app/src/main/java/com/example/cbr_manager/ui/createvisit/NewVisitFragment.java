@@ -41,6 +41,8 @@ public class NewVisitFragment extends Fragment {
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
+    private String clientName;
+    private String username = "";
 
     public NewVisitFragment() {
     }
@@ -63,37 +65,12 @@ public class NewVisitFragment extends Fragment {
 
         clientId = ((CreateVisitActivity) getActivity()).clientId;
 
-        apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    User user = response.body();
-                    userId = user.getId();
-                } else {
-                    Toast.makeText(getContext(), "User response error.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getContext(), "User failure error.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String todayString = format.format(today);
-
-        EditText textView = (EditText) view.findViewById(R.id.fragmentPreambleEditTextDate);
-        textView.setText(todayString);
-
+        setupAutoFilledTextViews(view);
         setupLocationSpinner(view);
         setupProvisionLayoutVisibility(view);
-
         setupVisibilityHealthProvisions(view);
         setupVisibilityEducationProvisions(view);
         setupVisibilitySocialProvisions(view);
-
         setupRadioGroupProvisionListeners(view);
 
         view.findViewById(R.id.preambleSubmitButton).setOnClickListener(new View.OnClickListener() {
@@ -103,6 +80,56 @@ public class NewVisitFragment extends Fragment {
                 ((CreateVisitActivity) getActivity()).onBackPressed();
             }
         });
+    }
+
+    private void setupAutoFilledTextViews(View view) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+                        Client client = response.body();
+
+                        EditText clientNameEditText = (EditText) view.findViewById(R.id.fragmentPreambleClientEditText);
+                        clientNameEditText.setText(client.getFullName());
+                        clientNameEditText.setEnabled(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+
+                }
+            });
+
+            apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        User user = response.body();
+                        userId = user.getId();
+
+                        EditText cbrWorkerName = (EditText) view.findViewById(R.id.fragmentPreambleCBRNameEditText);
+                        cbrWorkerName.setText(user.getUsername());
+                        cbrWorkerName.setEnabled(false);
+                    } else {
+                        Toast.makeText(getContext(), "User response error.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Toast.makeText(getContext(), "User failure error.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String todayString = format.format(today);
+        EditText textView = (EditText) view.findViewById(R.id.fragmentPreambleEditTextDate);
+        textView.setText(todayString);
+        textView.setEnabled(false);
     }
 
     private void gatherAllData(View view) {
@@ -167,6 +194,7 @@ public class NewVisitFragment extends Fragment {
         boolean isSocialProvision = socialProvisionChip.isChecked();
 
         EditText cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
+        cbrWorkerName.setText(username);
         String name = cbrWorkerName.getText().toString();
 
         Date today = Calendar.getInstance().getTime();

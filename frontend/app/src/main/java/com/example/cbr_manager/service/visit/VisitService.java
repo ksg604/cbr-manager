@@ -1,9 +1,8 @@
 package com.example.cbr_manager.service.visit;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.helper.Helper;
+import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.auth.AuthResponse;
-import com.example.cbr_manager.service.client.ClientAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

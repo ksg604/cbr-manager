@@ -23,7 +23,7 @@
             app:cardCornerRadius="50dp">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="0dp"
@@ -33,7 +33,7 @@
 
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textViewFullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -43,11 +43,12 @@
             android:layout_marginLeft="125dp"
             android:layout_marginTop="22dp"
             android:text="Peter"
-            android:textColor="@color/purple_700"
-            android:textSize="20sp" />
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -60,7 +61,7 @@
             android:text="Burnaby Region" />
 
         <TextView
-            android:id="@+id/riskTextView"
+            android:id="@+id/textViewRiskScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

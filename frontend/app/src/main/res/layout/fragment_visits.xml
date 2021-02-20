@@ -10,7 +10,8 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCreateVisit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,13 +19,13 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
-        android:layout_width="419dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="420dp"
+        android:layout_height="452dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCreateVisit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visitsLabel"
         tools:context=".ScrollingActivity"
-        tools:layout_editor_absoluteX="0dp"
         tools:showIn="@layout/fragment_visits">
 
         <LinearLayout
@@ -162,12 +163,25 @@
 
     <Button
         android:id="@+id/buttonCreateVisit"
-        android:layout_width="144dp"
-        android:layout_height="89dp"
+        android:layout_width="265dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="16dp"
         android:text="Create visit"
-        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/visitsLabel"
+        android:layout_width="89dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Visits:"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCreateVisit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -86,14 +86,20 @@ For layouts, that is `frontend\app\src\main\res\layout`, contains our UI element
 
 ## Android Studio
 1. Download the latest version of Android studio from [this link](https://developer.android.com/studio), available for Windows, Mac, Linux and Chrome OS.
-2. Follow the download and installation instruction until you get to ![this screen](/readme_images/setup_01)
+2. Follow the download and installation instruction until you open ![Android studio](/readme_images/build-setup01)
 ### Android Emulator
-Android Emulator can be use on both [Windows](####windows) and [Linux](####linux)
+Android Emulator can be use on [Windows](####windows), [Mac](####mac) and [Linux](####linux)
 #### Windows
-If you are using Intel graphic go ahead to [this step](#####intel-graphic-card), otherwise if you are using AMD graphic card continue on.
-##### AMD graphic card
-
+1. Go to Control Panel and search `windows feature` on the search box.
+2. Click on `Turn windows feature on/off` and make sure Hyper-V/Windows Hypervisor Platform or any other virtual machine features are ![unchecked](/readme_images/build-setup02), you will need to restart your computer.
+3. If you are using AMD graphic go ahead to [this step](#####amd-graphic-card), otherwise if you are using Intel graphic card continue on.
 ##### Intel graphic card
+1. Open Android studio and go to SDK manager>![SDK Update sites](/readme_images/build-setup05)
+
+##### AMD graphic card
+1. Open Android studio and go to SDK manager>![SDK Tool](/readme_images/build-setup04)
+2. 
+#### Mac
 
 #### Linux
 

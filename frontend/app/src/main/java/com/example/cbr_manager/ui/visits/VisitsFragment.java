@@ -107,6 +107,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         startActivity(visitInfoIntent);
     }
 
+
     private void setupButtons(View root) {
         setupCreateVisitButton(root);
     }

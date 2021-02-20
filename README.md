@@ -129,7 +129,7 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 3 Follow the instruction, after installation you can check if it is installed correctly by typing `sc query gvm` on the Window command prompt, if you can see `STATE 4 RUNNING` it means the installation run correctly.
 
-4. Go to [AVD Setup](####android-virtual-device-setup)
+4. Go to [AVD Setup](#android-virtual-device-setup)
 
 #### Mac
 On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervisor.Framework, if your MacOS version is lower you can go to Android studio Configure>SDK Manager>SDK Update sites and install Intel HAXM
@@ -167,7 +167,7 @@ On MacOS X v10.10 Yosemite or higher, Android emulator use the built-in Hypervis
 ## Django Virtual environment
 1. Download and install Python 3.9 from [this link](https://www.python.org/downloads/release/python-390/)
 
-2. Open the project backend folder [(backend directory explanation)](##backend-directory)
+2. Open the project backend folder [(backend directory explanation)](#backend-directory)
 
 3. Open a terminal or Windows Command prompt in this directory and run the following commands in order
  ```

@@ -17,6 +17,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
 import java.util.ArrayList;
@@ -41,9 +42,12 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         int clientId = -1;
+
         ClientDetailsActivity activity = (ClientDetailsActivity) getActivity();
+        ClientDetailsFragment fragment = (ClientDetailsFragment)activity.getSupportFragmentManager().findFragmentById(R.id.fragment_client_details);
+
         if (activity != null)
-            clientId = activity.getClientId();
+            clientId = fragment.getClientId();
 
         this.clientId = clientId;
         visitsViewModel =

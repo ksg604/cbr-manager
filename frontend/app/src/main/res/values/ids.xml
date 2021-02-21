@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="clientDetailsConstraintLayout" type="id"></item>
+    <item name="clientDetailsBackImageView" type="id"></item>
+    <item name="clientDetailsDisplayPictureImageView" type="id">
+    </item>
+    <item name="clientDetailsNameTextView" type="id"></item>
+    <item name="profileGenderImageView" type="id"></item>
+    <item name="clientDetailsGenderTitleTextView" type="id"></item>
+    <item name="clientDetailsGenderTextView" type="id"></item>
+    <item name="profileAgeImageView" type="id"></item>
+    <item name="clientDetailsAgeTitleTextView" type="id"></item>
+    <item name="clientDetailsAgeTextView" type="id"></item>
+    <item name="profileLocationImageView" type="id"></item>
+    <item name="profileLocationTitleTextView" type="id"></item>
+    <item name="clientDetailsLocationTextView" type="id"></item>
+    <item name="profileEducationImageView" type="id"></item>
+    <item name="profileEducationTitle" type="id"></item>
+    <item name="clientDetailsEducationTextView" type="id"></item>
+    <item name="profileDisabilityImageView" type="id"></item>
+    <item name="clientDetailsDisabilityTitleTextView" type="id">
+    </item>
+    <item name="clientDetailsDisabilityTextView" type="id"></item>
+    <item name="profileRiskImageView" type="id"></item>
+    <item name="clientDetailsRiskTitleTextView" type="id"></item>
+    <item name="clientDetailsRiskLevelTextView" type="id"></item>
+    <item name="profileSocialImageView" type="id"></item>
+    <item name="clientDetailsSocialTitleTextView" type="id"></item>
+    <item name="clientDetailsSocialTextView" type="id"></item>
+    <item name="profileHealthImageView" type="id"></item>
+    <item name="clientDetailsHealthTitleTextView" type="id"></item>
+    <item name="clientDetailsHealthTextView" type="id"></item>
+    <item name="clientDetailsBackButton" type="id"></item>
+    <item name="clientDetailsNewVisitButton" type="id"></item>
+    <item name="clientDetailsSeeVisitsButton" type="id"></item>
+    <item name="clientDetailsEditButton" type="id"></item>
+</resources>

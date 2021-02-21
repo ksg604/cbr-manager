@@ -310,3 +310,39 @@ As a user, I want to be able to see alerts from the dashboard, so I can prioriti
 2. Any UI tinkering needed on the alert list/ alert details pages? 
 
 
+## Kevin's Contribution
+
+### Client details activity
+
+*User story:** (#5)
+As a user, I want to be able to view all my clients/visits, so I can monitor and record client related activity
+
+* Client details, listing all relevant information about the client
+
+*User story:** (4)
+As a user, I want to be able to record and edit client/visit data, so I can better manage my duties
+
+* Button on client details page which routes to edit client form 
+* Button on visits list page which routes to create visit page
+
+**Unfinished parts: **
+
+1. Implement the form where a user will be able to update client details by submitting new information to the backend
+2. Implement ability to edit visit information by swiping on visit items in visit list
+
+**Questions for the customer:**
+
+1. On the visits page, do you want to be able to edit visits by swiping the visit items to see a menu?  Or to
+ have a button on the visit details page which is accessible by tapping the visit items in the visits list
+
+2. On the clients details page, how is the layout of the buttons at the bottom? (New visit, see visits, edit and back).
+Are these too many buttons? 
+
+3. Would you prefer to have a dedicated back button integrated into each accessible part of the user interface (such as the back button on the client details page)
+or are you okay with just using the back button which is supplied with Android OS?
+
+4. Is the button size too large on the visits page?  How do you feel about the overall UI of the visits page.  Should the create button be relocated elsewhere?
+
+5. How do you feel about the attributes which are present on the client details page?  (such as health, social, education) are there any more which you would like to add?
+
+

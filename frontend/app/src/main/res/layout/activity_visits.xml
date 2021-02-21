@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.clientdetails.ClientDetailsActivity">
+    tools:context=".ui.visits.VisitsActivity">
 
     <androidx.fragment.app.FragmentContainerView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_client_details"
+        android:id="@+id/visits_fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

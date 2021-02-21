@@ -11,11 +11,20 @@
     <SearchView
         android:id="@+id/visitSearchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+    </SearchView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="612dp"
         android:padding="4dp" />
+
+    <Button
+        android:id="@+id/buttonCreateVisit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Create visit" />
 </LinearLayout>

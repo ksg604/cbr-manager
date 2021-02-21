@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +51,9 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         mRecyclerView.setAdapter(adapter);
 
         fetchVisitsToList(visitsRecyclerItems);
+
+
+        setupButtons(root);
 
         return root;
     }
@@ -100,5 +105,22 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         visitInfoIntent.putExtra("clientId", visitsRecyclerItem.getVisit().getClientID());
 
         startActivity(visitInfoIntent);
+    }
+
+
+    private void setupButtons(View root) {
+        setupCreateVisitButton(root);
+    }
+
+    private void setupCreateVisitButton(View root) {
+        Button createVisitButton = root.findViewById(R.id.buttonCreateVisit);
+
+        createVisitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
+                startActivity(createVisitIntent);
+            }
+        });
     }
 }

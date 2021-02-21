@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         adapter = new ClientListRecyclerItemAdapter(clientList, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
+        setupButtons(root);
         return root;
     }
 
@@ -84,5 +87,20 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         clientInfoIntent.putExtra("clientId", client.getId());
 
         startActivity(clientInfoIntent);
+    }
+
+    private void setupButtons(View root) {
+        setupCreateClientButton(root);
+    }
+
+    private void setupCreateClientButton(View root) {
+        Button createClientButton = root.findViewById(R.id.buttonCreateClient);
+        createClientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent createClientIntent = new Intent(getActivity(), CreateClientActivity.class);
+                startActivity(createClientIntent);
+            }
+        });
     }
 }

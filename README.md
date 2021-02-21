@@ -368,6 +368,35 @@ As an admin, I want to be able to create new clients' data, so I can track their
 
 2. There are two parts to the survey, one part where the client can fill out information themselves, and another part where they fill it out together with a CBR worker. Currently only the first part is implemented. For the second part, would a separate survey page be better? Or combine them into one?
 
+## Sean's Contribution
+
+### Visit management/details
+After a user creats a visits for clients, there needs to be a convenient way for the user to view these visits. If accessing the page from the navigation bar, all visits will be shown. Users can also see a list of visits for specific clients, and then see more details for those visits.
+
+**User Story** (#5)
+As a user, I want to be able to view all my clients/visits, So I can monitor and record client related activity
+
+* The items in the visit list include the client's name and number
+* Visits can be viewed either by client or in one big list
+* The per-client visits page uses nearly all the same logic as the full visits page, but it is passed the clientID and filters by it.
+* The visits details page for each visit also shows additional details
+
+**Unfinished parts:**
+
+1. The visit list should show the date of the visit, and perhaps sort by that date
+
+2. Some information on the visits details page is currently hardcoded for display purposes. This should be fixed.
+
+**Questions for the customer:**
+
+1. Would it ever be useful to view all visits in one place, or would it only be useful to view visits on a per-client basis?
+
+### Login page
+The login page allows users to log in to reach their personalized home screen
+
+**User Story** (#1)
+As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
+
 ## William Tran's Contribution
 
 ### Creation of New Clients

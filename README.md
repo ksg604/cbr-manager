@@ -173,7 +173,7 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 3. Open a terminal or Windows Command prompt in this directory and run the following commands in order
  ```
- python3 -m venv venv
+ python -m venv venv
  For Linux: source venv/bin/activate
  For Windows: venv\Scripts\activate
 
@@ -396,3 +396,21 @@ The login page allows users to log in to reach their personalized home screen
 
 **User Story** (#1)
 As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
+
+## William Tran's Contribution
+
+### Creation of New Clients
+**User story:** (#4)
+As a user, I want to be able to record my client's data to a remote server so I can manage my duties.
+
+*Client models and image root for upload and saving client data.
+
+**Unfinished parts:**
+
+1. Implement search function from Backend
+
+**Questions for the customer:**
+
+1. If given the keyword options to search clients from the list, what kind of options would you like to for search function? For example you can search by locations, name, type of disability.
+It is possible to search for multiple keywords if all of the keywords are relevant to the client's data, but it is difficult to search for client's data using keyword from the visit data.
+

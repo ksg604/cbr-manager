@@ -150,3 +150,6 @@ media/images/temp
 
 #Mac stuff
 .DS_Store
+
+# Django static files
+staticfiles

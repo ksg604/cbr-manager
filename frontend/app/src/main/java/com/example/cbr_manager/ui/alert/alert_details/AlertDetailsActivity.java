@@ -52,7 +52,8 @@ public class AlertDetailsActivity extends AppCompatActivity {
                     // Todo: dynamically set the alert info here
                     setupTitleTextView(alert.getTitle());
                     setupBodyTextView(alert.getBody());
-                    setupDateTextView(alert.getDate());
+                    alert.formatDate();
+                    setupDateTextView("Date posted:  " + alert.getDate());
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

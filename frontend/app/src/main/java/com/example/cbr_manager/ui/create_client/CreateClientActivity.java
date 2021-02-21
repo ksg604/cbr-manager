@@ -9,11 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.Client;
 
 public class CreateClientActivity extends AppCompatActivity {
 
     private ClientCreatePagerAdapter clientCreatePagerAdapter;
     private ViewPager createClientViewPager;
+    Client client = new Client("no");
 
     public enum CreateClientFragments {
       CONSENT,
@@ -60,5 +62,9 @@ public class CreateClientActivity extends AppCompatActivity {
 
     public void setViewPager(final int fragmentNumber) {
         createClientViewPager.setCurrentItem(fragmentNumber);
+    }
+
+    public Client getClient() {
+        return client;
     }
 }

@@ -3,6 +3,9 @@ package com.example.cbr_manager.service.client;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
 // Todo: figure out image upload
 public class Client {
     @SerializedName("id")
@@ -274,6 +277,41 @@ public class Client {
     private String conclusionSocialProvision;
 
     public Client() {
+    }
+    public Client(String consent) {
+        this.consent = consent;
+        this.date = "";
+        this.firstName = "test";
+        this.lastName = "test";
+        this.contactClient = 1234;
+        this.age = 12;
+        this.gender = "M";
+        this.id = 1234;
+        this.location = "test";
+        this.villageNo = 123;
+        this.disability = "test";
+        this.carePresent = "test";
+        this.contactCare = 1;
+        this.healthRisk = 2;
+        this.socialRisk = 3;
+        this.educationRisk = 4;
+    }
+    public Client(String consent, String date, String firstName, String lastName, int contactClient, int age,
+                  String gender, int id, String location, int villageNo, String disability,
+                  String carePresent, int contactCare) {
+        this.consent = consent;
+        this.date = date;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactClient = contactClient;
+        this.age = age;
+        this.gender = gender;
+        this.id = id;
+        this.location = location;
+        this.villageNo = villageNo;
+        this.disability = disability;
+        this.carePresent = carePresent;
+        this.contactCare = contactCare;
     }
 
     public Integer getId() {

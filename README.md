@@ -173,7 +173,7 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 3. Open a terminal or Windows Command prompt in this directory and run the following commands in order
  ```
- python3 -m venv venv
+ python -m venv venv
  For Linux: source venv/bin/activate
  For Windows: venv\Scripts\activate
 

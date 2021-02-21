@@ -17,9 +17,9 @@ public class CaregiverInfoFragment extends Fragment {
 
     private RadioGroup radioGroup;
     private RadioButton radioButton;
-    private boolean caregiverPresent;
+    private String caregiverPresent="";
     private EditText editTextCaregiverContactNumber;
-    private String caregiverContactNumber;
+    private int caregiverContactNumber=0;
 
     @Override
     public View onCreateView(
@@ -55,16 +55,14 @@ public class CaregiverInfoFragment extends Fragment {
     private void checkButton(View v) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = v.findViewById(radioId);
-        String c = radioButton.getText().toString();
-        if(c.equalsIgnoreCase("Yes")) {
-            caregiverPresent = true;
-        } else{
-            caregiverPresent = false;
-        }
+        caregiverPresent = radioButton.getText().toString();
     }
 
     private void updateInfo(View v) {
-        caregiverContactNumber = editTextCaregiverContactNumber.getText().toString();
+        String caregiverContactNumberInString = editTextCaregiverContactNumber.getText().toString();
+        if(!caregiverContactNumberInString.equals("")) {
+            caregiverContactNumber = Integer.parseInt(caregiverContactNumberInString);
+        }
+        ((CreateClientActivity) getActivity()).setCaregiverInfo(caregiverPresent, caregiverContactNumber);
     }
-
 }

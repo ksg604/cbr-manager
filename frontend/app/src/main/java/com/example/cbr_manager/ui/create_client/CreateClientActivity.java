@@ -15,7 +15,7 @@ public class CreateClientActivity extends AppCompatActivity {
 
     private ClientCreatePagerAdapter clientCreatePagerAdapter;
     private ViewPager createClientViewPager;
-    Client client = new Client("no");
+    Client client = new Client("yes");
 
     public enum CreateClientFragments {
       CONSENT,
@@ -66,5 +66,28 @@ public class CreateClientActivity extends AppCompatActivity {
 
     public Client getClient() {
         return client;
+    }
+    public void setConsentInfo(String consent, String date) {
+        client.setConsent(consent);
+        client.setDate(date);
+    }
+    public void setPersonalInfo(String firstName, String lastName, int contactClient, int age, String gender) {
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setContactClient(contactClient);
+        client.setAge(age);
+        client.setGender(gender);
+    }
+    public void setVillageInfo(String location, int id, int villageNo) {
+        client.setLocation(location);
+        client.setId(id);
+        client.setVillageNo(villageNo);
+    }
+    public void setDisabilityInfo(String disability) {
+        client.setDisability(disability);
+    }
+    public void setCaregiverInfo(String carePresent, int contactCare) {
+        client.setCarePresent(carePresent);
+        client.setContactCare(contactCare);
     }
 }

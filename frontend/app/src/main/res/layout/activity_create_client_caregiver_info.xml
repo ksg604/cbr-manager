@@ -95,14 +95,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <RadioButton
-            android:id="@+id/radioButton1"
+            android:id="@+id/radioButtonNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no" />
 
         <RadioButton
-            android:id="@+id/radioButton0"
+            android:id="@+id/radioButtonYes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/yes" />

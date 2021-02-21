@@ -1,6 +1,7 @@
 package com.example.cbr_manager.ui.create_client;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import com.example.cbr_manager.R;
 public class DisabilityFragment extends Fragment {
 
     CheckBox[] checkBoxes = new CheckBox[10];
-    boolean[] disabilities_check = new boolean[10];
+    String[] disability_list = {"Amputee", "Polio", "Spinal Cord Injury", "Cerebral Palsy", "Spina Bifada",
+                                "Hydrocephalus", "Visual Impairment", "Hearing Impairment", "Don't Know", "Other"};
+    String disabilities="";
 
     @Override
     public View onCreateView(
@@ -27,14 +30,14 @@ public class DisabilityFragment extends Fragment {
         for(int i=0 ; i<10 ; i++) {
             txt = "checkBox" + i;
             int resourceId = this.getResources().getIdentifier(txt, "id", getActivity().getPackageName());
-            checkBoxes[i] = (CheckBox) view.findViewById(resourceId);
+            checkBoxes[i] = view.findViewById(resourceId);
         }
 
         Button nextButton = view.findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInfo(getView());
+                updateInfo(v);
                 ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.CAREGIVER_INFO.ordinal());
             }
         });
@@ -50,13 +53,12 @@ public class DisabilityFragment extends Fragment {
     }
 
     public void updateInfo(View v) {
+        disabilities = "";
         for(int i=0 ; i<10 ; i++) {
             if(checkBoxes[i].isChecked()) {
-                disabilities_check[i] = true;
-            } else {
-                disabilities_check[i] = false;
+                disabilities = disabilities.concat(disability_list[i] + "/");
             }
         }
+        ((CreateClientActivity) getActivity()).setDisabilityInfo(disabilities);
     }
-
 }

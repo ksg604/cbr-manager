@@ -280,21 +280,21 @@ public class Client {
     }
     public Client(String consent) {
         this.consent = consent;
-        this.date = "";
+        this.date = "1/1/1";
         this.firstName = "test";
         this.lastName = "test";
-        this.contactClient = 1234;
-        this.age = 12;
-        this.gender = "M";
-        this.id = 1234;
+        this.contactClient = 0;
+        this.age = 0;
+        this.gender = "test";
+        this.id = 0;
         this.location = "test";
-        this.villageNo = 123;
+        this.villageNo = 0;
         this.disability = "test";
         this.carePresent = "test";
-        this.contactCare = 1;
-        this.healthRisk = 2;
-        this.socialRisk = 3;
-        this.educationRisk = 4;
+        this.contactCare = 0;
+        this.healthRisk = 0;
+        this.socialRisk = 0;
+        this.educationRisk = 0;
     }
     public Client(String consent, String date, String firstName, String lastName, int contactClient, int age,
                   String gender, int id, String location, int villageNo, String disability,

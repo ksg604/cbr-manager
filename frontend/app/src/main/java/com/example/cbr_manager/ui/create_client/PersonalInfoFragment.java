@@ -17,9 +17,11 @@ import com.example.cbr_manager.R;
 public class PersonalInfoFragment extends Fragment implements AdapterView.OnItemSelectedListener{
     EditText editTextFirstName, editTextLastName, editTextAge, editTextContactNumber;
     Spinner spinner;
-    String firstName, lastName, contactNumber;
+    String firstName="";
+    String lastName="";
+    int contactNumber=0;
     int age=0;
-    char gender;
+    String gender="";
     private static final String[] paths = {"Male", "Female"};
 
     @Override
@@ -62,24 +64,27 @@ public class PersonalInfoFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        gender = paths[position].charAt(0);
+        gender = paths[position];
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        gender = paths[0].charAt(0);
+        gender = paths[0];
     }
 
     public void updateInfo(View v) {
         firstName = editTextFirstName.getText().toString();
         lastName = editTextLastName.getText().toString();
+        String contactNum = editTextContactNumber.getText().toString();
+        if(!contactNum.equals("")) {
+            contactNumber = Integer.parseInt(contactNum);
+        }
         String age_string = editTextAge.getText().toString();
-        if(age_string.length()==0) {
-            age=0;
-        } else {
+        if(!age_string.equals("")) {
             age = Integer.parseInt(age_string);
         }
-        contactNumber = editTextContactNumber.getText().toString();
+
+        ((CreateClientActivity) getActivity()).setPersonalInfo(firstName, lastName, contactNumber, age, gender);
     }
 
 }

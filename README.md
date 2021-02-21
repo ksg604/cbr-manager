@@ -360,13 +360,32 @@ As an admin, I want to be able to create new clients' data, so I can track their
 
 1. Implementing the camera when taking photo of the client + caretaker if they are present.
 
-2. Other survey requirements such as health risk, social risk, and education risk. Currently they are set to 0.
+2. Handling errors so that there is more flexibility with the input + show errors. Currently it has to follow a specific format, otherwise it will return a HTTP 400(Bad Request)
+
+3. Other survey requirements such as health risk, social risk, and education risk. Currently they are set to 0.
+
+**Format of the inputs:**
+1. Consent : either Yes or No works.
+2. Date : One number per column only. No alphabets or special characters.
+3. ID : One number only. No alphabets or special characters.
+4. Location : All location works.
+5. Village number : same as #3.
+6. First Name : Everything works.
+7. Last Name : Evertying works.
+8. Gender : either gender works.
+9. Age : same as #3.
+10. Client contact number : same as #3. N/A option does not work currently.
+11. All types of disabilities work.
+12. Caregiver present : both options work
+13. Caregiver contact number : same as #10.
+14. photo : not implemented yet.
 
 **Questions for the customer:**
 
 1. Is the flow of the create client survey page okay? Or do you want us to follow the exact order of the powerpoint slides?
 
 2. There are two parts to the survey, one part where the client can fill out information themselves, and another part where they fill it out together with a CBR worker. Currently only the first part is implemented. For the second part, would a separate survey page be better? Or combine them into one?
+
 
 ## Sean's Contribution
 

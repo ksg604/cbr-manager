@@ -15,7 +15,9 @@ public class CreateClientActivity extends AppCompatActivity {
 
     private ClientCreatePagerAdapter clientCreatePagerAdapter;
     private ViewPager createClientViewPager;
-    Client client = new Client("yes");
+
+    //Base client object for creating new clients.
+    Client client = new Client();
 
     public enum CreateClientFragments {
       CONSENT,

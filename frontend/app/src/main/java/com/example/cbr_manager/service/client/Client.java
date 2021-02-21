@@ -276,21 +276,20 @@ public class Client {
     @Expose
     private String conclusionSocialProvision;
 
+    //Initializing fields that are needed for POST request in itr1
     public Client() {
-    }
-    public Client(String consent) {
-        this.consent = consent;
-        this.date = "1/1/1";
-        this.firstName = "test";
-        this.lastName = "test";
+        this.consent = "";
+        this.date = "";
+        this.firstName = "";
+        this.lastName = "";
         this.contactClient = 0;
         this.age = 0;
-        this.gender = "test";
+        this.gender = "";
         this.id = 0;
-        this.location = "test";
+        this.location = "";
         this.villageNo = 0;
-        this.disability = "test";
-        this.carePresent = "test";
+        this.disability = "";
+        this.carePresent = "";
         this.contactCare = 0;
         this.healthRisk = 0;
         this.socialRisk = 0;

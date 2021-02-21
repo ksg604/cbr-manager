@@ -367,3 +367,21 @@ As an admin, I want to be able to create new clients' data, so I can track their
 1. Is the flow of the create client survey page okay? Or do you want us to follow the exact order of the powerpoint slides?
 
 2. There are two parts to the survey, one part where the client can fill out information themselves, and another part where they fill it out together with a CBR worker. Currently only the first part is implemented. For the second part, would a separate survey page be better? Or combine them into one?
+
+## William Tran's Contribution
+
+### Creation of New Clients
+**User story:** (#4)
+As a user, I want to be able to record my client's data to a remote server so I can manage my duties.
+
+*Client models and image root for upload and saving client data.
+
+**Unfinished parts:**
+
+1. Implement search function from Backend
+
+**Questions for the customer:**
+
+1. If given the keyword options to search clients from the list, what kind of options would you like to for search function? For example you can search by locations, name, type of disability.
+It is possible to search for multiple keywords if all of the keywords are relevant to the client's data, but it is difficult to search for client's data using keyword from the visit data.
+

@@ -147,25 +147,25 @@ public class NewVisitFragment extends Fragment {
                             @Override
                             public void onResponse(Call<Visit> call, Response<Visit> response) {
                                 if (response.isSuccessful()) {
-                                    Toast.makeText(getContext(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(getContext(), "Response error creating visit.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "Response error creating visit.", Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<Visit> call, Throwable t) {
-                                Toast.makeText(getContext(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error in creating new visit.", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        Toast.makeText(getContext(), "Response error finding client.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Response error finding client.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Client> call, Throwable t) {
-                    Toast.makeText(getContext(), "Error finding client.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error finding client.", Toast.LENGTH_SHORT).show();
                 }
             });
         }

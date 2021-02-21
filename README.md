@@ -346,3 +346,24 @@ or are you okay with just using the back button which is supplied with Android O
 5. How do you feel about the attributes which are present on the client details page?  (such as health, social, education) are there any more which you would like to add?
 
 
+## Kun Hyung Park(Arthur)'s Contribution
+
+### Creation of New Clients
+
+**User story:**  (#4) 
+As an admin, I want to be able to create new clients' data, so I can track their progress and keep data as reference
+
+* Client creation ,including making the client creation page in android and uploading the new client info to the backend.
+
+
+**Unfinished parts:**
+
+1. Implementing the camera when taking photo of the client + caretaker if they are present.
+
+2. Other survey requirements such as health risk, social risk, and education risk. Currently they are set to 0.
+
+**Questions for the customer:**
+
+1. Is the flow of the create client survey page okay? Or do you want us to follow the exact order of the powerpoint slides?
+
+2. There are two parts to the survey, one part where the client can fill out information themselves, and another part where they fill it out together with a CBR worker. Currently only the first part is implemented. For the second part, would a separate survey page be better? Or combine them into one?

@@ -462,8 +462,8 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 # How to Navigate Application
 
 Once the app is running, you will be on the login screen. Input "user1" as the username and "password" as the password.
-![Login](/readme-images/login.png)
-<img src="/readme-images/login.png"  width="216" height="444">
+<!-- ![Login](/readme-images/login.png) -->
+<img src="/readme-images/login.png"  width="432" height="888">
 
 After logging in, you will see the dashboard. Here, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
 ![Dashboard](/readme-images/dashboard.png)

@@ -30,7 +30,7 @@ router = routers.DefaultRouter()
 
 # Register additional api url endpoints here
 router.register(r'clients', ClientViewSet, basename="Client")
-router.register(r'users', UserViewSet)
+router.register(r'users', UserViewSet, basename="User")
 router.register(r'visits', VisitViewSet)
 router.register(r'alerts', AlertViewSet)
 

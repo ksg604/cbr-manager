@@ -37,7 +37,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
     @Override
     public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
         Client currentClient = clients.get(position);
-        Helper.setImageViewFromURL(currentClient.getPhotoURL(), holder.imageView);
+        Helper.setImageViewFromURL(currentClient.getPhotoURL(), holder.imageView, R.drawable.client_details_placeholder);
 
         holder.textViewFullName.setText(currentClient.getFullName());
         holder.textViewLocation.setText(currentClient.getLocation());

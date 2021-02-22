@@ -8,10 +8,8 @@ from clients.serializer import ClientSerializer
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
 
-    queryset = Client.objects.all()
-
     def get_queryset(self):
-        queryset = self.queryset
+        queryset = Client.objects.all()
 
         order_by = self.request.query_params.get("ordering", None)
 

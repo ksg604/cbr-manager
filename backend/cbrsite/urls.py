@@ -17,7 +17,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework.authtoken import views as auth_view
 
 from django.conf import settings
 
@@ -30,7 +29,7 @@ from alerts.views import AlertViewSet
 router = routers.DefaultRouter()
 
 # Register additional api url endpoints here
-router.register(r'clients', ClientViewSet)
+router.register(r'clients', ClientViewSet, basename="Client")
 router.register(r'users', UserViewSet)
 router.register(r'visits', VisitViewSet)
 router.register(r'alerts', AlertViewSet)

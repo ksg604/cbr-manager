@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cbr_manager"
+        android:windowSoftInputMode="adjustResize"
         tools:targetApi="n">
         <activity android:name=".ui.visitdetails.VisitDetailsActivity" />
         <activity android:name=".ui.createvisit.CreateVisitActivity" />

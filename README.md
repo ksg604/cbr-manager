@@ -463,42 +463,55 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 
 Once the app is running, you will be on the login screen. Input "user1" as the username and "password" as the password.
 ![Login](/readme-images/login.png)
+<img src="/readme-images/login.png"  width="216" height="444">
 
 After logging in, you will see the dashboard. Here, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
 ![Dashboard](/readme-images/dashboard.png)
+<img src="/readme-images/dashboard.png"  width="216" height="444">
 
 To access the navigation bar, click on the three horizontal bars in the top left corner.
 ![Navigation Bar](/readme-images/nav_bar.png)
+<img src="/readme-images/nav_bar.png"  width="216" height="444">
 
 To create a new user, click on "User Creation (Admin Only)" from the navigation bar. Here, you can create a new user that can log in.
 ![User Creation](/readme-images/user_creation.png)
+<img src="/readme-images/user_creation.png"  width="216" height="444">
 
 To create a new alert, click on "Alert Creation (Admin Only)" from the navigation bar. Here, you can fill in the text boxes to create a new alert.
 ![Alert Creation](/readme-images/alert_creation.png)
+<img src="/readme-images/alert_creation.png"  width="216" height="444">
 
 Now you can see this alert at the top of the dashboard.
 ![Alert on Dashboard](/readme-images/new_alert_dash.png)
+<img src="/readme-images/new_alert_dash.png"  width="216" height="444">
 
 To view all alerts, click "See More" in the alert section at the top of the dashboard.
 ![Alert List](/readme-images/alert_list.png)
+<img src="/readme-images/alert_list.png"  width="216" height="444">
 
 You can click on an alert from here to view more details about it.
 ![Alert Details](/readme-images/new_alert_details.png)
+<img src="/readme-images/new_alert_details.png"  width="216" height="444">
 
 To view clients, click on "Client List" from the navigation bar.
 ![Client List](/readme-images/client_list.png)
+<img src="/readme-images/client_list.png"  width="216" height="444">
 
 From here, you can select a client to see more details about them.
 ![Client Details](/readme-images/client_details.png)
+<img src="/readme-images/client_details.png"  width="216" height="444">
 
 From the client details page, you can see a client's visits by clicking on "See Visits".
 ![Client Visits](/readme-images/per_client_visits.png)
+<img src="/readme-images/per_client_visits.png"  width="216" height="444">
 
 You can click on any individual visit to see more visit details.
 ![Visit Details](/readme-images/visit_details.png)
+<img src="/readme-images/visit_details.png"  width="216" height="444">
 
 You can also view all visits for all clients by clicking on "Visits" on the navigation bar.
 ![All Visits](/readme-images/all_visits.png)
+<img src="/readme-images/all_visits.png"  width="216" height="444">
 
 You can register a new client by clicking on "New Client" from the navigation bar. This will take you to the new client page. Here, you will go through several screens of questions including some drop down menus before being able to submit the new client. Please follow the following suggestions for now for a bug-free client creation experience.
 
@@ -519,13 +532,16 @@ You can register a new client by clicking on "New Client" from the navigation ba
 14. photo : not implemented yet.
 
 ![Create Client](/readme-images/create_client_1.png)
-<img src="/readme-images/create_client_1.png"  width="120" height="120">
+<img src="/readme-images/create_client_1.png"  width="216" height="444">
 
 To create a visit for a client, go to that client's details page and click on "Create Visit". From here, fill out the fields and select options from the drop down menu(s).
 ![Create Visit](/readme-images/create_visit_1.png)
+<img src="/readme-images/create_visit_1.png"  width="216" height="444">
 
 Certain selections will prompt you with other questions. For example, if you select CBR for the "Purpose of Visit" question, you will be prompted with another "CBR Type" question.
 ![CBR Prompt](/readme-images/create_visit_2.png)
+<img src="/readme-images/create_visit_2.png"  width="216" height="444">
 
 Note: you may need to use the back button built into Android devices and emulators to exit from certain pages. This is something that will be addressed in the next iteration.
 ![Back Button](/readme-images/back.png)
+<img src="/readme-images/back.png"  width="216" height="444">

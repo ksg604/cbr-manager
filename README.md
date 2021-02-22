@@ -1,3 +1,19 @@
+# Introduction
+Welcome to the HHA CBR Manager project by team Saturn! 
+
+The goal of the project is to create an Android app that satisfies the customers requirements as stated in the initial presentation and any requirements to be modified or added through feedback.
+
+
+## Tools
+Our development tools include using Android Studio for the frontend including all UI elements and Django as the backend server which is used to communicate with the database and handle any additional logic performed on the data.
+
+## Progress
+In iteration 1, we've designed the UI for the majority of required pages and created the classes and models for users, clients, visits and alerts. So now all users can create, store and retrieve their clients' and visits' data to and from the server, either ran locally or through the one deployed on Heroku. The admin can also send alerts to all and create new users that have seperate sets of clients and visit data.
+
+## Upcoming
+For next iteration we plan to add the local database so work can be done without an internet connection and sync with the server once connection is resumed. We will also add in referrals and seperate user permissions for admins and other users.
+
+
 # How to setup Local Development
 
 ## Django

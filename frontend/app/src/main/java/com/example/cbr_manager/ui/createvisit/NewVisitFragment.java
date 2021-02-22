@@ -77,7 +77,7 @@ public class NewVisitFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 gatherAllData(view);
-                ((CreateVisitActivity) getActivity()).onBackPressed();
+
             }
         });
     }
@@ -148,6 +148,8 @@ public class NewVisitFragment extends Fragment {
                             public void onResponse(Call<Visit> call, Response<Visit> response) {
                                 if (response.isSuccessful()) {
                                     Toast.makeText(getActivity(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
+
+                                    ((CreateVisitActivity) getActivity()).onBackPressed();
                                 } else {
                                     Toast.makeText(getActivity(), "Response error creating visit.", Toast.LENGTH_LONG).show();
                                 }

@@ -71,6 +71,7 @@
         android:enabled="false"
         android:text="New User"
         android:textColor="#FFF"
+        android:visibility="invisible"
         app:backgroundTint="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"

@@ -340,13 +340,10 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 
 * Button on client details page which routes to edit client form
 * Button on visits list page which routes to create visit page
-* Edit client form UI which allows a user to edit a client's information on their client details page
-* User will be able to access their visits which correspond with the client they are viewing on the client details page by clicking a button
-* User will be able to create a new visit through the client details page
 
 **Unfinished parts: **
 
-1. Implement the PUT request portion of where a user will be able to update client details by submitting new information to the backend
+1. Implement the form where a user will be able to update client details by submitting new information to the backend
 2. Implement ability to edit visit information by swiping on visit items in visit list
 
 **Questions for the customer:**

@@ -543,4 +543,4 @@ Certain selections will prompt you with other questions. For example, if you sel
 
 Note: you may need to use the back button built into Android devices and emulators to exit from certain pages. This is something that will be addressed in the next iteration.
 
-<img src="/readme-images/back.png"  width="432" height="888">
+<img src="/readme-images/back.png"  width="778" height="517">

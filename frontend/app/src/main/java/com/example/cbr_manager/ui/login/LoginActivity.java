@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -26,9 +26,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.visits.VisitsActivity;
+import com.example.cbr_manager.utils.ErrorParser;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -122,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
 
                 LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
@@ -130,20 +128,20 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (apiService.isAuthenticated()) {
-                            loginViewModel.login(credential.username,
-                                    credential.password);
                             Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                             startActivity(intent);
                         } else {
-                            Snackbar.make(v, "Error " + Integer.toString(response.code()) + " Could not authenticate", Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
+                            handleAuthError(view, response);
                         }
+                        hideKeyBoard(view);
                         loadingProgressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void onFailure(Call<AuthResponse> call, Throwable t) {
-                        // TODO: handle a critical failure
+                        Snackbar.make(view, "Connection failed to server", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        hideKeyBoard(view);
                         loadingProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
@@ -157,6 +155,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void handleAuthError(View view, Response response) {
+        ErrorParser errorParser = new ErrorParser(response.errorBody());
+        Snackbar.make(view, errorParser.toString(), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    private void hideKeyBoard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

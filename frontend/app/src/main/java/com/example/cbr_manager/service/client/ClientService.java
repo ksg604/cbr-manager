@@ -60,8 +60,12 @@ public class ClientService {
         RequestBody lastName = RequestBody.create(client.getLastName(), MediaType.parse("text/plain"));
         RequestBody location = RequestBody.create(client.getLocation(), MediaType.parse("text/plain"));
         RequestBody consent = RequestBody.create(client.getConsent(), MediaType.parse("text/plain"));
+        RequestBody villageNo = RequestBody.create(client.getVillageNo().toString(), MediaType.parse("text/plain"));
         RequestBody gender = RequestBody.create(client.getGender(), MediaType.parse("text/plain"));
+        RequestBody age = RequestBody.create(client.getAge().toString(), MediaType.parse("text/plain"));
+        RequestBody contactClient = RequestBody.create(client.getContactClient().toString(), MediaType.parse("text/plain"));
         RequestBody carePresent = RequestBody.create(client.getCarePresent(), MediaType.parse("text/plain"));
+        RequestBody contactCare = RequestBody.create(client.getContactCare().toString(), MediaType.parse("text/plain"));
         RequestBody disability = RequestBody.create(client.getDisability(), MediaType.parse("text/plain"));
         RequestBody healthRisk = RequestBody.create(client.getHealthRisk().toString(), MediaType.parse("text/plain"));
         RequestBody socialRisk = RequestBody.create(client.getSocialRisk().toString(), MediaType.parse("text/plain"));
@@ -73,8 +77,12 @@ public class ClientService {
                 lastName,
                 location,
                 consent,
+                villageNo,
                 gender,
+                age,
+                contactClient,
                 carePresent,
+                contactCare,
                 disability,
                 healthRisk,
                 socialRisk,

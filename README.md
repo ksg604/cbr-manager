@@ -519,6 +519,7 @@ You can register a new client by clicking on "New Client" from the navigation ba
 14. photo : not implemented yet.
 
 ![Create Client](/readme-images/create_client_1.png)
+<img src="/uploads/d19fcc3d3b4d313c8cd7960a343463b6/table.png"  width="120" height="120">
 
 To create a visit for a client, go to that client's details page and click on "Create Visit". From here, fill out the fields and select options from the drop down menu(s).
 ![Create Visit](/readme-images/create_visit_1.png)

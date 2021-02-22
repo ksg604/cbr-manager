@@ -9,11 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.Client;
 
 public class CreateClientActivity extends AppCompatActivity {
 
     private ClientCreatePagerAdapter clientCreatePagerAdapter;
     private ViewPager createClientViewPager;
+
+    //Base client object for creating new clients.
+    Client client = new Client();
 
     public enum CreateClientFragments {
       CONSENT,
@@ -60,5 +64,32 @@ public class CreateClientActivity extends AppCompatActivity {
 
     public void setViewPager(final int fragmentNumber) {
         createClientViewPager.setCurrentItem(fragmentNumber);
+    }
+
+    public Client getClient() {
+        return client;
+    }
+    public void setConsentInfo(String consent, String date) {
+        client.setConsent(consent);
+        client.setDate(date);
+    }
+    public void setPersonalInfo(String firstName, String lastName, int contactClient, int age, String gender) {
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setContactClient(contactClient);
+        client.setAge(age);
+        client.setGender(gender);
+    }
+    public void setVillageInfo(String location, int id, int villageNo) {
+        client.setLocation(location);
+        client.setId(id);
+        client.setVillageNo(villageNo);
+    }
+    public void setDisabilityInfo(String disability) {
+        client.setDisability(disability);
+    }
+    public void setCaregiverInfo(String carePresent, int contactCare) {
+        client.setCarePresent(carePresent);
+        client.setContactCare(contactCare);
     }
 }

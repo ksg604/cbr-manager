@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.Client;
+
 
 
 public class ConsentFragment extends Fragment {
@@ -19,23 +21,29 @@ public class ConsentFragment extends Fragment {
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText year, month, day;
-    private boolean consent;
-    private String date;
+    private String consent="";
+    private String date="";
+    private Client client;
+    View view;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        View view = inflater.inflate(R.layout.activity_create_client_consent, container, false);
+        view = inflater.inflate(R.layout.activity_create_client_consent, container, false);
+        client = ((CreateClientActivity) getActivity()).getClient();
         radioGroup = view.findViewById(R.id.radioGroup);
+        year = view.findViewById(R.id.editTextYear);
+        month = view.findViewById(R.id.editTextMonth);
+        day = view.findViewById(R.id.editTextDay);
+
         Button nextButton = view.findViewById(R.id.nextButton);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkButton(getView());
-                checkDate(getView());
+                updateInfo();
                 ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.VILLAGE_INFO.ordinal());
             }
         });
@@ -43,22 +51,11 @@ public class ConsentFragment extends Fragment {
         return view;
     }
 
-    private void checkButton(View v) {
+    private void updateInfo() {
         int radioId = radioGroup.getCheckedRadioButtonId();
-        radioButton = v.findViewById(radioId);
-        String c = radioButton.getText().toString();
-        if(c.equalsIgnoreCase("Yes")) {
-            consent = true;
-        } else{
-            consent=false;
-        }
-    }
-
-    private void checkDate(View v) {
-        year = v.findViewById(R.id.editTextYear);
-        month = v.findViewById(R.id.editTextMonth);
-        day = v.findViewById(R.id.editTextDay);
+        radioButton = view.findViewById(radioId);
+        consent = radioButton.getText().toString();
         date = year.getText().toString() + "/" + month.getText().toString() + "/" + day.getText().toString();
+        ((CreateClientActivity) getActivity()).setConsentInfo(consent, date);
     }
-
 }

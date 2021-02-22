@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.create_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,8 @@ public class VillageInfoFragment extends Fragment implements AdapterView.OnItemS
             "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
     private EditText editTextId, editTextVillageNum;
 
-    String id="", location="", villageNumber="";
+    int id=0, villageNumber=0;
+    String location="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +71,15 @@ public class VillageInfoFragment extends Fragment implements AdapterView.OnItemS
     }
 
     private void updateInfo(View v) {
-        id = editTextId.getText().toString();
-        villageNumber = editTextVillageNum.getText().toString();
+        String idInString = editTextId.getText().toString();
+        String villageNumberInString = editTextVillageNum.getText().toString();
+        if(!idInString.equals("")) {
+            id = Integer.parseInt(idInString);
+        }
+        if(!villageNumberInString.equals("")) {
+            villageNumber = Integer.parseInt(villageNumberInString);
+        }
+        ((CreateClientActivity) getActivity()).setVillageInfo(location, id, villageNumber);
     }
 
 }

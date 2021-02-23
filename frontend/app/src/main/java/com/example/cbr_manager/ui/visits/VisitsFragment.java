@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -109,17 +110,19 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
 
     private void setupButtons(View root) {
-        setupCreateVisitButton(root);
+        setupNewVisitButton(root);
     }
 
-    private void setupCreateVisitButton(View root) {
-        Button createVisitButton = root.findViewById(R.id.buttonCreateVisit);
 
-        createVisitButton.setOnClickListener(new View.OnClickListener() {
+    private void setupNewVisitButton(View root) {
+        Button newVisitButton = root.findViewById(R.id.buttonCreateVisit);
+        newVisitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
-                startActivity(createVisitIntent);
+                TextView nameTextView = (TextView)getView().findViewById(R.id.clientDetailsNameTextView);
+                String name = nameTextView.getText().toString();
+                Intent intent = new Intent(getActivity(), CreateVisitActivity.class);
+                startActivity(intent);
             }
         });
     }

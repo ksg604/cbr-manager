@@ -153,7 +153,7 @@ public class ClientDetailsFragment extends Fragment {
 
     private void setupImageViews(String imageURL) {
         ImageView displayPicture = (ImageView)getView().findViewById(R.id.clientDetailsDisplayPictureImageView);
-        Helper.setImageViewFromURL(imageURL, displayPicture);
+        Helper.setImageViewFromURL(imageURL, displayPicture, R.drawable.client_details_placeholder);
     }
 
     private void setupNameTextView(String fullName) {

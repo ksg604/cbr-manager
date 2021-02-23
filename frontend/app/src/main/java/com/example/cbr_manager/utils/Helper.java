@@ -27,9 +27,12 @@ public class Helper {
         return Drawable.createFromStream(stream, url);
     }
 
-    public static void setImageViewFromURL(String url, ImageView view){
+    public static void setImageViewFromURL(String url, ImageView view, int defaultDrawableResId){
         Picasso picasso = Picasso.get();
         picasso.load(url).into(view);
+        if (view.getDrawable() == null){
+            view.setImageResource(defaultDrawableResId);
+        }
     }
 
     public static String riskToColourCode(int riskScore){

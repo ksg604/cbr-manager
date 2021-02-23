@@ -53,9 +53,6 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
         fetchVisitsToList(visitsRecyclerItems);
 
-
-        setupButtons(root);
-
         return root;
     }
 
@@ -106,24 +103,5 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         visitInfoIntent.putExtra("clientId", visitsRecyclerItem.getVisit().getClientID());
 
         startActivity(visitInfoIntent);
-    }
-
-
-    private void setupButtons(View root) {
-        setupNewVisitButton(root);
-    }
-
-
-    private void setupNewVisitButton(View root) {
-        Button newVisitButton = root.findViewById(R.id.buttonCreateVisit);
-        newVisitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView nameTextView = (TextView)getView().findViewById(R.id.clientDetailsNameTextView);
-                String name = nameTextView.getText().toString();
-                Intent intent = new Intent(getActivity(), CreateVisitActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

@@ -194,4 +194,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="toolbar">toolbar</string>
+    <string name="new_client">new client</string>
 </resources>

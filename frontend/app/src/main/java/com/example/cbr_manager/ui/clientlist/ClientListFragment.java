@@ -1,6 +1,7 @@
 package com.example.cbr_manager.ui.clientlist;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,10 +37,13 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     private RecyclerView.LayoutManager mLayoutManager;
     private APIService apiService = APIService.getInstance();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
+
+
+
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -47,8 +54,19 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         fetchClientsToList(clientList);
 
         setupButtons(root);
+        setUpToolBar();
+
 
         return root;
+    }
+
+    public void setUpToolBar() {
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
+        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
     }
 
     public void fetchClientsToList(List<Client> clientList) {

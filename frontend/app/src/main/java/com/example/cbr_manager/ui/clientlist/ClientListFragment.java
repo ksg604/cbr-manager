@@ -6,11 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,15 +25,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener{
+public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
 
-    private ClientListViewModel clientListViewModel;
+    List<Client> clientList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private ClientListRecyclerItemAdapter adapter; // TODO
     private RecyclerView.LayoutManager mLayoutManager;
-    private SearchView searchView;
-    List<Client> clientList = new ArrayList<>();
-
     private APIService apiService = APIService.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,8 +39,6 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         fetchClientsToList(clientList);
 
-        clientListViewModel =
-                new ViewModelProvider(this).get(ClientListViewModel.class);
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
 
         mRecyclerView = root.findViewById(R.id.recyclerView);

@@ -36,18 +36,18 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
-        fetchClientsToList(clientList);
-
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
-
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(getContext());
         clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
         clientListRecyclerView.setLayoutManager(mLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
+
+        fetchClientsToList(clientList);
+
         setupButtons(root);
+
         return root;
     }
 

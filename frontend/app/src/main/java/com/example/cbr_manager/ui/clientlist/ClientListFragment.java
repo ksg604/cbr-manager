@@ -1,17 +1,18 @@
 package com.example.cbr_manager.ui.clientlist;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,9 +41,9 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        setUpToolBar();
+
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
-
-
 
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
@@ -53,20 +54,31 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         fetchClientsToList(clientList);
 
-        setupButtons(root);
-        setUpToolBar();
-
-
         return root;
     }
 
     public void setUpToolBar() {
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        setHasOptionsMenu(true);
+    }
 
-        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.client_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.new_client) {
+            launchCreateClientActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void launchCreateClientActivity() {
+        Intent createClientIntent = new Intent(getActivity(), CreateClientActivity.class);
+        startActivity(createClientIntent);
     }
 
     public void fetchClientsToList(List<Client> clientList) {
@@ -98,20 +110,5 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         clientInfoIntent.putExtra("clientId", client.getId());
 
         startActivity(clientInfoIntent);
-    }
-
-    private void setupButtons(View root) {
-        setupCreateClientButton(root);
-    }
-
-    private void setupCreateClientButton(View root) {
-        Button createClientButton = root.findViewById(R.id.buttonCreateClient);
-        createClientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent createClientIntent = new Intent(getActivity(), CreateClientActivity.class);
-                startActivity(createClientIntent);
-            }
-        });
     }
 }

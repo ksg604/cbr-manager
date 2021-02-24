@@ -193,4 +193,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="toolbar">toolbar</string>
+    <string name="new_client">new client</string>
+    <string name="hint_search">Search</string>
 </resources>

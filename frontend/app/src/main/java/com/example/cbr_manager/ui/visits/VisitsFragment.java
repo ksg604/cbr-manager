@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -51,9 +52,6 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         mRecyclerView.setAdapter(adapter);
 
         fetchVisitsToList(visitsRecyclerItems);
-
-
-        setupButtons(root);
 
         return root;
     }
@@ -105,22 +103,5 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         visitInfoIntent.putExtra("clientId", visitsRecyclerItem.getVisit().getClientID());
 
         startActivity(visitInfoIntent);
-    }
-
-
-    private void setupButtons(View root) {
-        setupCreateVisitButton(root);
-    }
-
-    private void setupCreateVisitButton(View root) {
-        Button createVisitButton = root.findViewById(R.id.buttonCreateVisit);
-
-        createVisitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
-                startActivity(createVisitIntent);
-            }
-        });
     }
 }

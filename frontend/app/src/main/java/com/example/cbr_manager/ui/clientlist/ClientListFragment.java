@@ -1,16 +1,19 @@
 package com.example.cbr_manager.ui.clientlist;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,35 +30,55 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener{
+public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
 
-    private ClientListViewModel clientListViewModel;
-    private RecyclerView mRecyclerView;
-    private ClientListRecyclerItemAdapter adapter; // TODO
-    private RecyclerView.LayoutManager mLayoutManager;
-    private SearchView searchView;
     List<Client> clientList = new ArrayList<>();
-
+    private RecyclerView clientListRecyclerView;
+    private ClientListRecyclerItemAdapter clientListAdapter; // TODO
+    private RecyclerView.LayoutManager mLayoutManager;
     private APIService apiService = APIService.getInstance();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        setUpToolBar();
 
+        View root = inflater.inflate(R.layout.fragment_client_list, container, false);
+
+        clientListRecyclerView = root.findViewById(R.id.recyclerView);
+        clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        mLayoutManager = new LinearLayoutManager(getContext());
+        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
+        clientListRecyclerView.setLayoutManager(mLayoutManager);
+        clientListRecyclerView.setAdapter(clientListAdapter);
 
         fetchClientsToList(clientList);
 
-        clientListViewModel =
-                new ViewModelProvider(this).get(ClientListViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_client_list, container, false);
-
-        mRecyclerView = root.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
-        adapter = new ClientListRecyclerItemAdapter(clientList, this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
-        setupButtons(root);
         return root;
+    }
+
+    public void setUpToolBar() {
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.client_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.new_client) {
+            launchCreateClientActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void launchCreateClientActivity() {
+        Intent createClientIntent = new Intent(getActivity(), CreateClientActivity.class);
+        startActivity(createClientIntent);
     }
 
     public void fetchClientsToList(List<Client> clientList) {
@@ -67,7 +90,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
                         List<Client> clients = response.body();
                         clientList.addAll(clients);
                     }
-                    adapter.notifyDataSetChanged();
+                    clientListAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -87,20 +110,5 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         clientInfoIntent.putExtra("clientId", client.getId());
 
         startActivity(clientInfoIntent);
-    }
-
-    private void setupButtons(View root) {
-        setupCreateClientButton(root);
-    }
-
-    private void setupCreateClientButton(View root) {
-        Button createClientButton = root.findViewById(R.id.buttonCreateClient);
-        createClientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent createClientIntent = new Intent(getActivity(), CreateClientActivity.class);
-                startActivity(createClientIntent);
-            }
-        });
     }
 }

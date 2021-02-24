@@ -195,4 +195,5 @@
     </string>
     <string name="toolbar">toolbar</string>
     <string name="new_client">new client</string>
+    <string name="hint_search">Search</string>
 </resources>

@@ -28,8 +28,8 @@ import retrofit2.Response;
 public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
 
     List<Client> clientList = new ArrayList<>();
-    private RecyclerView mRecyclerView;
-    private ClientListRecyclerItemAdapter adapter; // TODO
+    private RecyclerView clientListRecyclerView;
+    private ClientListRecyclerItemAdapter clientListAdapter; // TODO
     private RecyclerView.LayoutManager mLayoutManager;
     private APIService apiService = APIService.getInstance();
 
@@ -41,12 +41,12 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
 
-        mRecyclerView = root.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        clientListRecyclerView = root.findViewById(R.id.recyclerView);
+        clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(getContext());
-        adapter = new ClientListRecyclerItemAdapter(clientList, this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
+        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
+        clientListRecyclerView.setLayoutManager(mLayoutManager);
+        clientListRecyclerView.setAdapter(clientListAdapter);
         setupButtons(root);
         return root;
     }
@@ -60,7 +60,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
                         List<Client> clients = response.body();
                         clientList.addAll(clients);
                     }
-                    adapter.notifyDataSetChanged();
+                    clientListAdapter.notifyDataSetChanged();
                 }
 
                 @Override

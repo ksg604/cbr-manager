@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'clients.apps.ClientsConfig',
     'users.apps.UsersConfig',
+    'referral.apps.ReferralConfig',
     'visits.apps.VisitsConfig',
     'authenticate.apps.AuthenticateConfig',
     'alerts.apps.AlertsConfig',

@@ -3,6 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from referral.models import PhysiotherapyReferral, Referral, WheelchairReferral, ProstheticReferral, OrthoticReferral
 from referral.text_choices import ReferralTypes
+from utils.utils import update_object
 
 
 class PhysioReferralSerializer(serializers.ModelSerializer):
@@ -73,9 +74,24 @@ class ReferralSerializer(serializers.ModelSerializer):
 
         return super(ReferralSerializer, self).create(validated_data)
 
-    def to_representation(self, instance):
-        data = super(ReferralSerializer, self).to_representation(instance)
-        return data
+    def update(self, instance, validated_data):
+        referral_obj = super(ReferralSerializer, self).update(instance, validated_data)
+
+        self._update_referral_type_obj(referral_obj, validated_data)
+
+        return referral_obj
+
+    def _update_referral_type_obj(self, referral, validated_data):
+        referral_data = validated_data['referral']
+        serializers_class = _get_serializer_class(referral.referral_type)
+        serializer = serializers_class(data=referral_data)
+
+        if serializer.is_valid():
+            referral_type_obj = referral.content_object
+            update_object(referral_type_obj, **referral_data)
+            referral_type_obj.save()
+        else:
+            raise ValidationError({'referral': serializer.errors})
 
 
 def _get_serializer_class(referral_type):

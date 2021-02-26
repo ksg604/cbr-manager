@@ -15,10 +15,11 @@
         android:theme="@style/Theme.Cbr_manager"
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="n">
+        <activity android:name=".ui.createreferral.CreateReferralActivity"></activity>
         <activity android:name=".ui.visitdetails.VisitDetailsActivity" />
         <activity
             android:name=".ui.createvisit.CreateVisitActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.visits.VisitsActivity" />
         <activity
             android:name=".NavigationActivity"

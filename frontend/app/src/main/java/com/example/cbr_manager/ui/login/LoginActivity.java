@@ -26,6 +26,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.AuthResponse;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.example.cbr_manager.ui.homepage.HomepageActivity;
 import com.example.cbr_manager.utils.ErrorParser;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -128,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (apiService.isAuthenticated()) {
-                            Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomepageActivity.class);
                             startActivity(intent);
                         } else {
                             handleAuthError(view, response);

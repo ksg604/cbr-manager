@@ -93,12 +93,29 @@ public class CreateReferralActivity extends AppCompatActivity {
 
         } else if (service == R.id.referralWheelChairRadioButton) {
             WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
-
+            String hipWidth;
             boolean isExisting = false;
+            boolean isRepairable = false;
+
+            TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
+            hipWidth = hipWidthEditText.getText().toString();
+
+            RadioGroup isExistingWheelchair = findViewById(R.id.referralExistingWheelchairRadioGroup);
+            if (isExistingWheelchair.getCheckedRadioButtonId() == R.id.referralExistingWheelchairYes) {
+                isExisting = true;
+            }
+
+            RadioGroup isRepairableWheelchair = findViewById(R.id.referralCanRepairRadioGroup);
+            if (isRepairableWheelchair.getCheckedRadioButtonId() == R.id.referralCanRepairYes) {
+                isRepairable = true;
+            }
 
         } else if (service == R.id.referralOtherRadioButton) {
             // TODO
         }
+
+        TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
+        String referToString = referTo.getText().toString();
     }
 
     private void setupWheelchairLayout() {

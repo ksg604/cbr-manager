@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.home;
+package com.example.cbr_manager.ui.dashboard;
 
 import android.content.Context;
 import android.content.Intent;

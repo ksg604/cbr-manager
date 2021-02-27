@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from clients.models import Client
-from referral.text_choices import InjuryLocation, UsageExperience, Conditions, ReferralStatus, ServiceTypes
+from referral.text_choices import InjuryLocation, UsageExperience, Condition, ReferralStatus, ServiceTypes
 
 
 class Referral(models.Model):
@@ -44,9 +44,8 @@ class WheelchairService(ServiceType):
 class PhysiotherapyService(ServiceType):
     type = ServiceTypes.PHYSIOTHERAPY
 
-    conditions = models.CharField(choices=Conditions.choices, max_length=100)
-    specified_condition = models.CharField(max_length=100, help_text='Other condition, please specify', blank=True,
-                                           default="")
+    condition = models.CharField(choices=Condition.choices, max_length=100)
+    other_description = models.TextField(help_text='Other condition, please specify', blank=True, default="")
 
 
 class ProstheticService(ServiceType):

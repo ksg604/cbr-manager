@@ -212,34 +212,175 @@
                 android:id="@+id/referralPhysioLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/referralPhysioTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Physiotherapy"
                     android:textColor="@color/purple_700"
+                    android:layout_marginBottom="8dp"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/referralPhysioPhotoTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Photo of client" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/referralPhysioImageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
-                    android:id="@+id/textView20"
+                    android:id="@+id/referralClientConditionTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Client condition" />
+
+                <Spinner
+                    android:id="@+id/referralPhysioDDL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Describe Other"
+                        android:layout_marginBottom="8dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralProstheticLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="16dp">
+
+                <TextView
+                    android:id="@+id/referralProstheticTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Prosthetic"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/referralProstheticWhereTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is injury below or above knee?" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/referralProstheticBelow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Below" />
+
+                    <RadioButton
+                        android:id="@+id/referralProstheticAbove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Above" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralOrthoticLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/referralOrthoticTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Orthotic"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/referralOrthoticWhereTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is injury below or above elbow?" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/referralOrthoticAboveRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Below" />
+
+                    <RadioButton
+                        android:id="@+id/referralOrthoticBelowRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Above" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/referralReferToTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Refer To"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Refer To" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/referralSubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:layout_margin="16dp"/>
         </LinearLayout>
     </ScrollView>
 

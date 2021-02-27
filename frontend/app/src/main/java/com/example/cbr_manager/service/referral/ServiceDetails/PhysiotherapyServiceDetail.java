@@ -11,14 +11,6 @@ public class PhysiotherapyServiceDetail extends ServiceDetail {
     @Expose
     private String specifiedCondition;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getConditions() {
         return conditions;
     }

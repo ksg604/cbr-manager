@@ -28,6 +28,10 @@ public class ReferralService extends BaseService {
         return referralAPI.getReferral(authHeader, id);
     }
 
+    public Call<Referral> updateReferral(int id, Referral referral) {
+        return referralAPI.updateReferral(authHeader, id, referral);
+    }
+
     public Call<Referral> createReferral(Referral referral) {
         return referralAPI.createReferral(authHeader, referral);
     }

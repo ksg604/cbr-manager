@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from referral.models import PhysiotherapyService, Referral, WheelchairService, ProstheticService, OrthoticService
+from referral.models import PhysiotherapyService, Referral, WheelchairService, ProstheticService, OrthoticService, \
+    OtherService
 from referral.text_choices import ServiceTypes
 from utils.utils import update_object
 
@@ -34,6 +35,12 @@ class OrthoticServiceSerializer(ExposeTypeMixin, serializers.ModelSerializer):
         fields = '__all__'
 
 
+class OtherServiceSerializer(ExposeTypeMixin, serializers.ModelSerializer):
+    class Meta:
+        model = OtherService
+        fields = '__all__'
+
+
 class ServiceJSONField(serializers.JSONField):
     def to_representation(self, obj):
         referral = obj
@@ -54,7 +61,8 @@ class ReferralSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Referral
-        fields = ('id', 'service_detail', 'date_created', 'status', 'outcome', 'service_type', 'client', 'user_creator')
+        fields = ('id', 'service_detail', 'date_created', 'status', 'outcome', 'service_type', 'client', 'user_creator',
+                  'refer_to')
 
     def create(self, validated_data):
         def extract_service_details():
@@ -103,7 +111,8 @@ def _get_serializer_class(service_type):
         ServiceTypes.WHEELCHAIR: WheelChairServiceSerializer,
         ServiceTypes.PHYSIOTHERAPY: PhysioServiceSerializer,
         ServiceTypes.ORTHOTIC: OrthoticServiceSerializer,
-        ServiceTypes.PROSTHETIC: ProstheticServiceSerializer
+        ServiceTypes.PROSTHETIC: ProstheticServiceSerializer,
+        ServiceTypes.OTHER: OtherServiceSerializer
     }
 
     if service_type not in serializer_map:

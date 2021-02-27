@@ -37,6 +37,19 @@ public class Referral {
     @Expose
     private Integer userCreator;
 
+    @SerializedName("refer_to")
+    @Expose
+    private String refer_to;
+
+    public String getRefer_to() {
+        return refer_to;
+    }
+
+    public void setRefer_to(String refer_to) {
+        this.refer_to = refer_to;
+    }
+
+
     public Integer getId() {
         return id;
     }

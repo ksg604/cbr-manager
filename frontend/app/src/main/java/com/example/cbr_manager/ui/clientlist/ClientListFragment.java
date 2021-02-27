@@ -111,4 +111,5 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         startActivity(clientInfoIntent);
     }
+
 }

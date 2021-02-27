@@ -1,6 +1,7 @@
 package com.example.cbr_manager.service.referral;
 
 import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
@@ -27,6 +28,7 @@ public class ReferralSerializer implements JsonDeserializer<Referral> {
         map.put("Physiotherapy", PhysiotherapyServiceDetail.class);
         map.put("Prosthetic", ProstheticServiceDetail.class);
         map.put("Orthotic", OrthoticServiceDetail.class);
+        map.put("Other", OtherServiceDetail.class);
     }
 
     @Override

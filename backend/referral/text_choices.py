@@ -11,7 +11,7 @@ class UsageExperience(models.TextChoices):
     INTERMEDIATE = 'Intermediate'
 
 
-class Conditions(models.TextChoices):
+class Condition(models.TextChoices):
     AMPUTEE = 'Amputee',
     POLIO = 'Polio',
     SPINAL_CORD_INJURY = 'Spinal Cord Injury'
@@ -33,3 +33,4 @@ class ServiceTypes(models.TextChoices):
     PHYSIOTHERAPY = "Physiotherapy"
     PROSTHETIC = "Prosthetic"
     ORTHOTIC = "Orthotic"
+    OTHER = "Other"

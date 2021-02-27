@@ -206,7 +206,12 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="toolbar">toolbar</string>
-    <string name="new_client">new client</string>
+    <string name="new_client">NEW CLIENT</string>
+    <string name="new_visit">NEW VISIT</string>
+    <string name="dashboard">DASHBOARD</string>
+    <string name="new_referral">NEW REFERRAL</string>
+    <string name="client_list">CLIENT LIST</string>
+    <string name="sync">SYNC</string>
     <string name="hint_search">Search</string>
     <string name="create_referral">Create Referral</string>
 </resources>

@@ -4,26 +4,26 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PhysiotherapyServiceDetail extends ServiceDetail {
-    @SerializedName("conditions")
+    @SerializedName("condition")
     @Expose
-    private String conditions;
-    @SerializedName("specified_condition")
+    private String condition;
+    @SerializedName("other_description")
     @Expose
-    private String specifiedCondition;
+    private String other_description;
 
-    public String getConditions() {
-        return conditions;
+    public String getCondition() {
+        return condition;
     }
 
-    public void setConditions(String conditions) {
-        this.conditions = conditions;
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
-    public String getSpecifiedCondition() {
-        return specifiedCondition;
+    public String getOther_description() {
+        return other_description;
     }
 
-    public void setSpecifiedCondition(String specifiedCondition) {
-        this.specifiedCondition = specifiedCondition;
+    public void setOther_description(String other_description) {
+        this.other_description = other_description;
     }
 }

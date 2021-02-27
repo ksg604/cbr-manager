@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
-from referral.models import Referral, WheelchairService, PhysiotherapyService, OrthoticService, ProstheticService
+from referral.models import Referral, WheelchairService, PhysiotherapyService, OrthoticService, ProstheticService, \
+    OtherService
 
 
 @admin.register(Referral)
@@ -39,5 +40,10 @@ class OrthoticServiceAdmin(ReferralBaseAdmin):
 
 
 @admin.register(ProstheticService)
+class ProstheticServiceAdmin(ReferralBaseAdmin):
+    pass
+
+
+@admin.register(OtherService)
 class ProstheticServiceAdmin(ReferralBaseAdmin):
     pass

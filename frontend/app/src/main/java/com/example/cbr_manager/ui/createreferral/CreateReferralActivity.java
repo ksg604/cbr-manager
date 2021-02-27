@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.referral.Referral;
+import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
@@ -51,7 +56,30 @@ public class CreateReferralActivity extends AppCompatActivity {
         Referral referral = new Referral();
 
         if (service == R.id.referralPhysioRadioButton) {
+            PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
+            String clientCondition;
 
+            TextInputEditText physioOtherCondition = findViewById(R.id.referralOtherPhysio);
+
+            String otherConditionDescription = "";
+            Spinner referralPhysioDDL = findViewById(R.id.referralPhysioDDL);
+            clientCondition = referralPhysioDDL.getSelectedItem().toString();
+
+            if (clientCondition.equals("Other")) {
+                otherConditionDescription = physioOtherCondition.getText().toString();
+            }
+
+            physiotherapyServiceDetail.setSpecifiedCondition(clientCondition);
+            // TODO: Waiting on addition of other description.
+
+        } else if (service == R.id.referralProstheticRadioButton) {
+            ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
+        } else if (service == R.id.referralOrthoticRadioButton) {
+            OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
+        } else if (service == R.id.referralWheelChairRadioButton) {
+            WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
+        } else if (service == R.id.referralOtherRadioButton) {
+            // TODO
         }
     }
 

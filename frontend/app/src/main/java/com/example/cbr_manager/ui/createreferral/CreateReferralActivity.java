@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.referral.Referral;
 
 import java.util.Objects;
 
@@ -25,17 +26,33 @@ public class CreateReferralActivity extends AppCompatActivity {
         setTitle("Create Referral");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        setupReferralServiceRadioGroup();
+        setupPhysioLayout();
+        setupWheelchairLayout();
+        setupSubmission();
+    }
+
+    private void setupSubmission() {
         Button submitButton = findViewById(R.id.referralSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                gatherData();
+                
                 onBackPressed();
             }
         });
+    }
 
-        setupReferralServiceRadioGroup();
-        setupPhysioLayout();
-        setupWheelchairLayout();
+    private void gatherData() {
+        RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
+        int service = selectedService.getCheckedRadioButtonId();
+
+        Referral referral = new Referral();
+
+        if (service == R.id.referralPhysioRadioButton) {
+
+        }
     }
 
     private void setupWheelchairLayout() {

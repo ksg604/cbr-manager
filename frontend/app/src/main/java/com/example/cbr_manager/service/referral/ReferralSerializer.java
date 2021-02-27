@@ -47,7 +47,7 @@ public class ReferralSerializer implements JsonDeserializer<Referral> {
         if (serializer_class != null) {
             return gson.fromJson(referral_json, serializer_class);
         } else {
-            throw new JsonParseException("Could not serialize service detail.");
+            throw new JsonParseException("Could not deserialize service detail.");
         }
     }
 }

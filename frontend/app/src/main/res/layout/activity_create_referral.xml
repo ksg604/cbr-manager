@@ -98,7 +98,8 @@
                 android:id="@+id/referralWheelchairLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/referralWheelChairTitleTextView"
@@ -145,6 +146,7 @@
                     android:text="Existing Wheelchair?" />
 
                 <RadioGroup
+                    android:id="@+id/referralExistingWheelchairRadioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -175,6 +177,7 @@
                     android:text="Can the existing wheelchair be repaired?" />
 
                 <RadioGroup
+                    android:id="@+id/referralCanRepairRadioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -213,15 +216,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/referralPhysioTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Physiotherapy"
                     android:textColor="@color/purple_700"
-                    android:layout_marginBottom="8dp"
                     android:textSize="18sp" />
 
                 <TextView
@@ -248,7 +252,7 @@
                     android:id="@+id/referralPhysioDDL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -257,8 +261,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Describe Other"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="8dp"
+                        android:hint="Describe Other" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -266,15 +270,16 @@
                 android:id="@+id/referralProstheticLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_margin="16dp">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/referralProstheticTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Prosthetic"
                     android:layout_marginBottom="8dp"
+                    android:text="Prosthetic"
                     android:textColor="@color/purple_700"
                     android:textSize="18sp" />
 
@@ -310,14 +315,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/referralOrthoticTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Orthotic"
                     android:layout_marginBottom="8dp"
+                    android:text="Orthotic"
                     android:textColor="@color/purple_700"
                     android:textSize="18sp" />
 
@@ -353,6 +359,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Refer To"
+                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
                 android:textColor="@color/purple_700"
                 android:textSize="18sp"

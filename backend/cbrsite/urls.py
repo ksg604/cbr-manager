@@ -22,6 +22,7 @@ from django.conf import settings
 
 from authenticate.views import CustomObtainToken
 from clients.views_api import ClientViewSet
+from referral.views import ReferralViewSet
 from users.views import UserViewSet
 from visits.views import VisitViewSet
 from alerts.views import AlertViewSet
@@ -33,6 +34,7 @@ router.register(r'clients', ClientViewSet, basename="Client")
 router.register(r'users', UserViewSet, basename="User")
 router.register(r'visits', VisitViewSet)
 router.register(r'alerts', AlertViewSet)
+router.register(r'referrals', ReferralViewSet, basename='Referral')
 
 urlpatterns = \
     [

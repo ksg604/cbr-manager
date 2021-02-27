@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 
@@ -31,6 +33,48 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
         });
 
+        setupReferralServiceRadioGroup();
+        setupPhysioLayout();
+        setupWheelchairLayout();
+    }
+
+    private void setupWheelchairLayout() {
+        RadioGroup existingChair = findViewById(R.id.referralExistingWheelchairRadioGroup);
+        RadioGroup canRepair = findViewById(R.id.referralCanRepairRadioGroup);
+        canRepair.setVisibility(View.GONE);
+
+        TextView bringWheelChair = findViewById(R.id.referralBringWheelchairTextView);
+        bringWheelChair.setVisibility(View.GONE);
+
+        existingChair.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.referralExistingWheelchairYes) {
+                    canRepair.setVisibility(View.VISIBLE);
+                } else {
+                    canRepair.setVisibility(View.GONE);
+                    canRepair.clearCheck();
+                    bringWheelChair.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        canRepair.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.referralCanRepairYes) {
+                    bringWheelChair.setVisibility(View.VISIBLE);
+                } else {
+                    bringWheelChair.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void setupPhysioLayout() {
+    }
+
+    private void setupReferralServiceRadioGroup() {
         RadioGroup serviceRequired = findViewById(R.id.createReferralServiceRadioGroup);
         serviceRequired.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -39,7 +83,6 @@ public class CreateReferralActivity extends AppCompatActivity {
                 LinearLayout prostheticLayout = findViewById(R.id.referralProstheticLayout);
                 LinearLayout orthoticLayout = findViewById(R.id.referralOrthoticLayout);
                 LinearLayout wheelchairLayout = findViewById(R.id.referralWheelchairLayout);
-                LinearLayout otherLayout = findViewById(R.id.referralOrthoticLayout);
 
                 if (checkedId == R.id.referralPhysioRadioButton) {
                     setAllGone();
@@ -53,11 +96,9 @@ public class CreateReferralActivity extends AppCompatActivity {
                 } else if (checkedId == R.id.referralWheelChairRadioButton) {
                     setAllGone();
                     wheelchairLayout.setVisibility(View.VISIBLE);
-                } else if (checkedId == R.id.referralOtherRadioButton) {
+                } else {
                     setAllGone();
-                    otherLayout.setVisibility(View.VISIBLE);
                 }
-
             }
         });
     }

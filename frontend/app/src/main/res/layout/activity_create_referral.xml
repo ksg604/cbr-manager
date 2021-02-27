@@ -252,7 +252,8 @@
                     android:id="@+id/referralPhysioDDL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:entries="@array/physioNeedsArray" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

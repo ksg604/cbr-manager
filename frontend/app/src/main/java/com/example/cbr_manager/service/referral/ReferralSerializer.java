@@ -41,8 +41,8 @@ public class ReferralSerializer implements JsonDeserializer<Referral> {
     private ServiceDetail deserializeServiceDetail(JsonObject json) {
         Gson gson = new Gson();
 
-        JsonObject referral_json = (JsonObject) json.get("referral");
-        String referral_type = json.get("referral_type").getAsString();
+        JsonObject referral_json = (JsonObject) json.get("service_detail");
+        String referral_type = json.get("service_type").getAsString();
         Class<ServiceDetail> serializer_class =  map.get(referral_type);
 
         if (serializer_class != null) {

@@ -23,9 +23,9 @@ public class Referral {
     @Expose
     private String outcome;
 
-    @SerializedName("referral_type")
+    @SerializedName("service_type")
     @Expose
-    private String referralType;
+    private String serviceType;
 
     @SerializedName("client")
     @Expose
@@ -67,12 +67,12 @@ public class Referral {
         this.outcome = outcome;
     }
 
-    public String getReferralType() {
-        return referralType;
+    public String getServiceType() {
+        return serviceType;
     }
 
-    public void setReferralType(String referralType) {
-        this.referralType = referralType;
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
     public Integer getClient() {

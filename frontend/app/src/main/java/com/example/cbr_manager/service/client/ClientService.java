@@ -1,15 +1,18 @@
 package com.example.cbr_manager.service.client;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.auth.AuthResponse;
+import com.example.cbr_manager.utils.Helper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.util.List;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -92,6 +95,12 @@ public class ClientService {
 
     public Call<Client> createClient(Client client){
         return this.clientAPI.createClient(authHeader, client);
+    }
+
+    public Call<ResponseBody> uploadClientPhoto(File file, int clientId) {
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        return this.clientAPI.uploadPhoto(authHeader, clientId, body);
     }
 
 }

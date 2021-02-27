@@ -56,6 +56,6 @@ class ProstheticService(ServiceType):
 
 
 class OrthoticService(ServiceType):
-    type = ServiceTypes.PHYSIOTHERAPY
+    type = ServiceTypes.ORTHOTIC
 
     elbow_injury_location = models.CharField(max_length=20, choices=InjuryLocation.choices)

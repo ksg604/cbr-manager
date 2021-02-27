@@ -7,7 +7,7 @@ from utils.utils import update_object
 
 
 class ExposeTypeMixin(metaclass=serializers.SerializerMetaclass):
-    type = serializers.CharField(required=False)
+    type = serializers.CharField(required=False, read_only=True)
 
 
 class PhysioServiceSerializer(ExposeTypeMixin, serializers.ModelSerializer):

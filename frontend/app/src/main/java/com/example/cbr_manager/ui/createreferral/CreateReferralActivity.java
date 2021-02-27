@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -74,10 +75,27 @@ public class CreateReferralActivity extends AppCompatActivity {
 
         } else if (service == R.id.referralProstheticRadioButton) {
             ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
+            RadioGroup aboveOrBelowKnee = findViewById(R.id.referralAboveOrBelowKnee);
+            int getSelectedId = aboveOrBelowKnee.getCheckedRadioButtonId();
+            RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
+            String getRadioText = aboveOrBelow.getText().toString();
+
+            prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
+
         } else if (service == R.id.referralOrthoticRadioButton) {
             OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
+            RadioGroup aboveOrBelowElbow = findViewById(R.id.referralAboveOrBelowElbow);
+            int getSelectedId = aboveOrBelowElbow.getCheckedRadioButtonId();
+            RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
+            String getRadioText = aboveOrBelow.getText().toString();
+
+            orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
+
         } else if (service == R.id.referralWheelChairRadioButton) {
             WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
+
+            boolean isExisting = false;
+
         } else if (service == R.id.referralOtherRadioButton) {
             // TODO
         }

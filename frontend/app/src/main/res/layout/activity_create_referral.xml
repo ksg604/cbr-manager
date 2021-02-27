@@ -292,6 +292,7 @@
                     android:text="Is injury below or above knee?" />
 
                 <RadioGroup
+                    android:id="@+id/referralAboveOrBelowKnee"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -336,6 +337,7 @@
                     android:text="Is injury below or above elbow?" />
 
                 <RadioGroup
+                    android:id="@+id/referralAboveOrBelowElbow"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">

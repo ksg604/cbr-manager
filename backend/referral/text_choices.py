@@ -33,3 +33,4 @@ class ServiceTypes(models.TextChoices):
     PHYSIOTHERAPY = "Physiotherapy"
     PROSTHETIC = "Prosthetic"
     ORTHOTIC = "Orthotic"
+    OTHER = "Other"

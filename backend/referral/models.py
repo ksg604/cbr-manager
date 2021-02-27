@@ -59,3 +59,9 @@ class OrthoticService(ServiceType):
     type = ServiceTypes.ORTHOTIC
 
     elbow_injury_location = models.CharField(max_length=20, choices=InjuryLocation.choices)
+
+
+class OtherService(ServiceType):
+    type = ServiceTypes.OTHER
+
+    description = models.TextField()

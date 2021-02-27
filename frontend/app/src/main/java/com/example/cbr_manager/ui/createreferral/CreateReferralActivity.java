@@ -78,7 +78,10 @@ public class CreateReferralActivity extends AppCompatActivity {
             RadioGroup aboveOrBelowKnee = findViewById(R.id.referralAboveOrBelowKnee);
             int getSelectedId = aboveOrBelowKnee.getCheckedRadioButtonId();
             RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
-            String getRadioText = aboveOrBelow.getText().toString();
+            String getRadioText = "";
+            if (aboveOrBelow != null) {
+                getRadioText = aboveOrBelow.getText().toString();
+            }
 
             prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
 
@@ -87,7 +90,11 @@ public class CreateReferralActivity extends AppCompatActivity {
             RadioGroup aboveOrBelowElbow = findViewById(R.id.referralAboveOrBelowElbow);
             int getSelectedId = aboveOrBelowElbow.getCheckedRadioButtonId();
             RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
-            String getRadioText = aboveOrBelow.getText().toString();
+            String getRadioText = "";
+
+            if (aboveOrBelow != null) {
+                getRadioText = aboveOrBelow.getText().toString();
+            }
 
             orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
 

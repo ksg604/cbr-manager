@@ -195,5 +195,10 @@
     </string>
     <string name="toolbar">toolbar</string>
     <string name="new_client">new client</string>
+    <string name="new_visit">New Visit</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="new_referral">New Referral</string>
+    <string name="all_clients">All Clients</string>
+    <string name="sync">Sync</string>
     <string name="hint_search">Search</string>
 </resources>

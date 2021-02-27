@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.visits.VisitsPerClientFragment;
 import com.example.cbr_manager.utils.Helper;
@@ -95,6 +96,15 @@ public class ClientDetailsFragment extends Fragment {
 
         setupButtons(root);
         setupVectorImages(root);
+
+        Button newReferralPlaceHolderButton = root.findViewById(R.id.clientDetailsNewReferralButton);
+        newReferralPlaceHolderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateReferralActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return root;
     }

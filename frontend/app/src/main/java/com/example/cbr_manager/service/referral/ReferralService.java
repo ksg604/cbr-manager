@@ -28,6 +28,10 @@ public class ReferralService extends BaseService {
         return referralAPI.getReferral(authHeader, id);
     }
 
+    public Call<Referral> createReferral(Referral referral) {
+        return referralAPI.createReferral(authHeader, referral);
+    }
+
     @Override
     protected ReferralAPI getAPI() {
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -43,4 +47,6 @@ public class ReferralService extends BaseService {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build().create(retroFitAPIClass);
     }
+
+
 }

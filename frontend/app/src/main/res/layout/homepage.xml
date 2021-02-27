@@ -48,7 +48,7 @@
                 tools:ignore="RtlCompat" />
 
             <Button
-                android:id="@+id/newVisitButton2"
+                android:id="@+id/dashboardButton"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="30dp"
@@ -63,11 +63,11 @@
                 android:textColor="#000000"
                 app:backgroundTint="#A1A1A1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newVisitButton3"
+                app:layout_constraintTop_toBottomOf="@+id/newClientButton"
                 tools:ignore="RtlCompat" />
 
             <Button
-                android:id="@+id/newVisitButton5"
+                android:id="@+id/clientListButton"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="30dp"
@@ -82,11 +82,11 @@
                 android:textColor="#000000"
                 app:backgroundTint="#A1A1A1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newVisitButton2"
+                app:layout_constraintTop_toBottomOf="@+id/dashboardButton"
                 tools:ignore="RtlCompat" />
 
             <Button
-                android:id="@+id/newVisitButton4"
+                android:id="@+id/newReferralButton"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="30dp"
@@ -105,7 +105,7 @@
                 tools:ignore="RtlCompat" />
 
             <Button
-                android:id="@+id/newVisitButton6"
+                android:id="@+id/syncButton"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="30dp"
@@ -120,11 +120,11 @@
                 android:textColor="#000000"
                 app:backgroundTint="#A1A1A1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newVisitButton4"
+                app:layout_constraintTop_toBottomOf="@+id/newReferralButton"
                 tools:ignore="RtlCompat" />
 
             <Button
-                android:id="@+id/newVisitButton3"
+                android:id="@+id/newClientButton"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="30dp"

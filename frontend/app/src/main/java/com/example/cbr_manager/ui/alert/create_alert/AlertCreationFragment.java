@@ -1,6 +1,5 @@
 package com.example.cbr_manager.ui.alert.create_alert;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
-import com.example.cbr_manager.ui.home.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;

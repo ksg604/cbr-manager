@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.home;
+package com.example.cbr_manager.ui.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class DashboardFragment extends Fragment {
 
     private final APIService apiService = APIService.getInstance();
     ViewPager viewPager;
@@ -44,13 +44,13 @@ public class HomeFragment extends Fragment {
     TextView titleTextView;
     int homeAlertId;
 
-    private HomeViewModel homeViewModel;
+    private DashboardViewModel dashboardViewModel;
     View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        dashboardViewModel =
+                new ViewModelProvider(this).get(DashboardViewModel.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
         fetchNewestAlert();
         setupViewPager(root, clientViewPagerList);
@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment {
         seeMoreTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(HomeFragment.this)
+                NavHostFragment.findNavController(DashboardFragment.this)
                         .navigate(R.id.action_nav_dashboard_to_nav_alert_list);
             }
         });
@@ -198,7 +198,7 @@ public class HomeFragment extends Fragment {
         allClientsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(HomeFragment.this)
+                NavHostFragment.findNavController(DashboardFragment.this)
                         .navigate(R.id.action_nav_dashboard_to_nav_client_list);
             }
         });

@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from clients.models import Client
-from referral.text_choices import InjuryLocation, UsageExperience, Conditions, ReferralStatus, ReferralTypes
+from referral.text_choices import InjuryLocation, UsageExperience, Conditions, ReferralStatus, ServiceTypes
 
 
 class Referral(models.Model):
@@ -15,13 +15,13 @@ class Referral(models.Model):
     status = models.CharField(max_length=20, choices=ReferralStatus.choices, default=ReferralStatus.CREATED)
     outcome = models.TextField(blank=True, default="")
 
-    referral_type = models.CharField(max_length=50, choices=ReferralTypes.choices)
-    referral_object_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=limit)
-    referral_object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('referral_object_type', 'referral_object_id')
+    service_type = models.CharField(max_length=50, choices=ServiceTypes.choices)
+    service_object_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=limit)
+    service_object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('service_object_type', 'service_object_id')
 
 
-class ReferralType(models.Model):
+class ServiceType(models.Model):
     type = None
     referral = GenericRelation(Referral)
 
@@ -32,8 +32,8 @@ class ReferralType(models.Model):
         return self.type + " ({})".format(self.id)
 
 
-class WheelchairReferral(ReferralType):
-    type = ReferralTypes.WHEELCHAIR
+class WheelchairService(ServiceType):
+    type = ServiceTypes.WHEELCHAIR
 
     usage_experience = models.CharField(max_length=100, choices=UsageExperience.choices)
     client_hip_width = models.FloatField(default=0)
@@ -41,21 +41,21 @@ class WheelchairReferral(ReferralType):
     is_wheel_chair_repairable = models.BooleanField()
 
 
-class PhysiotherapyReferral(ReferralType):
-    type = ReferralTypes.PHYSIOTHERAPY
+class PhysiotherapyService(ServiceType):
+    type = ServiceTypes.PHYSIOTHERAPY
 
     conditions = models.CharField(choices=Conditions.choices, max_length=100)
     specified_condition = models.CharField(max_length=100, help_text='Other condition, please specify', blank=True,
                                            default="")
 
 
-class ProstheticReferral(ReferralType):
-    type = ReferralTypes.PROSTHETIC
+class ProstheticService(ServiceType):
+    type = ServiceTypes.PROSTHETIC
 
     knee_injury_location = models.CharField(max_length=20, choices=InjuryLocation.choices)
 
 
-class OrthoticReferral(ReferralType):
-    type = ReferralTypes.PHYSIOTHERAPY
+class OrthoticService(ServiceType):
+    type = ServiceTypes.PHYSIOTHERAPY
 
     elbow_injury_location = models.CharField(max_length=20, choices=InjuryLocation.choices)

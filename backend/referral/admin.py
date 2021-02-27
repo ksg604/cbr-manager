@@ -1,13 +1,13 @@
 from django.contrib import admin
 
 # Register your models here.
-from referral.models import Referral, WheelchairReferral, PhysiotherapyReferral, OrthoticReferral, ProstheticReferral
+from referral.models import Referral, WheelchairService, PhysiotherapyService, OrthoticService, ProstheticService
 
 
 @admin.register(Referral)
 class ReferralAdmin(admin.ModelAdmin):
-    readonly_fields = ('referral_type', 'referral_object_id', 'referral_object_type')
-    list_display = ('status', 'referral_type', 'user_creator', 'client_name',)
+    readonly_fields = ('service_type', 'service_object_id', 'service_object_type')
+    list_display = ('status', 'service_type', 'user_creator', 'client_name',)
 
     def user_creator(self, obj):
         return obj.user
@@ -16,28 +16,28 @@ class ReferralAdmin(admin.ModelAdmin):
         return obj.client
 
     def referral_type(self, obj):
-        return obj.referral_type.type
+        return obj.service_type.type
 
 
 class ReferralBaseAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(PhysiotherapyReferral)
+@admin.register(PhysiotherapyService)
 class PhysioServiceAdmin(ReferralBaseAdmin):
     pass
 
 
-@admin.register(WheelchairReferral)
+@admin.register(WheelchairService)
 class WheelchairServiceAdmin(ReferralBaseAdmin):
     pass
 
 
-@admin.register(OrthoticReferral)
+@admin.register(OrthoticService)
 class OrthoticServiceAdmin(ReferralBaseAdmin):
     pass
 
 
-@admin.register(ProstheticReferral)
+@admin.register(ProstheticService)
 class ProstheticServiceAdmin(ReferralBaseAdmin):
     pass

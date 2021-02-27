@@ -28,7 +28,7 @@ class ReferralStatus(models.TextChoices):
     RESOLVED = 'RESOLVED'
 
 
-class ReferralTypes(models.TextChoices):
+class ServiceTypes(models.TextChoices):
     WHEELCHAIR = "Wheelchair"
     PHYSIOTHERAPY = "Physiotherapy"
     PROSTHETIC = "Prosthetic"

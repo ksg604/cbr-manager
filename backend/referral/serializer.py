@@ -1,76 +1,80 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from referral.models import PhysiotherapyReferral, Referral, WheelchairReferral, ProstheticReferral, OrthoticReferral
-from referral.text_choices import ReferralTypes
+from referral.models import PhysiotherapyService, Referral, WheelchairService, ProstheticService, OrthoticService
+from referral.text_choices import ServiceTypes
 from utils.utils import update_object
 
 
-class PhysioReferralSerializer(serializers.ModelSerializer):
+class ExposeTypeMixin(metaclass=serializers.SerializerMetaclass):
+    type = serializers.CharField(required=False)
+
+
+class PhysioServiceSerializer(ExposeTypeMixin, serializers.ModelSerializer):
     class Meta:
-        model = PhysiotherapyReferral
+        model = PhysiotherapyService
         fields = '__all__'
 
 
-class WheelChairReferralSerializer(serializers.ModelSerializer):
+class WheelChairServiceSerializer(ExposeTypeMixin, serializers.ModelSerializer):
     class Meta:
-        model = WheelchairReferral
+        model = WheelchairService
         fields = '__all__'
 
 
-class ProstheticReferralSerializer(serializers.ModelSerializer):
+class ProstheticServiceSerializer(ExposeTypeMixin, serializers.ModelSerializer):
     class Meta:
-        model = ProstheticReferral
+        model = ProstheticService
         fields = '__all__'
 
 
-class OrthoticReferralSerializer(serializers.ModelSerializer):
+class OrthoticServiceSerializer(ExposeTypeMixin, serializers.ModelSerializer):
     class Meta:
-        model = OrthoticReferral
+        model = OrthoticService
         fields = '__all__'
 
 
-class ReferralJSONField(serializers.JSONField):
+class ServiceJSONField(serializers.JSONField):
     def to_representation(self, obj):
         referral = obj
         referral_obj = referral.content_object
-        referral_type = referral.referral_type
+        referral_type = referral.service_type
         serializer_class = _get_serializer_class(referral_type)
         return serializer_class(referral_obj).data
 
     def to_internal_value(self, data):
-        internal_value = super(ReferralJSONField, self).to_internal_value(data)
+        internal_value = super(ServiceJSONField, self).to_internal_value(data)
         return {
             self.field_name: internal_value
         }
 
 
 class ReferralSerializer(serializers.ModelSerializer):
-    referral = ReferralJSONField(source='*')
+    service_detail = ServiceJSONField(source='*')
 
     class Meta:
         model = Referral
-        fields = ('id', 'referral', 'date_created', 'status', 'outcome', 'referral_type', 'client', 'user_creator')
+        fields = ('id', 'service_detail', 'date_created', 'status', 'outcome', 'service_type', 'client', 'user_creator')
 
     def create(self, validated_data):
-        def extract_referral_data():
-            data = validated_data['referral']
-            del validated_data['referral']
+        def extract_service_details():
+            data = validated_data['service_detail']
+            del validated_data['service_detail']
             if data is None:
-                raise ValidationError({'referral': ['this field cannot be empty']})
+                raise ValidationError({'service_detail': ['this field cannot be empty']})
             return data
 
-        referral_type = validated_data['referral_type']
-        referral_data = extract_referral_data()
+        referral_type = validated_data['service_type']
+        service_details = extract_service_details()
 
         serializer_class = _get_serializer_class(referral_type)
-        serializer = serializer_class(data=referral_data)
+        serializer = serializer_class(data=service_details)
 
         if serializer.is_valid():
             content_object = serializer.save()
             validated_data['content_object'] = content_object
         else:
-            raise ValidationError({'referral': serializer.errors})
+            raise ValidationError({'service_detail': serializer.errors})
 
         return super(ReferralSerializer, self).create(validated_data)
 
@@ -82,27 +86,27 @@ class ReferralSerializer(serializers.ModelSerializer):
         return referral_obj
 
     def _update_referral_type_obj(self, referral, validated_data):
-        referral_data = validated_data['referral']
-        serializers_class = _get_serializer_class(referral.referral_type)
-        serializer = serializers_class(data=referral_data)
+        service_details = validated_data['service_detail']
+        serializers_class = _get_serializer_class(referral.service_type)
+        serializer = serializers_class(data=service_details)
 
         if serializer.is_valid():
-            referral_type_obj = referral.content_object
-            update_object(referral_type_obj, **referral_data)
-            referral_type_obj.save()
+            service_type_obj = referral.content_object
+            update_object(service_type_obj, **service_details)
+            service_type_obj.save()
         else:
-            raise ValidationError({'referral': serializer.errors})
+            raise ValidationError({'service_detail': serializer.errors})
 
 
-def _get_serializer_class(referral_type):
+def _get_serializer_class(service_type):
     serializer_map = {
-        ReferralTypes.WHEELCHAIR: WheelChairReferralSerializer,
-        ReferralTypes.PHYSIOTHERAPY: PhysioReferralSerializer,
-        ReferralTypes.ORTHOTIC: OrthoticReferralSerializer,
-        ReferralTypes.PROSTHETIC: ProstheticReferralSerializer
+        ServiceTypes.WHEELCHAIR: WheelChairServiceSerializer,
+        ServiceTypes.PHYSIOTHERAPY: PhysioServiceSerializer,
+        ServiceTypes.ORTHOTIC: OrthoticServiceSerializer,
+        ServiceTypes.PROSTHETIC: ProstheticServiceSerializer
     }
 
-    if referral_type not in serializer_map:
-        raise ValidationError({'referral_type': ['unrecognized referral type']})
+    if service_type not in serializer_map:
+        raise ValidationError({'service_type': ['unrecognized service type']})
     else:
-        return serializer_map.get(referral_type)
+        return serializer_map.get(service_type)

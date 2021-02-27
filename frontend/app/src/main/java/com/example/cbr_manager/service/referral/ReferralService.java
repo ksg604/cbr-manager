@@ -24,6 +24,10 @@ public class ReferralService extends BaseService {
         return referralAPI.getReferrals(authHeader);
     }
 
+    public Call<Referral> getReferral(int id) {
+        return referralAPI.getReferral(authHeader, id);
+    }
+
     @Override
     protected ReferralAPI getAPI() {
         GsonBuilder gsonBuilder = new GsonBuilder();

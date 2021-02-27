@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/referralPreambleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -94,6 +95,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/referralWheelchairLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -102,13 +104,13 @@
                     android:id="@+id/referralWheelChairTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/purple_700"
                     android:layout_margin="16dp"
                     android:text="Wheelchair"
+                    android:textColor="@color/purple_700"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/referralWheelChairPhotoTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -116,7 +118,7 @@
                     android:text="Photo of devices" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/referralWheelChairPhotoImageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -131,34 +133,34 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:hint="Hip width" />
+                        android:hint="Hip width"
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/referralExisitingWheelchairTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Existing Wheelchair?"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginLeft="16dp"
+                    android:text="Existing Wheelchair?" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton6"
+                        android:id="@+id/referralExistingWheelchairYes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Yes" />
 
                     <RadioButton
-                        android:id="@+id/radioButton7"
+                        android:id="@+id/referralExistingWheelchairNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -166,7 +168,7 @@
                 </RadioGroup>
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/referralCanRepairTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -175,19 +177,19 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginRight="16dp"
+                    android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton8"
+                        android:id="@+id/referralCanRepairYes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Yes" />
 
                     <RadioButton
-                        android:id="@+id/radioButton9"
+                        android:id="@+id/referralCanRepairNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -195,15 +197,48 @@
                 </RadioGroup>
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/referralBringWheelchairTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Please bring the wheelchair to the centre."
+                    android:layout_marginLeft="16dp"
                     android:drawableStart="@drawable/ic_info"
                     android:drawableLeft="@drawable/ic_info"
-                    android:layout_marginLeft="16dp"
-                    android:textColor="#fc0303"/>
+                    android:text="Please bring the wheelchair to the centre."
+                    android:textColor="#fc0303" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralPhysioLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Physiotherapy"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Photo of client" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Client condition" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

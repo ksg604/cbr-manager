@@ -14,6 +14,7 @@ class Referral(models.Model):
     limit = models.Q(app_label="referral")
     status = models.CharField(max_length=20, choices=ReferralStatus.choices, default=ReferralStatus.CREATED)
     outcome = models.TextField(blank=True, default="")
+    refer_to = models.CharField(max_length=100)
 
     service_type = models.CharField(max_length=50, choices=ServiceTypes.choices)
     service_object_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=limit)

@@ -16,10 +16,9 @@ import java.util.Map;
 
 public class ReferralSerializer implements JsonDeserializer<Referral> {
 
-    // Declaring the static map
     private static Map<String, Class> map;
 
-    // Instantiating the static map
+    // place service details mapping here
     static {
         map = new HashMap<>();
         map.put("Wheelchair", WheelchairServiceDetail.class);

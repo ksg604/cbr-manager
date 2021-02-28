@@ -1,13 +1,19 @@
 package com.example.cbr_manager.ui.createreferral;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,6 +35,8 @@ import java.util.Objects;
 
 public class CreateReferralActivity extends AppCompatActivity {
 
+    static final int REQUEST_IMAGE_CAPTURE = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +48,38 @@ public class CreateReferralActivity extends AppCompatActivity {
         setupPhysioLayout();
         setupWheelchairLayout();
         setupSubmission();
+        setupCameraButtonListener();
+    }
+
+    private void setupCameraButtonListener() {
+        Button cameraButton = findViewById(R.id.referralTakePhotoButton);
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        ImageView referralImageView = findViewById(R.id.referralImageView);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && requestCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            referralImageView.setImageBitmap(imageBitmap);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void setupSubmission() {

@@ -49,15 +49,6 @@ public class ClientDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClientDetailsEditFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ClientDetailsFragment newInstance(String param1, String param2) {
         ClientDetailsFragment fragment = new ClientDetailsFragment();
         Bundle args = new Bundle();
@@ -102,6 +93,7 @@ public class ClientDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateReferralActivity.class);
+                intent.putExtra("CLIENT_ID", clientId);
                 startActivity(intent);
             }
         });

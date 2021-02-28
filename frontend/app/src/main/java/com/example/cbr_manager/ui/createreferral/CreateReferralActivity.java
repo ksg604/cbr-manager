@@ -42,11 +42,13 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
+    int clientId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_referral);
+        clientId = getIntent().getIntExtra("CLIENT_ID", -1);
         setTitle("Create Referral");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 

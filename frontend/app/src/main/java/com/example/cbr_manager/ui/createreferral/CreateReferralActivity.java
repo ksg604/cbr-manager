@@ -167,6 +167,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             physiotherapyServiceDetail.setCondition(clientCondition);
 
             referral.setServiceDetail(physiotherapyServiceDetail);
+            referral.setServiceType("Physiotherapy");
 
         } else if (service == R.id.referralProstheticRadioButton) {
             ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
@@ -181,6 +182,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
 
             referral.setServiceDetail(prostheticServiceDetail);
+            referral.setServiceType("Prosthetic");
 
         } else if (service == R.id.referralOrthoticRadioButton) {
             OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
@@ -196,6 +198,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
 
             referral.setServiceDetail(orthoticServiceDetail);
+            referral.setServiceType("Orthotic");
 
         } else if (service == R.id.referralWheelChairRadioButton) {
             WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
@@ -223,6 +226,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
 
             referral.setServiceDetail(wheelchairServiceDetail);
+            referral.setServiceType("Wheelchair");
 
         } else if (service == R.id.referralOtherRadioButton) {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
@@ -232,6 +236,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             otherServiceDetail.setDescription(otherDescription);
 
             referral.setServiceDetail(otherServiceDetail);
+            referral.setServiceType("Other");
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
@@ -241,6 +246,11 @@ public class CreateReferralActivity extends AppCompatActivity {
         referral.setStatus("made");
 
         // TODO: You are here! Referral is ready to be sent to the server. What's missing is the clientID (pass from clientDetails over, I think?) and current User ID.
+        referral.setClient(clientId);
+        referral.setUserCreator(userId);
+        if (apiService.isAuthenticated()) {
+
+        }
     }
 
     private void setupWheelchairLayout() {

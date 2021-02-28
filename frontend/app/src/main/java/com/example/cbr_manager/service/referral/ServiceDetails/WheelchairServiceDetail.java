@@ -12,6 +12,37 @@ public class WheelchairServiceDetail extends ServiceDetail {
     @Expose
     private Boolean isWheelChairRepairable;
 
+    @SerializedName("client_has_existing_wheelchair")
+    @Expose
+    private Boolean clientHasExistingWheelchair;
+
+    @SerializedName("client_hip_width")
+    @Expose
+    private Float clientHipWidth;
+
+    public Boolean getWheelChairRepairable() {
+        return isWheelChairRepairable;
+    }
+
+    public void setWheelChairRepairable(Boolean wheelChairRepairable) {
+        isWheelChairRepairable = wheelChairRepairable;
+    }
+
+    public Boolean getClientHasExistingWheelchair() {
+        return clientHasExistingWheelchair;
+    }
+
+    public void setClientHasExistingWheelchair(Boolean clientHasExistingWheelchair) {
+        this.clientHasExistingWheelchair = clientHasExistingWheelchair;
+    }
+
+    public Float getClientHipWidth() {
+        return clientHipWidth;
+    }
+
+    public void setClientHipWidth(Float clientHipWidth) {
+        this.clientHipWidth = clientHipWidth;
+    }
 
     public String getUsageExperience() {
         return usageExperience;

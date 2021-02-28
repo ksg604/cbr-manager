@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -55,6 +57,7 @@ public class CreateReferralActivity extends AppCompatActivity {
         int service = selectedService.getCheckedRadioButtonId();
 
         Referral referral = new Referral();
+        ServiceDetail serviceDetail;
 
         if (service == R.id.referralPhysioRadioButton) {
             PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
@@ -68,10 +71,9 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             if (clientCondition.equals("Other")) {
                 otherConditionDescription = physioOtherCondition.getText().toString();
+                physiotherapyServiceDetail.setOther_description(otherConditionDescription);
             }
-
-            physiotherapyServiceDetail.setSpecifiedCondition(clientCondition);
-            // TODO: Waiting on addition of other description.
+            physiotherapyServiceDetail.setCondition(clientCondition);
 
         } else if (service == R.id.referralProstheticRadioButton) {
             ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
@@ -117,8 +119,15 @@ public class CreateReferralActivity extends AppCompatActivity {
                 isRepairable = true;
             }
 
+            wheelchairServiceDetail.setClientHasExistingWheelchair(isExisting);
+            wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
+
         } else if (service == R.id.referralOtherRadioButton) {
-            // TODO
+            OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
+            TextInputEditText otherServiceEditText = findViewById(R.id.referralOtherServiceDescription);
+            String otherDescription = "";
+            otherDescription = otherServiceEditText.getText().toString();
+            otherServiceDetail.setDescription(otherDescription);
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);

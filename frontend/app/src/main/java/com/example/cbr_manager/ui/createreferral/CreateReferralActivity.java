@@ -140,7 +140,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gatherData();
-                onBackPressed();
+//                onBackPressed();
             }
         });
     }
@@ -208,6 +208,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
             hipWidth = hipWidthEditText.getText().toString();
+            wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
 
             RadioGroup isExistingWheelchair = findViewById(R.id.referralExistingWheelchairRadioGroup);
             if (isExistingWheelchair.getCheckedRadioButtonId() == R.id.referralExistingWheelchairYes) {
@@ -243,13 +244,27 @@ public class CreateReferralActivity extends AppCompatActivity {
         String referToString = referTo.getText().toString();
 
         referral.setRefer_to(referToString);
-        referral.setStatus("made");
 
-        // TODO: You are here! Referral is ready to be sent to the server. What's missing is the clientID (pass from clientDetails over, I think?) and current User ID.
-        referral.setClient(clientId);
+        referral.setClient(new Integer(clientId));
         referral.setUserCreator(userId);
         if (apiService.isAuthenticated()) {
+            Call<Referral> call = apiService.getReferralService().createReferral(referral);
+            call.enqueue(new Callback<Referral>() {
+                @Override
+                public void onResponse(Call<Referral> call, Response<Referral> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                    } else {
+                        Toast.makeText(CreateReferralActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<Referral> call, Throwable t) {
+                    Toast.makeText(CreateReferralActivity.this, "Failure connecting to server.", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

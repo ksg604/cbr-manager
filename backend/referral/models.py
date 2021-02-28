@@ -16,6 +16,8 @@ class Referral(models.Model):
     outcome = models.TextField(blank=True, default="")
     refer_to = models.CharField(max_length=100)
 
+    photo = models.ImageField(blank=True, upload_to='images/')
+
     service_type = models.CharField(max_length=50, choices=ServiceTypes.choices)
     service_object_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=limit)
     service_object_id = models.PositiveIntegerField()

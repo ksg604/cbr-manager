@@ -62,7 +62,7 @@ class ReferralSerializer(serializers.ModelSerializer):
     class Meta:
         model = Referral
         fields = ('id', 'service_detail', 'date_created', 'status', 'outcome', 'service_type', 'client', 'user_creator',
-                  'refer_to')
+                  'refer_to', 'photo')
 
     def create(self, validated_data):
         def extract_service_details():
@@ -104,6 +104,7 @@ class ReferralSerializer(serializers.ModelSerializer):
             service_type_obj.save()
         else:
             raise ValidationError({'service_detail': serializer.errors})
+
 
 
 def _get_serializer_class(service_type):

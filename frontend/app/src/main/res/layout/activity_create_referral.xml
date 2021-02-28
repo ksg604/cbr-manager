@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/referralWheelChairTitleTextView"
@@ -110,20 +110,36 @@
                     android:textColor="@color/purple_700"
                     android:textSize="18sp" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/referralWheelChairPhotoTextView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="16dp"-->
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    android:text="Photo of devices" />-->
+                <TextView
+                    android:id="@+id/referralWheelchairUsageTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="Usage Experience" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/referralWheelChairPhotoImageView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    tools:srcCompat="@tools:sample/avatars" />-->
+                <RadioGroup
+                    android:id="@+id/referralWheelChairUsageRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp">
+
+                    <RadioButton
+                        android:id="@+id/referralWheelchairBasic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Basic" />
+
+                    <RadioButton
+                        android:id="@+id/referralWheelchairIntermediate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Intermediate" />
+                </RadioGroup>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

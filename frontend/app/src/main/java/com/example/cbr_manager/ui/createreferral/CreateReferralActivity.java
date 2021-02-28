@@ -210,6 +210,13 @@ public class CreateReferralActivity extends AppCompatActivity {
             hipWidth = hipWidthEditText.getText().toString();
             wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
 
+            RadioGroup usageExperience = findViewById(R.id.referralWheelChairUsageRadioGroup);
+            if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
+                wheelchairServiceDetail.setUsageExperience("Intermediate");
+            } else {
+                wheelchairServiceDetail.setUsageExperience("Basic");
+            }
+
             RadioGroup isExistingWheelchair = findViewById(R.id.referralExistingWheelchairRadioGroup);
             if (isExistingWheelchair.getCheckedRadioButtonId() == R.id.referralExistingWheelchairYes) {
                 isExisting = true;
@@ -225,7 +232,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
             wheelchairServiceDetail.setClientHasExistingWheelchair(isExisting);
             wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
-
+            wheelchairServiceDetail.setUsageExperience("Basic");
             referral.setServiceDetail(wheelchairServiceDetail);
             referral.setServiceType("Wheelchair");
 

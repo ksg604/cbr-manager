@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
@@ -33,16 +34,23 @@ import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServ
 import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
+import com.example.cbr_manager.service.user.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateReferralActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
     int clientId = -1;
+    private Integer userId = -1;
+    private APIService apiService = APIService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +60,30 @@ public class CreateReferralActivity extends AppCompatActivity {
         setTitle("Create Referral");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        getUserId();
         setupReferralServiceRadioGroup();
         setupPhysioLayout();
         setupWheelchairLayout();
         setupSubmission();
         setupCameraButtonListener();
+    }
+
+    private void getUserId() {
+        if (apiService.isAuthenticated()) {
+            apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        User user = response.body();
+                        userId = user.getId();
+                    }
+                }
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     private void setupCameraButtonListener() {

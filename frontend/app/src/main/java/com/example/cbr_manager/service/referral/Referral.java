@@ -41,6 +41,18 @@ public class Referral {
     @Expose
     private String refer_to;
 
+    @SerializedName("photo")
+    @Expose(serialize = false) // Do not send 'photo' attribute to API
+    private String photoURL;
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
+    }
+
     public String getRefer_to() {
         return refer_to;
     }
@@ -48,7 +60,6 @@ public class Referral {
     public void setRefer_to(String refer_to) {
         this.refer_to = refer_to;
     }
-
 
     public Integer getId() {
         return id;

@@ -5,8 +5,13 @@ import com.example.cbr_manager.service.auth.AuthResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -36,10 +41,15 @@ public class ReferralService extends BaseService {
         return referralAPI.createReferral(authHeader, referral);
     }
 
+    public Call<ResponseBody> uploadPhoto(File file, int referralId) {
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        return referralAPI.uploadPhoto(authHeader, referralId, body);
+    }
+
     @Override
     protected ReferralAPI getAPI() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.excludeFieldsWithModifiers();
+        GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
 
         ReferralSerializer referralSerializer = new ReferralSerializer();
         gsonBuilder.registerTypeAdapter(Referral.class, referralSerializer);

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -22,6 +23,7 @@ import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticService
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
@@ -184,9 +186,29 @@ public class CreateReferralActivity extends AppCompatActivity {
     }
 
     private void setupPhysioLayout() {
+        TextInputLayout referralPhysioOther = findViewById(R.id.referralPhysioOtherTextInputLayout);
+        referralPhysioOther.setVisibility(View.GONE);
+        Spinner spinner = findViewById(R.id.referralPhysioDDL);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinner.getSelectedItem().toString().equals("Other")) {
+                    referralPhysioOther.setVisibility(View.VISIBLE);
+                } else {
+                    referralPhysioOther.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setupReferralServiceRadioGroup() {
+        TextInputLayout referralServiceOther = findViewById(R.id.referralDescribeOtherTextInputLayout);
+        referralServiceOther.setVisibility(View.GONE);
         RadioGroup serviceRequired = findViewById(R.id.createReferralServiceRadioGroup);
         serviceRequired.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -210,6 +232,7 @@ public class CreateReferralActivity extends AppCompatActivity {
                     wheelchairLayout.setVisibility(View.VISIBLE);
                 } else {
                     setAllGone();
+                    referralServiceOther.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -227,6 +250,9 @@ public class CreateReferralActivity extends AppCompatActivity {
         orthoticLayout.setVisibility(View.GONE);
         wheelchairLayout.setVisibility(View.GONE);
         otherLayout.setVisibility(View.GONE);
+
+        TextInputLayout referralServiceOther = findViewById(R.id.referralDescribeOtherTextInputLayout);
+        referralServiceOther.setVisibility(View.GONE);
     }
 
 

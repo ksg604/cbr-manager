@@ -8,3 +8,5 @@ sqlparse==0.4.1
 requests
 Pillow
 gunicorn
+psycopg2
+python-dotenv

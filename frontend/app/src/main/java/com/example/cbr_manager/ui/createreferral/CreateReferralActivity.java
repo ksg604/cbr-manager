@@ -40,7 +40,8 @@ import java.util.Objects;
 
 public class CreateReferralActivity extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE_CAPTURE = -1;
+    static final int REQUEST_IMAGE_CAPTURE = 102;
+    static final int REQUEST_CAMERA_USE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 101) {
+        if (requestCode == REQUEST_CAMERA_USE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
             }
@@ -87,7 +88,7 @@ public class CreateReferralActivity extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            startActivityForResult(takePictureIntent, 102);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         } catch (ActivityNotFoundException e) {
 
         }
@@ -97,7 +98,7 @@ public class CreateReferralActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ImageView referralImageView = findViewById(R.id.referralImageView);
-        if (requestCode == 102) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             referralImageView.setImageBitmap(imageBitmap);
@@ -110,7 +111,6 @@ public class CreateReferralActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gatherData();
-                
                 onBackPressed();
             }
         });

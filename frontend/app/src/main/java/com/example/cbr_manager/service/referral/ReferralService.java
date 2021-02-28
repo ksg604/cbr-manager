@@ -49,8 +49,7 @@ public class ReferralService extends BaseService {
 
     @Override
     protected ReferralAPI getAPI() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.excludeFieldsWithModifiers();
+        GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
 
         ReferralSerializer referralSerializer = new ReferralSerializer();
         gsonBuilder.registerTypeAdapter(Referral.class, referralSerializer);

@@ -110,20 +110,20 @@
                     android:textColor="@color/purple_700"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/referralWheelChairPhotoTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Photo of devices" />
+<!--                <TextView-->
+<!--                    android:id="@+id/referralWheelChairPhotoTextView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:text="Photo of devices" />-->
 
-                <ImageView
-                    android:id="@+id/referralWheelChairPhotoImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/referralWheelChairPhotoImageView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    tools:srcCompat="@tools:sample/avatars" />-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -229,19 +229,19 @@
                     android:textColor="@color/purple_700"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/referralPhysioPhotoTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Photo of client" />
+<!--                <TextView-->
+<!--                    android:id="@+id/referralPhysioPhotoTextView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:text="Photo of client" />-->
 
-                <ImageView
-                    android:id="@+id/referralPhysioImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/referralPhysioImageView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    tools:srcCompat="@tools:sample/avatars" />-->
 
                 <TextView
                     android:id="@+id/referralClientConditionTextView"
@@ -358,6 +358,39 @@
                         android:layout_weight="1"
                         android:text="Above" />
                 </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralPhotoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/referralPhotoTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photo"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/referralImageView"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    app:srcCompat="@drawable/client_details_placeholder" />
+
+                <Button
+                    android:id="@+id/referralTakePhotoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/take_photo"
+                     />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout

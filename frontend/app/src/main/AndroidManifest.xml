@@ -16,6 +16,11 @@
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="n">
         <activity android:name=".ui.createreferral.CreateReferralActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".ui.visitdetails.VisitDetailsActivity" />
         <activity

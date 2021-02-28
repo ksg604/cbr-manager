@@ -55,9 +55,7 @@ public class CreateReferralActivity extends AppCompatActivity {
     private void gatherData() {
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
         int service = selectedService.getCheckedRadioButtonId();
-
         Referral referral = new Referral();
-        ServiceDetail serviceDetail;
 
         if (service == R.id.referralPhysioRadioButton) {
             PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
@@ -75,6 +73,8 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
             physiotherapyServiceDetail.setCondition(clientCondition);
 
+            referral.setServiceDetail(physiotherapyServiceDetail);
+
         } else if (service == R.id.referralProstheticRadioButton) {
             ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
             RadioGroup aboveOrBelowKnee = findViewById(R.id.referralAboveOrBelowKnee);
@@ -86,6 +86,8 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
 
             prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
+
+            referral.setServiceDetail(prostheticServiceDetail);
 
         } else if (service == R.id.referralOrthoticRadioButton) {
             OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
@@ -99,6 +101,8 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
 
             orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
+
+            referral.setServiceDetail(orthoticServiceDetail);
 
         } else if (service == R.id.referralWheelChairRadioButton) {
             WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
@@ -119,8 +123,13 @@ public class CreateReferralActivity extends AppCompatActivity {
                 isRepairable = true;
             }
 
+            if (!hipWidth.isEmpty()) {
+                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+            }
             wheelchairServiceDetail.setClientHasExistingWheelchair(isExisting);
             wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
+
+            referral.setServiceDetail(wheelchairServiceDetail);
 
         } else if (service == R.id.referralOtherRadioButton) {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
@@ -128,10 +137,17 @@ public class CreateReferralActivity extends AppCompatActivity {
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
             otherServiceDetail.setDescription(otherDescription);
+
+            referral.setServiceDetail(otherServiceDetail);
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
         String referToString = referTo.getText().toString();
+
+        referral.setRefer_to(referToString);
+        referral.setStatus("made");
+
+        // TODO: You are here! Referral is ready to be sent to the server. What's missing is the clientID (pass from clientDetails over, I think?) and current User ID.
     }
 
     private void setupWheelchairLayout() {

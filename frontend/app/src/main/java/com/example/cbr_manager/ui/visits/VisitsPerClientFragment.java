@@ -89,7 +89,7 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
                                             Timestamp datetimeCreated = visit.getDatetimeCreated();
                                             Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
                                             String formattedDate = formatter.format(datetimeCreated);
-                                            visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, formattedDate, visit.getClient().getFullName(), visit));
+                                            visitUIList.add(new VisitsRecyclerItem(R.drawable.visit_default_pic, formattedDate, visit.getClient().getFullName(), visit));
                                         }
                                         adapter.notifyDataSetChanged();
                                     }

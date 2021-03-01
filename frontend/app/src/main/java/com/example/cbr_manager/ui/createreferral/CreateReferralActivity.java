@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,11 @@ import com.example.cbr_manager.service.user.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -51,6 +57,7 @@ public class CreateReferralActivity extends AppCompatActivity {
     int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
+    private String imageFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,6 +280,18 @@ public class CreateReferralActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        imageFilePath = image.getAbsolutePath();
+
+        return image;
     }
 
     private void setupWheelchairLayout() {

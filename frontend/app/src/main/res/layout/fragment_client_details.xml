@@ -9,9 +9,9 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="70dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,12 +25,26 @@
                 android:background="@drawable/bg_item"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/clientDetailsBackImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/ic_back2" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/clientDetailsBackImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        app:srcCompat="@drawable/ic_back2" />
+
+                    <ImageView
+                        android:id="@+id/clientDetailsEditImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:padding="16dp"
+                        android:src="@android:drawable/ic_menu_edit" />
+
+                </FrameLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
@@ -63,7 +77,7 @@
 
             <Button
                 android:id="@+id/clientDetailsNewReferralButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Referral Placeholder" />
 
@@ -376,54 +390,24 @@
 
     <Button
         android:id="@+id/clientDetailsNewVisitButton"
-        android:layout_width="95dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="New Visit"
         android:textColor="#FFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/clientDetailsSeeVisitsButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteY="675dp" />
 
     <Button
         android:id="@+id/clientDetailsSeeVisitsButton"
-        android:layout_width="95dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="See Visits"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/clientDetailsEditButton"
-        app:layout_constraintStart_toEndOf="@+id/clientDetailsNewVisitButton" />
+        tools:layout_editor_absoluteY="675dp" />
 
-    <Button
-        android:id="@+id/clientDetailsBackButton"
-        android:layout_width="95dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Back"
-        android:textColor="#FFF"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/clientDetailsEditButton" />
-
-    <Button
-        android:id="@+id/clientDetailsEditButton"
-        android:layout_width="95dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/clientDetailsBackButton"
-        app:layout_constraintStart_toEndOf="@+id/clientDetailsSeeVisitsButton" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

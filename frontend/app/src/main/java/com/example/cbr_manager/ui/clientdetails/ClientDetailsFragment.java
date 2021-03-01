@@ -205,20 +205,13 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupButtons(View root) {
-        setupBackButton(root);
-        setupNewVisitButton(root);
-        setupSeeVisitsButton(root);
+        //setupNewVisitButton(root);
+        //setupSeeVisitsButton(root);
         setupEditButton(root);
-
-        ImageView backImageView = root.findViewById(R.id.clientDetailsBackImageView);
-        backImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        setupBackButton(root);
     }
 
+    /*
     private void setupNewVisitButton(View root) {
         Button newVisitButton = root.findViewById(R.id.clientDetailsNewVisitButton);
         newVisitButton.setOnClickListener(new View.OnClickListener() {
@@ -242,29 +235,29 @@ public class ClientDetailsFragment extends Fragment {
                         .add(android.R.id.content, new VisitsPerClientFragment()).commit();
             }
         });
-    }
-
-    private void setupBackButton(View root) {
-        Button backButton = root.findViewById(R.id.clientDetailsBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-    }
+    }*/
 
     private void setupEditButton(View root) {
 
-        Button editButton = root.findViewById(R.id.clientDetailsEditButton);
+        ImageView editButtonImageView = root.findViewById(R.id.clientDetailsEditImageView);
 
-        editButton.setOnClickListener(new View.OnClickListener() {
+        editButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+    }
+
+    private void setupBackButton(View root) {
+        ImageView backImageView = root.findViewById(R.id.clientDetailsBackImageView);
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
     }

@@ -114,11 +114,14 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
     public void onItemClick(int position) {
 
         Intent visitInfoIntent = new Intent(getContext(), VisitDetailsActivity.class);
-
         VisitsRecyclerItem visitsRecyclerItem = visitsRecyclerItems.get(position);
-        visitInfoIntent.putExtra("additionalInfo", visitsRecyclerItem.getVisit().getAdditionalInfo());
-        visitInfoIntent.putExtra("clientId", visitsRecyclerItem.getVisit().getClientID());
-
+        Visit visit = visitsRecyclerItem.getVisit();
+        visitInfoIntent.putExtra("additionalInfo", visit.getAdditionalInfo());
+        visitInfoIntent.putExtra("clientId", visit.getClientID());
+        Timestamp datetimeCreated = visit.getDatetimeCreated();
+        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        String formattedDate = formatter.format(datetimeCreated);
+        visitInfoIntent.putExtra("formattedDate", formattedDate);
         startActivity(visitInfoIntent);
     }
 }

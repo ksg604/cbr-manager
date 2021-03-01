@@ -20,6 +20,9 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
@@ -71,7 +74,10 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                                     if (response.isSuccessful()) {
                                         Client client = response.body();
                                         visit.setClient(client);
-                                        visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
+                                        Timestamp datetimeCreated = visit.getDatetimeCreated();
+                                        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                                        String formattedDate = formatter.format(datetimeCreated);
+                                        visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, formattedDate, visit.getClient().getFullName(), visit));
                                     }
 
                                     adapter.notifyDataSetChanged();
@@ -97,11 +103,14 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     public void onItemClick(int position) {
 
         Intent visitInfoIntent = new Intent(getContext(), VisitDetailsActivity.class);
-
         VisitsRecyclerItem visitsRecyclerItem = visitsRecyclerItems.get(position);
-        visitInfoIntent.putExtra("additionalInfo", visitsRecyclerItem.getVisit().getAdditionalInfo());
-        visitInfoIntent.putExtra("clientId", visitsRecyclerItem.getVisit().getClientID());
-
+        Visit visit = visitsRecyclerItem.getVisit();
+        visitInfoIntent.putExtra("additionalInfo", visit.getAdditionalInfo());
+        visitInfoIntent.putExtra("clientId", visit.getClientID());
+        Timestamp datetimeCreated = visit.getDatetimeCreated();
+        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        String formattedDate = formatter.format(datetimeCreated);
+        visitInfoIntent.putExtra("formattedDate", formattedDate);
         startActivity(visitInfoIntent);
     }
 }

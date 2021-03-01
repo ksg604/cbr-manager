@@ -65,7 +65,7 @@ public class CreateReferralActivity extends AppCompatActivity {
     int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
-    private String imageFilePath;
+    private String imageFilePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

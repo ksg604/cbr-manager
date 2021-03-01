@@ -25,6 +25,7 @@ public class VisitDetailsActivity extends AppCompatActivity {
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private String additionalInfo;
+    private String formattedDate;
     private int clientId = -1;
 
     @Override
@@ -38,9 +39,11 @@ public class VisitDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String additionalInfo = intent.getStringExtra("additionalInfo");
         int clientId = intent.getIntExtra("clientId", -1);
+        String formattedDate = intent.getStringExtra("formattedDate");
         getClientInfo(clientId);
         this.clientId = clientId;
         this.additionalInfo = additionalInfo;
+        this.formattedDate = formattedDate;
         setupButtons();
         setupTextViews();
         setupImageViews();
@@ -106,8 +109,8 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
 
     private void setupDateTextView() {
-        TextView ageTextView = findViewById(R.id.visitDetailsDateTextView);
-        ageTextView.setText("Date: 12-07-1992");
+        TextView dateTextView = findViewById(R.id.visitDetailsDateTextView);
+        dateTextView.setText("Date: " + this.formattedDate);
     }
 
     private void setupAdditionalInfoTextView(String additionalInfo) {

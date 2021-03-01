@@ -1,0 +1,23 @@
+# start production
+sudo docker-compose -f docker-compose.prod.yml -p prod up -d --build
+
+# restart production
+sudo docker-compose -f docker-compose.prod.yml -p prod restart
+
+# tear down production
+sudo docker-compose -f docker-compose.prod.yml -p prod down -v
+
+# ssh into production container
+sudo docker-compose -f docker-compose.prod.yml -p prod run web bash
+
+# start dev
+sudo docker-compose -f docker-compose.yml -p dev up -d --build
+
+# restart dev
+sudo docker-compose -f docker-compose.yml -p dev restart
+
+# tear down dev
+sudo docker-compose -f docker-compose.yml -p dev down -v
+
+# ssh into dev container
+sudo docker-compose -f docker-compose.yml -p dev run web bash

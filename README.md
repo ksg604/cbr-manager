@@ -477,6 +477,68 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 
 * Modified the create clients page such that it uses fragments rather than activities. This would give some performance gain.
 
+# Deployment with Docker
+
+Use docker to deploy
+
+## Prerequisites 
+
+`.env.dev` used to store development secrets
+
+```
+DEBUG=1 # sets django into development mode
+SECRET_KEY=foo
+DB_USER=postgres
+DB_PASS=postgres
+DB_HOST=db
+DB_PORT=5432
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+```
+
+`.env.prod` used to store production secrets
+
+```
+SECRET_KEY=foo
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASS=postgres
+DB_HOST=db
+DB_PORT=5432
+DB_ENGINE=django.db.backends.postgresql
+```
+
+Here's a list of commands to for docker-compose
+
+```
+# start production
+sudo docker-compose -f docker-compose.prod.yml -p prod up -d --build
+
+# restart production
+sudo docker-compose -f docker-compose.prod.yml -p prod restart
+
+# tear down production
+sudo docker-compose -f docker-compose.prod.yml -p prod down -v
+
+# ssh into production container
+sudo docker-compose -f docker-compose.prod.yml -p prod run web bash
+
+# start dev
+sudo docker-compose -f docker-compose.yml -p dev up -d --build
+
+# restart dev
+sudo docker-compose -f docker-compose.yml -p dev restart
+
+# tear down dev
+sudo docker-compose -f docker-compose.yml -p dev down -v
+
+# ssh into dev container
+sudo docker-compose -f docker-compose.yml -p dev run web bash
+```
+
+Production will be deployed on port 80
+
+Development will be deployed on port 8001
 
 # How to Navigate Application
 

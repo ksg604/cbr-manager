@@ -75,12 +75,6 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/clientDetailsNewReferralButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Referral Placeholder" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -387,21 +381,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/clientDetailsNewVisitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Visit"
-        android:textColor="#FFF"
-        tools:layout_editor_absoluteY="675dp" />
-
-    <Button
-        android:id="@+id/clientDetailsSeeVisitsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="See Visits"
-        tools:layout_editor_absoluteY="675dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

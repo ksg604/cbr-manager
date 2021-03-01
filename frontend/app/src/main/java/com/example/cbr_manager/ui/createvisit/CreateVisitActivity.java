@@ -15,9 +15,12 @@ import android.widget.EditText;
 
 import com.example.cbr_manager.R;
 
+import java.sql.Timestamp;
+
 public class CreateVisitActivity extends AppCompatActivity {
 
     int clientId = -1;
+    Timestamp datetimeCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

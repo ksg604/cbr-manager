@@ -20,6 +20,10 @@ import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +86,10 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
                                         if (response.isSuccessful()) {
                                             Client client = response.body();
                                             visit.setClient(client);
-                                            visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
+                                            Timestamp datetimeCreated = visit.getDatetimeCreated();
+                                            Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                                            String formattedDate = formatter.format(datetimeCreated);
+                                            visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, formattedDate, visit.getClient().getFullName(), visit));
                                         }
                                         adapter.notifyDataSetChanged();
                                     }

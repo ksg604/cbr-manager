@@ -14,11 +14,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Calendar;
 
 
 public class ConsentFragment extends Fragment {
 
+    TextInputEditText newDate;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText year, month, day;
@@ -38,6 +41,10 @@ public class ConsentFragment extends Fragment {
         year = view.findViewById(R.id.editTextYear);
         month = view.findViewById(R.id.editTextMonth);
         day = view.findViewById(R.id.editTextDay);
+
+        newDate = view.findViewById(R.id.editTextDate);
+        Calendar calendar = Calendar.getInstance();
+
 
         Button nextButton = view.findViewById(R.id.nextButton);
 

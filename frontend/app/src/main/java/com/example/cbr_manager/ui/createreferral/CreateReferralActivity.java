@@ -5,12 +5,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -46,6 +49,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -123,11 +127,22 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
 
-        }
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+
+            } catch (ActivityNotFoundException | IOException e) {
+                Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
+            }
+
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+
     }
 
     @Override
@@ -135,9 +150,15 @@ public class CreateReferralActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         ImageView referralImageView = findViewById(R.id.referralImageView);
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            referralImageView.setImageBitmap(imageBitmap);
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            referralImageView.setImageBitmap(imageBitmap);
+            File imgFile = new File(imageFilePath);
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                referralImageView.setImageBitmap(myBitmap);
+            }
+            Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -267,6 +288,27 @@ public class CreateReferralActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Referral> call, Response<Referral> response) {
                     if (response.isSuccessful()) {
+                        Referral submittedReferral = response.body();
+                        File photoFile = new File(imageFilePath);
+                        if (photoFile.exists()) {
+                            Call<ResponseBody> photoCall = apiService.getReferralService().uploadPhoto(photoFile, submittedReferral.getId().intValue());
+                            photoCall.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(CreateReferralActivity.this, "Referral Photo successfully uploaded!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(CreateReferralActivity.this, "Referral photo upload failed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                }
+                            });
+                        }
+
                         Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     } else {

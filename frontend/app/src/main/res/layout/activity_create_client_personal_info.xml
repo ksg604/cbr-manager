@@ -35,9 +35,8 @@
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:text="@string/first_name"
-                android:textColor="@color/teal_700" />
+                />
 
             <EditText
                 android:id="@+id/editTextFirstName"
@@ -62,9 +61,7 @@
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/last_name"
-                android:textColor="@color/teal_700" />
+                android:text="@string/last_name" />
 
             <EditText
                 android:id="@+id/editTextLastName"
@@ -89,9 +86,8 @@
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:text="@string/gender"
-                android:textColor="@color/teal_700" />
+                />
 
             <Spinner
                 android:id="@+id/gender_dropdown"
@@ -111,9 +107,7 @@
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/age"
-                android:textColor="@color/teal_700" />
+                android:text="@string/age" />
 
             <EditText
                 android:id="@+id/editTextAge"
@@ -138,9 +132,7 @@
                 android:layout_marginEnd="16dp"
                 android:paddingTop="10dp"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/contact_number"
-                android:textColor="@color/teal_700" />
+                android:text="@string/contact_number" />
 
             <EditText
                 android:id="@+id/editTextContactNumber"

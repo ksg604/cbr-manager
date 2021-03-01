@@ -3,9 +3,11 @@ package com.example.cbr_manager.ui.clientdetails;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,8 +19,10 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
+import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
 import com.example.cbr_manager.ui.visits.VisitsPerClientFragment;
 import com.example.cbr_manager.utils.Helper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -88,6 +92,7 @@ public class ClientDetailsFragment extends Fragment {
         setupButtons(root);
         setupVectorImages(root);
 
+        /*
         Button newReferralPlaceHolderButton = root.findViewById(R.id.clientDetailsNewReferralButton);
         newReferralPlaceHolderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +101,35 @@ public class ClientDetailsFragment extends Fragment {
                 intent.putExtra("CLIENT_ID", clientId);
                 startActivity(intent);
             }
+        });*/
+
+        BottomNavigationView clientDetailsNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
+        clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()) {
+                    case R.id.visitsPerClientFragment:
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .add(android.R.id.content, new VisitsPerClientFragment()).commit();
+                        break;
+                        /*
+                    case R.id.newVisitFragment:
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .add(android.R.id.content, new NewVisitFragment()).commit();
+                        break;*/
+                        /*
+                    case R.id.createReferralActivity:
+                        // TODO: Navigate to create referral fragment instead of activity
+                        Intent createReferralIntent = new Intent(getActivity(), CreateReferralActivity.class);
+                        createReferralIntent.putExtra("CLIENT_ID", clientId);
+                        startActivity(intent);
+                        break;*/
+                }
+                return false;
+            }
         });
+
 
         return root;
     }
@@ -205,8 +238,7 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupButtons(View root) {
-        //setupNewVisitButton(root);
-        //setupSeeVisitsButton(root);
+
         setupEditButton(root);
         setupBackButton(root);
     }
@@ -225,17 +257,7 @@ public class ClientDetailsFragment extends Fragment {
             }
         });
     }
-
-    private void setupSeeVisitsButton(View root) {
-        Button newVisitButton = root.findViewById(R.id.clientDetailsSeeVisitsButton);
-        newVisitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(android.R.id.content, new VisitsPerClientFragment()).commit();
-            }
-        });
-    }*/
+*/
 
     private void setupEditButton(View root) {
 

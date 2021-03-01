@@ -2,12 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="See Visits"
+        android:id="@+id/visitsPerClientFragment"
         android:icon="@drawable/ic_visit"
         />
 
     <item android:title="New Visit"
+        android:id="@+id/newVisitFragment"
         android:icon="@drawable/ic_new_visit"/>
 
     <item android:title="New Referral"
+        android:id="@+id/createReferralActivity"
         android:icon="@drawable/ic_new_referral"/>
 </menu>

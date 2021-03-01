@@ -150,15 +150,11 @@ public class CreateReferralActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         ImageView referralImageView = findViewById(R.id.referralImageView);
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            referralImageView.setImageBitmap(imageBitmap);
             File imgFile = new File(imageFilePath);
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 referralImageView.setImageBitmap(myBitmap);
             }
-            Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
         }
     }
 

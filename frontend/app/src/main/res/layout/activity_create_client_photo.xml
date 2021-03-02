@@ -37,9 +37,7 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:text="@string/photo_of_client"
-        android:textColor="@color/teal_700"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/cbr_logo"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -61,17 +59,19 @@
         android:id="@+id/takePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/take_photo"
         android:textColor="#FFF"
         app:backgroundTint="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/createClientProfilePicture" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/createClientProfilePicture"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/photo_of_client"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

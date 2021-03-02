@@ -11,7 +11,7 @@
     <string name="client_information">Client Information</string>
     <string name="visits">Visits</string>
     <string name="cbr_logo">CBR Logo</string>
-    <string name="consent">1. Do you consent to this interview</string>
+    <string name="consent">1. Do you consent to this interview?</string>
     <string name="date_form_complete">2. Date form completed</string>
     <string name="what_is_your_id">3. What is your ID Number?</string>
     <string name="client_creation_location">4. Location</string>

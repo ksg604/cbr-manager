@@ -1,15 +1,20 @@
 package com.example.cbr_manager.ui.create_client;
 
+import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
@@ -21,7 +26,7 @@ import java.util.Calendar;
 
 public class ConsentFragment extends Fragment {
 
-    TextInputEditText newDate;
+    EditText newDate;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText year, month, day;
@@ -44,6 +49,28 @@ public class ConsentFragment extends Fragment {
 
         newDate = view.findViewById(R.id.editTextDate);
         Calendar calendar = Calendar.getInstance();
+
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        newDate.setText(year + "/" + (month + 1) + "/" + day);
+//        newDate.setInputType(InputType.TYPE_NULL);
+        newDate.setFocusable(false);
+        newDate.setClickable(false);
+        newDate.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog picker = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                newDate.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
 
 
         Button nextButton = view.findViewById(R.id.nextButton);

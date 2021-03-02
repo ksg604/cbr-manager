@@ -2,6 +2,9 @@ package com.example.cbr_manager.service.client;
 
 import android.util.Log;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,9 +12,11 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 // Todo: figure out image upload
+@Entity(tableName = "client")
 public class Client {
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     private Integer id;
     @SerializedName("risk_score")
     @Expose

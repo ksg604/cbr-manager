@@ -83,7 +83,6 @@ public class ClientDetailsEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client_details_edit, container, false);
 
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
@@ -108,6 +107,8 @@ public class ClientDetailsEditFragment extends Fragment {
                 gender = paths[0];
             }
         });
+
+        return root;
     }
 
     private void modifyClientInfo(Client client) {

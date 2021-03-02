@@ -91,8 +91,12 @@ public class ClientDetailsFragment extends Fragment {
 
         setupButtons(root);
         setupVectorImages(root);
+        setupBottomNavigationView(root);
 
+        return root;
+    }
 
+    private void setupBottomNavigationView(View root) {
         BottomNavigationView clientDetailsNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
         clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -105,7 +109,7 @@ public class ClientDetailsFragment extends Fragment {
                         break;
                     case R.id.newVisitFragment:
                         Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
-                        intent.putExtra("clientId", clientId);
+                        createVisitIntent.putExtra("clientId", clientId);
                         startActivity(createVisitIntent);
                         break;
                     case R.id.createReferralActivityClient:
@@ -118,8 +122,6 @@ public class ClientDetailsFragment extends Fragment {
                 return false;
             }
         });
-
-        return root;
     }
 
 
@@ -259,7 +261,5 @@ public class ClientDetailsFragment extends Fragment {
     public int getClientId() {
         return clientId;
     }
-
-
 
 }

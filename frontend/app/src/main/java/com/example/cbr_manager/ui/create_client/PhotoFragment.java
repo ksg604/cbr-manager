@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +51,7 @@ public class PhotoFragment extends Fragment {
     private static final APIService apiService = APIService.getInstance();
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
-    private String imageFilePath;
+    private String imageFilePath = "";
 
     @Override
     public View onCreateView(
@@ -164,6 +165,25 @@ public class PhotoFragment extends Fragment {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 if(response.isSuccessful()){
+
+                    int clientId = response.body().getId().intValue();
+
+                    File photoFile = new File(imageFilePath);
+                    if (photoFile.exists()) {
+                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, clientId);
+                        photoCall.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
                     Snackbar.make(view, "Successfully created the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else{

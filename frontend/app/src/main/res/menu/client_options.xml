@@ -11,6 +11,6 @@
         android:icon="@drawable/ic_new_visit"/>
 
     <item android:title="New Referral"
-        android:id="@+id/createReferralActivity"
+        android:id="@+id/createReferralActivityClient"
         android:icon="@drawable/ic_new_referral"/>
 </menu>

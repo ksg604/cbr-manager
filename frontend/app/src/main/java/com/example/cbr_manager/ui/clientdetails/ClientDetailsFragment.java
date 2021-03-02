@@ -92,16 +92,6 @@ public class ClientDetailsFragment extends Fragment {
         setupButtons(root);
         setupVectorImages(root);
 
-        /*
-        Button newReferralPlaceHolderButton = root.findViewById(R.id.clientDetailsNewReferralButton);
-        newReferralPlaceHolderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateReferralActivity.class);
-                intent.putExtra("CLIENT_ID", clientId);
-                startActivity(intent);
-            }
-        });*/
 
         BottomNavigationView clientDetailsNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
         clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -113,23 +103,21 @@ public class ClientDetailsFragment extends Fragment {
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .add(android.R.id.content, new VisitsPerClientFragment()).commit();
                         break;
-                        /*
                     case R.id.newVisitFragment:
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .add(android.R.id.content, new NewVisitFragment()).commit();
-                        break;*/
-                        /*
-                    case R.id.createReferralActivity:
+                        Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
+                        intent.putExtra("clientId", clientId);
+                        startActivity(createVisitIntent);
+                        break;
+                    case R.id.createReferralActivityClient:
                         // TODO: Navigate to create referral fragment instead of activity
                         Intent createReferralIntent = new Intent(getActivity(), CreateReferralActivity.class);
                         createReferralIntent.putExtra("CLIENT_ID", clientId);
-                        startActivity(intent);
-                        break;*/
+                        startActivity(createReferralIntent);
+                        break;
                 }
                 return false;
             }
         });
-
 
         return root;
     }
@@ -242,22 +230,6 @@ public class ClientDetailsFragment extends Fragment {
         setupEditButton(root);
         setupBackButton(root);
     }
-
-    /*
-    private void setupNewVisitButton(View root) {
-        Button newVisitButton = root.findViewById(R.id.clientDetailsNewVisitButton);
-        newVisitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView nameTextView = (TextView)getView().findViewById(R.id.clientDetailsNameTextView);
-                String name = nameTextView.getText().toString();
-                Intent intent = new Intent(getActivity(), CreateVisitActivity.class);
-                intent.putExtra("clientId", clientId);
-                startActivity(intent);
-            }
-        });
-    }
-*/
 
     private void setupEditButton(View root) {
 

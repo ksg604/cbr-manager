@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ClientSelectorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClientSelectorFragment extends Fragment {
+public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,5 +52,10 @@ public class ClientSelectorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_client_selector, container, false);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }

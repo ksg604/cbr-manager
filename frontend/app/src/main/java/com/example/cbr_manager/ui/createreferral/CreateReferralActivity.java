@@ -5,13 +5,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,11 +42,21 @@ import com.example.cbr_manager.service.user.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+// REFERENCES: https://medium.com/android-news/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
+//             https://developer.android.com/training/camera/photobasics
+// dispatchCameraIntent() and gatherData() methods both draw from the above references.
 
 public class CreateReferralActivity extends AppCompatActivity {
 
@@ -51,6 +65,7 @@ public class CreateReferralActivity extends AppCompatActivity {
     int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
+    private String imageFilePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +114,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 101);
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
         } else {
             dispatchTakePictureIntent();
         }
@@ -116,11 +131,22 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
 
-        }
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+
+            } catch (ActivityNotFoundException | IOException e) {
+                Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
+            }
+
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+
     }
 
     @Override
@@ -128,9 +154,11 @@ public class CreateReferralActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         ImageView referralImageView = findViewById(R.id.referralImageView);
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            referralImageView.setImageBitmap(imageBitmap);
+            File imgFile = new File(imageFilePath);
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                referralImageView.setImageBitmap(myBitmap);
+            }
         }
     }
 
@@ -260,6 +288,27 @@ public class CreateReferralActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Referral> call, Response<Referral> response) {
                     if (response.isSuccessful()) {
+                        Referral submittedReferral = response.body();
+                        File photoFile = new File(imageFilePath);
+                        if (photoFile.exists()) {
+                            Call<ResponseBody> photoCall = apiService.getReferralService().uploadPhoto(photoFile, submittedReferral.getId().intValue());
+                            photoCall.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(CreateReferralActivity.this, "Referral Photo successfully uploaded!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(CreateReferralActivity.this, "Referral photo upload failed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                }
+                            });
+                        }
+
                         Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     } else {
@@ -273,6 +322,18 @@ public class CreateReferralActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        imageFilePath = image.getAbsolutePath();
+
+        return image;
     }
 
     private void setupWheelchairLayout() {

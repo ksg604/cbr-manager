@@ -29,7 +29,7 @@ public class ConsentFragment extends Fragment {
     EditText newDate;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
-    private EditText year, month, day;
+//    private EditText year, month, day;
     private String consent="";
     private String date="";
     private Client client;
@@ -43,9 +43,6 @@ public class ConsentFragment extends Fragment {
         view = inflater.inflate(R.layout.activity_create_client_consent, container, false);
         client = ((CreateClientActivity) getActivity()).getClient();
         radioGroup = view.findViewById(R.id.radioGroup);
-        year = view.findViewById(R.id.editTextYear);
-        month = view.findViewById(R.id.editTextMonth);
-        day = view.findViewById(R.id.editTextDay);
 
         setupDatePicker();
         Button nextButton = view.findViewById(R.id.nextButton);
@@ -69,7 +66,6 @@ public class ConsentFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
         newDate.setText(year + "/" + (month + 1) + "/" + day);
-//        newDate.setInputType(InputType.TYPE_NULL);
         newDate.setFocusable(false);
         newDate.setClickable(false);
         newDate.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +88,6 @@ public class ConsentFragment extends Fragment {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = view.findViewById(radioId);
         consent = radioButton.getText().toString();
-//        date = year.getText().toString() + "/" + month.getText().toString() + "/" + day.getText().toString();
         date = newDate.getText().toString().trim();
         ((CreateClientActivity) getActivity()).setConsentInfo(consent, date);
     }

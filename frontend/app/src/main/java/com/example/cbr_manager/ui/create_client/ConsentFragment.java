@@ -47,6 +47,21 @@ public class ConsentFragment extends Fragment {
         month = view.findViewById(R.id.editTextMonth);
         day = view.findViewById(R.id.editTextDay);
 
+        setupDatePicker();
+        Button nextButton = view.findViewById(R.id.nextButton);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateInfo();
+                ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.VILLAGE_INFO.ordinal());
+            }
+        });
+
+        return view;
+    }
+
+    private void setupDatePicker() {
         newDate = view.findViewById(R.id.editTextDate);
         Calendar calendar = Calendar.getInstance();
 
@@ -71,26 +86,14 @@ public class ConsentFragment extends Fragment {
                 picker.show();
             }
         });
-
-
-        Button nextButton = view.findViewById(R.id.nextButton);
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateInfo();
-                ((CreateClientActivity) getActivity()).setViewPager(CreateClientActivity.CreateClientFragments.VILLAGE_INFO.ordinal());
-            }
-        });
-
-        return view;
     }
 
     private void updateInfo() {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = view.findViewById(radioId);
         consent = radioButton.getText().toString();
-        date = year.getText().toString() + "/" + month.getText().toString() + "/" + day.getText().toString();
+//        date = year.getText().toString() + "/" + month.getText().toString() + "/" + day.getText().toString();
+        date = newDate.getText().toString().trim();
         ((CreateClientActivity) getActivity()).setConsentInfo(consent, date);
     }
 }

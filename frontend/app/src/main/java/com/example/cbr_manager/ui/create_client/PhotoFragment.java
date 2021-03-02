@@ -1,12 +1,19 @@
 package com.example.cbr_manager.ui.create_client;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.NavigationActivity;
@@ -23,8 +30,11 @@ import retrofit2.Response;
 
 public class PhotoFragment extends Fragment {
     Button cameraButton;
-    private static final APIService apiService = APIService.getInstance();
     View view;
+
+    private static final APIService apiService = APIService.getInstance();
+    static final int REQUEST_IMAGE_CAPTURE = 102;
+    static final int REQUEST_CAMERA_USE = 101;
 
     @Override
     public View onCreateView(
@@ -35,6 +45,9 @@ public class PhotoFragment extends Fragment {
 
         cameraButton = view.findViewById(R.id.takePhotoButton);
         //TODO: Add Camera functionality
+        setupCameraButtonListener();
+
+
 
         Button submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +65,43 @@ public class PhotoFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setupCameraButtonListener() {
+        Button cameraButton = view.findViewById(R.id.takePhotoButton);
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askCameraPermission();
+            }
+        });
+    }
+
+    private void askCameraPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
+        } else {
+            dispatchTakePictureIntent();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_USE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchTakePictureIntent();
+            }
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+
+        }
     }
 
     private void submitSurvey() {

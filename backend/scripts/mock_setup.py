@@ -1,7 +1,8 @@
 import os
 import random
 from pathlib import Path
-
+import sys
+sys.path.insert(0, os.path.dirname(os.getcwd()))  # need root director in path
 import requests
 from django.core.files.images import ImageFile
 

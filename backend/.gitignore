@@ -145,11 +145,15 @@ cython_debug/
 scripts/temp/
 
 # Ignore images that get uploaded, don't ignore default image
-media/images/temp
+media/*
 !media/images/default.png
 
 #Mac stuff
 .DS_Store
 
-# Django static files
-staticfiles
+# static ignores
+static/*
+!static/django-logo-negative.png
+
+#ignore environment
+.env.*

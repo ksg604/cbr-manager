@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +16,19 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.client.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> {
+public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> implements Filterable {
 
     private List<Client> clients;
+    private List<Client> clientsListFull = new ArrayList<>();
     private OnItemListener onItemListener;
 
     public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
         this.clients = clientList;
         this.onItemListener = onItemListener;
+        clientsListFull = new ArrayList<>(clientsListFull);
     }
 
     @NonNull
@@ -52,9 +57,47 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         return clients.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
     public interface OnItemListener {
         void onItemClick(int position);
     }
+
+
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Client> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(clientsListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Client client : clientsListFull) {
+                    if (client.getFullName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(client);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            clients.clear();
+            clients.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;

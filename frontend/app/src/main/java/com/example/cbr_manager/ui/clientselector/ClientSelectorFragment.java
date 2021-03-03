@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
@@ -78,6 +79,20 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
         clientListRecyclerView.setAdapter(clientListAdapter);
 
         fetchClientsToList(clientList);
+
+        SearchView search = root.findViewById(R.id.clientSelectorSearchView);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                clientListAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         return root;
     }

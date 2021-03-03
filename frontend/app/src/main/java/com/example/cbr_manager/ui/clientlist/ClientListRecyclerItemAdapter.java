@@ -28,7 +28,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
     public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
         this.clients = clientList;
         this.onItemListener = onItemListener;
-        clientsListFull = new ArrayList<>(clientsListFull);
+        clientsListFull = new ArrayList<>(clientList);
     }
 
     @NonNull
@@ -68,12 +68,13 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
 
 
-    private Filter filter = new Filter() {
+    public Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Client> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
+                filteredList = new ArrayList<>(clientsListFull);
                 filteredList.addAll(clientsListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
@@ -97,6 +98,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
             clients.addAll((List) results.values);
             notifyDataSetChanged();
         }
+
     };
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

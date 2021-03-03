@@ -2,34 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ConstrainedLayout"
-    android:orientation="vertical"
+    android:id="@+id/clientSelectorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
-    tools:context=".ui.clientlist.ClientListFragment">
+    android:orientation="vertical"
+    tools:context=".ui.clientselector.ClientSelectorFragment">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/clientSelectorSearchCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:cardCornerRadius="4dp">
 
         <SearchView
-            android:id="@+id/clientSearchView"
+            android:id="@+id/clientSelectorSearchView"
+            android:queryHint="@string/hint_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:iconifiedByDefault="false"
-            android:queryHint="@string/hint_search" />
+            android:layout_height="match_parent" />
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/clientSelectorRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+        android:layout_height="match_parent" />
 </LinearLayout>

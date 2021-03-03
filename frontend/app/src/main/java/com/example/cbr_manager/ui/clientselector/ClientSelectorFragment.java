@@ -3,6 +3,7 @@ package com.example.cbr_manager.ui.clientselector;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -16,6 +17,10 @@ import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
 
@@ -58,7 +63,37 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client_selector, container, false);
+        View root = inflater.inflate(R.layout.fragment_client_selector, container, false);
+
+        clientListRecyclerView = root.findViewById(R.id.clientSelectorRecyclerView);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
+        clientListRecyclerView.setLayoutManager(mLayoutManager);
+        clientListRecyclerView.setAdapter(clientListAdapter);
+
+        fetchClientsToList(clientList);
+
+        return root;
+    }
+
+    private void fetchClientsToList(List<Client> clientList) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
+                @Override
+                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
+                    if (response.isSuccessful()) {
+                        List<Client> clients = response.body();
+                        clientList.addAll(clients);
+                    }
+                    clientListAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<List<Client>> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     @Override

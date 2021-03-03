@@ -23,12 +23,15 @@ import com.example.cbr_manager.ui.clientlist.ClientListFragment;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
+import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.login.LoginActivity;
 
 public class HomepageActivity extends AppCompatActivity {
     private ImageButton newClientButton, newVisitButton, dashboardButton;
     private ImageButton newReferralButton, clientListButton, syncButton;
+    private final int NEW_VISIT_CODE = 100;
+    private final int NEW_REFERRAL_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +63,20 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomepageActivity.this, NavigationActivity.class);
+                intent.putExtra("NEW_VISIT_CODE", NEW_VISIT_CODE);
                 startActivity(intent);
             }
         });
 
         newReferralButton = findViewById(R.id.newReferralButton);
+        newReferralButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomepageActivity.this, CreateReferralActivity.class);
+                intent.putExtra("NEW_REFERRAL_CODE", NEW_REFERRAL_CODE);
+                startActivity(intent);
+            }
+        });
 
         clientListButton = findViewById(R.id.clientListButton);
         clientListButton.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.clientselector;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,8 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
+import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
+import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,9 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     private ClientListRecyclerItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private APIService apiService = APIService.getInstance();
+
+    private final int NEW_VISIT_CODE = 100;
+    private final int NEW_REFERRAL_CODE = 101;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -98,6 +104,18 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
 
     @Override
     public void onItemClick(int position) {
+        int code = ((ClientSelectorActivity) getActivity()).getCode();
+        Client client = clientList.get(position);
+        int clientId = client.getId();
 
+        if (code == NEW_REFERRAL_CODE) {
+            Intent referralIntent = new Intent(getContext(), CreateReferralActivity.class);
+            referralIntent.putExtra("CLIENT_ID", clientId);
+            startActivity(referralIntent);
+        } else {
+            Intent visitsIntent = new Intent(getContext(), CreateVisitActivity.class);
+            visitsIntent.putExtra("clientId", clientId);
+            startActivity(visitsIntent);
+        }
     }
 }

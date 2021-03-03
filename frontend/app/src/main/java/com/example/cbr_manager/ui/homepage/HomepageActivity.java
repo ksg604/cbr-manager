@@ -63,7 +63,7 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomepageActivity.this, NavigationActivity.class);
-                intent.putExtra("NEW_VISIT_CODE", NEW_VISIT_CODE);
+                intent.putExtra("CODE", NEW_VISIT_CODE);
                 startActivity(intent);
             }
         });
@@ -73,7 +73,7 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomepageActivity.this, CreateReferralActivity.class);
-                intent.putExtra("NEW_REFERRAL_CODE", NEW_REFERRAL_CODE);
+                intent.putExtra("CODE", NEW_REFERRAL_CODE);
                 startActivity(intent);
             }
         });

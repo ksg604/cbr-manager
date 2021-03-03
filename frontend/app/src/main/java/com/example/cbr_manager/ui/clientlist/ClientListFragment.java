@@ -34,7 +34,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
     List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
-    private ClientListRecyclerItemAdapter clientListAdapter; // TODO
+    private ClientListRecyclerItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private APIService apiService = APIService.getInstance();
 

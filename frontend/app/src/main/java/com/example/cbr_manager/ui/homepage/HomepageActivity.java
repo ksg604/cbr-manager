@@ -21,6 +21,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientlist.ClientListFragment;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
+import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.login.LoginActivity;
@@ -48,7 +49,8 @@ public class HomepageActivity extends AppCompatActivity {
         newVisitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomepageActivity.this, CreateVisitActivity.class);
+//                Intent intent = new Intent(HomepageActivity.this, CreateVisitActivity.class);
+                Intent intent = new Intent(HomepageActivity.this, ClientSelectorActivity.class);
                 startActivity(intent);
             }
         });

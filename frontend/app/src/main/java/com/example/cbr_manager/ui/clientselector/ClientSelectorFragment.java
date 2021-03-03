@@ -3,20 +3,27 @@ package com.example.cbr_manager.ui.clientselector;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClientSelectorFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
+
+    List<Client> clientList = new ArrayList<>();
+    private RecyclerView clientListRecyclerView;
+    private ClientListRecyclerItemAdapter clientListAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private APIService apiService = APIService.getInstance();
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

@@ -54,6 +54,7 @@ public class HomepageActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                Intent intent = new Intent(HomepageActivity.this, CreateVisitActivity.class);
                 Intent intent = new Intent(HomepageActivity.this, ClientSelectorActivity.class);
+                intent.putExtra("CODE", NEW_VISIT_CODE);
                 startActivity(intent);
             }
         });
@@ -63,7 +64,6 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomepageActivity.this, NavigationActivity.class);
-                intent.putExtra("CODE", NEW_VISIT_CODE);
                 startActivity(intent);
             }
         });
@@ -72,7 +72,7 @@ public class HomepageActivity extends AppCompatActivity {
         newReferralButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomepageActivity.this, CreateReferralActivity.class);
+                Intent intent = new Intent(HomepageActivity.this, ClientSelectorActivity.class);
                 intent.putExtra("CODE", NEW_REFERRAL_CODE);
                 startActivity(intent);
             }

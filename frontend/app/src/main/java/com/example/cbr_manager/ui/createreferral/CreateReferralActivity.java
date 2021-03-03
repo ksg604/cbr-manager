@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
@@ -74,6 +75,26 @@ public class CreateReferralActivity extends AppCompatActivity {
         clientId = getIntent().getIntExtra("CLIENT_ID", -1);
         setTitle("Create Referral");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        TextInputEditText clientName = findViewById(R.id.referralClientName);
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+                        Client client = response.body();
+                        clientName.setText(client.getFullName());
+                        clientName.setFocusable(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+
+                }
+            });
+
+        }
 
         getUserId();
         setupReferralServiceRadioGroup();

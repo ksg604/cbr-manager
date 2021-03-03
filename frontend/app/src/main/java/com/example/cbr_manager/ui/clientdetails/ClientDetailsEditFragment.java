@@ -177,6 +177,7 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void setupButtons(View root) {
+        setupBackButton(root);
         setupSubmitButton(root);
     }
     private void setupSubmitButton(View root) {
@@ -188,6 +189,16 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getAndModifyClientInfo(clientId, root);
+            }
+        });
+    }
+
+    private void setupBackButton(View root) {
+        ImageView backButtonImageView = root.findViewById(R.id.clientDetailsEditBackImageView);
+        backButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
     }

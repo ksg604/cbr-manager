@@ -8,6 +8,7 @@ import com.example.cbr_manager.R;
 
 public class HomepageActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

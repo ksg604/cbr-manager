@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,9 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
@@ -32,7 +36,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
     private VisitsViewModel visitsViewModel;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter adapter;
+    private VisitsRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
 
@@ -53,6 +57,20 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
         fetchVisitsToList(visitsRecyclerItems);
 
+        SearchView visitSearch = root.findViewById(R.id.visitSearchView);
+        visitSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
         return root;
     }
 
@@ -71,7 +89,10 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                                     if (response.isSuccessful()) {
                                         Client client = response.body();
                                         visit.setClient(client);
-                                        visitUIList.add(new VisitsRecyclerItem(R.drawable.dog, visit.getClient().getFullName(), String.valueOf(visit.getClientID()), visit));
+                                        Timestamp datetimeCreated = visit.getDatetimeCreated();
+                                        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                                        String formattedDate = formatter.format(datetimeCreated);
+                                        visitUIList.add(new VisitsRecyclerItem(R.drawable.visit_default_pic, formattedDate, visit.getClient().getFullName(), visit));
                                     }
 
                                     adapter.notifyDataSetChanged();
@@ -97,11 +118,14 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     public void onItemClick(int position) {
 
         Intent visitInfoIntent = new Intent(getContext(), VisitDetailsActivity.class);
-
-        VisitsRecyclerItem visitsRecyclerItem = visitsRecyclerItems.get(position);
-        visitInfoIntent.putExtra("additionalInfo", visitsRecyclerItem.getVisit().getAdditionalInfo());
-        visitInfoIntent.putExtra("clientId", visitsRecyclerItem.getVisit().getClientID());
-
+        VisitsRecyclerItem visitsRecyclerItem = adapter.getVisitItem(position);
+        Visit visit = visitsRecyclerItem.getVisit();
+        visitInfoIntent.putExtra("additionalInfo", visit.getAdditionalInfo());
+        visitInfoIntent.putExtra("clientId", visit.getClientID());
+        Timestamp datetimeCreated = visit.getDatetimeCreated();
+        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        String formattedDate = formatter.format(datetimeCreated);
+        visitInfoIntent.putExtra("formattedDate", formattedDate);
         startActivity(visitInfoIntent);
     }
 }

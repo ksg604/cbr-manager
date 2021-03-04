@@ -1,12 +1,28 @@
 package com.example.cbr_manager.ui.create_client;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import android.content.pm.PackageManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.NavigationActivity;
@@ -16,6 +32,13 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,8 +46,12 @@ import retrofit2.Response;
 
 public class PhotoFragment extends Fragment {
     Button cameraButton;
-    private static final APIService apiService = APIService.getInstance();
     View view;
+
+    private static final APIService apiService = APIService.getInstance();
+    static final int REQUEST_IMAGE_CAPTURE = 102;
+    static final int REQUEST_CAMERA_USE = 101;
+    private String imageFilePath = "";
 
     @Override
     public View onCreateView(
@@ -35,6 +62,9 @@ public class PhotoFragment extends Fragment {
 
         cameraButton = view.findViewById(R.id.takePhotoButton);
         //TODO: Add Camera functionality
+        setupCameraButtonListener();
+
+
 
         Button submitButton = view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +84,77 @@ public class PhotoFragment extends Fragment {
         return view;
     }
 
+    private void setupCameraButtonListener() {
+        Button cameraButton = view.findViewById(R.id.takePhotoButton);
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askCameraPermission();
+            }
+        });
+    }
+
+    private void askCameraPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
+        } else {
+            dispatchTakePictureIntent();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_USE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchTakePictureIntent();
+            }
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+
+        } catch (ActivityNotFoundException | IOException e) {
+        }
+
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(getContext(),
+                    "com.example.android.fileprovider", photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        imageFilePath = image.getAbsolutePath();
+
+        return image;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ImageView referralImageView = view.findViewById(R.id.createClientProfilePicture);
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            File imgFile = new File(imageFilePath);
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                referralImageView.setImageBitmap(myBitmap);
+            }
+        }
+    }
+
     private void submitSurvey() {
         Intent intent = new Intent(getActivity(), NavigationActivity.class);
         startActivity(intent);
@@ -64,6 +165,25 @@ public class PhotoFragment extends Fragment {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 if(response.isSuccessful()){
+
+                    int clientId = response.body().getId().intValue();
+
+                    File photoFile = new File(imageFilePath);
+                    if (photoFile.exists()) {
+                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, clientId);
+                        photoCall.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
                     Snackbar.make(view, "Successfully created the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else{

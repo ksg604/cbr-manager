@@ -3,9 +3,11 @@ package com.example.cbr_manager.ui.clientdetails;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,8 +19,10 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
+import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
 import com.example.cbr_manager.ui.visits.VisitsPerClientFragment;
 import com.example.cbr_manager.utils.Helper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -49,15 +53,6 @@ public class ClientDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClientDetailsEditFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ClientDetailsFragment newInstance(String param1, String param2) {
         ClientDetailsFragment fragment = new ClientDetailsFragment();
         Bundle args = new Bundle();
@@ -97,12 +92,30 @@ public class ClientDetailsFragment extends Fragment {
         setupButtons(root);
         setupVectorImages(root);
 
-        Button newReferralPlaceHolderButton = root.findViewById(R.id.clientDetailsNewReferralButton);
-        newReferralPlaceHolderButton.setOnClickListener(new View.OnClickListener() {
+
+        BottomNavigationView clientDetailsNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
+        clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateReferralActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()) {
+                    case R.id.visitsPerClientFragment:
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .add(android.R.id.content, new VisitsPerClientFragment()).commit();
+                        break;
+                    case R.id.newVisitFragment:
+                        Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
+                        createVisitIntent.putExtra("clientId", clientId);
+                        startActivity(createVisitIntent);
+                        break;
+                    case R.id.createReferralActivityClient:
+                        // TODO: Navigate to create referral fragment instead of activity
+                        Intent createReferralIntent = new Intent(getActivity(), CreateReferralActivity.class);
+                        createReferralIntent.putExtra("CLIENT_ID", clientId);
+                        startActivity(createReferralIntent);
+                        break;
+                }
+                return false;
             }
         });
 
@@ -213,66 +226,32 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupButtons(View root) {
-        setupBackButton(root);
-        setupNewVisitButton(root);
-        setupSeeVisitsButton(root);
+
         setupEditButton(root);
-
-        ImageView backImageView = root.findViewById(R.id.clientDetailsBackImageView);
-        backImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-    }
-
-    private void setupNewVisitButton(View root) {
-        Button newVisitButton = root.findViewById(R.id.clientDetailsNewVisitButton);
-        newVisitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView nameTextView = (TextView)getView().findViewById(R.id.clientDetailsNameTextView);
-                String name = nameTextView.getText().toString();
-                Intent intent = new Intent(getActivity(), CreateVisitActivity.class);
-                intent.putExtra("clientId", clientId);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setupSeeVisitsButton(View root) {
-        Button newVisitButton = root.findViewById(R.id.clientDetailsSeeVisitsButton);
-        newVisitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(android.R.id.content, new VisitsPerClientFragment()).commit();
-            }
-        });
-    }
-
-    private void setupBackButton(View root) {
-        Button backButton = root.findViewById(R.id.clientDetailsBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        setupBackButton(root);
     }
 
     private void setupEditButton(View root) {
 
-        Button editButton = root.findViewById(R.id.clientDetailsEditButton);
+        ImageView editButtonImageView = root.findViewById(R.id.clientDetailsEditImageView);
 
-        editButton.setOnClickListener(new View.OnClickListener() {
+        editButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+    }
+
+    private void setupBackButton(View root) {
+        ImageView backImageView = root.findViewById(R.id.clientDetailsBackImageView);
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
     }

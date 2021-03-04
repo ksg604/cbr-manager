@@ -1,20 +1,37 @@
 package com.example.cbr_manager.ui.createreferral;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
@@ -22,24 +39,148 @@ import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServ
 import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
+import com.example.cbr_manager.service.user.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+// REFERENCES: https://medium.com/android-news/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
+//             https://developer.android.com/training/camera/photobasics
+// dispatchCameraIntent() and gatherData() methods both draw from the above references.
+
 public class CreateReferralActivity extends AppCompatActivity {
+
+    static final int REQUEST_IMAGE_CAPTURE = 102;
+    static final int REQUEST_CAMERA_USE = 101;
+    int clientId = -1;
+    private Integer userId = -1;
+    private APIService apiService = APIService.getInstance();
+    private String imageFilePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_referral);
+        clientId = getIntent().getIntExtra("CLIENT_ID", -1);
         setTitle("Create Referral");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        TextInputEditText clientName = findViewById(R.id.referralClientName);
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+                        Client client = response.body();
+                        clientName.setText(client.getFullName());
+                        clientName.setFocusable(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+
+                }
+            });
+
+        }
+
+        getUserId();
         setupReferralServiceRadioGroup();
         setupPhysioLayout();
         setupWheelchairLayout();
         setupSubmission();
+        setupCameraButtonListener();
+    }
+
+    private void getUserId() {
+        if (apiService.isAuthenticated()) {
+            apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        User user = response.body();
+                        userId = user.getId();
+                    }
+                }
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    private void setupCameraButtonListener() {
+        Button cameraButton = findViewById(R.id.referralTakePhotoButton);
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askCameraPermission();
+            }
+        });
+    }
+
+    private void askCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
+        } else {
+            dispatchTakePictureIntent();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_USE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchTakePictureIntent();
+            }
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+
+            } catch (ActivityNotFoundException | IOException e) {
+                Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
+            }
+
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ImageView referralImageView = findViewById(R.id.referralImageView);
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            File imgFile = new File(imageFilePath);
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                referralImageView.setImageBitmap(myBitmap);
+            }
+        }
     }
 
     private void setupSubmission() {
@@ -48,8 +189,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gatherData();
-                
-                onBackPressed();
+//                onBackPressed();
             }
         });
     }
@@ -76,6 +216,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             physiotherapyServiceDetail.setCondition(clientCondition);
 
             referral.setServiceDetail(physiotherapyServiceDetail);
+            referral.setServiceType("Physiotherapy");
 
         } else if (service == R.id.referralProstheticRadioButton) {
             ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
@@ -90,6 +231,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
 
             referral.setServiceDetail(prostheticServiceDetail);
+            referral.setServiceType("Prosthetic");
 
         } else if (service == R.id.referralOrthoticRadioButton) {
             OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
@@ -105,6 +247,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
 
             referral.setServiceDetail(orthoticServiceDetail);
+            referral.setServiceType("Orthotic");
 
         } else if (service == R.id.referralWheelChairRadioButton) {
             WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
@@ -114,6 +257,14 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
             hipWidth = hipWidthEditText.getText().toString();
+            wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+
+            RadioGroup usageExperience = findViewById(R.id.referralWheelChairUsageRadioGroup);
+            if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
+                wheelchairServiceDetail.setUsageExperience("Intermediate");
+            } else {
+                wheelchairServiceDetail.setUsageExperience("Basic");
+            }
 
             RadioGroup isExistingWheelchair = findViewById(R.id.referralExistingWheelchairRadioGroup);
             if (isExistingWheelchair.getCheckedRadioButtonId() == R.id.referralExistingWheelchairYes) {
@@ -130,8 +281,9 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
             wheelchairServiceDetail.setClientHasExistingWheelchair(isExisting);
             wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
-
+            wheelchairServiceDetail.setUsageExperience("Basic");
             referral.setServiceDetail(wheelchairServiceDetail);
+            referral.setServiceType("Wheelchair");
 
         } else if (service == R.id.referralOtherRadioButton) {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
@@ -141,15 +293,68 @@ public class CreateReferralActivity extends AppCompatActivity {
             otherServiceDetail.setDescription(otherDescription);
 
             referral.setServiceDetail(otherServiceDetail);
+            referral.setServiceType("Other");
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
         String referToString = referTo.getText().toString();
 
         referral.setRefer_to(referToString);
-        referral.setStatus("made");
 
-        // TODO: You are here! Referral is ready to be sent to the server. What's missing is the clientID (pass from clientDetails over, I think?) and current User ID.
+        referral.setClient(new Integer(clientId));
+        referral.setUserCreator(userId);
+        if (apiService.isAuthenticated()) {
+            Call<Referral> call = apiService.getReferralService().createReferral(referral);
+            call.enqueue(new Callback<Referral>() {
+                @Override
+                public void onResponse(Call<Referral> call, Response<Referral> response) {
+                    if (response.isSuccessful()) {
+                        Referral submittedReferral = response.body();
+                        File photoFile = new File(imageFilePath);
+                        if (photoFile.exists()) {
+                            Call<ResponseBody> photoCall = apiService.getReferralService().uploadPhoto(photoFile, submittedReferral.getId().intValue());
+                            photoCall.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(CreateReferralActivity.this, "Referral Photo successfully uploaded!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(CreateReferralActivity.this, "Referral photo upload failed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                }
+                            });
+                        }
+
+                        Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                    } else {
+                        Toast.makeText(CreateReferralActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Referral> call, Throwable t) {
+                    Toast.makeText(CreateReferralActivity.this, "Failure connecting to server.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        imageFilePath = image.getAbsolutePath();
+
+        return image;
     }
 
     private void setupWheelchairLayout() {

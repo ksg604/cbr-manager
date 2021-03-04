@@ -11,7 +11,7 @@
     <string name="client_information">Client Information</string>
     <string name="visits">Visits</string>
     <string name="cbr_logo">CBR Logo</string>
-    <string name="consent">1. Do you consent to this interview</string>
+    <string name="consent">1. Do you consent to this interview?</string>
     <string name="date_form_complete">2. Date form completed</string>
     <string name="what_is_your_id">3. What is your ID Number?</string>
     <string name="client_creation_location">4. Location</string>
@@ -108,12 +108,12 @@
     <string-array name="physioNeedsArray">
         <item>Amputee</item>
         <item>Polio</item>
-        <item>Spinal cord injury</item>
-        <item>Cerebral palsy</item>
-        <item>Spina bifida</item>
+        <item>Spinal Cord Injury</item>
+        <item>Cerebral Palsy</item>
+        <item>Spina Bifida</item>
         <item>Hydrocephalus</item>
-        <item>Visual impairment</item>
-        <item>Hearing impairment</item>
+        <item>Visual Impairment</item>
+        <item>Hearing Impairment</item>
         <item>Other</item>
     </string-array>
     <string name="large_text">

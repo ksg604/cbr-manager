@@ -5,8 +5,13 @@ import com.example.cbr_manager.service.client.ClientService;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.Timestamp;
+
 public class Visit {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("client_id")
     @Expose
     private int clientID;
@@ -19,6 +24,9 @@ public class Visit {
     @SerializedName("client")
     @Expose
     private Client client = new Client();
+    @SerializedName("datetime_created")
+    @Expose
+    private Timestamp datetimeCreated;
 
     public Visit(String additionalInfo, int clientID, int userID, Client client) {
         this.additionalInfo = additionalInfo;
@@ -29,6 +37,14 @@ public class Visit {
 
     public Visit() {
 
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
     }
 
     public String getAdditionalInfo() {
@@ -61,6 +77,12 @@ public class Visit {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Timestamp getDatetimeCreated() { return this.datetimeCreated; }
+
+    public void setDatetimeCreated(Timestamp datetimeCreated) {
+        this.datetimeCreated = datetimeCreated;
     }
 
 }

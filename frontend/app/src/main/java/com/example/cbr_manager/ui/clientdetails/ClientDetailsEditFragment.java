@@ -112,26 +112,6 @@ public class ClientDetailsEditFragment extends Fragment {
         return root;
     }
 
-
-
-    private void modifyClientInfo(Client client) {
-
-        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
-                Log.d("log",client.getFirstName());
-                //Log.d("okay", response.body().toString());
-
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
-            }
-        });
-    }
-
     private void getAndModifyClientInfo(int clientId, View root) {
 
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
@@ -150,9 +130,24 @@ public class ClientDetailsEditFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     Client client = response.body();
-                    String [] nameTokens = editClientName.toString().split(" ");
+
+                    String [] nameTokens = editClientName.getText().toString().split(" ");
+                    client.setGender(gender);
                     client.setFirstName(nameTokens[0]);
                     client.setLastName(nameTokens[1]);
+
+
+                    //client.setAge(Integer.parseInt(editClientAge.getText().toString()));
+
+                    //client.setLocation(editClientLocation.getText().toString());
+                    //client.setEducationGoal(editClientEducation.getText().toString());
+                    //client.setDisability(editClientDisability.getText().toString());
+
+                    /*
+                    client.setRiskScore(Integer.parseInt(editClientRiskLevel.getText().toString()));
+                    client.setSocialGoal(editClientSocial.getText().toString());
+                    client.setHealthGoal(editClientHealth.getText().toString());*/
+
                     modifyClientInfo(client);
 
                 } else {
@@ -167,7 +162,21 @@ public class ClientDetailsEditFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+    }
 
+    private void modifyClientInfo(Client client) {
+        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                Log.d("log",client.getFirstName());
+                //Log.d("okay", response.body().toString());
+            }
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setupButtons(View root) {

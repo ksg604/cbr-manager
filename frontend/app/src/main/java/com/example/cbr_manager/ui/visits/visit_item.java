@@ -1,7 +1,8 @@
-package com.example.cbr_manager;
+package com.example.cbr_manager.ui.visits;
 
 import android.os.Bundle;
 
+import com.example.cbr_manager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

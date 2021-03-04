@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,12 +48,17 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
                              ViewGroup container, Bundle savedInstanceState) {
         int clientId = -1;
 
-        ClientDetailsActivity activity = (ClientDetailsActivity) getActivity();
-        ClientDetailsFragment fragment = (ClientDetailsFragment)activity.getSupportFragmentManager().findFragmentById(R.id.fragment_client_details);
+        FragmentActivity activity = getActivity();
+        ClientDetailsActivity clientDetailsActivity;
+        ClientDetailsFragment fragment;
 
-        if (activity != null)
-            clientId = fragment.getClientId();
-
+        if (activity instanceof ClientDetailsActivity) {
+            clientDetailsActivity = (ClientDetailsActivity) activity;
+            if (clientDetailsActivity != null) {
+                fragment = (ClientDetailsFragment)clientDetailsActivity.getSupportFragmentManager().findFragmentById(R.id.fragment_client_details);
+                clientId = fragment.getClientId();
+            }
+        }
         this.clientId = clientId;
         visitsViewModel =
                 new ViewModelProvider(this).get(VisitsViewModel.class);
@@ -78,7 +84,7 @@ public class VisitsPerClientFragment extends Fragment implements VisitsRecyclerI
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
-                            if (visit.getClientID() == clientId) {
+                            if (clientId == -1 || visit.getClientID() == clientId) {
                                 Call<Client> call1 = apiService.clientService.getClient(clientId);
                                 call1.enqueue(new Callback<Client>() {
                                     @Override

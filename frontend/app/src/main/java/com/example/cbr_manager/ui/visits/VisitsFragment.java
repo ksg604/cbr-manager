@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,14 +17,16 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,12 +38,28 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private int clientId = -1;
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        int clientId = -1;
+
+        FragmentActivity activity = getActivity();
+        ClientDetailsActivity clientDetailsActivity;
+        ClientDetailsFragment fragment;
+
+        if (activity instanceof ClientDetailsActivity) {
+            clientDetailsActivity = (ClientDetailsActivity) activity;
+            if (clientDetailsActivity != null) {
+                fragment = (ClientDetailsFragment)clientDetailsActivity.getSupportFragmentManager().findFragmentById(R.id.fragment_client_details);
+                clientId = fragment.getClientId();
+            }
+        }
+        this.clientId = clientId;
         visitsViewModel =
                 new ViewModelProvider(this).get(VisitsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_visits, container, false);
@@ -67,26 +84,27 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
-                            Call<Client> call1 = apiService.clientService.getClient(visit.getClientID());
-                            call1.enqueue(new Callback<Client>() {
-                                @Override
-                                public void onResponse(Call<Client> call, Response<Client> response) {
-                                    if (response.isSuccessful()) {
-                                        Client client = response.body();
-                                        visit.setClient(client);
-                                        Timestamp datetimeCreated = visit.getDatetimeCreated();
-                                        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-                                        String formattedDate = formatter.format(datetimeCreated);
-                                        visitUIList.add(new VisitsRecyclerItem(R.drawable.visit_default_pic, formattedDate, visit.getClient().getFullName(), visit));
+                            int currClientID = visit.getClientID();
+                            if (clientId == -1 || visit.getClientID() == clientId) {
+                                Call<Client> call1 = apiService.clientService.getClient(currClientID);
+                                call1.enqueue(new Callback<Client>() {
+                                    @Override
+                                    public void onResponse(Call<Client> call, Response<Client> response) {
+                                        if (response.isSuccessful()) {
+                                            Client client = response.body();
+                                            visit.setClient(client);
+                                            Timestamp datetimeCreated = visit.getDatetimeCreated();
+                                            Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                                            String formattedDate = formatter.format(datetimeCreated);
+                                            visitUIList.add(new VisitsRecyclerItem(R.drawable.visit_default_pic, formattedDate, visit.getClient().getFullName(), visit));
+                                        }
+                                        adapter.notifyDataSetChanged();
                                     }
-
-                                    adapter.notifyDataSetChanged();
-                                }
-                                @Override
-                                public void onFailure(Call<Client> call, Throwable t) {
-
-                                }
-                            });
+                                    @Override
+                                    public void onFailure(Call<Client> call, Throwable t) {
+                                    }
+                                });
+                            }
                         }
                     }
                 }

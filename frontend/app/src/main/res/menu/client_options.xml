@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="See Visits"
-        android:id="@+id/visitsPerClientFragment"
+        android:id="@+id/visitsFragment"
         android:icon="@drawable/ic_visit"
         />
 

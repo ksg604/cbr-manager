@@ -104,9 +104,9 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredClientList = (ArrayList<Client>) results.values;
 
-            for (Client client : filteredClientList) {
-                Log.d("tag", client.getFullName());
-            }
+//            for (Client client : filteredClientList) {
+//                Log.d("tag", client.getFullName());
+//            }
             notifyDataSetChanged();
         }
 

@@ -103,7 +103,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
     @Override
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
-        VisitsRecyclerItem currentItem = visitsRecyclerItems.get(position);
+        VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
 
         holder.imageView.setImageResource(currentItem.getmImageResource());
         holder.textView1.setText(currentItem.getmText1());

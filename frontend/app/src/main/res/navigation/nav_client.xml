@@ -9,7 +9,7 @@
         android:id="@+id/visitsFragment"
         android:name="com.example.cbr_manager.ui.visits.VisitsFragment"
         android:label="fragment_visits_per_client"
-        tools:layout="@layout/fragment_visits_per_client" />
+        tools:layout="@layout/fragment_visits" />
     <fragment
         android:id="@+id/newVisitFragment"
         android:name="com.example.cbr_manager.ui.createvisit.NewVisitFragment"

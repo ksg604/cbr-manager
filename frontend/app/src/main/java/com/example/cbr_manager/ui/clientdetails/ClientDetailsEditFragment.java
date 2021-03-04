@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,14 +112,17 @@ public class ClientDetailsEditFragment extends Fragment {
         return root;
     }
 
+
+
     private void modifyClientInfo(Client client) {
+
         apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                Log.d("log",client.getFirstName());
+                //Log.d("okay", response.body().toString());
 
-                if ( response.code() == 200 ) {
-                    Toast.makeText(parentLayout.getContext(), "Client updated successfully", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
@@ -139,29 +143,18 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
         EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
 
+
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
 
                 if (response.isSuccessful()) {
                     Client client = response.body();
-
-
-
-                    String[] name = editClientName.getText().toString().split(" ");
-                    client.setFirstName(name[0]);
-                    client.setLastName(name[1]);
-                    client.setAge(Integer.parseInt(editClientAge.getText().toString()));
-                    client.setLocation(editClientLocation.getText().toString());
-                    client.setEducationGoal(editClientEducation.getText().toString());
-                    client.setDisability(editClientDisability.getText().toString());
-                    client.setRiskScore(Integer.parseInt(editClientRiskLevel.getText().toString()));
-                    client.setSocialGoal(editClientSocial.getText().toString());
-                    client.setHealthGoal(editClientHealth.getText().toString());
-
-
+                    String [] nameTokens = editClientName.toString().split(" ");
+                    client.setFirstName(nameTokens[0]);
+                    client.setLastName(nameTokens[1]);
                     modifyClientInfo(client);
-                    Toast.makeText(parentLayout.getContext(), "Client updated successfully", Toast.LENGTH_SHORT).show();
+
                 } else {
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -174,6 +167,7 @@ public class ClientDetailsEditFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+
     }
 
     private void setupButtons(View root) {

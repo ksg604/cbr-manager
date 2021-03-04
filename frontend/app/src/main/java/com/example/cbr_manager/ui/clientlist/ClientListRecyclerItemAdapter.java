@@ -1,6 +1,7 @@
 package com.example.cbr_manager.ui.clientlist;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     @Override
     public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
-        Client currentClient = clients.get(position);
+        Client currentClient = filteredClientList.get(position);
         Helper.setImageViewFromURL(currentClient.getPhotoURL(), holder.imageView, R.drawable.client_details_placeholder);
 
         holder.textViewFullName.setText(currentClient.getFullName());
@@ -56,6 +57,8 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
     public int getItemCount() {
         return filteredClientList.size();
     }
+
+
 
     @Override
     public Filter getFilter() {
@@ -80,6 +83,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
                 for (Client client : clients) {
                     if (client.getFullName().toLowerCase().contains(searchString)) {
+//                        Log.d("tag", client.getFullName());
                         tempFilteredList.add(client);
                     }
                 }
@@ -93,9 +97,11 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-//            clients.clear();
-//            clients.addAll((List) results.values);
             filteredClientList = (ArrayList<Client>) results.values;
+
+            for (Client client : filteredClientList) {
+                Log.d("tag", client.getFullName());
+            }
             notifyDataSetChanged();
         }
 

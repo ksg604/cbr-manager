@@ -107,7 +107,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
                         clientList.addAll(clients);
                     }
                     clientListAdapter.notifyDataSetChanged();
-                    clientListRecyclerView.setAdapter(clientListAdapter);
+//                    clientListRecyclerView.setAdapter(clientListAdapter);
                 }
 
                 @Override

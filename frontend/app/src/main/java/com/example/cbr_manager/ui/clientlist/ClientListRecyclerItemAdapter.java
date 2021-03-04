@@ -32,6 +32,11 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         this.filteredClientList = clientList;
     }
 
+    public Client getClient(int position) {
+        return filteredClientList.get(position);
+    }
+
+
     @NonNull
     @Override
     public ClientItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

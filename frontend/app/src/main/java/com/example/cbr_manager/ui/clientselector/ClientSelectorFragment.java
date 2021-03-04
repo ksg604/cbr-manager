@@ -121,7 +121,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     @Override
     public void onItemClick(int position) {
         int code = ((ClientSelectorActivity) getActivity()).getCode();
-        Client client = clientList.get(position);
+        Client client = clientListAdapter.getClient(position);
         int clientId = client.getId();
 
         if (code == NEW_REFERRAL_CODE) {

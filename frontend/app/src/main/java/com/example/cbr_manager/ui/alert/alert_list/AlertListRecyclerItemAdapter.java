@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,11 +17,52 @@ import com.example.cbr_manager.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertListRecyclerItemAdapter.AlertItemViewHolder> {
+public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertListRecyclerItemAdapter.AlertItemViewHolder> implements Filterable {
 
     private ArrayList<AlertListRecyclerItem> alertListRecyclerItems;
     private List<AlertListRecyclerItem> alertListRecyclerItemsFull;
     private OnItemListener onItemListener;
+    private List<AlertListRecyclerItem> filteredAlerts;
+
+    public AlertListRecyclerItem getAlert(int position) {
+        return filteredAlerts.get(position);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String searchString = constraint.toString().toLowerCase().trim();
+
+            if (searchString.isEmpty()) {
+                filteredAlerts = alertListRecyclerItems;
+            } else {
+                ArrayList<AlertListRecyclerItem> tempFilteredList = new ArrayList<>();
+
+                for (AlertListRecyclerItem alertListRecyclerItem : alertListRecyclerItems) {
+                    if (alertListRecyclerItem.getmTitle().toLowerCase().trim().contains(searchString)) {
+                        tempFilteredList.add(alertListRecyclerItem);
+                    }
+                }
+                filteredAlerts = tempFilteredList;
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredAlerts;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredAlerts = (ArrayList<AlertListRecyclerItem>) results.values;
+
+            notifyDataSetChanged();
+        }
+    };
 
     public static class AlertItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textListTitle;
@@ -52,6 +95,7 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
         this.alertListRecyclerItems = alertListRecyclerItems;
         this.alertListRecyclerItemsFull = new ArrayList<>();
         this.alertListRecyclerItemsFull.addAll(alertListRecyclerItems);
+        this.filteredAlerts = alertListRecyclerItems;
         this.onItemListener = onItemListener;
     }
 
@@ -65,7 +109,7 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
 
     @Override
     public void onBindViewHolder(@NonNull AlertItemViewHolder holder, int position) {
-        AlertListRecyclerItem currentItem = alertListRecyclerItems.get(position);
+        AlertListRecyclerItem currentItem = filteredAlerts.get(position);
 
         holder.textListTitle.setText(currentItem.getmTitle());
         holder.textListBody.setText(currentItem.getmBody());
@@ -74,7 +118,7 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
 
     @Override
     public int getItemCount() {
-        return alertListRecyclerItems.size();
+        return filteredAlerts.size();
     }
 
 

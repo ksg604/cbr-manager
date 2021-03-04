@@ -21,7 +21,6 @@ import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -52,6 +51,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         ClientDetailsActivity clientDetailsActivity;
         ClientDetailsFragment fragment;
 
+        //If this fragment was called from ClientDetailsActivity, there will be an associated clientId
         if (activity instanceof ClientDetailsActivity) {
             clientDetailsActivity = (ClientDetailsActivity) activity;
             if (clientDetailsActivity != null) {
@@ -84,8 +84,12 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
-                            int currClientID = visit.getClientID();
-                            if (clientId == -1 || visit.getClientID() == clientId) {
+                            int currClientID = visit.getClientId();
+                            /*  If the clientId is still -1, that means this fragment was not called
+                                for a specific client, which means we should display all visits.
+                                Otherwise, we should only display visits for the client in question.
+                             */
+                            if (clientId == -1 || visit.getClientId() == clientId) {
                                 Call<Client> call1 = apiService.clientService.getClient(currClientID);
                                 call1.enqueue(new Callback<Client>() {
                                     @Override
@@ -124,7 +128,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         VisitsRecyclerItem visitsRecyclerItem = visitsRecyclerItems.get(position);
         Visit visit = visitsRecyclerItem.getVisit();
         visitInfoIntent.putExtra("additionalInfo", visit.getAdditionalInfo());
-        visitInfoIntent.putExtra("clientId", visit.getClientID());
+        visitInfoIntent.putExtra("clientId", visit.getClientId());
         Timestamp datetimeCreated = visit.getDatetimeCreated();
         Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         String formattedDate = formatter.format(datetimeCreated);

@@ -88,8 +88,8 @@ public class DashboardFragment extends Fragment {
                         List<String> differentLocations = new ArrayList<>();
                         List<Integer> differentClients = new ArrayList<>();
                         for (Visit eachVisit : visits) {
-                            if (!differentClients.contains(eachVisit.getClientID())) {
-                                differentClients.add(eachVisit.getClientID());
+                            if (!differentClients.contains(eachVisit.getClientId())) {
+                                differentClients.add(eachVisit.getClientId());
                             }
                             if (!differentLocations.contains(eachVisit.getClient().getLocationDropDown())) {
                                 differentLocations.add(eachVisit.getClient().getLocationDropDown());

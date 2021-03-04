@@ -90,7 +90,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
             @Override
             public boolean onQueryTextChange(String newText) {
                 clientListAdapter.getFilter().filter(newText);
-                return false;
+                return true;
             }
         });
 

@@ -22,13 +22,13 @@ import java.util.List;
 public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> implements Filterable {
 
     private List<Client> clients;
-    private List<Client> clientsListFull = new ArrayList<>();
+    private List<Client> filteredClientList;
     private OnItemListener onItemListener;
 
     public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
         this.clients = clientList;
         this.onItemListener = onItemListener;
-        clientsListFull = new ArrayList<>(clientList);
+        this.filteredClientList = clientList;
     }
 
     @NonNull
@@ -54,7 +54,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     @Override
     public int getItemCount() {
-        return clients.size();
+        return filteredClientList.size();
     }
 
     @Override
@@ -71,31 +71,31 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
     public Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Client> filteredList = new ArrayList<>();
+            String searchString = constraint.toString().toLowerCase().trim();
 
-            if (constraint == null || constraint.length() == 0) {
-                filteredList = new ArrayList<>(clientsListFull);
-                filteredList.addAll(clientsListFull);
+            if (searchString.isEmpty()) {
+                filteredClientList = clients;
             } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+                ArrayList<Client> tempFilteredList = new ArrayList<>();
 
-                for (Client client : clientsListFull) {
-                    if (client.getFullName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(client);
+                for (Client client : clients) {
+                    if (client.getFullName().toLowerCase().contains(searchString)) {
+                        tempFilteredList.add(client);
                     }
                 }
+                filteredClientList = tempFilteredList;
             }
-
             FilterResults results = new FilterResults();
-            results.values = filteredList;
+            results.values = filteredClientList;
 
             return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            clients.clear();
-            clients.addAll((List) results.values);
+//            clients.clear();
+//            clients.addAll((List) results.values);
+            filteredClientList = (ArrayList<Client>) results.values;
             notifyDataSetChanged();
         }
 

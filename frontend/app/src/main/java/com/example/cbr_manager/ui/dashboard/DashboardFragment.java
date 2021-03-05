@@ -91,8 +91,8 @@ public class DashboardFragment extends Fragment {
                             if (!differentClients.contains(eachVisit.getClientId())) {
                                 differentClients.add(eachVisit.getClientId());
                             }
-                            if (!differentLocations.contains(eachVisit.getClient().getLocationDropDown())) {
-                                differentLocations.add(eachVisit.getClient().getLocationDropDown());
+                            if (!differentLocations.contains(eachVisit.getLocationDropDown())) {
+                                differentLocations.add(eachVisit.getLocationDropDown());
                             }
                         }
 

@@ -1,9 +1,12 @@
 package com.example.cbr_manager.ui.clientlist;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,17 +17,25 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.client.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> {
+public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> implements Filterable {
 
     private List<Client> clients;
+    private List<Client> filteredClientList;
     private OnItemListener onItemListener;
 
     public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
         this.clients = clientList;
         this.onItemListener = onItemListener;
+        this.filteredClientList = clientList;
     }
+
+    public Client getClient(int position) {
+        return filteredClientList.get(position);
+    }
+
 
     @NonNull
     @Override
@@ -36,7 +47,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     @Override
     public void onBindViewHolder(@NonNull ClientItemViewHolder holder, int position) {
-        Client currentClient = clients.get(position);
+        Client currentClient = filteredClientList.get(position);
         Helper.setImageViewFromURL(currentClient.getPhotoURL(), holder.imageView, R.drawable.client_details_placeholder);
 
         holder.textViewFullName.setText(currentClient.getFullName());
@@ -49,12 +60,57 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     @Override
     public int getItemCount() {
-        return clients.size();
+        return filteredClientList.size();
+    }
+
+
+
+    @Override
+    public Filter getFilter() {
+        return filter;
     }
 
     public interface OnItemListener {
         void onItemClick(int position);
     }
+
+
+
+    public Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String searchString = constraint.toString().toLowerCase().trim();
+
+            if (searchString.isEmpty()) {
+                filteredClientList = clients;
+            } else {
+                ArrayList<Client> tempFilteredList = new ArrayList<>();
+
+                for (Client client : clients) {
+                    if (client.getFullName().toLowerCase().contains(searchString)) {
+//                        Log.d("tag", client.getFullName());
+                        tempFilteredList.add(client);
+                    }
+                }
+                filteredClientList = tempFilteredList;
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredClientList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredClientList = (ArrayList<Client>) results.values;
+
+//            for (Client client : filteredClientList) {
+//                Log.d("tag", client.getFullName());
+//            }
+            notifyDataSetChanged();
+        }
+
+    };
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;

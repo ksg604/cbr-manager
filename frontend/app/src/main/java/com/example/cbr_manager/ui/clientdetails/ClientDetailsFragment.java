@@ -105,7 +105,7 @@ public class ClientDetailsFragment extends Fragment {
                         break;
                     case R.id.newVisitFragment:
                         Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
-                        intent.putExtra("clientId", clientId);
+                        createVisitIntent.putExtra("clientId", clientId);
                         startActivity(createVisitIntent);
                         break;
                     case R.id.createReferralActivityClient:

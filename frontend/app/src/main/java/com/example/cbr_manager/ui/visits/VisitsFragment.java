@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -35,7 +38,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
     private VisitsViewModel visitsViewModel;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter adapter;
+    private VisitsRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static int NO_SPECIFIC_CLIENT = -1;
     private int clientId = NO_SPECIFIC_CLIENT;
@@ -73,6 +76,20 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         mRecyclerView.setAdapter(adapter);
 
         fetchVisitsToList(visitsRecyclerItems);
+
+        SearchView visitSearch = root.findViewById(R.id.visitSearchView);
+        visitSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
 
         return root;
     }
@@ -123,7 +140,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     public void onItemClick(int position) {
 
         Intent visitInfoIntent = new Intent(getContext(), VisitDetailsActivity.class);
-        VisitsRecyclerItem visitsRecyclerItem = visitsRecyclerItems.get(position);
+        VisitsRecyclerItem visitsRecyclerItem = adapter.getVisitItem(position);
         Visit visit = visitsRecyclerItem.getVisit();
         visitInfoIntent.putExtra("additionalInfo", visit.getAdditionalInfo());
         visitInfoIntent.putExtra("clientId", visit.getClientId());

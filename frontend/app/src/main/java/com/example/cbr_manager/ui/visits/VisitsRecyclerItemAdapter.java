@@ -3,6 +3,8 @@ package com.example.cbr_manager.ui.visits;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,10 +15,50 @@ import com.example.cbr_manager.R;
 
 import java.util.ArrayList;
 
-public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecyclerItemAdapter.VisitItemViewHolder> {
+public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecyclerItemAdapter.VisitItemViewHolder> implements Filterable {
 
     private ArrayList<VisitsRecyclerItem> visitsRecyclerItems;
+    private ArrayList<VisitsRecyclerItem> visitsFilteredList;
     private OnItemListener onItemListener;
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public VisitsRecyclerItem getVisitItem(int position) {
+        return visitsFilteredList.get(position);
+    }
+
+    public Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String searchString = constraint.toString().toLowerCase().trim();
+
+            if (searchString.isEmpty()) {
+                visitsFilteredList = visitsRecyclerItems;
+            } else {
+                ArrayList<VisitsRecyclerItem> tempFilteredList = new ArrayList<>();
+
+                for (VisitsRecyclerItem visitsRecyclerItem : visitsRecyclerItems) {
+                    if (visitsRecyclerItem.getmText2().toLowerCase().trim().contains(searchString)) {
+                        tempFilteredList.add(visitsRecyclerItem);
+                    }
+                }
+                visitsFilteredList = tempFilteredList;
+            }
+            FilterResults results = new FilterResults();
+            results.values = visitsFilteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            visitsFilteredList = (ArrayList<VisitsRecyclerItem>) results.values;
+            notifyDataSetChanged();
+        }
+    };
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
@@ -48,6 +90,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     public VisitsRecyclerItemAdapter(ArrayList<VisitsRecyclerItem> visitsRecyclerItems, OnItemListener onItemListener) {
         this.visitsRecyclerItems = visitsRecyclerItems;
         this.onItemListener = onItemListener;
+        this.visitsFilteredList = visitsRecyclerItems;
     }
 
     @NonNull
@@ -60,7 +103,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
     @Override
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
-        VisitsRecyclerItem currentItem = visitsRecyclerItems.get(position);
+        VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
 
         holder.imageView.setImageResource(currentItem.getmImageResource());
         holder.textView1.setText(currentItem.getmText1());
@@ -69,6 +112,6 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
     @Override
     public int getItemCount() {
-        return visitsRecyclerItems.size();
+        return visitsFilteredList.size();
     }
 }

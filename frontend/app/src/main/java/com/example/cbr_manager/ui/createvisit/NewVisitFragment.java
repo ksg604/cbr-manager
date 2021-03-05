@@ -139,7 +139,7 @@ public class NewVisitFragment extends Fragment {
                 public void onResponse(Call<Client> call, Response<Client> response) {
                     if (response.isSuccessful()) {
                         client = response.body();
-                        fillClientWithVisitData(client, view);
+                        fillVisitData(visit, view);
                         Visit visit = new Visit("", clientId, userId, client);
 
                         Call<Visit> call1 = apiService.visitService.createVisit(visit);
@@ -173,7 +173,7 @@ public class NewVisitFragment extends Fragment {
         }
     }
 
-    private void fillClientWithVisitData(Client client, View view) {
+    private void fillVisitData(Visit visit, View view) {
         ChipGroup purposeChipGroup = view.findViewById(R.id.purposeChipGroup);
         purposeChipGroup.getCheckedChipIds();
 

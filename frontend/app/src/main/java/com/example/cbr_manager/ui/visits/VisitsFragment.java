@@ -37,7 +37,8 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private int clientId = -1;
+    private static int NO_SPECIFIC_CLIENT = -1;
+    private int clientId = NO_SPECIFIC_CLIENT;
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
@@ -45,7 +46,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        int clientId = -1;
+        int clientId = NO_SPECIFIC_CLIENT;
 
         FragmentActivity activity = getActivity();
         ClientDetailsActivity clientDetailsActivity;
@@ -85,11 +86,8 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
                             int currClientID = visit.getClientId();
-                            /*  If the clientId is still -1, that means this fragment was not called
-                                for a specific client, which means we should display all visits.
-                                Otherwise, we should only display visits for the client in question.
-                             */
-                            if (clientId == -1 || visit.getClientId() == clientId) {
+
+                            if (clientId == NO_SPECIFIC_CLIENT || visit.getClientId() == clientId) {
                                 Call<Client> call1 = apiService.clientService.getClient(currClientID);
                                 call1.enqueue(new Callback<Client>() {
                                     @Override

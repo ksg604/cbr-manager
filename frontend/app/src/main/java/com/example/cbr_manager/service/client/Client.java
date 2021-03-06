@@ -50,13 +50,13 @@ public class Client {
     private Integer age;
     @SerializedName("contact_client")
     @Expose
-    private Integer contactClient;
+    private String contactClient;
     @SerializedName("care_present")
     @Expose
     private String carePresent;
     @SerializedName("contact_care")
     @Expose
-    private Integer contactCare;
+    private String contactCare;
     @SerializedName("photo")
     @Expose(serialize = false) // Do not send 'photo' attribute to API
     private String photoURL;
@@ -97,7 +97,7 @@ public class Client {
         this.date = "";
         this.firstName = "";
         this.lastName = "";
-        this.contactClient = 0;
+        this.contactClient = "";
         this.age = 0;
         this.gender = "";
         this.id = 0;
@@ -105,14 +105,14 @@ public class Client {
         this.villageNo = 0;
         this.disability = "";
         this.carePresent = "";
-        this.contactCare = 0;
+        this.contactCare = "";
         this.healthRisk = 0;
         this.socialRisk = 0;
         this.educationRisk = 0;
     }
-    public Client(String consent, String date, String firstName, String lastName, int contactClient, int age,
+    public Client(String consent, String date, String firstName, String lastName, String contactClient, int age,
                   String gender, int id, String location, int villageNo, String disability,
-                  String carePresent, int contactCare) {
+                  String carePresent, String contactCare) {
         this.consent = consent;
         this.date = date;
         this.firstName = firstName;
@@ -216,11 +216,11 @@ public class Client {
         this.age = age;
     }
 
-    public Integer getContactClient() {
+    public String getContactClient() {
         return contactClient;
     }
 
-    public void setContactClient(Integer contactClient) {
+    public void setContactClient(String contactClient) {
         this.contactClient = contactClient;
     }
 
@@ -232,11 +232,11 @@ public class Client {
         this.carePresent = carePresent;
     }
 
-    public Integer getContactCare() {
+    public String getContactCare() {
         return contactCare;
     }
 
-    public void setContactCare(Integer contactCare) {
+    public void setContactCare(String contactCare) {
         this.contactCare = contactCare;
     }
 

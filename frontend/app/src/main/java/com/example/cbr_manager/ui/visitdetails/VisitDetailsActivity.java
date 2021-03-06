@@ -25,6 +25,8 @@ public class VisitDetailsActivity extends AppCompatActivity {
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private String additionalInfo;
+    private String zone;
+    private int villageNum;
     private String formattedDate;
     private int clientId = -1;
 
@@ -44,6 +46,7 @@ public class VisitDetailsActivity extends AppCompatActivity {
         this.clientId = clientId;
         this.additionalInfo = additionalInfo;
         this.formattedDate = formattedDate;
+        this.zone = intent.getStringExtra("zone");
         setupButtons();
         setupTextViews();
         setupImageViews();
@@ -104,7 +107,7 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
     private void setupLocationTextView() {
         TextView locationTextView = findViewById(R.id.visitDetailsLocationTextView);
-        locationTextView.setText("Location: BidiBidi Zone 1");
+        locationTextView.setText("Location: " + this.zone);
     }
 
 

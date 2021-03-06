@@ -148,6 +148,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         String formattedDate = formatter.format(datetimeCreated);
         visitInfoIntent.putExtra("formattedDate", formattedDate);
+        visitInfoIntent.putExtra("zone", visit.getLocationDropDown());
         startActivity(visitInfoIntent);
     }
 }

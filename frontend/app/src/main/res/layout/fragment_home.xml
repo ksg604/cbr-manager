@@ -47,7 +47,7 @@
                         android:textSize="18sp"/>
 
                     <TextView
-                        android:id="@+id/seeMoreTextView"
+                        android:id="@+id/seeAllTextView"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -142,6 +142,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
+                        android:id="@+id/dashboardAllClientsTextView"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:layout_weight="1"
@@ -272,7 +273,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView23"
+                            android:id="@+id/dashboardTotalVisitsNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -282,7 +283,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView24"
+                            android:id="@+id/dashboardTotalVisits"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total Visits" />
@@ -295,7 +296,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView25"
+                            android:id="@+id/dashboardClientsVisitedNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -306,7 +307,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView26"
+                            android:id="@+id/dashboardClientsVisited"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Clients Visited" />
@@ -319,7 +320,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView27"
+                            android:id="@+id/dashboardLocationsNum"
                             android:layout_width="wrap_content"
                             android:layout_gravity="center"
                             android:layout_height="wrap_content"
@@ -329,7 +330,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView28"
+                            android:id="@+id/dashboardLocations"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Locations" />
@@ -562,8 +563,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="300dp"
                     android:background="@color/grey" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey"
+                    android:layout_marginBottom="8dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

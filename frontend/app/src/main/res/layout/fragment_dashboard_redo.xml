@@ -168,7 +168,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="20"
-
                     android:textColor="@color/purple_700"
                     android:textSize="18sp"
                     android:textStyle="bold" />

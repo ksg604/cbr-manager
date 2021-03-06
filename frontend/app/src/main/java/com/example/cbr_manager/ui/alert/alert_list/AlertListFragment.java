@@ -49,6 +49,20 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
         fetchAlertsToList(alertRecyclerItems);
+
+        SearchView alertSearchView = root.findViewById(R.id.alertSearchView);
+        alertSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return root;
     }
 
@@ -79,7 +93,7 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
 
         Intent alertInfoIntent = new Intent(getContext(), AlertDetailsActivity.class);
 
-        AlertListRecyclerItem alertListRecyclerItem = alertRecyclerItems.get(position);
+        AlertListRecyclerItem alertListRecyclerItem = adapter.getAlert(position);
         alertInfoIntent.putExtra("alertId", alertListRecyclerItem.getAlert().getId());
 
         startActivity(alertInfoIntent);

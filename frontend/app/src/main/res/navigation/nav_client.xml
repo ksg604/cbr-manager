@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_client"
-    app:startDestination="@id/visitsPerClientFragment">
+    app:startDestination="@id/visitsFragment">
 
     <fragment
-        android:id="@+id/visitsPerClientFragment"
-        android:name="com.example.cbr_manager.ui.visits.VisitsPerClientFragment"
+        android:id="@+id/visitsFragment"
+        android:name="com.example.cbr_manager.ui.visits.VisitsFragment"
         android:label="fragment_visits_per_client"
-        tools:layout="@layout/fragment_visits_per_client" />
+        tools:layout="@layout/fragment_visits" />
     <fragment
         android:id="@+id/newVisitFragment"
         android:name="com.example.cbr_manager.ui.createvisit.NewVisitFragment"

@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -53,7 +54,19 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         clientListRecyclerView.setAdapter(clientListAdapter);
 
         fetchClientsToList(clientList);
+        SearchView clientSearch = root.findViewById(R.id.clientSearchView);
+        clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                clientListAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return root;
     }
 
@@ -106,7 +119,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         Intent clientInfoIntent = new Intent(getContext(), ClientDetailsActivity.class);
 
-        Client client = clientList.get(position);
+        Client client = clientListAdapter.getClient(position);
         clientInfoIntent.putExtra("clientId", client.getId());
 
         startActivity(clientInfoIntent);

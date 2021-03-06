@@ -1,7 +1,6 @@
 package com.example.cbr_manager.service.visit;
 
 import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.service.client.ClientService;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,10 +13,10 @@ public class Visit {
     private int id;
     @SerializedName("client_id")
     @Expose
-    private int clientID;
+    private int clientId;
     @SerializedName("user_creator")
     @Expose
-    private int userID;
+    private int userId;
     @SerializedName("additional_notes")
     @Expose
     private String additionalInfo;
@@ -28,10 +27,10 @@ public class Visit {
     @Expose
     private Timestamp datetimeCreated;
 
-    public Visit(String additionalInfo, int clientID, int userID, Client client) {
+    public Visit(String additionalInfo, int clientId, int userId, Client client) {
         this.additionalInfo = additionalInfo;
-        this.clientID = clientID;
-        this.userID = userID;
+        this.clientId = clientId;
+        this.userId = userId;
         this.client = client;
     }
 
@@ -39,11 +38,11 @@ public class Visit {
 
     }
 
-    public int getID() {
+    public int getId() {
         return id;
     }
 
-    public void setID(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,20 +54,20 @@ public class Visit {
         this.additionalInfo = additionalInfo;
     }
 
-    public int getClientID() {
-        return clientID;
+    public int getClientId() {
+        return clientId;
     }
 
-    public void setClientID(int clientID) {
-        this.clientID = clientID;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getUserId() {
+        return userId;
     }
 
-    public int setUserID(int userID) {
-        return this.userID = userID;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Client getClient() {

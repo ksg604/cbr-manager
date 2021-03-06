@@ -20,7 +20,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
-import com.example.cbr_manager.ui.visits.VisitsPerClientFragment;
+import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -103,9 +103,9 @@ public class ClientDetailsFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch(item.getItemId()) {
-                    case R.id.visitsPerClientFragment:
+                    case R.id.visitsFragment:
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .add(android.R.id.content, new VisitsPerClientFragment()).commit();
+                                .add(android.R.id.content, new VisitsFragment()).commit();
                         break;
                     case R.id.newVisitFragment:
                         Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);

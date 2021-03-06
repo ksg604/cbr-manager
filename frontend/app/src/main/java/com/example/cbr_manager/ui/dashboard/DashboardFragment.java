@@ -194,23 +194,23 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupButtons(View root) {
-        Button allClientsButton = (Button) root.findViewById(R.id.allClientsButton);
-        allClientsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(DashboardFragment.this)
-                        .navigate(R.id.action_nav_dashboard_to_nav_client_list);
-            }
-        });
-
-        Button button = (Button) root.findViewById(R.id.addClientButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CreateClientActivity.class);
-                startActivity(intent);
-            }
-        });
+//        Button allClientsButton = (Button) root.findViewById(R.id.allClientsButton);
+//        allClientsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavHostFragment.findNavController(DashboardFragment.this)
+//                        .navigate(R.id.action_nav_dashboard_to_nav_client_list);
+//            }
+//        });
+//
+//        Button button = (Button) root.findViewById(R.id.addClientButton);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), CreateClientActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void setupViewPager(View root, List<Client> clientList) {

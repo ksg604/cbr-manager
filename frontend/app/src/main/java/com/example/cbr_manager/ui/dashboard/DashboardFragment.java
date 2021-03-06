@@ -66,12 +66,12 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupImageViews(View root) {
-        ImageView totalVisits = root.findViewById(R.id.dashboardTotalVisitsImageView);
-        totalVisits.setImageResource(R.drawable.ic_date);
-        ImageView clientsVisited = root.findViewById(R.id.dashboardClientsVisitedImageView);
-        clientsVisited.setImageResource(R.drawable.ic_clients);
-        ImageView regionsVisited = root.findViewById(R.id.dashboardRegionsImageView);
-        regionsVisited.setImageResource(R.drawable.ic_place);
+//        ImageView totalVisits = root.findViewById(R.id.dashboardTotalVisitsImageView);
+//        totalVisits.setImageResource(R.drawable.ic_date);
+//        ImageView clientsVisited = root.findViewById(R.id.dashboardClientsVisitedImageView);
+//        clientsVisited.setImageResource(R.drawable.ic_clients);
+//        ImageView regionsVisited = root.findViewById(R.id.dashboardRegionsImageView);
+//        regionsVisited.setImageResource(R.drawable.ic_place);
     }
 
     private void setupVisitStats(View root) {
@@ -143,7 +143,7 @@ public class DashboardFragment extends Fragment {
 
 
     public void setAlertButtons(){
-        seeMoreTextView = root.findViewById(R.id.seeMoreTextView);
+        seeMoreTextView = root.findViewById(R.id.dashboardAlertsMoreTextView);
         titleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

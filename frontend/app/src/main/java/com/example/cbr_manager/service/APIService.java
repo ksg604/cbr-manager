@@ -24,7 +24,7 @@ public class APIService {
     public VisitService visitService;
     public AlertService alertService;
     public User currentUser;
-    private ReferralService referralService;
+    public ReferralService referralService;
 
     private APIService() {
     }

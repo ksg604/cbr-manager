@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.create_user.UserCreationFragment">
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="250dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="10dp"
+        android:ems="16"
+        android:inputType="textLongMessage"
+        app:layout_constraintBottom_toTopOf="@+id/textTitleHeader"
+        app:layout_constraintStart_toStartOf="@+id/textTitleHeader" />
+
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="330dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="92dp"
+        android:ems="13"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textTitleHeader"
+        android:layout_width="76dp"
+        android:layout_height="20dp"
+        android:text="Title:"
+        android:textSize="12sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/textTitle"
+        app:layout_constraintStart_toStartOf="@+id/textTitle" />
+
+    <TextView
+        android:id="@+id/textBodyHeader"
+        android:layout_width="76dp"
+        android:layout_height="20dp"
+        android:text="Body:"
+        android:textSize="12sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/textTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
+    <ScrollView
+        android:id="@+id/yourScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
+        app:layout_constraintStart_toStartOf="@+id/textBodyHeader"
+        app:layout_constraintTop_toBottomOf="@+id/textBodyHeader">
+
+        <LinearLayout
+            android:id="@+id/yourMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                android:id="@+id/textBody"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:textSize="16sp"
+                android:maxLines="50"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:singleLine="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
+            <!-- add your other content here -->
+        </LinearLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="48dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonMarkAsRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginBottom="48dp"
+        android:text="Mark As Read"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

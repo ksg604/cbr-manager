@@ -42,7 +42,7 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
                 ArrayList<ReferralListRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (ReferralListRecyclerItem referralListRecyclerItem : referralListRecyclerItems) {
-                    if (referralListRecyclerItem.getmTitle().toLowerCase().trim().contains(searchString)) {
+                    if (referralListRecyclerItem.getmType().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(referralListRecyclerItem);
                     }
                 }
@@ -63,15 +63,15 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
     };
 
     public static class ReferralItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textListTitle;
-        public TextView textListBody;
+        public TextView textListStatus;
+        public TextView textListType;
         public TextView textListDate;
         OnItemListener onItemListener;
 
         public ReferralItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
-            textListTitle = itemView.findViewById(R.id.textListTitle);
-            textListBody = itemView.findViewById(R.id.textListBody);
+            textListStatus = itemView.findViewById(R.id.textListStatus);
+            textListType = itemView.findViewById(R.id.textListType);
             textListDate = itemView.findViewById(R.id.textListDate);
             this.onItemListener = onItemListener;
 
@@ -109,8 +109,8 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
     public void onBindViewHolder(@NonNull ReferralItemViewHolder holder, int position) {
         ReferralListRecyclerItem currentItem = filteredReferrals.get(position);
 
-        holder.textListTitle.setText(currentItem.getmTitle());
-        holder.textListBody.setText(currentItem.getmBody());
+        holder.textListStatus.setText(currentItem.getmStatus());
+        holder.textListType.setText(currentItem.getmType());
         holder.textListDate.setText(currentItem.getmDate());
     }
 

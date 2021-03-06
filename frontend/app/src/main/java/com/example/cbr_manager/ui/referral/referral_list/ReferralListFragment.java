@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
-import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
+import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getTitle(), referral.getBody(), referral, referral.getDate()));
+                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral, referral.getDateCreated()));
                         }
                     }
                     adapter.notifyDataSetChanged();
@@ -91,7 +91,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     @Override
     public void onItemClick(int position) {
 
-        Intent referralInfoIntent = new Intent(getContext(), ReferralDetailsActivity.class);
+        Intent referralInfoIntent = new Intent(getContext(), ReferralDetailsFragment.class);
 
         ReferralListRecyclerItem referralListRecyclerItem = adapter.getReferral(position);
         referralInfoIntent.putExtra("referralId", referralListRecyclerItem.getReferral().getId());

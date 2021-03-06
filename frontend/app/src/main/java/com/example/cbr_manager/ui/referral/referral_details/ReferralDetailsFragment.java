@@ -17,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReferralDetailsActivity extends AppCompatActivity {
+public class ReferralDetailsFragment extends AppCompatActivity {
 
 
     private APIService apiService = APIService.getInstance();
@@ -49,10 +49,6 @@ public class ReferralDetailsActivity extends AppCompatActivity {
                     Referral referral = response.body();
 
                     // Todo: dynamically set the referral info here
-                    setupTitleTextView(referral.getTitle());
-                    setupBodyTextView(referral.getBody());
-                    referral.formatDate();
-                    setupDateTextView("Date posted:  " + referral.getDate());
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the referral. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

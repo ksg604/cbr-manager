@@ -21,6 +21,9 @@ public class Referral {
     @Expose
     private String status;
 
+    public Referral() {
+    }
+
     public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer client, Integer userCreator, String refer_to, String photoURL) {
         this.serviceDetail = serviceDetail;
         this.dateCreated = dateCreated;

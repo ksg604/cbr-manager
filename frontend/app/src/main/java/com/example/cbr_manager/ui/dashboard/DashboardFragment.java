@@ -75,41 +75,41 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupVisitStats(View root) {
-        if (apiService.isAuthenticated()) {
-            apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
-                @Override
-                public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
-                    if (response.isSuccessful()) {
-                        List<Visit> visits = response.body();
-                        int totalVisits = visits.size();
-
-                        TextView totalNumberVisits = root.findViewById(R.id.totalVisitsNumberTextView);
-                        totalNumberVisits.setText(Integer.toString(totalVisits));
-                        List<String> differentLocations = new ArrayList<>();
-                        List<Integer> differentClients = new ArrayList<>();
-                        for (Visit eachVisit : visits) {
-                            if (!differentClients.contains(eachVisit.getClientId())) {
-                                differentClients.add(eachVisit.getClientId());
-                            }
-                            if (!differentLocations.contains(eachVisit.getClient().getLocationDropDown())) {
-                                differentLocations.add(eachVisit.getClient().getLocationDropDown());
-                            }
-                        }
-
-                        TextView totalClientsVisited = root.findViewById(R.id.clientsVisitedNumberTextView);
-                        totalClientsVisited.setText(Integer.toString(differentClients.size()));
-
-                        TextView totalLocationsVisited = root.findViewById(R.id.regionsVisitedNumberTextView);
-                        totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Visit>> call, Throwable t) {
-
-                }
-            });
-        }
+//        if (apiService.isAuthenticated()) {
+//            apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
+//                @Override
+//                public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
+//                    if (response.isSuccessful()) {
+//                        List<Visit> visits = response.body();
+//                        int totalVisits = visits.size();
+//
+//                        TextView totalNumberVisits = root.findViewById(R.id.totalVisitsNumberTextView);
+//                        totalNumberVisits.setText(Integer.toString(totalVisits));
+//                        List<String> differentLocations = new ArrayList<>();
+//                        List<Integer> differentClients = new ArrayList<>();
+//                        for (Visit eachVisit : visits) {
+//                            if (!differentClients.contains(eachVisit.getClientId())) {
+//                                differentClients.add(eachVisit.getClientId());
+//                            }
+//                            if (!differentLocations.contains(eachVisit.getClient().getLocationDropDown())) {
+//                                differentLocations.add(eachVisit.getClient().getLocationDropDown());
+//                            }
+//                        }
+//
+//                        TextView totalClientsVisited = root.findViewById(R.id.clientsVisitedNumberTextView);
+//                        totalClientsVisited.setText(Integer.toString(differentClients.size()));
+//
+//                        TextView totalLocationsVisited = root.findViewById(R.id.regionsVisitedNumberTextView);
+//                        totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<Visit>> call, Throwable t) {
+//
+//                }
+//            });
+//        }
     }
 
     public void fetchNewestAlert() {

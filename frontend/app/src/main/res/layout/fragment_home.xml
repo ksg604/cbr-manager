@@ -107,7 +107,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp">
 
                     <TextView
                         android:id="@+id/priorityTextView"
@@ -127,50 +130,62 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/priorityTextView" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/grey"/>
+
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="All Clients"
                     android:textAllCaps="true"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
                     android:textColor="@color/purple_700"
                     android:id="@+id/dashaboardAllClientsTextView">
+
+
                 </TextView>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/clientPriorityList"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:layout_editor_absoluteX="28dp">
+<!--                <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/clientPriorityList"-->
+<!--                    app:layout_constraintVertical_bias="0.0"-->
+<!--                    tools:layout_editor_absoluteX="28dp">-->
 
 
-                    <Button
-                        android:id="@+id/allClientsButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/all_clients"
-                        android:layout_weight="1"
-                        android:textColor="@color/teal_700"
-                        app:backgroundTint="#FFF"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/clientPriorityList" />
+<!--                    <Button-->
+<!--                        android:id="@+id/allClientsButton"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/all_clients"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:textColor="@color/teal_700"-->
+<!--                        app:backgroundTint="#FFF"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/clientPriorityList" />-->
 
-                    <Button
-                        android:id="@+id/addClientButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/add_client"
-                        android:textColor="@color/teal_700"
-                        app:backgroundTint="@color/white" />
+<!--                    <Button-->
+<!--                        android:id="@+id/addClientButton"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="@string/add_client"-->
+<!--                        android:textColor="@color/teal_700"-->
+<!--                        app:backgroundTint="@color/white" />-->
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+<!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
 
 
             </LinearLayout>

@@ -22,6 +22,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
+import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import retrofit2.Response;
 
 public class DashboardFragment extends Fragment {
 
+    private static final int NEW_VISIT_CODE = 100;
     private final APIService apiService = APIService.getInstance();
     ViewPager viewPager;
     ViewPagerAdapter adapter;
@@ -55,7 +57,6 @@ public class DashboardFragment extends Fragment {
         fetchNewestAlert();
         setupViewPager(root, clientViewPagerList);
         setupButtons(root);
-        setupImageViews(root);
         setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
@@ -63,15 +64,6 @@ public class DashboardFragment extends Fragment {
         setupVisitStats(root);
 
         return root;
-    }
-
-    private void setupImageViews(View root) {
-        ImageView totalVisits = root.findViewById(R.id.dashboardTotalVisitsImageView);
-        totalVisits.setImageResource(R.drawable.ic_date);
-        ImageView clientsVisited = root.findViewById(R.id.dashboardClientsVisitedImageView);
-        clientsVisited.setImageResource(R.drawable.ic_clients);
-        ImageView regionsVisited = root.findViewById(R.id.dashboardRegionsImageView);
-        regionsVisited.setImageResource(R.drawable.ic_place);
     }
 
     private void setupVisitStats(View root) {
@@ -83,7 +75,7 @@ public class DashboardFragment extends Fragment {
                         List<Visit> visits = response.body();
                         int totalVisits = visits.size();
 
-                        TextView totalNumberVisits = root.findViewById(R.id.totalVisitsNumberTextView);
+                        TextView totalNumberVisits = root.findViewById(R.id.dashboardTotalVisitsNum);
                         totalNumberVisits.setText(Integer.toString(totalVisits));
                         List<String> differentLocations = new ArrayList<>();
                         List<Integer> differentClients = new ArrayList<>();
@@ -96,10 +88,10 @@ public class DashboardFragment extends Fragment {
                             }
                         }
 
-                        TextView totalClientsVisited = root.findViewById(R.id.clientsVisitedNumberTextView);
+                        TextView totalClientsVisited = root.findViewById(R.id.dashboardClientsVisitedNum);
                         totalClientsVisited.setText(Integer.toString(differentClients.size()));
 
-                        TextView totalLocationsVisited = root.findViewById(R.id.regionsVisitedNumberTextView);
+                        TextView totalLocationsVisited = root.findViewById(R.id.dashboardLocationsNum);
                         totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
                     }
                 }
@@ -141,10 +133,10 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-
     public void setAlertButtons(){
-        seeMoreTextView = root.findViewById(R.id.seeMoreTextView);
-        titleTextView.setOnClickListener(new View.OnClickListener() {
+        seeMoreTextView = root.findViewById(R.id.seeAllTextView);
+        TextView moreTextView = root.findViewById(R.id.dashboardAlertsMoreTextView);
+        moreTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AlertDetailsActivity.class);
@@ -194,8 +186,8 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupButtons(View root) {
-        Button allClientsButton = (Button) root.findViewById(R.id.allClientsButton);
-        allClientsButton.setOnClickListener(new View.OnClickListener() {
+        TextView allClientsTextView = root.findViewById(R.id.dashboardAllClientsTextView);
+        allClientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(DashboardFragment.this)
@@ -203,11 +195,21 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        Button button = (Button) root.findViewById(R.id.addClientButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        TextView addClientTextView = root.findViewById(R.id.dashaboardAddClientTextView);
+        addClientTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CreateClientActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView newVisitTextView = root.findViewById(R.id.dashboardNewVisitTextView);
+        newVisitTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ClientSelectorActivity.class);
+                intent.putExtra("CODE", NEW_VISIT_CODE);
                 startActivity(intent);
             }
         });

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +18,6 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -132,11 +130,11 @@ public class ClientDetailsFragment extends Fragment {
         gender.setImageResource(R.drawable.ic_person);
         ImageView disability = root.findViewById(R.id.profileDisabilityImageView);
         disability.setImageResource(R.drawable.ic_disable);
-        ImageView education = root.findViewById(R.id.profileEducationImageView);
+        ImageView education = root.findViewById(R.id.profileEducationGoalImageView);
         education.setImageResource(R.drawable.ic_education);
         ImageView social = root.findViewById(R.id.profileSocialImageView);
         social.setImageResource(R.drawable.ic_social);
-        ImageView health = root.findViewById(R.id.profileHealthImageView);
+        ImageView health = root.findViewById(R.id.profileHealthGoalImageView);
         health.setImageResource(R.drawable.ic_health);
         ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
         riskScore.setImageResource(R.drawable.ic_risk);
@@ -213,17 +211,17 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupHealthTextView(String health) {
-        TextView healthTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthTextView);
+        TextView healthTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthGoalTextView);
         healthTextView.setText(health);
     }
 
     private void setupEducationTextView(String education) {
-        TextView educationTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationTextView);
+        TextView educationTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationGoalTextView);
         educationTextView.setText(education);
     }
 
     private void setupSocialTextView(String social) {
-        TextView socialTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialTextView);
+        TextView socialTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialGoalTextView);
         socialTextView.setText(social);
     }
 

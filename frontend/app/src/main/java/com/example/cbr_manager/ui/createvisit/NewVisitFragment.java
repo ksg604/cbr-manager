@@ -386,12 +386,12 @@ public class NewVisitFragment extends Fragment {
         visit.setEncouragementSocialProvision(isSocialEncouragement);
 
         visit.setAdviceSocialProvisionText(socialAdviceDescription);
-        visit.setAdvocacyHealthProvisionText(socialAdvocacyDescription);
+        visit.setAdvocacySocialProvisionText(socialAdvocacyDescription);
         visit.setReferralSocialProvisionText(socialReferralDescription);
         visit.setEncouragementSocialProvisionText(socialEncouragementDescription);
 
         visit.setGoalMetSocialProvision(socialGoalText);
-        visit.setConclusionEducationProvision(socialConclusion);
+        visit.setConclusionSocialProvision(socialConclusion);
     }
 
     private void setupLocationSpinner(View view) {

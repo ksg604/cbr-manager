@@ -109,6 +109,7 @@ public class ClientDetailsEditFragment extends Fragment {
             public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
                 Log.d("log",client.getFirstName());
+                getActivity().onBackPressed();
             }
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
@@ -123,7 +124,7 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
         EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
         EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
-        EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
+        EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
         EditText editClientRiskLevel = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
         EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
         EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
@@ -180,7 +181,7 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
         EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
         EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
-        EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
+        EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
         EditText editClientRiskLevel = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
         EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
         EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);

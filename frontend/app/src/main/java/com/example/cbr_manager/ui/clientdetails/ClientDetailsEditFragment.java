@@ -125,7 +125,6 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
         EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
         EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
-        EditText editClientRiskLevel = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
         EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
         EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
 
@@ -142,7 +141,6 @@ public class ClientDetailsEditFragment extends Fragment {
                 client.setLocation(editClientLocation.getText().toString());
                 client.setEducationGoal(editClientEducation.getText().toString());
                 client.setDisability(editClientDisability.getText().toString());
-                client.setRiskScore(Integer.parseInt(editClientRiskLevel.getText().toString()));
                 client.setSocialGoal(editClientSocial.getText().toString());
                 client.setHealthGoal(editClientHealth.getText().toString());
                 modifyClientInfo(client);
@@ -182,9 +180,12 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
         EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
         EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
-        EditText editClientRiskLevel = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
         EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
         EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
+
+        EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
+        EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
+        EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
 
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
@@ -197,7 +198,6 @@ public class ClientDetailsEditFragment extends Fragment {
                 editClientLocation.setText(client.getLocation());
                 editClientEducation.setText(client.getEducationGoal());
                 editClientDisability.setText(client.getDisability());
-                editClientRiskLevel.setText(client.getRiskScore().toString());
                 editClientSocial.setText(client.getSocialGoal());
                 editClientHealth.setText(client.getHealthGoal());
             }
@@ -253,8 +253,17 @@ public class ClientDetailsEditFragment extends Fragment {
         social.setImageResource(R.drawable.ic_social);
         ImageView health = root.findViewById(R.id.profileHealthImageViewEdit);
         health.setImageResource(R.drawable.ic_health);
-        ImageView riskScore = root.findViewById(R.id.profileRiskImageViewEdit);
-        riskScore.setImageResource(R.drawable.ic_risk);
+
+        ImageView educationRisk = root.findViewById(R.id.profileEducationRiskImageViewEdit);
+        educationRisk.setImageResource(R.drawable.ic_risk);
+
+        ImageView socialRisk = root.findViewById(R.id.profileSocialRiskImageViewEdit);
+        socialRisk.setImageResource(R.drawable.ic_risk);
+
+        ImageView healthRisk = root.findViewById(R.id.profileHealthRiskImageViewEdit);
+        healthRisk.setImageResource(R.drawable.ic_risk);
+
+
     }
 
 }

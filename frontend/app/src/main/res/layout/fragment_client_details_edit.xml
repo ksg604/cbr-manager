@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/profileGenderImageViewEdit"
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/profileAgeImageViewEdit"
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/profileLocationImageViewEdit"
@@ -180,7 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/profileDisabilityImageViewEdit"
@@ -219,7 +219,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
 
                 <ImageView
@@ -236,7 +236,7 @@
 
                 <TextView
                     android:id="@+id/clientDetailsRiskTitleTextView3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="118dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Education Risk:"
@@ -257,7 +257,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
 
                 <ImageView
@@ -295,7 +295,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
 
                 <ImageView
@@ -315,7 +315,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Health Risk"
+                    android:text="Health Risk:"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -333,7 +333,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/profileEducationImageViewEdit"
@@ -373,7 +373,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/profileSocialImageViewEdit"
@@ -413,7 +413,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                tools:layout_margin="16dp">
+                tools:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/profileHealthImageViewEdit"

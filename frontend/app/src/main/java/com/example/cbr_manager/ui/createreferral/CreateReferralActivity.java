@@ -333,7 +333,7 @@ public class CreateReferralActivity extends AppCompatActivity {
                         }
 
                         Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
-                        onBackPressed();
+                        finish();
                     } else {
                         Toast.makeText(CreateReferralActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
                     }

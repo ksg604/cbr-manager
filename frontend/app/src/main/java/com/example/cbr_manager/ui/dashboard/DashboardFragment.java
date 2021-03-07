@@ -39,7 +39,7 @@ public class DashboardFragment extends Fragment {
     private final APIService apiService = APIService.getInstance();
     ViewPager viewPager;
     ViewPagerAdapter adapter;
-    List<Client> clientViewPagerList = new ArrayList<>();
+    List<Client> clientViewPagerList;
     Alert newestAlert;
     TextView seeMoreTextView;
     TextView dateAlertTextView;
@@ -51,11 +51,12 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
         fetchNewestAlert();
-        setupViewPager(root, clientViewPagerList);
+        setupViewPager(root);
         setupButtons(root);
         setAlertButtons();
 
@@ -215,8 +216,9 @@ public class DashboardFragment extends Fragment {
         });
     }
 
-    private void setupViewPager(View root, List<Client> clientList) {
-        adapter = new ViewPagerAdapter(getContext(), this.getActivity(), clientList);
+    private void setupViewPager(View root) {
+        clientViewPagerList =  new ArrayList<>();
+        adapter = new ViewPagerAdapter(getContext(), this.getActivity(), clientViewPagerList);
         viewPager = root.findViewById(R.id.clientPriorityList);
         viewPager.setAdapter(adapter);
         viewPager.setClipToPadding(false);

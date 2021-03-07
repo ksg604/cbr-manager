@@ -96,7 +96,7 @@ public class ReferralDetailsFragment extends AppCompatActivity {
     }
 
     private void setupBackButton() {
-        Button backButton = findViewById(R.id.buttonBack);
+        Button backButton = findViewById(R.id.buttonSaveDraft);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

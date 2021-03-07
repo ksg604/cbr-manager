@@ -74,7 +74,7 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
                     if (response.isSuccessful()) {
                         List<Alert> alertList = response.body();
                         for (Alert alert : alertList) {
-                            alertUIList.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, alert.getDate()));
+                            alertUIList.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, alert.getFormattedDate()));
                         }
                     }
                     adapter.notifyDataSetChanged();

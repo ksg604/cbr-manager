@@ -116,8 +116,7 @@ public class DashboardFragment extends Fragment {
 
                         if (alerts != null & !alerts.isEmpty()) {
                             newestAlert = alerts.get(0);
-                            newestAlert.formatDate();
-                            dateAlertTextView.setText("Date posted:  " +newestAlert.getDate());
+                            dateAlertTextView.setText("Date posted:  " +newestAlert.getFormattedDate());
                             titleTextView.setText(newestAlert.getTitle());
                             homeAlertId = newestAlert.getId();
                         }

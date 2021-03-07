@@ -34,7 +34,7 @@ public class AlertCreationFragment extends Fragment {
 
         editTextTitle = root.findViewById(R.id.editTextTitle);
         editTextBody = root.findViewById(R.id.editTextBody);
-        buttonSubmit = root.findViewById(R.id.buttonBack);
+        buttonSubmit = root.findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,6 +45,7 @@ public class AlertCreationFragment extends Fragment {
         });
         return root;
     }
+
 
     public void sendAlertCreateRequest() {
         Alert alert = new Alert(editTextTitle.getText().toString(),editTextBody.getText().toString());

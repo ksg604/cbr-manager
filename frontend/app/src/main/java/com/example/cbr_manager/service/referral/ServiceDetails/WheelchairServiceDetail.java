@@ -59,4 +59,15 @@ public class WheelchairServiceDetail extends ServiceDetail {
     public void setIsWheelChairRepairable(Boolean isWheelChairRepairable) {
         this.isWheelChairRepairable = isWheelChairRepairable;
     }
+
+    public String getInfo(){
+        String info =
+                "Usage Experience: " + usageExperience +"\n"
+                + "Hip width: " + clientHipWidth + "\n"
+                + "Existing Wheelchair: " + clientHasExistingWheelchair.toString() +"\n";
+        if(clientHasExistingWheelchair){
+            info += "Wheelchair repairable: " + isWheelChairRepairable;
+        }
+        return info;
+    }
 }

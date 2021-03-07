@@ -26,4 +26,8 @@ public class PhysiotherapyServiceDetail extends ServiceDetail {
     public void setOther_description(String other_description) {
         this.other_description = other_description;
     }
+    public String getInfo(){
+        return "Condition: " + condition +"\n"
+                + "Other Description: " + other_description;
+    }
 }

@@ -46,6 +46,7 @@ public class ClientDetailsEditFragment extends Fragment {
     private View parentLayout;
     private Spinner genderSpinner;
     String gender="";
+    Client client;
     private static final String[] paths = {"Male", "Female"};
 
 
@@ -87,9 +88,73 @@ public class ClientDetailsEditFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
+
+        Intent intent = getActivity().getIntent();
+        int clientId = intent.getIntExtra("clientId", -1);
+
+        setupGenderSpinner(root);
+        setupEditTexts(clientId, root);
         setupButtons(root);
         setupVectorImages(root);
 
+
+        return root;
+    }
+
+    private void modifyClientInfo(Client client) {
+
+
+        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                Log.d("log",client.getFirstName());
+            }
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getAndModifyClient(int clientId, View root) {
+
+        EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
+        EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
+        EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
+        EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
+        EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
+        EditText editClientRiskLevel = (EditText) root.findViewById(R.id.clientDetailsEditRiskLevel);
+        EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
+        EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
+
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                client.setGender(gender);
+
+                String [] clientName = editClientName.getText().toString().split(" ");
+                client.setFirstName(clientName[0]);
+                client.setLastName(clientName[1]);
+                client.setAge(Integer.parseInt(editClientAge.getText().toString()));
+                client.setLocation(editClientLocation.getText().toString());
+                client.setEducationGoal(editClientEducation.getText().toString());
+                client.setDisability(editClientDisability.getText().toString());
+                client.setRiskScore(Integer.parseInt(editClientRiskLevel.getText().toString()));
+                client.setSocialGoal(editClientSocial.getText().toString());
+                client.setHealthGoal(editClientHealth.getText().toString());
+                modifyClientInfo(client);
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setupGenderSpinner(View root) {
         String[] paths = {"Male", "Female"};
         Spinner spinner = (Spinner) root.findViewById(R.id.clientDetailsEditGenderSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
@@ -108,12 +173,9 @@ public class ClientDetailsEditFragment extends Fragment {
                 gender = paths[0];
             }
         });
-
-        return root;
     }
 
-    private void getAndModifyClientInfo(int clientId, View root) {
-
+    private void setupEditTexts(int clientId, View root) {
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
         EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
@@ -123,61 +185,30 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
         EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
 
-
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
-
-                if (response.isSuccessful()) {
-                    Client client = response.body();
-
-                    String [] nameTokens = editClientName.getText().toString().split(" ");
-                    client.setGender(gender);
-                    client.setFirstName(nameTokens[0]);
-                    client.setLastName(nameTokens[1]);
-
-
-                    //client.setAge(Integer.parseInt(editClientAge.getText().toString()));
-
-                    //client.setLocation(editClientLocation.getText().toString());
-                    //client.setEducationGoal(editClientEducation.getText().toString());
-                    //client.setDisability(editClientDisability.getText().toString());
-
-                    /*
-                    client.setRiskScore(Integer.parseInt(editClientRiskLevel.getText().toString()));
-                    client.setSocialGoal(editClientSocial.getText().toString());
-                    client.setHealthGoal(editClientHealth.getText().toString());*/
-
-                    modifyClientInfo(client);
-
-                } else {
-                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    private void modifyClientInfo(Client client) {
-        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
-                Log.d("log",client.getFirstName());
-                //Log.d("okay", response.body().toString());
+                String clientFirstName = client.getFirstName();
+                String clientLastName = client.getLastName();
+                editClientName.setText(clientFirstName + " " + clientLastName);
+                editClientAge.setText(client.getAge().toString());
+                editClientLocation.setText(client.getLocation());
+                editClientEducation.setText(client.getEducationGoal());
+                editClientDisability.setText(client.getDisability());
+                editClientRiskLevel.setText(client.getRiskScore().toString());
+                editClientSocial.setText(client.getSocialGoal());
+                editClientHealth.setText(client.getHealthGoal());
             }
+
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
 
             }
         });
     }
+
+
 
     private void setupButtons(View root) {
         setupBackButton(root);
@@ -191,7 +222,7 @@ public class ClientDetailsEditFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getAndModifyClientInfo(clientId, root);
+                getAndModifyClient(clientId, root);
             }
         });
     }
@@ -225,8 +256,4 @@ public class ClientDetailsEditFragment extends Fragment {
         riskScore.setImageResource(R.drawable.ic_risk);
     }
 
-
-
-
-    // TODO: Implement form which edits client on the backend
 }

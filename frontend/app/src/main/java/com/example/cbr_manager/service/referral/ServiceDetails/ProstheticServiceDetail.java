@@ -15,4 +15,8 @@ public class ProstheticServiceDetail extends ServiceDetail{
     @SerializedName("knee_injury_location")
     @Expose
     private String kneeInjuryLocation;
+
+    public String getInfo(){
+        return "Knee Injury Location: " + kneeInjuryLocation;
+    }
 }

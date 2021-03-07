@@ -115,8 +115,12 @@ public class ClientDetailsFragment extends Fragment {
                         createReferralIntent.putExtra("CLIENT_ID", clientId);
                         startActivity(createReferralIntent);
                     case R.id.referralsFragment:
+                        Bundle arguments = new Bundle();
+                        arguments.putInt("CLIENT_ID", clientId);
+                        ReferralListFragment fragment = new ReferralListFragment();
+                        fragment.setArguments(arguments);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .add(android.R.id.content, new ReferralListFragment()).commit();
+                                .add(android.R.id.content, fragment).commit();
                         break;
                 }
                 return false;

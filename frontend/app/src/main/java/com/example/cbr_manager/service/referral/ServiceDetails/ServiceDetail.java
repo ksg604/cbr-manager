@@ -27,4 +27,8 @@ public class ServiceDetail {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getInfo(){
+        return "";
+    }
 }

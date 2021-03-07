@@ -4,6 +4,10 @@ import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Referral {
     @SerializedName("service_detail")
     @Expose
@@ -138,6 +142,22 @@ public class Referral {
 
     public ServiceDetail getServiceDetail(){
         return this.serviceDetail;
+    }
+
+    public String getFormattedDate() {
+        String datePython = getDateCreated().substring(0,19);
+        String patternOutput = "MM/dd/yyyy  HH:mm";
+        String patternInput = "yyyy-MM-DD'T'HH:mm:ss";
+
+        SimpleDateFormat sdfInput = new SimpleDateFormat(patternInput);
+        SimpleDateFormat sdfOutput = new SimpleDateFormat(patternOutput);
+        Date date = null;
+        try {
+            date = sdfInput.parse(datePython);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sdfOutput.format(date);
     }
 }
 

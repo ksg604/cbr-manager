@@ -149,7 +149,7 @@ public class NewVisitFragment extends Fragment {
                                 if (response.isSuccessful()) {
                                     Toast.makeText(getActivity(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
 
-                                    ((CreateVisitActivity) getActivity()).onBackPressed();
+                                    ((CreateVisitActivity) getActivity()).finish();
                                 } else {
                                     Toast.makeText(getActivity(), "Response error creating visit.", Toast.LENGTH_LONG).show();
                                 }

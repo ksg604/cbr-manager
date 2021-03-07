@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
@@ -42,6 +43,9 @@ import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticService
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
+import com.example.cbr_manager.ui.homepage.HomepageFragment;
+import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -334,7 +338,8 @@ public class CreateReferralActivity extends AppCompatActivity {
                         }
 
                         Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(CreateReferralActivity.this, NavigationActivity.class);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(CreateReferralActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
                     }

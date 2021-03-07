@@ -33,6 +33,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SearchView searchView;
+    private int clientId;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
@@ -42,7 +43,10 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         referralListViewModel =
                 new ViewModelProvider(this).get(ReferralListViewModel.class);
         View root = inflater.inflate(R.layout.fragment_referral_list, container, false);
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            clientId = bundle.getInt("CLIENT_ID", -1);
+        }
         mRecyclerView = root.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -75,7 +79,9 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
+                            if(referral.getClient()==clientId){
                             referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated()));
+                        }
                         }
                     }
                     adapter.notifyDataSetChanged();

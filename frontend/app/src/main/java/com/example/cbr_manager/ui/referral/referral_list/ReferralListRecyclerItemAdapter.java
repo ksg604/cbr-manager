@@ -42,7 +42,7 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
                 ArrayList<ReferralListRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (ReferralListRecyclerItem referralListRecyclerItem : referralListRecyclerItems) {
-                    if (referralListRecyclerItem.getmType().toLowerCase().trim().contains(searchString)) {
+                    if (referralListRecyclerItem.getmReferTo().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(referralListRecyclerItem);
                     }
                 }

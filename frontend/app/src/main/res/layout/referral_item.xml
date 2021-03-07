@@ -14,7 +14,7 @@
 
 
         <TextView
-            android:id="@+id/textListTitle"
+            android:id="@+id/textListType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -30,7 +30,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textListBody"
+            android:id="@+id/textListStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

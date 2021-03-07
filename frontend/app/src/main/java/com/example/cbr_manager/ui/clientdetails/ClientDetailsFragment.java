@@ -20,6 +20,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
+import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -113,6 +114,9 @@ public class ClientDetailsFragment extends Fragment {
                         Intent createReferralIntent = new Intent(getActivity(), CreateReferralActivity.class);
                         createReferralIntent.putExtra("CLIENT_ID", clientId);
                         startActivity(createReferralIntent);
+                    case R.id.referralsFragment:
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .add(android.R.id.content, new ReferralListFragment()).commit();
                         break;
                 }
                 return false;

@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clientDetailsConstraintLayout"
+    android:id="@+id/referralDetailsConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.clientdetails.ClientDetailsFragment">
+    tools:context=".ui.referral.referral_details.ReferralDetailsFragment">
 
 
     <ScrollView
@@ -30,14 +30,15 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/clientDetailsBackImageView"
+                        android:id="@+id/referralDetailsBackImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
-                        app:srcCompat="@drawable/ic_android_back" />
+                        app:srcCompat="@drawable/ic_android_back"
+                        tools:ignore="VectorDrawableCompat" />
 
                     <ImageView
-                        android:id="@+id/clientDetailsEditImageView"
+                        android:id="@+id/referralDetailsEditImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -53,7 +54,7 @@
                     app:cardCornerRadius="75dp">
 
                     <ImageView
-                        android:id="@+id/clientDetailsDisplayPictureImageView"
+                        android:id="@+id/referralDetailsDisplayPictureImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -61,13 +62,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/clientDetailsNameTextView"
+                    android:id="@+id/referralDetailsNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Client Name"
+                    android:text="Referral Name"
                     android:textAllCaps="false"
                     android:textColor="#FFF"
                     android:textSize="36sp"
@@ -94,7 +95,7 @@
                     tools:srcCompat="@drawable/ic_person" />
 
                 <TextView
-                    android:id="@+id/clientDetailsGenderTitleTextView"
+                    android:id="@+id/referralDetailsGenderTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -104,7 +105,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsGenderTextView"
+                    android:id="@+id/referralDetailsGenderTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -132,7 +133,7 @@
                     tools:srcCompat="@drawable/ic_age" />
 
                 <TextView
-                    android:id="@+id/clientDetailsAgeTitleTextView"
+                    android:id="@+id/referralDetailsAgeTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -142,7 +143,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsAgeTextView"
+                    android:id="@+id/referralDetailsAgeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -180,7 +181,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsLocationTextView"
+                    android:id="@+id/referralDetailsLocationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -218,7 +219,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsEducationTextView"
+                    android:id="@+id/referralDetailsEducationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -246,7 +247,7 @@
                     tools:srcCompat="@drawable/ic_disable" />
 
                 <TextView
-                    android:id="@+id/clientDetailsDisabilityTitleTextView"
+                    android:id="@+id/referralDetailsDisabilityTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -256,7 +257,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsDisabilityTextView"
+                    android:id="@+id/referralDetailsDisabilityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -284,7 +285,7 @@
                     tools:srcCompat="@drawable/ic_health" />
 
                 <TextView
-                    android:id="@+id/clientDetailsRiskTitleTextView"
+                    android:id="@+id/referralDetailsRiskTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -294,7 +295,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsRiskLevelTextView"
+                    android:id="@+id/referralDetailsRiskLevelTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -322,7 +323,7 @@
                     tools:srcCompat="@drawable/ic_social" />
 
                 <TextView
-                    android:id="@+id/clientDetailsSocialTitleTextView"
+                    android:id="@+id/referralDetailsSocialTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -332,7 +333,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsSocialTextView"
+                    android:id="@+id/referralDetailsSocialTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -360,7 +361,7 @@
                     tools:srcCompat="@drawable/ic_risk" />
 
                 <TextView
-                    android:id="@+id/clientDetailsHealthTitleTextView"
+                    android:id="@+id/referralDetailsHealthTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -370,7 +371,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/clientDetailsHealthTextView"
+                    android:id="@+id/referralDetailsHealthTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -382,15 +383,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/clientDetailsBottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconTint="@color/purple_500"
-        app:itemTextColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/client_options"
-        app:labelVisibilityMode="labeled"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

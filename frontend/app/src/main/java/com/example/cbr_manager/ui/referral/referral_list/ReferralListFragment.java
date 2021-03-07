@@ -29,7 +29,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
     private ReferralListViewModel referralListViewModel;
     private RecyclerView mRecyclerView;
-    private ReferralListRecyclerItemAdapter adapter; // TODO
+    private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SearchView searchView;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();
@@ -74,7 +74,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral, referral.getDateCreated()));
+                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated()));
                         }
                     }
                     adapter.notifyDataSetChanged();

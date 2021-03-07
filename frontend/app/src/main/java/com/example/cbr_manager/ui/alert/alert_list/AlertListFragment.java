@@ -29,7 +29,7 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
 
     private AlertListViewModel alertListViewModel;
     private RecyclerView mRecyclerView;
-    private AlertListRecyclerItemAdapter adapter; // TODO
+    private AlertListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SearchView searchView;
     ArrayList<AlertListRecyclerItem> alertRecyclerItems = new ArrayList<>();

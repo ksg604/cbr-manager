@@ -42,6 +42,7 @@ import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticService
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

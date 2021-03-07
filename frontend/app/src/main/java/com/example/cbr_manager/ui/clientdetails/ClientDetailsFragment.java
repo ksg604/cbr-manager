@@ -138,6 +138,15 @@ public class ClientDetailsFragment extends Fragment {
         health.setImageResource(R.drawable.ic_health);
         ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
         riskScore.setImageResource(R.drawable.ic_risk);
+
+        ImageView educationRiskScore = root.findViewById(R.id.profileEducationRiskImageView);
+        educationRiskScore.setImageResource(R.drawable.ic_risk);
+
+        ImageView socialRiskScore = root.findViewById(R.id.profileSocialRiskImageView);
+        socialRiskScore.setImageResource(R.drawable.ic_risk);
+
+        ImageView healthRiskScore = root.findViewById(R.id.profileHealthRiskImageView);
+        healthRiskScore.setImageResource(R.drawable.ic_risk);
     }
 
     private void getClientInfo(int clientId) {
@@ -158,6 +167,9 @@ public class ClientDetailsFragment extends Fragment {
                     setupHealthTextView(client.getHealthGoal());
                     setupSocialTextView(client.getSocialGoal());
                     setupEducationTextView(client.getEducationGoal());
+                    setupEducationRiskTextView(client.getEducationRisk().toString());
+                    setupSocialRiskTextView(client.getSocialRisk().toString());
+                    setupHealthRiskTextView(client.getHealthRisk().toString());
                     setupDisabilityTextView(client.getDisability());
                     setupRiskLevelTextView(client.getRiskScore().toString());
                 } else {
@@ -223,6 +235,20 @@ public class ClientDetailsFragment extends Fragment {
     private void setupSocialTextView(String social) {
         TextView socialTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialGoalTextView);
         socialTextView.setText(social);
+    }
+
+    private void setupHealthRiskTextView(String healthRisk) {
+        TextView healthRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthRiskLevelTextView);
+        healthRiskTextView.setText(healthRisk);
+    }
+
+    private void setupEducationRiskTextView(String educationRisk) {
+        TextView educationRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationRiskLevelTextView);
+        educationRiskTextView.setText(educationRisk);
+    }
+    private void setupSocialRiskTextView(String socialRisk) {
+        TextView socialRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialRiskLevelTextView);
+        socialRiskTextView.setText(socialRisk);
     }
 
     private void setupButtons(View root) {

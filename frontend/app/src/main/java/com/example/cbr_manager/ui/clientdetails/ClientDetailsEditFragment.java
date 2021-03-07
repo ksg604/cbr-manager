@@ -128,6 +128,10 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
         EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
 
+        EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
+        EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
+        EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
+
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
@@ -143,6 +147,9 @@ public class ClientDetailsEditFragment extends Fragment {
                 client.setDisability(editClientDisability.getText().toString());
                 client.setSocialGoal(editClientSocial.getText().toString());
                 client.setHealthGoal(editClientHealth.getText().toString());
+                client.setEducationRisk(Integer.parseInt((editClientEducationRisk.getText().toString())));
+                client.setSocialRisk(Integer.parseInt(editClientSocialRisk.getText().toString()));
+                client.setHealthRisk(Integer.parseInt(editClientHealthRisk.getText().toString()));
                 modifyClientInfo(client);
             }
 
@@ -200,6 +207,10 @@ public class ClientDetailsEditFragment extends Fragment {
                 editClientDisability.setText(client.getDisability());
                 editClientSocial.setText(client.getSocialGoal());
                 editClientHealth.setText(client.getHealthGoal());
+                editClientEducationRisk.setText(client.getEducationRisk().toString());
+                editClientSocialRisk.setText(client.getSocialRisk().toString());
+                editClientHealthRisk.setText(client.getHealthRisk().toString());
+
             }
 
             @Override

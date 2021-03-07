@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,6 +79,12 @@ public class VisitDetailsActivity extends AppCompatActivity {
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+//                    try {
+//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                        Toast.makeText(this, jObjError.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
+//                    } catch (Exception e) {
+//                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+//                    }
                 }
             }
 

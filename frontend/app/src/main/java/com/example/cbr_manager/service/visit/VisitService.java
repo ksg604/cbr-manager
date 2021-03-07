@@ -153,7 +153,7 @@ public class VisitService {
                 MediaType.parse("text/plain"));
 
         return this.visitAPI.createVisitManual(
-                authHeader, userCreator, client, isCBRPurpose, isDisabilityReferralPurpose,
+                authHeader, visit, userCreator, client, isCBRPurpose, isDisabilityReferralPurpose,
                 isDisabilityFollowUpPurpose, isHealthProvision, isEducationProvision, isSocialProvision,
                 cbrWorkerName, locationVisitGPS, locationVisitDropDown, villageNoVisit,
                 wheelChairHealthProvision, prostheticHealthProvision, orthoticHealthProvision,

@@ -28,6 +28,7 @@ public interface VisitAPI {
     @Multipart
     @POST("api/visits/")
     Call<Visit> createVisitManual(@Header("Authorization") String authHeader,
+                                    @Body Visit visit,
                                     @Part("user_creator") RequestBody userCreator,
                                     @Part("client") RequestBody client,
                                     @Part("is_cbr_purpose") RequestBody isCBRPurpose,

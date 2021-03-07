@@ -10,7 +10,13 @@
         android:id="@+id/newVisitFragment"
         android:icon="@drawable/ic_new_visit"/>
 
+    <item android:title="See Referrals"
+        android:id="@+id/referralsFragment"
+        android:icon="@drawable/ic_new_referral"/>
+
     <item android:title="New Referral"
         android:id="@+id/createReferralActivityClient"
         android:icon="@drawable/ic_new_referral"/>
+
+
 </menu>

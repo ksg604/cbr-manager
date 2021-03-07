@@ -142,7 +142,7 @@ public class NewVisitFragment extends Fragment {
                         Visit visit = new Visit("", clientId, userId, client);
                         fillVisitData(visit, view);
 
-                        Call<Visit> call1 = apiService.visitService.createVisit(visit);
+                        Call<Visit> call1 = apiService.visitService.createVisitManual(visit);
                         call1.enqueue(new Callback<Visit>() {
                             @Override
                             public void onResponse(Call<Visit> call, Response<Visit> response) {

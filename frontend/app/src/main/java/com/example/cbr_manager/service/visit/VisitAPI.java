@@ -26,9 +26,10 @@ public interface VisitAPI {
     Call<Visit> createVisit(@Header("Authorization") String authHeader, @Body Visit visit);
 
     @Multipart
-    @POST("api/clients/")
-    Call<Client> createVisitManual(@Header("Authorization") String authHeader,
+    @POST("api/visits/")
+    Call<Visit> createVisitManual(@Header("Authorization") String authHeader,
                                     @Part("user_creator") RequestBody userCreator,
+                                    @Part("client") RequestBody client,
                                     @Part("is_cbr_purpose") RequestBody isCBRPurpose,
                                     @Part("is_disability_referral_purpose") RequestBody isDisabilityReferralPurpose,
                                     @Part(" is_disability_follow_up_purpose ") RequestBody isDisabilityFollowUpPurpose,

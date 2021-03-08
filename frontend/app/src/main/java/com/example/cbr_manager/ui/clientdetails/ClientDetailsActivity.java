@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.clientdetails;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -38,6 +39,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
 

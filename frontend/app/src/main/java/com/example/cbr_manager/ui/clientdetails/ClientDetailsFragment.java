@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.clientdetails;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -103,6 +104,18 @@ public class ClientDetailsFragment extends Fragment {
 
     private void setupToolBar() {
         setHasOptionsMenu(true);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_client) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -8,22 +8,468 @@
     tools:context=".ui.clientdetails.ClientDetailsEditFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="@string/hello_blank_fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_marginBottom="0dp">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_item"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/clientDetailsEditBackImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_back2" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="75dp">
+
+                    <ImageView
+                        android:id="@+id/DisplayPictureImageViewEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        tools:src="@tools:sample/avatars" />
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/clientDetailsEditName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="New Name"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/profileGenderImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_person" />
+
+                <TextView
+                    android:id="@+id/clientDetailsGenderTitleTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Gender:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/clientDetailsEditGenderSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/profileAgeImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_age" />
+
+                <TextView
+                    android:id="@+id/clientDetailsEditAgeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Age:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/clientDetailsEditAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number"
+                    tools:layout_marginLeft="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/profileLocationImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_place" />
+
+                <TextView
+                    android:id="@+id/profileLocationTitleTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Location:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/clientDetailsEditLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/profileDisabilityImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_disable" />
+
+                <TextView
+                    android:id="@+id/clientDetailsEditDisabilityGoalTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Disability:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/clientDetailsEditDisability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+
+                <ImageView
+                    android:id="@+id/profileEducationRiskImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_health" />
+
+                <TextView
+                    android:id="@+id/clientDetailsRiskTitleTextView3"
+                    android:layout_width="118dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Education Risk:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/clientDetailsEditEducationRiskLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+
+                <ImageView
+                    android:id="@+id/profileSocialRiskImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_health" />
+
+                <TextView
+                    android:id="@+id/clientDetailsSocialRiskTitleTextViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Social Risk:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/clientDetailsEditSocialRiskLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+
+                <ImageView
+                    android:id="@+id/profileHealthRiskImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_health" />
+
+                <TextView
+                    android:id="@+id/clientDetailsRiskTitleTextView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Health Risk:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/clientDetailsEditHealthRiskLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/profileEducationImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_education" />
+
+                <TextView
+                    android:id="@+id/clientDetailsEditEducationGoalTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Education Goal:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/clientDetailsEditEducation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/profileSocialImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_social" />
+
+                <TextView
+                    android:id="@+id/clientDetailsSocialGoalTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Social Goal:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/clientDetailsEditSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/profileHealthImageViewEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/ic_risk" />
+
+                <TextView
+                    android:id="@+id/clientDetailsHealthGoalTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Health Goal:"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/clientDetailsEditHealth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Client here"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="72dp" />
+        android:gravity="right"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/clientDetailsEditSubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:text="Submit" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

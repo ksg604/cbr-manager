@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
+
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
@@ -73,6 +72,7 @@ public class ClientDetailsFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,8 +92,13 @@ public class ClientDetailsFragment extends Fragment {
 
         setupButtons(root);
         setupVectorImages(root);
+        setupBottomNavigationView(root);
+
+        return root;
+    }
 
 
+    private void setupBottomNavigationView(View root) {
         BottomNavigationView clientDetailsNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
         clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -126,8 +131,6 @@ public class ClientDetailsFragment extends Fragment {
                 return false;
             }
         });
-
-        return root;
     }
 
 
@@ -138,14 +141,23 @@ public class ClientDetailsFragment extends Fragment {
         gender.setImageResource(R.drawable.ic_person);
         ImageView disability = root.findViewById(R.id.profileDisabilityImageView);
         disability.setImageResource(R.drawable.ic_disable);
-        ImageView education = root.findViewById(R.id.profileEducationImageView);
+        ImageView education = root.findViewById(R.id.profileEducationGoalImageView);
         education.setImageResource(R.drawable.ic_education);
         ImageView social = root.findViewById(R.id.profileSocialImageView);
         social.setImageResource(R.drawable.ic_social);
-        ImageView health = root.findViewById(R.id.profileHealthImageView);
+        ImageView health = root.findViewById(R.id.profileHealthGoalImageView);
         health.setImageResource(R.drawable.ic_health);
         ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
         riskScore.setImageResource(R.drawable.ic_risk);
+
+        ImageView educationRiskScore = root.findViewById(R.id.profileEducationRiskImageView);
+        educationRiskScore.setImageResource(R.drawable.ic_risk);
+
+        ImageView socialRiskScore = root.findViewById(R.id.profileSocialRiskImageView);
+        socialRiskScore.setImageResource(R.drawable.ic_risk);
+
+        ImageView healthRiskScore = root.findViewById(R.id.profileHealthRiskImageView);
+        healthRiskScore.setImageResource(R.drawable.ic_risk);
     }
 
     private void getClientInfo(int clientId) {
@@ -166,6 +178,9 @@ public class ClientDetailsFragment extends Fragment {
                     setupHealthTextView(client.getHealthGoal());
                     setupSocialTextView(client.getSocialGoal());
                     setupEducationTextView(client.getEducationGoal());
+                    setupEducationRiskTextView(client.getEducationRisk().toString());
+                    setupSocialRiskTextView(client.getSocialRisk().toString());
+                    setupHealthRiskTextView(client.getHealthRisk().toString());
                     setupDisabilityTextView(client.getDisability());
                     setupRiskLevelTextView(client.getRiskScore().toString());
                 } else {
@@ -219,18 +234,32 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupHealthTextView(String health) {
-        TextView healthTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthTextView);
+        TextView healthTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthGoalTextView);
         healthTextView.setText(health);
     }
 
     private void setupEducationTextView(String education) {
-        TextView educationTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationTextView);
+        TextView educationTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationGoalTextView);
         educationTextView.setText(education);
     }
 
     private void setupSocialTextView(String social) {
-        TextView socialTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialTextView);
+        TextView socialTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialGoalTextView);
         socialTextView.setText(social);
+    }
+
+    private void setupHealthRiskTextView(String healthRisk) {
+        TextView healthRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthRiskLevelTextView);
+        healthRiskTextView.setText(healthRisk);
+    }
+
+    private void setupEducationRiskTextView(String educationRisk) {
+        TextView educationRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationRiskLevelTextView);
+        educationRiskTextView.setText(educationRisk);
+    }
+    private void setupSocialRiskTextView(String socialRisk) {
+        TextView socialRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialRiskLevelTextView);
+        socialRiskTextView.setText(socialRisk);
     }
 
     private void setupButtons(View root) {
@@ -267,7 +296,5 @@ public class ClientDetailsFragment extends Fragment {
     public int getClientId() {
         return clientId;
     }
-
-
 
 }

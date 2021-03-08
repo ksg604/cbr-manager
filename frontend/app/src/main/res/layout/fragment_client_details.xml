@@ -159,7 +159,7 @@
                             android:id="@+id/profileLocationTitleTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Location:"
+                            android:text="Location"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                         <TextView
@@ -173,226 +173,149 @@
                             android:text="Location"
                             android:textSize="16sp" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsDisabilityTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Disability"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/clientDetailsDisabilityTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Disability"
+                            android:textSize="16sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="horizontal">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
 
-                <TextView
-                    android:id="@+id/clientDetailsDisabilityTitleTextView"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Disability:"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/clientDetailsDisabilityTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Disability"
-                    android:textSize="18sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsRiskTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Risk Level:"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp" />
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/clientDetailsRiskLevelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Risk Level"
+                            android:gravity="right"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="horizontal">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey"/>
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/profileDisabilityImageView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginLeft="16dp"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:layout_marginRight="8dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    tools:srcCompat="@drawable/ic_disable" />-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsEducationRiskTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Education Risk"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/clientDetailsRiskTitleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Risk Level:"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/clientDetailsEducationRiskLevelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Education Risk"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/clientDetailsRiskLevelTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Risk Level"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsSocialRiskTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Social Risk:"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
+                        <TextView
+                            android:id="@+id/clientDetailsSocialRiskLevelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:layout_weight="1"
+                            android:text="Social Risk"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:id="@+id/clientDetailsHealthRiskTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Health Risk"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/profileEducationRiskImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_health" />
+                        <TextView
+                            android:id="@+id/clientDetailsHealthRiskLevelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Health Risk"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/clientDetailsEducationRiskTitleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Education Risk:"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/clientDetailsEducationRiskLevelTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:text="Education Risk"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="horizontal">
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/profileRiskImageView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginLeft="16dp"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:layout_marginRight="8dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    tools:srcCompat="@drawable/ic_health" />-->
-
-                <ImageView
-                    android:id="@+id/profileSocialRiskImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_health" />
-
-                <TextView
-                    android:id="@+id/clientDetailsSocialRiskTitleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Social Risk:"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/clientDetailsSocialRiskLevelTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:text="Social Risk"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/profileHealthRiskImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_health" />
-
-                <TextView
-                    android:id="@+id/clientDetailsHealthRiskTitleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Health Risk:"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/clientDetailsHealthRiskLevelTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:text="Health Risk"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/profileEducationGoalImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_education" />
 
                 <TextView
                     android:id="@+id/profileEducationTitle"
@@ -420,18 +343,6 @@
                 android:layout_margin="16dp"
                 android:orientation="horizontal">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/profileSocialImageView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginLeft="16dp"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:layout_marginRight="8dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    tools:srcCompat="@drawable/ic_social" />-->
-
                 <TextView
                     android:id="@+id/clientDetailsSocialTitleTextView"
                     android:layout_width="wrap_content"
@@ -457,18 +368,6 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/profileHealthGoalImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_risk" />
 
                 <TextView
                     android:id="@+id/clientDetailsHealthTitleTextView"

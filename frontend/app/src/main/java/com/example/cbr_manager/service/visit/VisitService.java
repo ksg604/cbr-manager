@@ -46,8 +46,10 @@ public class VisitService {
     }
 
     public Call<Visit> createVisitManual(Visit visit) {
-        // TODO: Add more client fields when finalized. Restricted to manual fields for now.
-        // Need to manually build client request object because of its image field
+        // TODO: This method currently cannot properly pass a client object to the back end.
+        // For now, createVisit is used instead, as was done before,
+        // but this fails to pass all but the required fields to the visit table.
+
 
         RequestBody userCreator = RequestBody.create(Integer.toString(visit.getUserId()), MediaType.parse("text/plain"));
         RequestBody client = RequestBody.create(Integer.toString(visit.getClientId()), MediaType.parse("text/plain"));

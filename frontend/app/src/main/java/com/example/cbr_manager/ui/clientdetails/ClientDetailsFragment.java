@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,8 +88,10 @@ public class ClientDetailsFragment extends Fragment {
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
-        ImageView locationImageView = root.findViewById(R.id.profileLocationImageView);
-        locationImageView.setImageResource(R.drawable.ic_place);
+        setupToolBar();
+
+//        ImageView locationImageView = root.findViewById(R.id.profileLocationImageView);
+//        locationImageView.setImageResource(R.drawable.ic_place);
         this.clientId = clientId;
 
         setupButtons(root);
@@ -95,6 +99,16 @@ public class ClientDetailsFragment extends Fragment {
         setupBottomNavigationView(root);
 
         return root;
+    }
+
+    private void setupToolBar() {
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.client_details, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
 
@@ -135,29 +149,29 @@ public class ClientDetailsFragment extends Fragment {
 
 
     private void setupVectorImages(View root) {
-        ImageView age = root.findViewById(R.id.profileAgeImageView);
-        age.setImageResource(R.drawable.ic_age);
-        ImageView gender = root.findViewById(R.id.profileGenderImageView);
-        gender.setImageResource(R.drawable.ic_person);
-        ImageView disability = root.findViewById(R.id.profileDisabilityImageView);
-        disability.setImageResource(R.drawable.ic_disable);
-        ImageView education = root.findViewById(R.id.profileEducationGoalImageView);
-        education.setImageResource(R.drawable.ic_education);
-        ImageView social = root.findViewById(R.id.profileSocialImageView);
-        social.setImageResource(R.drawable.ic_social);
-        ImageView health = root.findViewById(R.id.profileHealthGoalImageView);
-        health.setImageResource(R.drawable.ic_health);
-        ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
-        riskScore.setImageResource(R.drawable.ic_risk);
-
-        ImageView educationRiskScore = root.findViewById(R.id.profileEducationRiskImageView);
-        educationRiskScore.setImageResource(R.drawable.ic_risk);
-
-        ImageView socialRiskScore = root.findViewById(R.id.profileSocialRiskImageView);
-        socialRiskScore.setImageResource(R.drawable.ic_risk);
-
-        ImageView healthRiskScore = root.findViewById(R.id.profileHealthRiskImageView);
-        healthRiskScore.setImageResource(R.drawable.ic_risk);
+//        ImageView age = root.findViewById(R.id.profileAgeImageView);
+//        age.setImageResource(R.drawable.ic_age);
+//        ImageView gender = root.findViewById(R.id.profileGenderImageView);
+//        gender.setImageResource(R.drawable.ic_person);
+//        ImageView disability = root.findViewById(R.id.profileDisabilityImageView);
+//        disability.setImageResource(R.drawable.ic_disable);
+//        ImageView education = root.findViewById(R.id.profileEducationGoalImageView);
+//        education.setImageResource(R.drawable.ic_education);
+//        ImageView social = root.findViewById(R.id.profileSocialImageView);
+//        social.setImageResource(R.drawable.ic_social);
+//        ImageView health = root.findViewById(R.id.profileHealthGoalImageView);
+//        health.setImageResource(R.drawable.ic_health);
+//        ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
+//        riskScore.setImageResource(R.drawable.ic_risk);
+//
+//        ImageView educationRiskScore = root.findViewById(R.id.profileEducationRiskImageView);
+//        educationRiskScore.setImageResource(R.drawable.ic_risk);
+//
+//        ImageView socialRiskScore = root.findViewById(R.id.profileSocialRiskImageView);
+//        socialRiskScore.setImageResource(R.drawable.ic_risk);
+//
+//        ImageView healthRiskScore = root.findViewById(R.id.profileHealthRiskImageView);
+//        healthRiskScore.setImageResource(R.drawable.ic_risk);
     }
 
     private void getClientInfo(int clientId) {

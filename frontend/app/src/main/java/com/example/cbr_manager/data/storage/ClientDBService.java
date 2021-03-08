@@ -23,7 +23,6 @@ public class ClientDBService {
                     clientDao = RoomDB.getDatabase(context).clientDao();
                 }
             }
-
         }
         return Instance;
     }

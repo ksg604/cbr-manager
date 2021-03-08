@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.clientdetails.ClientDetailsEditFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
@@ -70,23 +68,10 @@
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
 
-                <ImageView
-                    android:id="@+id/profileGenderImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_person" />
-
                 <TextView
                     android:id="@+id/clientDetailsGenderTitleTextView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Gender:"
                     android:textColor="@color/black"
                     android:textSize="24sp"
@@ -95,8 +80,7 @@
                 <Spinner
                     android:id="@+id/clientDetailsEditGenderSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -105,18 +89,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
-
-                <ImageView
-                    android:id="@+id/profileAgeImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_age" />
 
                 <TextView
                     android:id="@+id/clientDetailsEditAgeTextView"
@@ -144,19 +116,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
-
-                <ImageView
-                    android:id="@+id/profileLocationImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_place" />
-
                 <TextView
                     android:id="@+id/profileLocationTitleTextView2"
                     android:layout_width="wrap_content"
@@ -181,18 +140,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
-
-                <ImageView
-                    android:id="@+id/profileDisabilityImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_disable" />
 
                 <TextView
                     android:id="@+id/clientDetailsEditDisabilityGoalTitleTextView"
@@ -221,19 +168,6 @@
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
 
-
-                <ImageView
-                    android:id="@+id/profileEducationRiskImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_health" />
-
                 <TextView
                     android:id="@+id/clientDetailsRiskTitleTextView3"
                     android:layout_width="118dp"
@@ -258,19 +192,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
-
-
-                <ImageView
-                    android:id="@+id/profileSocialRiskImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_health" />
 
                 <TextView
                     android:id="@+id/clientDetailsSocialRiskTitleTextViewEdit"
@@ -297,19 +218,6 @@
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
 
-
-                <ImageView
-                    android:id="@+id/profileHealthRiskImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_health" />
-
                 <TextView
                     android:id="@+id/clientDetailsRiskTitleTextView5"
                     android:layout_width="wrap_content"
@@ -334,18 +242,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
-
-                <ImageView
-                    android:id="@+id/profileEducationImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_education" />
 
                 <TextView
                     android:id="@+id/clientDetailsEditEducationGoalTitleTextView"
@@ -375,18 +271,6 @@
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
 
-                <ImageView
-                    android:id="@+id/profileSocialImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_social" />
-
                 <TextView
                     android:id="@+id/clientDetailsSocialGoalTitleTextView"
                     android:layout_width="match_parent"
@@ -414,18 +298,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 tools:layout_margin="24dp">
-
-                <ImageView
-                    android:id="@+id/profileHealthImageViewEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_risk" />
 
                 <TextView
                     android:id="@+id/clientDetailsHealthGoalTitleTextView"

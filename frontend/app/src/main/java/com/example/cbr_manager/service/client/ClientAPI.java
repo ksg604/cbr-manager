@@ -25,7 +25,7 @@ public interface ClientAPI {
     @GET("api/clients/{id}")
     Call<Client> getClient(@Header("Authorization") String authHeader, @Path("id") int id);
 
-    @PUT("api/clients/{id}")
+    @PUT("api/clients/{id}/")
     Call<Client> modifyClient(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
 
     @POST("api/clients/")

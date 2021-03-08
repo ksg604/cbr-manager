@@ -59,10 +59,7 @@ public class CaregiverInfoFragment extends Fragment {
     }
 
     private void updateInfo(View v) {
-        String caregiverContactNumberInString = editTextCaregiverContactNumber.getText().toString();
-        if(!caregiverContactNumberInString.equals("")) {
-            caregiverContactNumber = Integer.parseInt(caregiverContactNumberInString);
-        }
+        String caregiverContactNumber = editTextCaregiverContactNumber.getText().toString();
         ((CreateClientActivity) getActivity()).setCaregiverInfo(caregiverPresent, caregiverContactNumber);
     }
 }

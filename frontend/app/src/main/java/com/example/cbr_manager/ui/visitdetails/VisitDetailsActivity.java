@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +27,8 @@ public class VisitDetailsActivity extends AppCompatActivity {
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private String additionalInfo;
+    private String location;
+    private int villageNum;
     private String formattedDate;
     private int clientId = -1;
 
@@ -44,6 +48,7 @@ public class VisitDetailsActivity extends AppCompatActivity {
         this.clientId = clientId;
         this.additionalInfo = additionalInfo;
         this.formattedDate = formattedDate;
+        this.location = intent.getStringExtra("location");
         setupButtons();
         setupTextViews();
         setupImageViews();
@@ -74,6 +79,12 @@ public class VisitDetailsActivity extends AppCompatActivity {
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+//                    try {
+//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                        Toast.makeText(this, jObjError.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
+//                    } catch (Exception e) {
+//                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+//                    }
                 }
             }
 
@@ -104,7 +115,7 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
     private void setupLocationTextView() {
         TextView locationTextView = findViewById(R.id.visitDetailsLocationTextView);
-        locationTextView.setText("Location: BidiBidi Zone 1");
+        locationTextView.setText("Location: " + this.location);
     }
 
 

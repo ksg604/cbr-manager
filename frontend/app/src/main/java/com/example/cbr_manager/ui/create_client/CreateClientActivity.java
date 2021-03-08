@@ -99,7 +99,7 @@ public class CreateClientActivity extends AppCompatActivity {
         client.setConsent(consent);
         client.setDate(date);
     }
-    public void setPersonalInfo(String firstName, String lastName, int contactClient, int age, String gender) {
+    public void setPersonalInfo(String firstName, String lastName, String contactClient, int age, String gender) {
         client.setFirstName(firstName);
         client.setLastName(lastName);
         client.setContactClient(contactClient);
@@ -114,7 +114,7 @@ public class CreateClientActivity extends AppCompatActivity {
     public void setDisabilityInfo(String disability) {
         client.setDisability(disability);
     }
-    public void setCaregiverInfo(String carePresent, int contactCare) {
+    public void setCaregiverInfo(String carePresent, String contactCare) {
         client.setCarePresent(carePresent);
         client.setContactCare(contactCare);
     }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
+import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsFragment;
 
 import java.util.ArrayList;
@@ -29,9 +30,10 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
     private ReferralListViewModel referralListViewModel;
     private RecyclerView mRecyclerView;
-    private ReferralListRecyclerItemAdapter adapter; // TODO
+    private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SearchView searchView;
+    private int clientId;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();
 
     private APIService apiService = APIService.getInstance();
@@ -41,7 +43,10 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         referralListViewModel =
                 new ViewModelProvider(this).get(ReferralListViewModel.class);
         View root = inflater.inflate(R.layout.fragment_referral_list, container, false);
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            clientId = bundle.getInt("CLIENT_ID", -1);
+        }
         mRecyclerView = root.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -74,7 +79,9 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral, referral.getDateCreated()));
+                            if(referral.getClient()==clientId){
+                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated()));
+                        }
                         }
                     }
                     adapter.notifyDataSetChanged();
@@ -91,7 +98,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     @Override
     public void onItemClick(int position) {
 
-        Intent referralInfoIntent = new Intent(getContext(), ReferralDetailsFragment.class);
+        Intent referralInfoIntent = new Intent(getContext(), ReferralDetailsActivity.class);
 
         ReferralListRecyclerItem referralListRecyclerItem = adapter.getReferral(position);
         referralInfoIntent.putExtra("referralId", referralListRecyclerItem.getReferral().getId());

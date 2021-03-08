@@ -8,23 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.ui.clientlist.ClientListFragment;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.ui.clientlist.ClientListFragment;
-import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
-import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.login.LoginActivity;
+import com.example.cbr_manager.ui.dashboard.DashboardFragment;
 
 public class HomepageFragment extends Fragment {
     private ImageButton newClientButton, newVisitButton, dashboardButton;
@@ -63,8 +55,8 @@ public class HomepageFragment extends Fragment {
         dashboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), NavigationActivity.class);
-                startActivity(intent);
+                NavHostFragment.findNavController(HomepageFragment.this)
+                        .navigate(R.id.action_nav_home_to_nav_dashboard);
             }
         });
 
@@ -82,9 +74,8 @@ public class HomepageFragment extends Fragment {
         clientListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                fragmentTransaction.add(android.R.id.content, new ClientListFragment()).commit();
-                fragmentTransaction.addToBackStack(null);
+                NavHostFragment.findNavController(HomepageFragment.this)
+                        .navigate(R.id.action_nav_home_to_nav_client_list);
             }
         });
 

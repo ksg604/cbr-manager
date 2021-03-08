@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -52,8 +51,7 @@ public class AlertDetailsActivity extends AppCompatActivity {
                     // Todo: dynamically set the alert info here
                     setupTitleTextView(alert.getTitle());
                     setupBodyTextView(alert.getBody());
-                    alert.formatDate();
-                    setupDateTextView("Date posted:  " + alert.getDate());
+                    setupDateTextView("Date posted:  " + alert.getFormattedDate());
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -101,7 +99,7 @@ public class AlertDetailsActivity extends AppCompatActivity {
     }
 
     private void setupBackButton() {
-        Button backButton = findViewById(R.id.buttonBack);
+        Button backButton = findViewById(R.id.buttonSaveDraft);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

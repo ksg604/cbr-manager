@@ -15,4 +15,8 @@ public class OrthoticServiceDetail extends ServiceDetail {
     public void setElbowInjuryLocation(String elbowInjuryLocation) {
         this.elbowInjuryLocation = elbowInjuryLocation;
     }
+
+    public String getInfo(){
+        return "Elbow Injury Location: " + elbowInjuryLocation;
+    }
 }

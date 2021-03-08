@@ -42,7 +42,7 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
                 ArrayList<ReferralListRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (ReferralListRecyclerItem referralListRecyclerItem : referralListRecyclerItems) {
-                    if (referralListRecyclerItem.getmType().toLowerCase().trim().contains(searchString)) {
+                    if (referralListRecyclerItem.getmReferTo().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(referralListRecyclerItem);
                     }
                 }
@@ -64,12 +64,14 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
 
     public static class ReferralItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textListStatus;
+        public TextView textListReferTo;
         public TextView textListType;
         public TextView textListDate;
         OnItemListener onItemListener;
 
         public ReferralItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
+            textListReferTo = itemView.findViewById(R.id.textListReferTo);
             textListStatus = itemView.findViewById(R.id.textListStatus);
             textListType = itemView.findViewById(R.id.textListType);
             textListDate = itemView.findViewById(R.id.textListDate);
@@ -110,6 +112,12 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
         ReferralListRecyclerItem currentItem = filteredReferrals.get(position);
 
         holder.textListStatus.setText(currentItem.getmStatus());
+        if(currentItem.getmReferTo().length()==0){
+            holder.textListReferTo.setVisibility(View.GONE);
+        }
+        else{
+            holder.textListReferTo.setText(currentItem.getmReferTo());
+        }
         holder.textListType.setText(currentItem.getmType());
         holder.textListDate.setText(currentItem.getmDate());
     }

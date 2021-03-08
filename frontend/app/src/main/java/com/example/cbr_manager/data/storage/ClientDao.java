@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface ClientDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Client...clients);
+    void insert(Client client);
 
     @Delete
     void delete(Client client);

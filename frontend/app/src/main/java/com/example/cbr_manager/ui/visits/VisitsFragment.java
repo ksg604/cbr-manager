@@ -151,7 +151,6 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         String formattedDate = formatter.format(datetimeCreated);
         visitInfoIntent.putExtra("formattedDate", formattedDate);
         visitInfoIntent.putExtra("location", visit.getLocationDropDown());
-        Log.d("testing", visit.getAdditionalInfo() + " " + visit.getClientId() + " " + formattedDate + " " + visit.getLocationDropDown());
         startActivity(visitInfoIntent);
     }
 }

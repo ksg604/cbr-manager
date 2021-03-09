@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.visitdetails.VisitDetailsFragment">
+    tools:context=".ui.visitdetails.VisitDetailsEditFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,14 +31,6 @@
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         app:srcCompat="@drawable/ic_back2" />
-
-                    <ImageView
-                        android:id="@+id/visitDetailsEditImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:padding="16dp"
-                        android:src="@android:drawable/ic_menu_edit" />
 
                 </FrameLayout>
 
@@ -100,14 +92,11 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/visitDetailsLocationTextView"
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/visitDetailsEditLocationSpinner"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Location"
-                    android:textSize="18sp" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,14 +127,13 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/visitDetailsDateTextView"
+                <EditText
+                    android:id="@+id/visitDetailsEditDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Date"
-                    android:textSize="18sp" />
+                    android:layout_weight="1"
+                    android:ems="10"
+                    tools:layout_marginLeft="8dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -168,7 +156,7 @@
 
                 <TextView
                     android:id="@+id/visitDetailsAdditionalInfoTitleTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Additional Info:"
@@ -176,14 +164,13 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/visitDetailsAdditionalInfoTextView"
+                <EditText
+                    android:id="@+id/visitDetailsEditAdditionalInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Additional Info"
-                    android:textSize="18sp" />
+                    android:layout_weight="1"
+                    android:ems="9"
+                    tools:layout_marginLeft="8dp" />
             </LinearLayout>
 
         </LinearLayout>

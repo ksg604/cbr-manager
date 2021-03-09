@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
@@ -89,6 +90,7 @@ public class VisitDetailsFragment extends Fragment {
 
         setupButtons(root);
         setupTextViews(root);
+        setupVectorImages(root);
         setupImageViews(root);
         setupBackImageViewButton(root);
 
@@ -135,6 +137,15 @@ public class VisitDetailsFragment extends Fragment {
         });
     }
 
+    private void setupVectorImages(View root) {
+        ImageView location = root.findViewById(R.id.profileLocationImageView);
+        location.setImageResource(R.drawable.ic_place);
+        ImageView date = root.findViewById(R.id.profileDateImageView);
+        date.setImageResource(R.drawable.ic_date);
+        ImageView additionalInfo = root.findViewById(R.id.profileAdditionalInfoImageView);
+        additionalInfo.setImageResource(R.drawable.ic_info);
+    }
+
     private void setupImageViews(View root) {
         ImageView displayPicture = root.findViewById(R.id.visitDetailsDisplayPictureImageView);
         displayPicture.setImageResource(R.drawable.client_details_placeholder);
@@ -154,13 +165,13 @@ public class VisitDetailsFragment extends Fragment {
 
     private void setupLocationTextView(View root) {
         TextView locationTextView = root.findViewById(R.id.visitDetailsLocationTextView);
-        locationTextView.setText("Location: " + this.location);
+        locationTextView.setText(this.location);
     }
 
 
     private void setupDateTextView(View root) {
         TextView dateTextView = root.findViewById(R.id.visitDetailsDateTextView);
-        dateTextView.setText("Date: " + this.formattedDate);
+        dateTextView.setText(this.formattedDate);
     }
 
     private void setupAdditionalInfoTextView(String additionalInfo, View root) {
@@ -170,6 +181,21 @@ public class VisitDetailsFragment extends Fragment {
 
     private void setupButtons(View root) {
         setupBackButton(root);
+        setupEditButton(root);
+    }
+
+    private void setupEditButton(View root) {
+        ImageView editButton = root.findViewById(R.id.visitDetailsEditImageView);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_visit_details, VisitDetailsEditFragment.class, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     private void setupBackButton(View root) {

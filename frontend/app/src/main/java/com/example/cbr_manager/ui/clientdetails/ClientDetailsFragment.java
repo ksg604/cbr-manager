@@ -2,9 +2,13 @@ package com.example.cbr_manager.ui.clientdetails;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -71,6 +75,7 @@ public class ClientDetailsFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +89,9 @@ public class ClientDetailsFragment extends Fragment {
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
+
+        Toolbar toolbar = root.findViewById(R.id.toolbar2);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setupToolBar();
         this.clientId = clientId;
 
@@ -100,17 +108,17 @@ public class ClientDetailsFragment extends Fragment {
 
     }
 
-//    @SuppressLint("NonConstantResourceId")
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.edit_client) {
-//            getActivity().getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
-//                    .addToBackStack(null)
-//                    .commit();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_client) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

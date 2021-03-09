@@ -107,8 +107,18 @@ public class Client {
         this.carePresent = "";
         this.contactCare = "";
         this.healthRisk = 0;
+        this.healthGoal = "";
+        this.healthRequire = "";
         this.socialRisk = 0;
+        this.socialRequire = "";
+        this.socialGoal = "";
         this.educationRisk = 0;
+        this.educationRequire = "";
+        this.educationGoal = "";
+        this.gpsLocation = "";
+        this.riskScore = 0;
+        this.photoURL = "";
+
     }
     public Client(String consent, String date, String firstName, String lastName, String contactClient, int age,
                   String gender, int id, String location, int villageNo, String disability,

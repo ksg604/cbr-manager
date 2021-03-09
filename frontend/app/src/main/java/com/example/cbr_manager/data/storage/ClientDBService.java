@@ -14,17 +14,14 @@ import java.util.concurrent.Future;
 
 public class ClientDBService {
     private static ClientDao clientDao;
-    private static ClientDBService Instance;
+    private static volatile ClientDBService Instance;
 
-    static ClientDBService getInstance(Context context){
+    public static ClientDBService getInstance(Context context){
         if(Instance == null){
-            synchronized (ClientDBService.class){
-                if(Instance == null){
-                    clientDao = RoomDB.getDatabase(context).clientDao();
-                }
-            }
+            Instance = new ClientDBService();
+            Instance.clientDao = RoomDB.getDatabase(context).clientDao();
         }
-        return Instance;
+        return (Instance);
     }
 
     public void insert(Client client){

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.data.storage.ClientDBService;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
@@ -70,7 +72,8 @@ public class PhotoFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitSurvey();
+                //submitSurvey();
+                submitDB();
             }
         });
         Button prevButton = view.findViewById(R.id.prevButton);
@@ -82,6 +85,14 @@ public class PhotoFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void submitDB(){
+        Intent intent = new Intent(getActivity(), NavigationActivity.class);
+        startActivity(intent);
+        Client client = ((CreateClientActivity) getActivity()).getClient();
+        ClientDBService.getInstance(getContext()).insert(client);
+
     }
 
     private void setupCameraButtonListener() {

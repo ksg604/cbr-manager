@@ -32,11 +32,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClientDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ClientDetailsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -89,7 +84,7 @@ public class ClientDetailsFragment extends Fragment {
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
-//        setupToolBar();
+        setupToolBar();
         this.clientId = clientId;
 
         setupButtons(root);
@@ -100,20 +95,22 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupToolBar() {
+//        getActivity().getActionBar().set
         setHasOptionsMenu(true);
+
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.edit_client) {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
-                    .addToBackStack(null)
-                    .commit();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.edit_client) {
+//            getActivity().getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+//                    .addToBackStack(null)
+//                    .commit();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

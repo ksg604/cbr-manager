@@ -14,15 +14,11 @@ public class ClientDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_details);
 
-        if ( savedInstanceState == null) {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragment_client_details, ClientDetailsFragment.class, null)
                     .commit();
-
         }
     }
-
-
-
 }

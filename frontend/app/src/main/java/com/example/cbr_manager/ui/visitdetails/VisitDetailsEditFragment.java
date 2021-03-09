@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -29,7 +32,7 @@ public class VisitDetailsEditFragment extends Fragment {
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private Spinner genderSpinner;
-    String gender="";
+    private String location="";
     Client client;
     private static final String[] paths = {"Male", "Female"};
 
@@ -77,6 +80,8 @@ public class VisitDetailsEditFragment extends Fragment {
         int clientId = intent.getIntExtra("clientId", -1);
 
         setupVectorImages(root);
+        setupLocationSpinner(root);
+        setupButtons(root);
 
         return root;
     }
@@ -88,5 +93,55 @@ public class VisitDetailsEditFragment extends Fragment {
         date.setImageResource(R.drawable.ic_date);
         ImageView additionalInfo = root.findViewById(R.id.profileAdditionalInfoImageView);
         additionalInfo.setImageResource(R.drawable.ic_info);
+    }
+
+    private void setupLocationSpinner(View root) {
+        String[] paths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
+                "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
+        Spinner spinner = (Spinner) root.findViewById(R.id.visitDetailsEditLocationSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                location = paths[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                location = paths[0];
+            }
+        });
+    }
+
+    private void setupButtons(View root) {
+        setupBackButton(root);
+        setupSubmitButton(root);
+    }
+
+    private void setupSubmitButton(View root) {
+        Intent intent = getActivity().getIntent();
+        int clientId = intent.getIntExtra("clientId", -1);
+
+        Button submitButton = root.findViewById(R.id.visitDetailsEditSubmitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO : set up GET and POST API call
+            }
+        });
+    }
+
+    private void setupBackButton(View root) {
+        ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
+        backButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 }

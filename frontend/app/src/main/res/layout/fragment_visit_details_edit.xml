@@ -177,13 +177,13 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/visitDetailsBackButton"
+        android:id="@+id/visitDetailsEditSubmitButton"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Back"
+        android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

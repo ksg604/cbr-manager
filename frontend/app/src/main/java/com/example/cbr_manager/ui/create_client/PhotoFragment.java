@@ -24,6 +24,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.data.storage.ClientDBService;
 import com.example.cbr_manager.service.APIService;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
@@ -56,7 +57,33 @@ public class PhotoFragment extends Fragment implements Step {
         //TODO: Add Camera functionality
         setupCameraButtonListener();
 
+
+
+        Button submitButton = view.findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //submitSurvey();
+                submitDB();
+            }
+        });
+        Button prevButton = view.findViewById(R.id.prevButton);
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CreateClientActivity) getActivity()).setViewPager(4);
+            }
+        });
+
         return view;
+    }
+
+    private void submitDB(){
+        Intent intent = new Intent(getActivity(), NavigationActivity.class);
+        startActivity(intent);
+        Client client = ((CreateClientActivity) getActivity()).getClient();
+        ClientDBService.getInstance(getContext()).insert(client);
+
     }
 
     private void setupCameraButtonListener() {

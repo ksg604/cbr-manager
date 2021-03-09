@@ -15,7 +15,7 @@ public abstract class RoomDB extends RoomDatabase {
 
     private static volatile RoomDB Instance;
 
-    static RoomDB getDatabase(final Context context){
+    public static RoomDB getDatabase(final Context context){
         if (Instance == null){
             synchronized (RoomDB.class){
                 if(Instance == null){

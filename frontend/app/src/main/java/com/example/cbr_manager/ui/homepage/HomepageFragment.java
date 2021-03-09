@@ -77,9 +77,49 @@ public class HomepageFragment extends Fragment {
         });
 
         syncButton = view.findViewById(R.id.syncButton);
+        syncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    requestSync();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
         return view;
+    }
+
+
+
+    private void requestSync() throws ExecutionException, InterruptedException {
+
+        ClientSync.getInstance(getContext()).performSync(clientList);
+    }
+
+    // Copied from ClientListFragment
+    public void fetchClientsToList(List<Client> clientList) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
+                @Override
+                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
+                    if (response.isSuccessful()) {
+                        List<Client> clients = response.body();
+                        clientList.addAll(clients);
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<Client>> call, Throwable t) {
+
+                }
+            });
+        }
+
+
     }
 
 

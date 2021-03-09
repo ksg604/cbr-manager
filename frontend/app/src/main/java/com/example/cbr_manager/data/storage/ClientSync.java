@@ -25,7 +25,7 @@ public class ClientSync {
     private static ClientDBService localdb;
     private static APIService apiService;
     private static ClientSync Instance;
-    private CountDownLatch latch;
+
 
     public static ClientSync getInstance(Context context) {
         if(Instance == null){
@@ -124,11 +124,10 @@ public class ClientSync {
 
     public void serverInsert(Client client){
         if (apiService.isAuthenticated()) {
-            apiService.clientService.createClient(client).enqueue(new Callback<Client>() {
+            Call<Client> call = apiService.clientService.createClientManual(client);
+            call.enqueue(new Callback<Client>() {
                 @Override
                 public void onResponse(Call<Client> call, Response<Client> response) {
-                    // TODO: May need client photo upload
-
 
                 }
 
@@ -137,6 +136,7 @@ public class ClientSync {
 
                 }
             });
+
         }
     }
 

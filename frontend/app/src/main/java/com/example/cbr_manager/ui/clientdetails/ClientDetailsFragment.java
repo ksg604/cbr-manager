@@ -89,10 +89,7 @@ public class ClientDetailsFragment extends Fragment {
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
-        setupToolBar();
-
-//        ImageView locationImageView = root.findViewById(R.id.profileLocationImageView);
-//        locationImageView.setImageResource(R.drawable.ic_place);
+//        setupToolBar();
         this.clientId = clientId;
 
         setupButtons(root);
@@ -133,8 +130,11 @@ public class ClientDetailsFragment extends Fragment {
 
                 switch(item.getItemId()) {
                     case R.id.visitsFragment:
+                        
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(android.R.id.content, new VisitsFragment()).addToBackStack(null).commit();
+                                .replace(android.R.id.content, new VisitsFragment())
+                                .addToBackStack(null)
+                                .commit();
                         break;
                     case R.id.newVisitFragment:
                         Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);

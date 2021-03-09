@@ -51,6 +51,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                              ViewGroup container, Bundle savedInstanceState) {
         int clientId = NO_SPECIFIC_CLIENT;
 
+        setHasOptionsMenu(true);
         FragmentActivity activity = getActivity();
         ClientDetailsActivity clientDetailsActivity;
         ClientDetailsFragment fragment;

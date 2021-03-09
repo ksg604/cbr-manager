@@ -2,27 +2,44 @@ package com.example.cbr_manager.ui.homepage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.data.storage.ClientDBService;
+import com.example.cbr_manager.data.storage.ClientSync;
+import com.example.cbr_manager.data.storage.RoomDB;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientlist.ClientListFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 import com.example.cbr_manager.ui.dashboard.DashboardFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomepageFragment extends Fragment {
     private ImageButton newClientButton, newVisitButton, dashboardButton;
     private ImageButton newReferralButton, clientListButton, syncButton;
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
+    private APIService apiService = APIService.getInstance();
+    List<Client> clientList = new ArrayList<>();
 
     View view;
 
@@ -30,6 +47,7 @@ public class HomepageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
+        fetchClientsToList(clientList);
 
         newClientButton = view.findViewById(R.id.newClientButton);
         newClientButton.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +98,49 @@ public class HomepageFragment extends Fragment {
         });
 
         syncButton = view.findViewById(R.id.syncButton);
+        syncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    requestSync();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
         return view;
+    }
+
+
+
+    private void requestSync() throws ExecutionException, InterruptedException {
+
+        ClientSync.getInstance(getContext()).performSync(clientList);
+    }
+
+    // Copied from ClientListFragment
+    public void fetchClientsToList(List<Client> clientList) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
+                @Override
+                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
+                    if (response.isSuccessful()) {
+                        List<Client> clients = response.body();
+                        clientList.addAll(clients);
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<Client>> call, Throwable t) {
+
+                }
+            });
+        }
+
+
     }
 
 

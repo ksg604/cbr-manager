@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -46,6 +47,7 @@ public class ClientService {
     public Call<List<Client>> getClients() {
         return this.clientAPI.getClients(authHeader);
     }
+
 
     public Call<Client> modifyClient(Client client) {
         return this.clientAPI.modifyClient(authHeader, client.getId(), client);

@@ -46,11 +46,12 @@ class Client(models.Model):
     def save(self, *args, **kwargs):
         self.risk_score = int(self.health_risk) + int(self.social_risk) + int(self.education_risk)
 
-        self.cbr_client_id = self._generate_client_id()
+        if not self.cbr_client_id:
+            self.cbr_client_id = self._generate_cbr_client_id()
 
         super(Client, self).save(*args, **kwargs)
 
-    def _generate_client_id(self):
+    def _generate_cbr_client_id(self):
         def get_first_letter(text):
             if text and len(text) > 0:
                 return text[0]

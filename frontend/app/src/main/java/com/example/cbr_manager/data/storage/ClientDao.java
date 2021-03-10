@@ -31,4 +31,8 @@ public interface ClientDao {
     @Query("SELECT * FROM client WHERE id LIKE :clientId")
     Client getClient(int clientId);
 
+    // Test function for clearing local database
+    @Query("DELETE FROM client")
+    void clearAll();
+
 }

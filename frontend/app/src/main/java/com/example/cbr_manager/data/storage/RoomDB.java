@@ -5,10 +5,13 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import com.example.cbr_manager.service.client.Client;
 
 @Database(entities = {Client.class}, version = 1, exportSchema = false)
+@TypeConverters({TimeStampConverter.class})
 public abstract class RoomDB extends RoomDatabase {
 
     public abstract ClientDao clientDao();

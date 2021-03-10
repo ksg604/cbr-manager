@@ -25,9 +25,13 @@ import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientActivity;
 import com.example.cbr_manager.ui.dashboard.DashboardFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,8 +42,6 @@ public class HomepageFragment extends Fragment {
     private ImageButton newReferralButton, clientListButton, syncButton;
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
-    private APIService apiService = APIService.getInstance();
-    List<Client> clientList = new ArrayList<>();
 
     View view;
 
@@ -47,7 +49,6 @@ public class HomepageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
-        fetchClientsToList(clientList);
 
         newClientButton = view.findViewById(R.id.newClientButton);
         newClientButton.setOnClickListener(new View.OnClickListener() {
@@ -101,13 +102,7 @@ public class HomepageFragment extends Fragment {
         syncButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    requestSync();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                requestSync();
             }
         });
 
@@ -117,31 +112,10 @@ public class HomepageFragment extends Fragment {
 
 
 
-    private void requestSync() throws ExecutionException, InterruptedException {
-
-        ClientSync.getInstance(getContext()).performSync(clientList);
+    private void requestSync() {
+        ClientSync.getInstance(getContext()).requestSync();
     }
 
-    // Copied from ClientListFragment
-    public void fetchClientsToList(List<Client> clientList) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
-                @Override
-                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
-                    if (response.isSuccessful()) {
-                        List<Client> clients = response.body();
-                        clientList.addAll(clients);
-                    }
-                }
-                @Override
-                public void onFailure(Call<List<Client>> call, Throwable t) {
-
-                }
-            });
-        }
-
-
-    }
 
 
 

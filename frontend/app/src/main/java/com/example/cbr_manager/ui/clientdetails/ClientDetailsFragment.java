@@ -134,6 +134,12 @@ public class ClientDetailsFragment extends Fragment {
     }
 
 
+    private void setUpTextView(int textViewID, String textValue){
+        TextView textView = (TextView)getView().findViewById(textViewID);
+        textView.setText(textValue);
+    }
+
+
     private void setupVectorImages(View root) {
         ImageView age = root.findViewById(R.id.profileAgeImageView);
         age.setImageResource(R.drawable.ic_age);
@@ -183,6 +189,7 @@ public class ClientDetailsFragment extends Fragment {
                     setupHealthRiskTextView(client.getHealthRisk().toString());
                     setupDisabilityTextView(client.getDisability());
                     setupRiskLevelTextView(client.getRiskScore().toString());
+                    setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
                 } else {
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

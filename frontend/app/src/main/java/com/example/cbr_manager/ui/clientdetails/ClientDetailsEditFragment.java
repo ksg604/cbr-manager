@@ -2,9 +2,6 @@ package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
-import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,17 +34,15 @@ public class ClientDetailsEditFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final String[] paths = {"Male", "Female"};
+    String gender = "";
+    Client client;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private Spinner genderSpinner;
-    String gender="";
-    Client client;
-    private static final String[] paths = {"Male", "Female"};
 
 
     public ClientDetailsEditFragment() {
@@ -108,9 +103,10 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
-                Log.d("log",client.getFirstName());
+                Log.d("log", client.getFirstName());
                 getActivity().onBackPressed();
             }
+
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
 
@@ -138,7 +134,7 @@ public class ClientDetailsEditFragment extends Fragment {
                 Client client = response.body();
                 client.setGender(gender);
 
-                String [] clientName = editClientName.getText().toString().split(" ");
+                String[] clientName = editClientName.getText().toString().split(" ");
                 client.setFirstName(clientName[0]);
                 client.setLastName(clientName[1]);
                 client.setAge(Integer.parseInt(editClientAge.getText().toString()));
@@ -221,11 +217,11 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
 
-
     private void setupButtons(View root) {
         setupBackButton(root);
         setupSubmitButton(root);
     }
+
     private void setupSubmitButton(View root) {
         Intent intent = getActivity().getIntent();
         int clientId = intent.getIntExtra("clientId", -1);

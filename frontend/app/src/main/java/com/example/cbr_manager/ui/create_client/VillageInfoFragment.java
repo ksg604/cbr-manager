@@ -1,6 +1,5 @@
 package com.example.cbr_manager.ui.create_client;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +18,9 @@ public class VillageInfoFragment extends Fragment implements AdapterView.OnItemS
     private Spinner spinner;
     private static final String[] paths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
             "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
-    private EditText editTextId, editTextVillageNum;
+    private EditText editTextVillageNum;
 
-    int id=0, villageNumber=0;
+    int villageNumber=0;
     String location="";
 
     @Override
@@ -29,8 +28,6 @@ public class VillageInfoFragment extends Fragment implements AdapterView.OnItemS
                              Bundle savedInstanceState){
 
         View view = inflater.inflate(R.layout.activity_create_client_village_info, container, false);
-
-        editTextId = (EditText) view.findViewById(R.id.editTextFirstName);
 
         spinner = (Spinner) view.findViewById(R.id.location_dropdown);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(getActivity(),
@@ -71,15 +68,11 @@ public class VillageInfoFragment extends Fragment implements AdapterView.OnItemS
     }
 
     private void updateInfo(View v) {
-        String idInString = editTextId.getText().toString();
         String villageNumberInString = editTextVillageNum.getText().toString();
-        if(!idInString.equals("")) {
-            id = Integer.parseInt(idInString);
-        }
         if(!villageNumberInString.equals("")) {
             villageNumber = Integer.parseInt(villageNumberInString);
         }
-        ((CreateClientActivity) getActivity()).setVillageInfo(location, id, villageNumber);
+        ((CreateClientActivity) getActivity()).setVillageInfo(location, villageNumber);
     }
 
 }

@@ -10,6 +10,11 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Helper {
@@ -43,5 +48,11 @@ public class Helper {
         } else {
             return "#c49704";
         }
+    }
+
+    public static String convertToString(Timestamp date){
+        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        String formattedDate = formatter.format(date);
+        return formattedDate;
     }
 }

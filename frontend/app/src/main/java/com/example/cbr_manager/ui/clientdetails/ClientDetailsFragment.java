@@ -193,67 +193,58 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupNameTextView(String fullName) {
-        TextView nameTextView = (TextView)getView().findViewById(R.id.clientDetailsNameTextView);
-        // TODO: Fill this TextView with information from the backend
-        nameTextView.setText(fullName);
+        setUpTextView(R.id.clientDetailsNameTextView, fullName);
     }
 
     private void setupLocationTextView(String location) {
-        TextView locationTextView = (TextView)getView().findViewById(R.id.clientDetailsLocationTextView);
-        locationTextView.setText(location);
+        setUpTextView(R.id.clientDetailsLocationTextView, location);
     }
 
     private void setupGenderTextView(String gender) {
-        TextView genderTextView = (TextView)getView().findViewById(R.id.clientDetailsGenderTextView);
-        genderTextView.setText(gender);
+        setUpTextView(R.id.clientDetailsGenderTextView, gender);
     }
 
     private void setupAgeTextView(String age) {
-        TextView ageTextView = (TextView)getView().findViewById(R.id.clientDetailsAgeTextView);
-        ageTextView.setText(age);
+        setUpTextView(R.id.clientDetailsAgeTextView, age);
     }
 
     private void setupDisabilityTextView(String disability) {
-        TextView disabilityTextView = (TextView)getView().findViewById(R.id.clientDetailsDisabilityTextView);
-        disabilityTextView.setText(disability);
+        setUpTextView(R.id.clientDetailsDisabilityTextView, disability);
     }
 
     private void setupRiskLevelTextView(String riskLevel) {
-        TextView riskLevelTextView = (TextView)getView().findViewById(R.id.clientDetailsRiskLevelTextView);
-        riskLevelTextView.setText(riskLevel);
+        setUpTextView(R.id.clientDetailsRiskLevelTextView, riskLevel);
     }
 
     private void setupHealthTextView(String health) {
-        TextView healthTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthGoalTextView);
-        healthTextView.setText(health);
+        setUpTextView(R.id.clientDetailsHealthGoalTextView, health);
     }
 
     private void setupEducationTextView(String education) {
-        TextView educationTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationGoalTextView);
-        educationTextView.setText(education);
+        setUpTextView(R.id.clientDetailsEducationGoalTextView, education);
     }
 
     private void setupSocialTextView(String social) {
-        TextView socialTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialGoalTextView);
-        socialTextView.setText(social);
+        setUpTextView(R.id.clientDetailsSocialGoalTextView, social);
     }
 
     private void setupHealthRiskTextView(String healthRisk) {
-        TextView healthRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthRiskLevelTextView);
-        healthRiskTextView.setText(healthRisk);
+        setUpTextView(R.id.clientDetailsHealthRiskLevelTextView, healthRisk);
     }
 
     private void setupEducationRiskTextView(String educationRisk) {
-        TextView educationRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationRiskLevelTextView);
-        educationRiskTextView.setText(educationRisk);
+        setUpTextView(R.id.clientDetailsEducationRiskLevelTextView, educationRisk);
     }
     private void setupSocialRiskTextView(String socialRisk) {
-        TextView socialRiskTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialRiskLevelTextView);
-        socialRiskTextView.setText(socialRisk);
+        setUpTextView(R.id.clientDetailsSocialRiskLevelTextView, socialRisk);
+    }
+
+    private void setUpTextView(int textViewId, String text) {
+        TextView textView = getView().findViewById(textViewId);
+        textView.setText(text);
     }
 
     private void setupButtons(View root) {
-
         setupEditButton(root);
         setupBackButton(root);
     }

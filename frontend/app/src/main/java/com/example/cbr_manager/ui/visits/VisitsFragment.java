@@ -61,8 +61,6 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         ClientDetailsActivity clientDetailsActivity;
         ClientDetailsFragment fragment;
 
-        getActivity().setTitle("Visits");
-
         //If this fragment was called from ClientDetailsActivity, there will be an associated clientId
         if (activity instanceof ClientDetailsActivity) {
             clientDetailsActivity = (ClientDetailsActivity) activity;
@@ -142,6 +140,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
             });
         }
     }
+
 
     @Override
     public void onItemClick(int position) {

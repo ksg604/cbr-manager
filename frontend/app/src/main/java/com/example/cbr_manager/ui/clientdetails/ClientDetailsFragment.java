@@ -1,6 +1,7 @@
 package com.example.cbr_manager.ui.clientdetails;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -102,7 +103,6 @@ public class ClientDetailsFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-
     private void setupBottomNavigationView(View root) {
         BottomNavigationView clientDetailsNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
         clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -135,6 +135,11 @@ public class ClientDetailsFragment extends Fragment {
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(android.R.id.content, fragment).addToBackStack(null).commit();
                         break;
+                    case R.id.editClient:
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+                                .addToBackStack(null)
+                                .commit();
                 }
                 return false;
             }
@@ -143,29 +148,6 @@ public class ClientDetailsFragment extends Fragment {
 
 
     private void setupVectorImages(View root) {
-//        ImageView age = root.findViewById(R.id.profileAgeImageView);
-//        age.setImageResource(R.drawable.ic_age);
-//        ImageView gender = root.findViewById(R.id.profileGenderImageView);
-//        gender.setImageResource(R.drawable.ic_person);
-//        ImageView disability = root.findViewById(R.id.profileDisabilityImageView);
-//        disability.setImageResource(R.drawable.ic_disable);
-//        ImageView education = root.findViewById(R.id.profileEducationGoalImageView);
-//        education.setImageResource(R.drawable.ic_education);
-//        ImageView social = root.findViewById(R.id.profileSocialImageView);
-//        social.setImageResource(R.drawable.ic_social);
-//        ImageView health = root.findViewById(R.id.profileHealthGoalImageView);
-//        health.setImageResource(R.drawable.ic_health);
-//        ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
-//        riskScore.setImageResource(R.drawable.ic_risk);
-//
-//        ImageView educationRiskScore = root.findViewById(R.id.profileEducationRiskImageView);
-//        educationRiskScore.setImageResource(R.drawable.ic_risk);
-//
-//        ImageView socialRiskScore = root.findViewById(R.id.profileSocialRiskImageView);
-//        socialRiskScore.setImageResource(R.drawable.ic_risk);
-//
-//        ImageView healthRiskScore = root.findViewById(R.id.profileHealthRiskImageView);
-//        healthRiskScore.setImageResource(R.drawable.ic_risk);
     }
 
     private void getClientInfo(int clientId) {

@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
@@ -153,11 +154,10 @@ public class PhotoFragment extends Fragment {
     }
 
     private void onSubmitSuccess(View view, Client client) {
-        Intent intent = new Intent(getActivity(), NavigationActivity.class);
-        intent.putExtra(NavigationActivity.KEY_SNACK_BAR_MESSAGE, "Successfully created the client.");
-//        Intent intent = new Intent(getActivity(), ClientDetailsActivity.class);
-//        intent.putExtra(ClientDetailsActivity.class, "Successfully created the client.");
+        Intent intent = new Intent(getActivity(), ClientDetailsActivity.class);
+        intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
         startActivity(intent);
+        getActivity().finish();
     }
 
     private void submitSurvey() {

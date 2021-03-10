@@ -1,10 +1,17 @@
 package com.example.cbr_manager.ui.clientdetails;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
+
+import java.util.Objects;
 
 public class ClientDetailsActivity extends AppCompatActivity {
 
@@ -14,6 +21,9 @@ public class ClientDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_details);
 
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        setTitle("Client Details");
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
@@ -21,4 +31,14 @@ public class ClientDetailsActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

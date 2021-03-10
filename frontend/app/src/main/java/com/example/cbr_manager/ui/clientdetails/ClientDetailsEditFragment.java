@@ -3,10 +3,14 @@ package com.example.cbr_manager.ui.clientdetails;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,19 +30,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClientDetailsEditFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ClientDetailsEditFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -54,15 +49,6 @@ public class ClientDetailsEditFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClientDetailsEditFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ClientDetailsEditFragment newInstance(String param1, String param2) {
         ClientDetailsEditFragment fragment = new ClientDetailsEditFragment();
         Bundle args = new Bundle();
@@ -95,7 +81,6 @@ public class ClientDetailsEditFragment extends Fragment {
         setupGenderSpinner(root);
         setupEditTexts(clientId, root);
         setupButtons(root);
-        setupVectorImages(root);
 
 
         return root;
@@ -248,33 +233,4 @@ public class ClientDetailsEditFragment extends Fragment {
             }
         });
     }
-
-    private void setupVectorImages(View root) {
-        ImageView locationImageView = root.findViewById(R.id.profileLocationImageViewEdit);
-        locationImageView.setImageResource(R.drawable.ic_place);
-        ImageView age = root.findViewById(R.id.profileAgeImageViewEdit);
-        age.setImageResource(R.drawable.ic_age);
-        ImageView gender = root.findViewById(R.id.profileGenderImageViewEdit);
-        gender.setImageResource(R.drawable.ic_person);
-        ImageView disability = root.findViewById(R.id.profileDisabilityImageViewEdit);
-        disability.setImageResource(R.drawable.ic_disable);
-        ImageView education = root.findViewById(R.id.profileEducationImageViewEdit);
-        education.setImageResource(R.drawable.ic_education);
-        ImageView social = root.findViewById(R.id.profileSocialImageViewEdit);
-        social.setImageResource(R.drawable.ic_social);
-        ImageView health = root.findViewById(R.id.profileHealthImageViewEdit);
-        health.setImageResource(R.drawable.ic_health);
-
-        ImageView educationRisk = root.findViewById(R.id.profileEducationRiskImageViewEdit);
-        educationRisk.setImageResource(R.drawable.ic_risk);
-
-        ImageView socialRisk = root.findViewById(R.id.profileSocialRiskImageViewEdit);
-        socialRisk.setImageResource(R.drawable.ic_risk);
-
-        ImageView healthRisk = root.findViewById(R.id.profileHealthRiskImageViewEdit);
-        healthRisk.setImageResource(R.drawable.ic_risk);
-
-
-    }
-
 }

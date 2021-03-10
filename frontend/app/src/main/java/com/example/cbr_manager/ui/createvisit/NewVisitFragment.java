@@ -41,7 +41,6 @@ public class NewVisitFragment extends Fragment {
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
-    private String clientName;
     private String username = "";
 
     public NewVisitFragment() {
@@ -77,7 +76,6 @@ public class NewVisitFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 gatherAllData(view);
-
             }
         });
     }
@@ -504,44 +502,44 @@ public class NewVisitFragment extends Fragment {
         Chip adviceChip = view.findViewById(R.id.educationProvisionsAdviceChip);
         TextView adviceTV = view.findViewById(R.id.educationProvisionAdviceTextView);
         EditText adviceET = view.findViewById(R.id.educationProvisionAdviceTextMultiLine);
-        setChipListener(adviceChip,adviceET,adviceTV);
+        setChipListener(adviceChip, adviceET, adviceTV);
 
         Chip advocacyChip = view.findViewById(R.id.educationProvisionsAdvocacyChip);
         TextView advocacyTV = view.findViewById(R.id.educationProvisionAdvocacyTextView);
         EditText advocacyET = view.findViewById(R.id.educationProvisionAdvocacyTextMultiLine);
-        setChipListener(advocacyChip,advocacyET,advocacyTV);
+        setChipListener(advocacyChip, advocacyET, advocacyTV);
 
         Chip referralChip = view.findViewById(R.id.educationProvisionsReferralChip);
         TextView referralTV = view.findViewById(R.id.educationProvisionReferralTextView);
         EditText referralET = view.findViewById(R.id.educationProvisionReferralTextMultiLine);
-        setChipListener(referralChip,referralET,referralTV);
+        setChipListener(referralChip, referralET, referralTV);
 
         Chip encourageChip = view.findViewById(R.id.educationProvisionsEncouragementChip);
         TextView encourageTV = view.findViewById(R.id.educationProvisionEncouragementTextView);
         EditText encourageET = view.findViewById(R.id.educationProvisionEncouragementTextMultiLine);
-        setChipListener(encourageChip,encourageET,encourageTV);
+        setChipListener(encourageChip, encourageET, encourageTV);
     }
 
     private void setupVisibilitySocialProvisions(View view) {
         Chip adviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
         TextView adviceTV = view.findViewById(R.id.socialProvisionAdviceTextView);
         EditText adviceET = view.findViewById(R.id.socialProvisionAdviceTextMultiLine);
-        setChipListener(adviceChip,adviceET,adviceTV);
+        setChipListener(adviceChip, adviceET, adviceTV);
 
         Chip advocacyChip = view.findViewById(R.id.socialProvisionAdvocacyChip);
         TextView advocacyTV = view.findViewById(R.id.socialProvisionAdvocacyTextView);
         EditText advocacyET = view.findViewById(R.id.socialProvisionAdvocacyMultiLineText);
-        setChipListener(advocacyChip,advocacyET,advocacyTV);
+        setChipListener(advocacyChip, advocacyET, advocacyTV);
 
         Chip referralChip = view.findViewById(R.id.socialProvisionReferralChip);
         TextView referralTV = view.findViewById(R.id.socialProvisionReferralTextView);
         EditText referralET = view.findViewById(R.id.socialProvisionReferralTextMultiLine);
-        setChipListener(referralChip,referralET,referralTV);
+        setChipListener(referralChip, referralET, referralTV);
 
         Chip encourageChip = view.findViewById(R.id.socialProvisionEncouragementChip);
         TextView encourageTV = view.findViewById(R.id.socialProvisionEncouragementTextView);
         EditText encourageET = view.findViewById(R.id.socialProvisionEncouragementTextMultiLine);
-        setChipListener(encourageChip,encourageET,encourageTV);
+        setChipListener(encourageChip, encourageET, encourageTV);
     }
 
     private void setChipListener(Chip chip, EditText editText, TextView textView) {

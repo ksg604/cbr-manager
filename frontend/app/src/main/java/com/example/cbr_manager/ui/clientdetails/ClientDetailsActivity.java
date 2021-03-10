@@ -24,12 +24,11 @@ public class ClientDetailsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setTitle("Client Details");
 
-        if ( savedInstanceState == null) {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragment_client_details, ClientDetailsFragment.class, null)
                     .commit();
-
         }
     }
 

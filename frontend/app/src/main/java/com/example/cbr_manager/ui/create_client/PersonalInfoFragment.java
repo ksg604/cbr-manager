@@ -19,7 +19,7 @@ public class PersonalInfoFragment extends Fragment implements AdapterView.OnItem
     Spinner spinner;
     String firstName="";
     String lastName="";
-    int contactNumber=0;
+    String contactNumber="";
     int age=0;
     String gender="";
     private static final String[] paths = {"Male", "Female"};
@@ -75,10 +75,7 @@ public class PersonalInfoFragment extends Fragment implements AdapterView.OnItem
     public void updateInfo(View v) {
         firstName = editTextFirstName.getText().toString();
         lastName = editTextLastName.getText().toString();
-        String contactNum = editTextContactNumber.getText().toString();
-        if(!contactNum.equals("")) {
-            contactNumber = Integer.parseInt(contactNum);
-        }
+        String contactNumber = editTextContactNumber.getText().toString();
         String age_string = editTextAge.getText().toString();
         if(!age_string.equals("")) {
             age = Integer.parseInt(age_string);

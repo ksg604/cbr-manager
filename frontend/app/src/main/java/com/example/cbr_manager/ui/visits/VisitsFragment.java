@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,7 @@ import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsFragment;
 
 import java.sql.Timestamp;
 import java.text.Format;
@@ -154,6 +156,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         String formattedDate = formatter.format(datetimeCreated);
         visitInfoIntent.putExtra("formattedDate", formattedDate);
+        visitInfoIntent.putExtra("location", visit.getLocationDropDown());
         startActivity(visitInfoIntent);
     }
 }

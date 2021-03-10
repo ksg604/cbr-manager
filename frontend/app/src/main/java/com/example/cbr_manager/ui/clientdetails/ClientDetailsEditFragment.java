@@ -81,7 +81,6 @@ public class ClientDetailsEditFragment extends Fragment {
         setupGenderSpinner(root);
         setupEditTexts(clientId, root);
         setupButtons(root);
-        setupVectorImages(root);
 
 
         return root;
@@ -234,31 +233,4 @@ public class ClientDetailsEditFragment extends Fragment {
             }
         });
     }
-
-    private void setupVectorImages(View root) {
-//        ImageView locationImageView = root.findViewById(R.id.profileLocationImageViewEdit);
-//        locationImageView.setImageResource(R.drawable.ic_place);
-//        ImageView age = root.findViewById(R.id.profileAgeImageViewEdit);
-//        age.setImageResource(R.drawable.ic_age);
-//        ImageView gender = root.findViewById(R.id.profileGenderImageViewEdit);
-//        gender.setImageResource(R.drawable.ic_person);
-//        ImageView disability = root.findViewById(R.id.profileDisabilityImageViewEdit);
-//        disability.setImageResource(R.drawable.ic_disable);
-//        ImageView education = root.findViewById(R.id.profileEducationImageViewEdit);
-//        education.setImageResource(R.drawable.ic_education);
-//        ImageView social = root.findViewById(R.id.profileSocialImageViewEdit);
-//        social.setImageResource(R.drawable.ic_social);
-//        ImageView health = root.findViewById(R.id.profileHealthImageViewEdit);
-//        health.setImageResource(R.drawable.ic_health);
-//
-//        ImageView educationRisk = root.findViewById(R.id.profileEducationRiskImageViewEdit);
-//        educationRisk.setImageResource(R.drawable.ic_risk);
-//
-//        ImageView socialRisk = root.findViewById(R.id.profileSocialRiskImageViewEdit);
-//        socialRisk.setImageResource(R.drawable.ic_risk);
-//
-//        ImageView healthRisk = root.findViewById(R.id.profileHealthRiskImageViewEdit);
-//        healthRisk.setImageResource(R.drawable.ic_risk);
-    }
-
 }

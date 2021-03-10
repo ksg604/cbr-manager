@@ -79,12 +79,6 @@ public class VisitDetailsActivity extends AppCompatActivity {
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        Toast.makeText(this, jObjError.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
-//                    } catch (Exception e) {
-//                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//                    }
                 }
             }
 

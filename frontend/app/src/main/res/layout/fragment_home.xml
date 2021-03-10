@@ -361,6 +361,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/outstandingReferralPerson1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -408,6 +409,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/outstandingReferralPerson2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -455,6 +457,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/outstandingReferralPerson3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

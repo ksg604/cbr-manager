@@ -1,32 +1,24 @@
 package com.example.cbr_manager.ui.clientdetails;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
@@ -243,11 +235,6 @@ public class ClientDetailsFragment extends Fragment {
     }
     private void setupSocialRiskTextView(String socialRisk) {
         setUpTextView(R.id.clientDetailsSocialRiskLevelTextView, socialRisk);
-    }
-
-    private void setUpTextView(int textViewId, String text) {
-        TextView textView = getView().findViewById(textViewId);
-        textView.setText(text);
     }
 
     private void setupButtons(View root) {

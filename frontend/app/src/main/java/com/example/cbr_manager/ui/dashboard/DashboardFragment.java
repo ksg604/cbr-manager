@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -88,6 +89,8 @@ public class DashboardFragment extends Fragment {
                                 completedReferrals++;
                             }
                         }
+                        
+                        fillTopThreeOutstandingReferrals(referrals);
 
                         TextView createdReferralsTextView = root.findViewById(R.id.dashboardOutstandingReferralsNumTextView);
                         createdReferralsTextView.setText(Integer.toString(createdReferrals));
@@ -101,6 +104,28 @@ public class DashboardFragment extends Fragment {
 
                 }
             });
+        }
+    }
+
+    private void fillTopThreeOutstandingReferrals(List<Referral> referrals) {
+        if (referrals.size() == 0) {
+            // Fill nothing.
+            return;
+        } else if (referrals.size() == 1) {
+            LinearLayout outStandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
+            outStandingReferral1.setVisibility(View.VISIBLE);
+        } else if (referrals.size() == 2) {
+            LinearLayout outstandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
+            LinearLayout outstandingReferral2 = getView().findViewById(R.id.outstandingReferralPerson2);
+            outstandingReferral1.setVisibility(View.VISIBLE);
+            outstandingReferral2.setVisibility(View.VISIBLE);
+        } else {
+            LinearLayout outstandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
+            LinearLayout outstandingReferral2 = getView().findViewById(R.id.outstandingReferralPerson2);
+            LinearLayout outstandingReferral3 = getView().findViewById(R.id.outstandingReferralPerson3);
+            outstandingReferral1.setVisibility(View.VISIBLE);
+            outstandingReferral2.setVisibility(View.VISIBLE);
+            outstandingReferral3.setVisibility(View.VISIBLE);
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsFragment;
 
 import java.sql.Timestamp;
 import java.text.Format;

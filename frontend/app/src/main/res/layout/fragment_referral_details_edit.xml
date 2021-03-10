@@ -233,7 +233,7 @@
                     android:id="@+id/referralDetailsOutcomeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="3dp"
                     android:lineSpacingExtra="4sp"
                     android:text="This and\nthat"
                     android:textIsSelectable="true"
@@ -269,7 +269,6 @@
                     android:layout_marginTop="4dp"
                     android:lineSpacingExtra="8sp"
                     android:text="This and \nthat"
-                    android:textIsSelectable="true"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/referralDetailsRiskTitleTextView"
                     app:layout_constraintTop_toBottomOf="@+id/referralDetailsRiskTitleTextView" />

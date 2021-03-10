@@ -54,8 +54,8 @@ public interface ClientAPI {
                                     @Part("education_risk") RequestBody educationRisk);
 
     @GET("api/clients/{id}/history/")
-    Call<ClientHistoryRecord> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id);
+    Call<List<ClientHistoryRecord>> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id);
 
     @GET("api/clients/{id}/history/?field={filterByField}")
-    Call<ClientHistoryRecord> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id, String filterByField);
+    Call<List<ClientHistoryRecord>> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id, String filterByField);
 }

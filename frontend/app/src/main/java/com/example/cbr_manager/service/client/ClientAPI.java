@@ -52,4 +52,10 @@ public interface ClientAPI {
                                     @Part("health_risk") RequestBody healthRisk,
                                     @Part("social_risk") RequestBody socialRisk,
                                     @Part("education_risk") RequestBody educationRisk);
+
+    @GET("api/clients/{id}/history/")
+    Call<ClientHistoryRecord> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id);
+
+    @GET("api/clients/{id}/history/?field={filterByField}")
+    Call<ClientHistoryRecord> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id, String filterByField);
 }

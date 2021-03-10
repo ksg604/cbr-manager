@@ -103,4 +103,12 @@ public class ClientService {
         return this.clientAPI.uploadPhoto(authHeader, clientId, body);
     }
 
+    public Call<ClientHistoryRecord> getClientHistoryRecords(int clientId){
+        return this.clientAPI.getClientHistoryRecords(authHeader, clientId);
+    }
+
+    public Call<ClientHistoryRecord> getClientHistoryRecords(int clientId, String filterByField){
+        return this.clientAPI.getClientHistoryRecords(authHeader, clientId, filterByField);
+    }
+
 }

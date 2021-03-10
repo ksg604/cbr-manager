@@ -57,17 +57,17 @@ class Client(models.Model):
                 return text[0]
             return ""
 
-        def append_number_if_not_zero(text, num):
-            if num != 0:
+        def append_number_if_not_one(text, num):
+            if num != 1:
                 return text + str(num)
             return text
 
-        candidate_number = 0
+        candidate_number = 1
         candidate_id = get_first_letter(self.first_name).lower() + get_first_letter(self.last_name).lower()
-        while Client.objects.filter(cbr_client_id=append_number_if_not_zero(candidate_id, candidate_number)).exists():
+        while Client.objects.filter(cbr_client_id=append_number_if_not_one(candidate_id, candidate_number)).exists():
             candidate_number += 1
 
-        return append_number_if_not_zero(candidate_id, candidate_number)
+        return append_number_if_not_one(candidate_id, candidate_number)
 
 
 class ClientHistoryRecord(models.Model):

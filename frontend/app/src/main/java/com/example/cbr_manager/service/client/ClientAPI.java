@@ -22,10 +22,10 @@ public interface ClientAPI {
     @GET("api/clients/")
     Call<List<Client>> getClients(@Header("Authorization") String authHeader);
 
-    @GET("api/clients/{id}")
+    @GET("api/clients/{id}/")
     Call<Client> getClient(@Header("Authorization") String authHeader, @Path("id") int id);
 
-    @PUT("api/clients/{id}")
+    @PUT("api/clients/{id}/")
     Call<Client> modifyClient(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
 
     @POST("api/clients/")
@@ -52,4 +52,10 @@ public interface ClientAPI {
                                     @Part("health_risk") RequestBody healthRisk,
                                     @Part("social_risk") RequestBody socialRisk,
                                     @Part("education_risk") RequestBody educationRisk);
+
+    @GET("api/clients/{id}/history/")
+    Call<List<ClientHistoryRecord>> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id);
+
+    @GET("api/clients/{id}/history/?field={filterByField}")
+    Call<List<ClientHistoryRecord>> getClientHistoryRecords(@Header("Authorization") String authHeader, @Path("id") int id, String filterByField);
 }

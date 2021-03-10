@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="See Visits"
+    <item android:title="Visits"
         android:id="@+id/visitsFragment"
         android:icon="@drawable/ic_visit"
         />
+
+    <item android:title="Referrals"
+        android:id="@+id/referralsFragment"
+        android:icon="@drawable/ic_new_referral"/>
 
     <item android:title="New Visit"
         android:id="@+id/newVisitFragment"
@@ -13,4 +17,11 @@
     <item android:title="New Referral"
         android:id="@+id/createReferralActivityClient"
         android:icon="@drawable/ic_new_referral"/>
+
+    <item android:title="Edit"
+        android:id="@+id/editClient"
+        android:icon="@drawable/ic_edit_purple"
+        />
+
+
 </menu>

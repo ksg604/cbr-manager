@@ -18,6 +18,11 @@ public class Client {
     @Expose
     @PrimaryKey
     private Integer id;
+
+    @SerializedName("cbr_client_id")
+    @Expose
+    private String cbrClientId;
+
     @SerializedName("risk_score")
     @Expose
     private Integer riskScore;
@@ -332,4 +337,11 @@ public class Client {
         return this.firstName + " " + this.lastName;
     }
 
+    public String getCbrClientId() {
+        return cbrClientId;
+    }
+
+    public void setCbrClientId(String cbrClientId) {
+        this.cbrClientId = cbrClientId;
+    }
 }

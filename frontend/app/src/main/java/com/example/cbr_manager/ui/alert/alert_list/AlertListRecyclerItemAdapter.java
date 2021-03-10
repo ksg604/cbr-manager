@@ -44,7 +44,7 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
                 ArrayList<AlertListRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (AlertListRecyclerItem alertListRecyclerItem : alertListRecyclerItems) {
-                    if (alertListRecyclerItem.getmTitle().toLowerCase().trim().contains(searchString)) {
+                    if (alertListRecyclerItem.getmTitle().toLowerCase().trim().contains(searchString) | alertListRecyclerItem.getmBody().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(alertListRecyclerItem);
                     }
                 }

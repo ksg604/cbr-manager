@@ -32,14 +32,14 @@
         <activity
             android:name=".ui.clientdetails.ClientDetailsActivity"
             android:label=".ClientDetailsActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui.referral.referral_details.ReferralDetailsActivity"
+            android:label=".ReferralDetailsActivity"
             android:theme="@style/Theme.Cbr_manager.NoActionBar" />
         <activity
             android:name=".ui.alert.alert_details.AlertDetailsActivity"
             android:label=".AlertDetailsActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar" />
-        <activity
-            android:name=".ui.homepage.HomepageActivity"
-            android:label=".HomepageActivity"
             android:theme="@style/Theme.Cbr_manager.NoActionBar" />
         <activity
             android:name=".ui.login.LoginActivity"

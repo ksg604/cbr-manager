@@ -60,7 +60,7 @@ public class Alert {
         this.date = date;
     }
 
-    public void formatDate() {
+    public String getFormattedDate() {
         String datePython = getDate().substring(0,19);
         String patternOutput = "MM/dd/yyyy   HH:mm";
         String patternInput = "yyyy-MM-DD'T'HH:mm:ss";
@@ -73,6 +73,6 @@ public class Alert {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        setDate(sdfOutput.format(date));
+        return sdfOutput.format(date);
     }
 }

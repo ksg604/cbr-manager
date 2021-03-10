@@ -14,9 +14,9 @@
     <item name="profileLocationImageView" type="id"></item>
     <item name="profileLocationTitleTextView" type="id"></item>
     <item name="clientDetailsLocationTextView" type="id"></item>
-    <item name="profileEducationImageView" type="id"></item>
+    <item name="profileEducationGoalImageView" type="id"></item>
     <item name="profileEducationTitle" type="id"></item>
-    <item name="clientDetailsEducationTextView" type="id"></item>
+    <item name="clientDetailsEducationGoalTextView" type="id"></item>
     <item name="profileDisabilityImageView" type="id"></item>
     <item name="clientDetailsDisabilityTitleTextView" type="id">
     </item>
@@ -26,10 +26,10 @@
     <item name="clientDetailsRiskLevelTextView" type="id"></item>
     <item name="profileSocialImageView" type="id"></item>
     <item name="clientDetailsSocialTitleTextView" type="id"></item>
-    <item name="clientDetailsSocialTextView" type="id"></item>
-    <item name="profileHealthImageView" type="id"></item>
+    <item name="clientDetailsSocialGoalTextView" type="id"></item>
+    <item name="profileHealthGoalImageView" type="id"></item>
     <item name="clientDetailsHealthTitleTextView" type="id"></item>
-    <item name="clientDetailsHealthTextView" type="id"></item>
+    <item name="clientDetailsHealthGoalTextView" type="id"></item>
     <item name="clientDetailsBackButton" type="id"></item>
     <item name="clientDetailsNewVisitButton" type="id"></item>
     <item name="clientDetailsSeeVisitsButton" type="id"></item>

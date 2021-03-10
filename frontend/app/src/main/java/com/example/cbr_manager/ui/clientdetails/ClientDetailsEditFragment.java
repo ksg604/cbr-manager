@@ -1,44 +1,53 @@
 package com.example.cbr_manager.ui.clientdetails;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClientDetailsEditFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ClientDetailsEditFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private APIService apiService = APIService.getInstance();
+    private View parentLayout;
+    private Spinner genderSpinner;
+    String gender="";
+    Client client;
+    private static final String[] paths = {"Male", "Female"};
+
 
     public ClientDetailsEditFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClientDetailsEditFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ClientDetailsEditFragment newInstance(String param1, String param2) {
         ClientDetailsEditFragment fragment = new ClientDetailsEditFragment();
         Bundle args = new Bundle();
@@ -61,8 +70,167 @@ public class ClientDetailsEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client_details_edit, container, false);
+
+        View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
+        parentLayout = root.findViewById(android.R.id.content);
+
+        Intent intent = getActivity().getIntent();
+        int clientId = intent.getIntExtra("clientId", -1);
+
+        setupGenderSpinner(root);
+        setupEditTexts(clientId, root);
+        setupButtons(root);
+
+
+        return root;
     }
 
-    // TODO: Implement form which edits client on the backend
+    private void modifyClientInfo(Client client) {
+
+
+        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                Log.d("log", client.getFirstName());
+                getActivity().onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getAndModifyClient(int clientId, View root) {
+
+        EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
+        EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
+        EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
+        EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
+        EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
+        EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
+        EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
+
+        EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
+        EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
+        EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
+
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                client.setGender(gender);
+
+                String [] clientName = editClientName.getText().toString().split(" ");
+                client.setFirstName(clientName[0]);
+                client.setLastName(clientName[1]);
+                client.setAge(Integer.parseInt(editClientAge.getText().toString()));
+                client.setLocation(editClientLocation.getText().toString());
+                client.setEducationGoal(editClientEducation.getText().toString());
+                client.setDisability(editClientDisability.getText().toString());
+                client.setSocialGoal(editClientSocial.getText().toString());
+                client.setHealthGoal(editClientHealth.getText().toString());
+                client.setEducationRisk(Integer.parseInt((editClientEducationRisk.getText().toString())));
+                client.setSocialRisk(Integer.parseInt(editClientSocialRisk.getText().toString()));
+                client.setHealthRisk(Integer.parseInt(editClientHealthRisk.getText().toString()));
+                modifyClientInfo(client);
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setupGenderSpinner(View root) {
+        String[] paths = {"Male", "Female"};
+        Spinner spinner = (Spinner) root.findViewById(R.id.clientDetailsEditGenderSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                gender = paths[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                gender = paths[0];
+            }
+        });
+    }
+
+    private void setupEditTexts(int clientId, View root) {
+        EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
+        EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
+        EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
+        EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
+        EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
+        EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
+        EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
+
+        EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
+        EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
+        EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
+
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                String clientFirstName = client.getFirstName();
+                String clientLastName = client.getLastName();
+                editClientName.setText(clientFirstName + " " + clientLastName);
+                editClientAge.setText(client.getAge().toString());
+                editClientLocation.setText(client.getLocation());
+                editClientEducation.setText(client.getEducationGoal());
+                editClientDisability.setText(client.getDisability());
+                editClientSocial.setText(client.getSocialGoal());
+                editClientHealth.setText(client.getHealthGoal());
+                editClientEducationRisk.setText(client.getEducationRisk().toString());
+                editClientSocialRisk.setText(client.getSocialRisk().toString());
+                editClientHealthRisk.setText(client.getHealthRisk().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void setupButtons(View root) {
+        setupBackButton(root);
+        setupSubmitButton(root);
+    }
+
+    private void setupSubmitButton(View root) {
+        Intent intent = getActivity().getIntent();
+        int clientId = intent.getIntExtra("clientId", -1);
+
+        Button submitButton = root.findViewById(R.id.clientDetailsEditSubmitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAndModifyClient(clientId, root);
+            }
+        });
+    }
+
+    private void setupBackButton(View root) {
+        ImageView backButtonImageView = root.findViewById(R.id.clientDetailsEditBackImageView);
+        backButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
 }

@@ -34,19 +34,8 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ReferralDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class ReferralDetailsFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private APIService apiService = APIService.getInstance();
     private int referralId = -1;
@@ -56,23 +45,9 @@ public class ReferralDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ReferralDetailsFragment newInstance(String param1, String param2) {
-        ReferralDetailsFragment fragment = new ReferralDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
     }
 
     @Override
@@ -107,8 +82,6 @@ public class ReferralDetailsFragment extends Fragment {
         outcome.setImageResource(R.drawable.ic_disable);
         ImageView dateCreated = root.findViewById(R.id.profileDateCreatedImageView);
         dateCreated.setImageResource(R.drawable.ic_education);
-        ImageView social = root.findViewById(R.id.profileSocialImageView);
-        social.setImageResource(R.drawable.ic_social);
         ImageView type = root.findViewById(R.id.profileTypeImageView);
         type.setImageResource(R.drawable.ic_health);
         ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
@@ -123,15 +96,14 @@ public class ReferralDetailsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Referral referral = response.body();
 
-                    // Todo: dynamically set the referral info here
-                    setupTypeTextView(referral.getServiceType());
+                    setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
+                    setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
+                    setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
+                    setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
+                    setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
+                    setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getFormattedDate());
                     setupImageViews(referral.getPhotoURL());
-                    setupReferToTextView(referral.getRefer_to());
-                    setupStatusTextView(referral.getStatus());
-                    setupDateCreatedTextView(referral.getFormattedDate());
-                    setupOutcomeTextView(referral.getOutcome());
                     setupClientTextView(referral.getClient());
-                    setupServiceDetailTextView(referral);
 
                 } else {
                     Snackbar.make(parentLayout, "Failed to get the referral. Please try again", Snackbar.LENGTH_LONG)
@@ -147,20 +119,12 @@ public class ReferralDetailsFragment extends Fragment {
         });
     }
 
-    private void setupImageViews(String imageURL) {
-        ImageView displayPicture = (ImageView)getView().findViewById(R.id.referralDetailsDisplayPictureImageView);
-        Helper.setImageViewFromURL(imageURL, displayPicture, R.drawable.client_details_placeholder);
-    }
-
-    private void setupTypeTextView(String type) {
-        TextView typeTextView = (TextView)getView().findViewById(R.id.referralDetailsTypeTextView);
-        // TODO: Fill this TextView with information from the backend
-        typeTextView.setText(type);
-    }
-
-    private void setupReferToTextView(String location) {
-        TextView locationTextView = (TextView)getView().findViewById(R.id.referralDetailsReferToTextView);
-        locationTextView.setText(location);
+    private void setUpTextView(int textViewId, String text) {
+        TextView textView = (TextView)getView().findViewById(textViewId);
+        if(text.equals("")){
+            text="None";
+        }
+        textView.setText(text);
     }
 
     private void setupClientTextView(int clientId) {
@@ -182,38 +146,16 @@ public class ReferralDetailsFragment extends Fragment {
                 }
             });
         }
-
     }
 
-    private void setupStatusTextView(String status) {
-        TextView statusTextView = (TextView)getView().findViewById(R.id.referralDetailsStatusTextView);
-        statusTextView.setText(status);
-    }
-
-    private void setupOutcomeTextView(String outcome) {
-        TextView outcomeTextView = (TextView)getView().findViewById(R.id.referralDetailsOutcomeTextView);
-        outcomeTextView.setText(outcome);
-    }
-
-    private void setupServiceDetailTextView(Referral referral) {
-        TextView serviceDetailTextView = (TextView)getView().findViewById(R.id.referralDetailsServiceDetailTextView);
-        serviceDetailTextView.setText(referral.getServiceDetail().getInfo());
-    }
-
-    private void setupDateCreatedTextView(String dateCreated) {
-        TextView dateCreatedTextView = (TextView)getView().findViewById(R.id.referralDetailsDateCreatedTextView);
-        dateCreatedTextView.setText(dateCreated);
-    }
-
-    private void setupSocialTextView(String social) {
-        TextView socialTextView = (TextView)getView().findViewById(R.id.referralDetailsSocialTextView);
-        socialTextView.setText(social);
+    private void setupImageViews(String imageURL) {
+        ImageView displayPicture = (ImageView)getView().findViewById(R.id.referralDetailsDisplayPictureImageView);
+        Helper.setImageViewFromURL(imageURL, displayPicture, R.drawable.client_details_placeholder);
     }
 
     private void setupButtons(View root) {
         setupBackButton(root);
     }
-
 
     private void setupBackButton(View root) {
         ImageView backImageView = root.findViewById(R.id.referralDetailsBackImageView);

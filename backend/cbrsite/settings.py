@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'y*g*axxtgv$fe+&8&_^h&@y!wz%4vih@k!gl3gu+sb0&w$hu7=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', True)
+DEBUG = int(os.getenv('DEBUG', True))
 
 ALLOWED_HOSTS = ['*']
 
@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'cbrsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.getenv('DB_NAME', 'db.sqlite3'),
+        'NAME': BASE_DIR / os.getenv('DB_NAME', 'db.sqlite3'),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASS', 'postgres'),
         'HOST': os.getenv('DB_HOST', 'localhost'),

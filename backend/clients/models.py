@@ -1,9 +1,5 @@
 from django.db import models
 
-
-# Create your models here.
-
-
 class Client(models.Model):
     """
     The clients that get visited by CBR members
@@ -47,3 +43,11 @@ class Client(models.Model):
     def save(self, *args, **kwargs):
         self.risk_score = int(self.health_risk) + int(self.social_risk) + int(self.education_risk)
         super(Client, self).save(*args, **kwargs)
+
+
+class ClientHistoryRecord(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True, editable=False)
+    field = models.CharField(max_length=100, editable=False)
+    old_value = models.TextField(editable=False)
+    new_value = models.TextField(editable=False)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, editable=False)

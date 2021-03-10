@@ -22,7 +22,7 @@ public interface ClientAPI {
     @GET("api/clients/")
     Call<List<Client>> getClients(@Header("Authorization") String authHeader);
 
-    @GET("api/clients/{id}")
+    @GET("api/clients/{id}/")
     Call<Client> getClient(@Header("Authorization") String authHeader, @Path("id") int id);
 
     @PUT("api/clients/{id}/")

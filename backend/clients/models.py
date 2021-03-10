@@ -1,10 +1,13 @@
 from django.db import models
 
+
 class Client(models.Model):
     """
     The clients that get visited by CBR members
     """
     # Client Basic information
+    cbr_client_id = models.CharField(unique=True, editable=False, max_length=10)  # auto generated
+
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     location = models.CharField(max_length=100)
@@ -42,7 +45,29 @@ class Client(models.Model):
 
     def save(self, *args, **kwargs):
         self.risk_score = int(self.health_risk) + int(self.social_risk) + int(self.education_risk)
+
+        if not self.cbr_client_id:
+            self.cbr_client_id = self._generate_cbr_client_id()
+
         super(Client, self).save(*args, **kwargs)
+
+    def _generate_cbr_client_id(self):
+        def get_first_letter(text):
+            if text and len(text) > 0:
+                return text[0]
+            return ""
+
+        def append_number_if_not_one(text, num):
+            if num != 1:
+                return text + str(num)
+            return text
+
+        candidate_number = 1
+        candidate_id = get_first_letter(self.first_name).lower() + get_first_letter(self.last_name).lower()
+        while Client.objects.filter(cbr_client_id=append_number_if_not_one(candidate_id, candidate_number)).exists():
+            candidate_number += 1
+
+        return append_number_if_not_one(candidate_id, candidate_number)
 
 
 class ClientHistoryRecord(models.Model):

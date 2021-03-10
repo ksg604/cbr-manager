@@ -214,4 +214,5 @@
     <string name="sync">SYNC</string>
     <string name="hint_search">Search</string>
     <string name="create_referral">Create Referral</string>
+    <string name="cbr_client_id">CBR Client ID:</string>
 </resources>

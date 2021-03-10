@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -106,9 +105,8 @@ public class CreateClientActivity extends AppCompatActivity {
         client.setAge(age);
         client.setGender(gender);
     }
-    public void setVillageInfo(String location, int id, int villageNo) {
+    public void setVillageInfo(String location, int villageNo) {
         client.setLocation(location);
-        client.setId(id);
         client.setVillageNo(villageNo);
     }
     public void setDisabilityInfo(String disability) {

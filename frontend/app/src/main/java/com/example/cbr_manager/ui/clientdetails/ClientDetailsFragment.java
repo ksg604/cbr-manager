@@ -89,10 +89,6 @@ public class ClientDetailsFragment extends Fragment {
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
-
-        Toolbar toolbar = root.findViewById(R.id.clientDetailsToolBar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        setupToolBar();
         this.clientId = clientId;
 
         setupButtons(root);
@@ -104,24 +100,6 @@ public class ClientDetailsFragment extends Fragment {
 
     private void setupToolBar() {
         setHasOptionsMenu(true);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.edit_client) {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
-                    .addToBackStack(null)
-                    .commit();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.client_details, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
 

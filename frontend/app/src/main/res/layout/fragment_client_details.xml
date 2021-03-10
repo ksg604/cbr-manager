@@ -7,16 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.clientdetails.ClientDetailsFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/clientDetailsToolBar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="?attr/actionBarTheme"
-        app:title="Client Details"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-    </androidx.appcompat.widget.Toolbar>
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/clientDetailsToolBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="?attr/colorPrimary"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        app:title="Client Details"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent">-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -24,7 +24,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/clientDetailsBottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clientDetailsToolBar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintBottom_toTopOf="@id/clientDetailsBottomNavigationView">
 
         <LinearLayout
@@ -476,15 +476,6 @@
                         android:textAllCaps="true"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
-
         </LinearLayout>
     </ScrollView>
 

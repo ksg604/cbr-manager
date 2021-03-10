@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.data.storage.ClientDBService;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
@@ -26,6 +27,7 @@ import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +55,16 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         clientListRecyclerView.setLayoutManager(mLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
-        fetchClientsToList(clientList);
+        //fetchClientsToList(clientList);
+        try {
+            clientList.addAll(ClientDBService.getInstance(getContext()).readAll());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        clientListAdapter.notifyDataSetChanged();
+
         SearchView clientSearch = root.findViewById(R.id.clientSearchView);
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

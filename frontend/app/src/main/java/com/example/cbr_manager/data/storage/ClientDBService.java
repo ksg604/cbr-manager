@@ -18,10 +18,13 @@ public class ClientDBService {
 
     public static ClientDBService getInstance(Context context){
         if(Instance == null){
-            Instance = new ClientDBService();
-            Instance.clientDao = RoomDB.getDatabase(context).clientDao();
+            Instance = new ClientDBService(context);
         }
         return (Instance);
+    }
+
+    private ClientDBService(Context context){
+        clientDao = RoomDB.getDatabase(context).clientDao();
     }
 
     public void insert(Client client){
@@ -81,6 +84,17 @@ public class ClientDBService {
 
         executor.shutdown();
         return future.get();
+    }
+
+    public void clearAll(){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Callable<Integer> callable = () ->{
+            clientDao.clearAll();
+            return 0;
+        };
+        Future<Integer> future = executor.submit(callable);
+
+        executor.shutdown();
     }
 
 }

@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -16,7 +19,7 @@ import okhttp3.RequestBody;
 public class Client {
     @SerializedName("id")
     @Expose
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private Integer id;
 
     @SerializedName("cbr_client_id")
@@ -123,6 +126,8 @@ public class Client {
         this.gpsLocation = "";
         this.riskScore = 0;
         this.photoURL = "";
+        this.lastModifed = new Timestamp(new Date().getTime());
+        this.newClient = true;
 
     }
     public Client(String consent, String date, String firstName, String lastName, String contactClient, int age,
@@ -354,4 +359,31 @@ public class Client {
     public void setCbrClientId(String cbrClientId) {
         this.cbrClientId = cbrClientId;
     }
+
+    // Extra fields for checking sync states
+    @SerializedName("last_modified")
+    @Expose
+    private Timestamp lastModifed;
+
+    @SerializedName("is_new_client")
+    @Expose
+    private boolean newClient;
+
+    public Timestamp getLastModifed(){
+        return lastModifed;
+    }
+
+    public void setLastModifed(Timestamp date){
+        this.lastModifed = date;
+    }
+
+    public boolean isNewClient(){
+        return newClient;
+    }
+
+    public void setNewClient(boolean newClient){
+        this.newClient = newClient;
+    }
+
+
 }

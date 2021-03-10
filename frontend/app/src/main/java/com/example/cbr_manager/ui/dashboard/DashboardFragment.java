@@ -20,6 +20,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
+import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
@@ -63,8 +64,44 @@ public class DashboardFragment extends Fragment {
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
         setupVisitStats(root);
+        setupOutstandingReferralStats(root);
 
         return root;
+    }
+
+    private void setupOutstandingReferralStats(View root) {
+        if (apiService.isAuthenticated()) {
+            apiService.referralService.getReferrals().enqueue(new Callback<List<Referral>>() {
+                @Override
+                public void onResponse(Call<List<Referral>> call, Response<List<Referral>> response) {
+                    if (response.isSuccessful()) {
+                        List<Referral> referrals = response.body();
+                        int createdReferrals = 0;
+                        int completedReferrals = 0;
+                        String status;
+                        for (Referral referral : referrals) {
+                            status = referral.getStatus();
+
+                            if (status.toLowerCase().trim().equals("created")) {
+                                createdReferrals++;
+                            } else if (status.toLowerCase().trim().equals("resolved")) {
+                                completedReferrals++;
+                            }
+                        }
+
+                        TextView createdReferralsTextView = root.findViewById(R.id.dashboardOutstandingReferralsNumTextView);
+                        createdReferralsTextView.setText(Integer.toString(createdReferrals));
+                        TextView completedReferralsTextView = root.findViewById(R.id.dashboardCompletedReferralsNumTextView);
+                        completedReferralsTextView.setText(Integer.toString(completedReferrals));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Referral>> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     private void setupVisitStats(View root) {

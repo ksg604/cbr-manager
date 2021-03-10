@@ -332,50 +332,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="8sp"
                     android:text="This and \nthat"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/profileRiskImageView"
                     app:layout_constraintTop_toBottomOf="@+id/referralDetailsRiskTitleTextView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/profileSocialImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@drawable/ic_social" />
-
-                <TextView
-                    android:id="@+id/referralDetailsSocialTitleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Social:"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/referralDetailsSocialTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Social"
-                    android:textSize="18sp" />
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

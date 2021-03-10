@@ -13,6 +13,7 @@ public class OtherServiceDetail extends ServiceDetail {
     }
 
     public void setDescription(String description) {
+        if(description.equals("")){description="None";}
         this.description = description;
     }
 

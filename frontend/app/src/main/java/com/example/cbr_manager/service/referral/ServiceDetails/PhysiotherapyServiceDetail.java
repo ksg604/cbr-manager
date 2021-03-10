@@ -24,6 +24,7 @@ public class PhysiotherapyServiceDetail extends ServiceDetail {
     }
 
     public void setOther_description(String other_description) {
+        if(other_description.equals("")){other_description="None";}
         this.other_description = other_description;
     }
     public String getInfo(){

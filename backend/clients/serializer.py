@@ -37,3 +37,9 @@ class ClientSerializer(serializers.ModelSerializer):
         create_client_history_record(client_fields_diff_dict, pre_update_client_json)
 
         return instance
+
+
+class ClientHistoryRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClientHistoryRecord
+        fields = '__all__'

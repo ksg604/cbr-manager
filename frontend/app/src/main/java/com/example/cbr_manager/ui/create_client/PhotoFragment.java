@@ -27,6 +27,8 @@ import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -150,9 +152,11 @@ public class PhotoFragment extends Fragment {
         }
     }
 
-    private void onSubmitSuccess(View view) {
+    private void onSubmitSuccess(View view, Client client) {
         Intent intent = new Intent(getActivity(), NavigationActivity.class);
         intent.putExtra(NavigationActivity.KEY_SNACK_BAR_MESSAGE, "Successfully created the client.");
+//        Intent intent = new Intent(getActivity(), ClientDetailsActivity.class);
+//        intent.putExtra(ClientDetailsActivity.class, "Successfully created the client.");
         startActivity(intent);
     }
 
@@ -166,11 +170,11 @@ public class PhotoFragment extends Fragment {
             public void onResponse(Call<Client> call, Response<Client> response) {
                 if (response.isSuccessful()) {
 
-                    int clientId = response.body().getId();
+                    Client client = response.body();
 
                     File photoFile = new File(imageFilePath);
                     if (photoFile.exists()) {
-                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, clientId);
+                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, client.getId());
                         photoCall.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -184,7 +188,7 @@ public class PhotoFragment extends Fragment {
                         });
                     }
 
-                    onSubmitSuccess(view);
+                    onSubmitSuccess(view, client);
                 } else {
                     Snackbar.make(view, "Failed to create the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

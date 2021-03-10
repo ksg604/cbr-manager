@@ -1,7 +1,9 @@
 from django.db import models
 
+from django.db.models.signals import post_save
 
 # Create your models here.
+from django.dispatch import receiver
 
 
 class Client(models.Model):
@@ -41,9 +43,24 @@ class Client(models.Model):
     class Meta:
         ordering = ['id']
 
+    def __init__(self, *args, **kwargs):
+        super(Client, self).__init__(*args, **kwargs)
+        self._original_state = self
+
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
         self.risk_score = int(self.health_risk) + int(self.social_risk) + int(self.education_risk)
         super(Client, self).save(*args, **kwargs)
+
+    def _has_client_changed(self, new_client_state):
+        return new_client_state == self
+
+
+class ClientHistoryRecord(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True, editable=False)
+    field = models.CharField(max_length=100, editable=False)
+    old_value = models.TextField(editable=False)
+    new_value = models.TextField(editable=False)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, editable=False)

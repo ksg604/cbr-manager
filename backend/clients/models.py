@@ -68,3 +68,11 @@ class Client(models.Model):
             candidate_number += 1
 
         return append_number_if_not_zero(candidate_id, candidate_number)
+
+
+class ClientHistoryRecord(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True, editable=False)
+    field = models.CharField(max_length=100, editable=False)
+    old_value = models.TextField(editable=False)
+    new_value = models.TextField(editable=False)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, editable=False)

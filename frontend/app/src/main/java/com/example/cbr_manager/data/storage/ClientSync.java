@@ -29,6 +29,9 @@ public class ClientSync {
     private static ClientDBService localdb;
     private static APIService apiService;
     private static ClientSync Instance;
+    private static volatile List<Client> localClient = new ArrayList<>();
+    private static volatile List<Client> serverClient = new ArrayList<>();
+
 
     private static volatile List<Client> localClient = new ArrayList<>();
     private static volatile List<Client> serverClient = new ArrayList<>();

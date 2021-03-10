@@ -90,7 +90,7 @@ public class ClientDetailsFragment extends Fragment {
         getClientInfo(clientId);
 
 
-        Toolbar toolbar = root.findViewById(R.id.toolbar2);
+        Toolbar toolbar = root.findViewById(R.id.clientDetailsToolBar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setupToolBar();
         this.clientId = clientId;
@@ -103,9 +103,7 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupToolBar() {
-//        getActivity().getActionBar().set
         setHasOptionsMenu(true);
-
     }
 
     @SuppressLint("NonConstantResourceId")

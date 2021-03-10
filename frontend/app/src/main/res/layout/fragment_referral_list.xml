@@ -8,6 +8,14 @@
     android:background="#EAEDF4"
     tools:context=".ui.referral.referral_list.ReferralListFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/referralListToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="Referral List"
+        android:theme="?attr/actionBarTheme" />
+
     <SearchView
         android:id="@+id/referralSearchView"
         android:layout_width="match_parent"

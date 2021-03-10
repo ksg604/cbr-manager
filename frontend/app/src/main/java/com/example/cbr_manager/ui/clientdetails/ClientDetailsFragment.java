@@ -1,16 +1,23 @@
 package com.example.cbr_manager.ui.clientdetails;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +26,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
+
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
@@ -30,11 +37,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClientDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ClientDetailsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -70,9 +72,10 @@ public class ClientDetailsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,14 +89,20 @@ public class ClientDetailsFragment extends Fragment {
         int clientId = intent.getIntExtra("clientId", -1);
         getClientInfo(clientId);
 
-        ImageView locationImageView = root.findViewById(R.id.profileLocationImageView);
-        locationImageView.setImageResource(R.drawable.ic_place);
         this.clientId = clientId;
 
         setupButtons(root);
         setupVectorImages(root);
+        setupBottomNavigationView(root);
 
+        return root;
+    }
 
+    private void setupToolBar() {
+        setHasOptionsMenu(true);
+    }
+
+    private void setupBottomNavigationView(View root) {
         BottomNavigationView clientDetailsNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
         clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -101,8 +110,11 @@ public class ClientDetailsFragment extends Fragment {
 
                 switch(item.getItemId()) {
                     case R.id.visitsFragment:
+                        
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .add(android.R.id.content, new VisitsFragment()).commit();
+                                .replace(android.R.id.content, new VisitsFragment())
+                                .addToBackStack(null)
+                                .commit();
                         break;
                     case R.id.newVisitFragment:
                         Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
@@ -120,32 +132,21 @@ public class ClientDetailsFragment extends Fragment {
                         ReferralListFragment fragment = new ReferralListFragment();
                         fragment.setArguments(arguments);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .add(android.R.id.content, fragment).commit();
+                                .replace(android.R.id.content, fragment).addToBackStack(null).commit();
                         break;
+                    case R.id.editClient:
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+                                .addToBackStack(null)
+                                .commit();
                 }
                 return false;
             }
         });
-
-        return root;
     }
 
 
     private void setupVectorImages(View root) {
-        ImageView age = root.findViewById(R.id.profileAgeImageView);
-        age.setImageResource(R.drawable.ic_age);
-        ImageView gender = root.findViewById(R.id.profileGenderImageView);
-        gender.setImageResource(R.drawable.ic_person);
-        ImageView disability = root.findViewById(R.id.profileDisabilityImageView);
-        disability.setImageResource(R.drawable.ic_disable);
-        ImageView education = root.findViewById(R.id.profileEducationImageView);
-        education.setImageResource(R.drawable.ic_education);
-        ImageView social = root.findViewById(R.id.profileSocialImageView);
-        social.setImageResource(R.drawable.ic_social);
-        ImageView health = root.findViewById(R.id.profileHealthImageView);
-        health.setImageResource(R.drawable.ic_health);
-        ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
-        riskScore.setImageResource(R.drawable.ic_risk);
     }
 
     private void getClientInfo(int clientId) {
@@ -166,6 +167,9 @@ public class ClientDetailsFragment extends Fragment {
                     setupHealthTextView(client.getHealthGoal());
                     setupSocialTextView(client.getSocialGoal());
                     setupEducationTextView(client.getEducationGoal());
+                    setupEducationRiskTextView(client.getEducationRisk().toString());
+                    setupSocialRiskTextView(client.getSocialRisk().toString());
+                    setupHealthRiskTextView(client.getHealthRisk().toString());
                     setupDisabilityTextView(client.getDisability());
                     setupRiskLevelTextView(client.getRiskScore().toString());
                 } else {
@@ -188,53 +192,58 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void setupNameTextView(String fullName) {
-        TextView nameTextView = (TextView)getView().findViewById(R.id.clientDetailsNameTextView);
-        // TODO: Fill this TextView with information from the backend
-        nameTextView.setText(fullName);
+        setUpTextView(R.id.clientDetailsNameTextView, fullName);
     }
 
     private void setupLocationTextView(String location) {
-        TextView locationTextView = (TextView)getView().findViewById(R.id.clientDetailsLocationTextView);
-        locationTextView.setText(location);
+        setUpTextView(R.id.clientDetailsLocationTextView, location);
     }
 
     private void setupGenderTextView(String gender) {
-        TextView genderTextView = (TextView)getView().findViewById(R.id.clientDetailsGenderTextView);
-        genderTextView.setText(gender);
+        setUpTextView(R.id.clientDetailsGenderTextView, gender);
     }
 
     private void setupAgeTextView(String age) {
-        TextView ageTextView = (TextView)getView().findViewById(R.id.clientDetailsAgeTextView);
-        ageTextView.setText(age);
+        setUpTextView(R.id.clientDetailsAgeTextView, age);
     }
 
     private void setupDisabilityTextView(String disability) {
-        TextView disabilityTextView = (TextView)getView().findViewById(R.id.clientDetailsDisabilityTextView);
-        disabilityTextView.setText(disability);
+        setUpTextView(R.id.clientDetailsDisabilityTextView, disability);
     }
 
     private void setupRiskLevelTextView(String riskLevel) {
-        TextView riskLevelTextView = (TextView)getView().findViewById(R.id.clientDetailsRiskLevelTextView);
-        riskLevelTextView.setText(riskLevel);
+        setUpTextView(R.id.clientDetailsRiskLevelTextView, riskLevel);
     }
 
     private void setupHealthTextView(String health) {
-        TextView healthTextView = (TextView)getView().findViewById(R.id.clientDetailsHealthTextView);
-        healthTextView.setText(health);
+        setUpTextView(R.id.clientDetailsHealthGoalTextView, health);
     }
 
     private void setupEducationTextView(String education) {
-        TextView educationTextView = (TextView)getView().findViewById(R.id.clientDetailsEducationTextView);
-        educationTextView.setText(education);
+        setUpTextView(R.id.clientDetailsEducationGoalTextView, education);
     }
 
     private void setupSocialTextView(String social) {
-        TextView socialTextView = (TextView)getView().findViewById(R.id.clientDetailsSocialTextView);
-        socialTextView.setText(social);
+        setUpTextView(R.id.clientDetailsSocialGoalTextView, social);
+    }
+
+    private void setupHealthRiskTextView(String healthRisk) {
+        setUpTextView(R.id.clientDetailsHealthRiskLevelTextView, healthRisk);
+    }
+
+    private void setupEducationRiskTextView(String educationRisk) {
+        setUpTextView(R.id.clientDetailsEducationRiskLevelTextView, educationRisk);
+    }
+    private void setupSocialRiskTextView(String socialRisk) {
+        setUpTextView(R.id.clientDetailsSocialRiskLevelTextView, socialRisk);
+    }
+
+    private void setUpTextView(int textViewId, String text) {
+        TextView textView = getView().findViewById(textViewId);
+        textView.setText(text);
     }
 
     private void setupButtons(View root) {
-
         setupEditButton(root);
         setupBackButton(root);
     }
@@ -267,7 +276,5 @@ public class ClientDetailsFragment extends Fragment {
     public int getClientId() {
         return clientId;
     }
-
-
 
 }

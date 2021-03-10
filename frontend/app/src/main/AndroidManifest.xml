@@ -32,7 +32,7 @@
         <activity
             android:name=".ui.clientdetails.ClientDetailsActivity"
             android:label=".ClientDetailsActivity"
-            android:theme="@style/Theme.Cbr_manager.NoActionBar" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.referral.referral_details.ReferralDetailsActivity"
             android:label=".ReferralDetailsActivity"

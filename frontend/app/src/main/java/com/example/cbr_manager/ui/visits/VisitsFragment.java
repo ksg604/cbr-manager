@@ -2,7 +2,11 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -10,6 +14,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,8 +27,10 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsFragment;
 
 import java.sql.Timestamp;
 import java.text.Format;
@@ -93,7 +101,6 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
         return root;
     }
-
     public void fetchVisitsToList(List<VisitsRecyclerItem> visitUIList) {
         if (apiService.isAuthenticated()) {
             apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
@@ -136,6 +143,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         }
     }
 
+
     @Override
     public void onItemClick(int position) {
 
@@ -148,6 +156,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         String formattedDate = formatter.format(datetimeCreated);
         visitInfoIntent.putExtra("formattedDate", formattedDate);
+        visitInfoIntent.putExtra("location", visit.getLocationDropDown());
         startActivity(visitInfoIntent);
     }
 }

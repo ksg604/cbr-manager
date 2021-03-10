@@ -41,7 +41,6 @@ public class NewVisitFragment extends Fragment {
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
-    private String clientName;
     private String username = "";
 
     public NewVisitFragment() {
@@ -77,7 +76,6 @@ public class NewVisitFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 gatherAllData(view);
-
             }
         });
     }
@@ -139,8 +137,8 @@ public class NewVisitFragment extends Fragment {
                 public void onResponse(Call<Client> call, Response<Client> response) {
                     if (response.isSuccessful()) {
                         client = response.body();
-                        fillClientWithVisitData(client, view);
                         Visit visit = new Visit("", clientId, userId, client);
+                        fillVisitData(visit, view);
 
                         Call<Visit> call1 = apiService.visitService.createVisit(visit);
                         call1.enqueue(new Callback<Visit>() {
@@ -173,7 +171,7 @@ public class NewVisitFragment extends Fragment {
         }
     }
 
-    private void fillClientWithVisitData(Client client, View view) {
+    private void fillVisitData(Visit visit, View view) {
         ChipGroup purposeChipGroup = view.findViewById(R.id.purposeChipGroup);
         purposeChipGroup.getCheckedChipIds();
 
@@ -328,70 +326,70 @@ public class NewVisitFragment extends Fragment {
         String socialConclusion = socialConclusionEditText.getText().toString();
 
         // Setting Preamble
-        client.setCBRPurpose(isCBR);
-        client.setDisabilityFollowUpPurpose(isDisabilityFollowUp);
-        client.setDisabilityReferralPurpose(isDisabilityReferral);
+        visit.setCBRPurpose(isCBR);
+        visit.setDisabilityFollowUpPurpose(isDisabilityFollowUp);
+        visit.setDisabilityReferralPurpose(isDisabilityReferral);
 
-        client.setHealthProvision(isHealthProvision);
-        client.setEducationProvision(isEducationProvision);
-        client.setSocialProvision(isSocialProvision);
+        visit.setHealthProvision(isHealthProvision);
+        visit.setEducationProvision(isEducationProvision);
+        visit.setSocialProvision(isSocialProvision);
 
-        client.setCbrWorkerName(name);
+        visit.setCbrWorkerName(name);
 
         // Setting locations
-        client.setLocationVisitGPS(locationVisit);
-        client.setLocationDropDown(locationDDL);
+        visit.setLocationVisitGPS(locationVisit);
+        visit.setLocationDropDown(locationDDL);
         if (!villageNumberString.isEmpty()) {
-            client.setVillageNoVisit(Integer.parseInt(villageNumberString));
+            visit.setVillageNoVisit(Integer.parseInt(villageNumberString));
         }
         // Health provision
-        client.setWheelchairHealthProvision(isWheelChairHealth);
-        client.setProstheticHealthProvision(isProtheticHealth);
-        client.setOrthoticHealthProvision(isOrtheticHealth);
-        client.setRepairsHealthProvision(isRepairHealth);
-        client.setReferralHealthProvision(isReferralHealth);
-        client.setAdviceHealthProvision(isAdviceHealth);
-        client.setAdvocacyHealthProvision(isAdvocacyHealth);
-        client.setEncouragementHealthProvision(isEncouragementHealth);
+        visit.setWheelchairHealthProvision(isWheelChairHealth);
+        visit.setProstheticHealthProvision(isProtheticHealth);
+        visit.setOrthoticHealthProvision(isOrtheticHealth);
+        visit.setRepairsHealthProvision(isRepairHealth);
+        visit.setReferralHealthProvision(isReferralHealth);
+        visit.setAdviceHealthProvision(isAdviceHealth);
+        visit.setAdvocacyHealthProvision(isAdvocacyHealth);
+        visit.setEncouragementHealthProvision(isEncouragementHealth);
 
-        client.setWheelchairHealthProvisionText(wheelchairDescription);
-        client.setProstheticHealthProvisionText(protheticDescription);
-        client.setOrthoticHealthProvisionText(ortheticDescription);
-        client.setRepairsHealthProvisionText(repairDescription);
-        client.setReferralHealthProvisionText(referralDescription);
-        client.setAdviceHealthProvisionText(adviceDescription);
-        client.setAdvocacyHealthProvisionText(advocacyDescription);
-        client.setEncouragementHealthProvisionText(encouragementDescription);
+        visit.setWheelchairHealthProvisionText(wheelchairDescription);
+        visit.setProstheticHealthProvisionText(protheticDescription);
+        visit.setOrthoticHealthProvisionText(ortheticDescription);
+        visit.setRepairsHealthProvisionText(repairDescription);
+        visit.setReferralHealthProvisionText(referralDescription);
+        visit.setAdviceHealthProvisionText(adviceDescription);
+        visit.setAdvocacyHealthProvisionText(advocacyDescription);
+        visit.setEncouragementHealthProvisionText(encouragementDescription);
 
-        client.setGoalMetHealthProvision(healthGoalText);
-        client.setConclusionHealthProvision(healthConclusionDescription);
+        visit.setGoalMetHealthProvision(healthGoalText);
+        visit.setConclusionHealthProvision(healthConclusionDescription);
 
         // Education provision
-        client.setAdviceEducationProvision(isEducationAdvice);
-        client.setAdvocacyEducationProvision(isEducationAdvocacy);
-        client.setReferralEducationProvision(isEducationReferral);
-        client.setEncouragementEducationProvision(isEducationEncouragement);
+        visit.setAdviceEducationProvision(isEducationAdvice);
+        visit.setAdvocacyEducationProvision(isEducationAdvocacy);
+        visit.setReferralEducationProvision(isEducationReferral);
+        visit.setEncouragementEducationProvision(isEducationEncouragement);
 
-        client.setAdviceEducationProvisionText(educationAdviceDescription);
-        client.setAdvocacyEducationProvisionText(educationAdvocacyDescription);
-        client.setReferralEducationProvisionText(educationReferralDescription);
-        client.setEncouragementEducationProvisionText(educationEncouragementDescription);
-        client.setGoalMetEducationProvision(educationGoalText);
-        client.setConclusionEducationProvision(educationConclusion);
+        visit.setAdviceEducationProvisionText(educationAdviceDescription);
+        visit.setAdvocacyEducationProvisionText(educationAdvocacyDescription);
+        visit.setReferralEducationProvisionText(educationReferralDescription);
+        visit.setEncouragementEducationProvisionText(educationEncouragementDescription);
+        visit.setGoalMetEducationProvision(educationGoalText);
+        visit.setConclusionEducationProvision(educationConclusion);
 
         // Social provision
-        client.setAdviceSocialProvision(isSocialAdvice);
-        client.setAdvocacySocialProvision(isSocialAdvocacy);
-        client.setReferralSocialProvision(isSocialReferral);
-        client.setEncouragementSocialProvision(isSocialEncouragement);
+        visit.setAdviceSocialProvision(isSocialAdvice);
+        visit.setAdvocacySocialProvision(isSocialAdvocacy);
+        visit.setReferralSocialProvision(isSocialReferral);
+        visit.setEncouragementSocialProvision(isSocialEncouragement);
 
-        client.setAdviceSocialProvisionText(socialAdviceDescription);
-        client.setAdvocacyHealthProvisionText(socialAdvocacyDescription);
-        client.setReferralSocialProvisionText(socialReferralDescription);
-        client.setEncouragementSocialProvisionText(socialEncouragementDescription);
+        visit.setAdviceSocialProvisionText(socialAdviceDescription);
+        visit.setAdvocacySocialProvisionText(socialAdvocacyDescription);
+        visit.setReferralSocialProvisionText(socialReferralDescription);
+        visit.setEncouragementSocialProvisionText(socialEncouragementDescription);
 
-        client.setGoalMetSocialProvision(socialGoalText);
-        client.setConclusionEducationProvision(socialConclusion);
+        visit.setGoalMetSocialProvision(socialGoalText);
+        visit.setConclusionSocialProvision(socialConclusion);
     }
 
     private void setupLocationSpinner(View view) {
@@ -504,44 +502,44 @@ public class NewVisitFragment extends Fragment {
         Chip adviceChip = view.findViewById(R.id.educationProvisionsAdviceChip);
         TextView adviceTV = view.findViewById(R.id.educationProvisionAdviceTextView);
         EditText adviceET = view.findViewById(R.id.educationProvisionAdviceTextMultiLine);
-        setChipListener(adviceChip,adviceET,adviceTV);
+        setChipListener(adviceChip, adviceET, adviceTV);
 
         Chip advocacyChip = view.findViewById(R.id.educationProvisionsAdvocacyChip);
         TextView advocacyTV = view.findViewById(R.id.educationProvisionAdvocacyTextView);
         EditText advocacyET = view.findViewById(R.id.educationProvisionAdvocacyTextMultiLine);
-        setChipListener(advocacyChip,advocacyET,advocacyTV);
+        setChipListener(advocacyChip, advocacyET, advocacyTV);
 
         Chip referralChip = view.findViewById(R.id.educationProvisionsReferralChip);
         TextView referralTV = view.findViewById(R.id.educationProvisionReferralTextView);
         EditText referralET = view.findViewById(R.id.educationProvisionReferralTextMultiLine);
-        setChipListener(referralChip,referralET,referralTV);
+        setChipListener(referralChip, referralET, referralTV);
 
         Chip encourageChip = view.findViewById(R.id.educationProvisionsEncouragementChip);
         TextView encourageTV = view.findViewById(R.id.educationProvisionEncouragementTextView);
         EditText encourageET = view.findViewById(R.id.educationProvisionEncouragementTextMultiLine);
-        setChipListener(encourageChip,encourageET,encourageTV);
+        setChipListener(encourageChip, encourageET, encourageTV);
     }
 
     private void setupVisibilitySocialProvisions(View view) {
         Chip adviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
         TextView adviceTV = view.findViewById(R.id.socialProvisionAdviceTextView);
         EditText adviceET = view.findViewById(R.id.socialProvisionAdviceTextMultiLine);
-        setChipListener(adviceChip,adviceET,adviceTV);
+        setChipListener(adviceChip, adviceET, adviceTV);
 
         Chip advocacyChip = view.findViewById(R.id.socialProvisionAdvocacyChip);
         TextView advocacyTV = view.findViewById(R.id.socialProvisionAdvocacyTextView);
         EditText advocacyET = view.findViewById(R.id.socialProvisionAdvocacyMultiLineText);
-        setChipListener(advocacyChip,advocacyET,advocacyTV);
+        setChipListener(advocacyChip, advocacyET, advocacyTV);
 
         Chip referralChip = view.findViewById(R.id.socialProvisionReferralChip);
         TextView referralTV = view.findViewById(R.id.socialProvisionReferralTextView);
         EditText referralET = view.findViewById(R.id.socialProvisionReferralTextMultiLine);
-        setChipListener(referralChip,referralET,referralTV);
+        setChipListener(referralChip, referralET, referralTV);
 
         Chip encourageChip = view.findViewById(R.id.socialProvisionEncouragementChip);
         TextView encourageTV = view.findViewById(R.id.socialProvisionEncouragementTextView);
         EditText encourageET = view.findViewById(R.id.socialProvisionEncouragementTextMultiLine);
-        setChipListener(encourageChip,encourageET,encourageTV);
+        setChipListener(encourageChip, encourageET, encourageTV);
     }
 
     private void setChipListener(Chip chip, EditText editText, TextView textView) {

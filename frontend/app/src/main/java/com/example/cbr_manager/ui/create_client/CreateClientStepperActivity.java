@@ -46,6 +46,8 @@ public class CreateClientStepperActivity extends AppCompatActivity  implements S
 
         formClientObj = new Client();
 
+        setTitle("Create a Client");
+
         mStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         mStepperLayout.setAdapter(setUpStepperAdapterWithFragments());
         mStepperLayout.setListener(this);

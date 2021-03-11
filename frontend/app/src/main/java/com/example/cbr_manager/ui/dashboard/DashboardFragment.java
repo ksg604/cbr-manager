@@ -88,7 +88,7 @@ public class DashboardFragment extends Fragment {
                             }
                         }
                         
-                        fillTopThreeOutstandingReferrals(referrals);
+//                        fillTopThreeOutstandingReferrals(referrals);
 
                         TextView createdReferralsTextView = root.findViewById(R.id.dashboardOutstandingReferralsNumTextView);
                         createdReferralsTextView.setText(Integer.toString(createdReferrals));

@@ -202,14 +202,12 @@ public class CreateVisitFragment extends Fragment {
         String todayString = format.format(today);
 
         // Location
-        EditText locationOfVisit = view.findViewById(R.id.editTextTextLocation);
-        String locationVisit = locationOfVisit.getText().toString();
+        String locationVisit = getEditTextString(R.id.editTextTextLocation);
 
         Spinner locationSpinner = view.findViewById(R.id.locationFragmentSpinner);
         String locationDDL = locationSpinner.getSelectedItem().toString();
 
-        EditText villageNumber = view.findViewById(R.id.villageNumberEditText);
-        String villageNumberString = villageNumber.getText().toString();
+        String villageNumberString = getEditTextString(R.id.villageNumberEditText);
 
         // Health provision
         Chip wheelchairHealth = view.findViewById(R.id.wheelchairChip);

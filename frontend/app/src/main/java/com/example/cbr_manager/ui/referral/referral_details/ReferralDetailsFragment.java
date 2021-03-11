@@ -19,6 +19,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
@@ -63,29 +64,11 @@ public class ReferralDetailsFragment extends Fragment {
         int referralId = intent.getIntExtra("referralId", -1);
         getReferralInfo(referralId);
 
-        ImageView locationImageView = root.findViewById(R.id.profileReferToImageView);
-        locationImageView.setImageResource(R.drawable.ic_place);
         this.referralId = referralId;
 
         setupButtons(root);
-        setupVectorImages(root);
 
         return root;
-    }
-    
-    private void setupVectorImages(View root) {
-        ImageView age = root.findViewById(R.id.profileAgeImageView);
-        age.setImageResource(R.drawable.ic_age);
-        ImageView gender = root.findViewById(R.id.profileGenderImageView);
-        gender.setImageResource(R.drawable.ic_person);
-        ImageView outcome = root.findViewById(R.id.profileOutcomeImageView);
-        outcome.setImageResource(R.drawable.ic_disable);
-        ImageView dateCreated = root.findViewById(R.id.profileDateCreatedImageView);
-        dateCreated.setImageResource(R.drawable.ic_education);
-        ImageView type = root.findViewById(R.id.profileTypeImageView);
-        type.setImageResource(R.drawable.ic_health);
-        ImageView riskScore = root.findViewById(R.id.profileRiskImageView);
-        riskScore.setImageResource(R.drawable.ic_risk);
     }
 
     private void getReferralInfo(int referralId) {
@@ -155,6 +138,22 @@ public class ReferralDetailsFragment extends Fragment {
 
     private void setupButtons(View root) {
         setupBackButton(root);
+        setupEditButton(root);
+    }
+
+    private void setupEditButton(View root) {
+
+        ImageView editButtonImageView = root.findViewById(R.id.referralDetailsEditImageView);
+
+        editButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_referral_details, ReferralDetailsEditFragment.class, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     private void setupBackButton(View root) {

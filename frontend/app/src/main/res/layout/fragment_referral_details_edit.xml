@@ -141,8 +141,8 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/referralDetailsReferToTextView"
+                <EditText
+                    android:id="@+id/referralDetailsReferToEditTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -169,14 +169,12 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/referralDetailsStatusTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Status"
-                    android:textSize="18sp" />
+                <Spinner
+                    android:id="@+id/referralDetailsEditStatusSpinner"
+                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
 
@@ -229,13 +227,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/referralDetailsOutcomeTextView"
+                <EditText
+                    android:id="@+id/referralDetailsOutcomeEditTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:lineSpacingExtra="4sp"
                     android:text="This and\nthat"
+                    android:maxLines="10"
                     android:textIsSelectable="true"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/referralDetailsOutcomeTitleTextView"
@@ -277,4 +276,22 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:text="Submit" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

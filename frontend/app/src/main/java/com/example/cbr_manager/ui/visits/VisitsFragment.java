@@ -149,14 +149,8 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
         Intent visitInfoIntent = new Intent(getContext(), VisitDetailsActivity.class);
         VisitsRecyclerItem visitsRecyclerItem = adapter.getVisitItem(position);
-        Visit visit = visitsRecyclerItem.getVisit();
-        visitInfoIntent.putExtra("additionalInfo", visit.getAdditionalInfo());
-        visitInfoIntent.putExtra("clientId", visit.getClientId());
-        Timestamp datetimeCreated = visit.getDatetimeCreated();
-        Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        String formattedDate = formatter.format(datetimeCreated);
-        visitInfoIntent.putExtra("formattedDate", formattedDate);
-        visitInfoIntent.putExtra("location", visit.getLocationDropDown());
+        visitInfoIntent.putExtra(VisitDetailsActivity.KEY_VISIT_ID, visitsRecyclerItem.getId());
+
         startActivity(visitInfoIntent);
     }
 }

@@ -27,15 +27,20 @@ import retrofit2.Response;
 
 public class VisitDetailsActivity extends AppCompatActivity {
 
+    public  static String KEY_VISIT_ID = "KEY_VISIT_ID";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_details);
 
         if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            int visitId = intent.getIntExtra(KEY_VISIT_ID, -1);
+            VisitDetailsFragment visitDetailsFragment = VisitDetailsFragment.newInstance(visitId);
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragment_visit_details, VisitDetailsFragment.class, null)
+                    .add(R.id.fragment_visit_details, visitDetailsFragment)
                     .commit();
         }
     }

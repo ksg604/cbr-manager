@@ -45,28 +45,16 @@ public class VisitService {
                 .build().create(VisitAPI.class);
     }
 
+    public Call<Visit> modifyVisit(Visit visit) {
+        return this.visitAPI.modifyVisit(authHeader, visit.getId(), visit);
+    }
+
     public Call<List<Visit>> getVisits() {
         return this.visitAPI.getVisits(authHeader);
     }
 
     public Call<Visit> getVisit(int visitID) {
         return this.visitAPI.getVisit(authHeader, visitID);
-    }
-
-    public Call<Visit> createVisitManual(Visit visit) {
-        // TODO: Add more client fields when finalized. Restricted to manual fields for now.
-
-        RequestBody clientId = RequestBody.create(Integer.toString(visit.getId()), MediaType.parse("text/plain"));
-        RequestBody location = RequestBody.create(visit.getLocationDropDown(), MediaType.parse("text/plain"));
-        RequestBody date = RequestBody.create(visit.getDatetimeCreated().toString(), MediaType.parse("text/plain"));
-        RequestBody additionalInfo = RequestBody.create(visit.getAdditionalInfo(), MediaType.parse("text/plain"));
-
-        return this.visitAPI.createVisitManual(
-                authHeader,
-                location,
-                date,
-                additionalInfo
-        );
     }
 
     public Call<Visit> createVisit(Visit visit) {

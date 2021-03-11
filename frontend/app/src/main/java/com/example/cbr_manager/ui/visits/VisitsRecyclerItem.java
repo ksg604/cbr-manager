@@ -15,6 +15,10 @@ public class VisitsRecyclerItem {
         this.visit = visit;
     }
 
+    public int getId() {
+        return visit.getId();
+    }
+
     public int getmImageResource() {
         return mImageResource;
     }

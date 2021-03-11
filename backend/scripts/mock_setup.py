@@ -43,6 +43,8 @@ def generate_random_clients(amount):
                 health_risk=str(random.randint(1, 10)),
                 education_risk=str(random.randint(1, 10)),
                 social_risk=str(random.randint(1, 10)),
+                contact_care="123 123 123",
+                contact_client="321 312, 321",
                 photo=ImageFile(jpg)
             )
             time.sleep(1)

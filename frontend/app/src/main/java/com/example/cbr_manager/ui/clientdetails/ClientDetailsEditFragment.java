@@ -2,15 +2,8 @@ package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,12 +12,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
-import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,9 +92,10 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
-                Log.d("log",client.getFirstName());
+                Log.d("log", client.getFirstName());
                 getActivity().onBackPressed();
             }
+
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
 
@@ -206,11 +206,11 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
 
-
     private void setupButtons(View root) {
         setupBackButton(root);
         setupSubmitButton(root);
     }
+
     private void setupSubmitButton(View root) {
         Intent intent = getActivity().getIntent();
         int clientId = intent.getIntExtra("clientId", -1);

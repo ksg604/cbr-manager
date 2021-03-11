@@ -155,9 +155,16 @@ public class PhotoFragment extends Fragment {
         }
     }
 
-    private void submitSurvey() {
+    private  void onSubmitSuccess(View view){
         Intent intent = new Intent(getActivity(), NavigationActivity.class);
         startActivity(intent);
+
+        Snackbar.make(view, "Successfully created the client.", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    private void submitSurvey() {
+
         Client client = ((CreateClientActivity) getActivity()).getClient();
 
         Call<Client> call = apiService.clientService.createClientManual(client);
@@ -166,7 +173,7 @@ public class PhotoFragment extends Fragment {
             public void onResponse(Call<Client> call, Response<Client> response) {
                 if(response.isSuccessful()){
 
-                    int clientId = response.body().getId().intValue();
+                    int clientId = response.body().getId();
 
                     File photoFile = new File(imageFilePath);
                     if (photoFile.exists()) {
@@ -184,8 +191,7 @@ public class PhotoFragment extends Fragment {
                         });
                     }
 
-                    Snackbar.make(view, "Successfully created the client.", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    onSubmitSuccess(view);
                 } else{
                     Snackbar.make(view, "Failed to create the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -198,5 +204,4 @@ public class PhotoFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         }); }
-
 }

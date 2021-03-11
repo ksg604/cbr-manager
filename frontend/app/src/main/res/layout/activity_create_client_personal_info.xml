@@ -113,7 +113,7 @@
             android:ems="10"
             android:hint="Age"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
+            android:inputType="number"
             app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 

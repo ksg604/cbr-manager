@@ -1,7 +1,9 @@
 package com.example.cbr_manager.ui.referral.referral_list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,9 +41,16 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     private RecyclerView.LayoutManager mLayoutManager;
     private SearchView searchView;
     private int clientId;
-    ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();
+    ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
 
     private APIService apiService = APIService.getInstance();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchReferralsToList(referralRecyclerItems);
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,14 +61,12 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         if (bundle != null) {
             clientId = bundle.getInt("CLIENT_ID", -1);
         }
-
         mRecyclerView = root.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         mLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ReferralListRecyclerItemAdapter(referralRecyclerItems, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
-        fetchReferralsToList(referralRecyclerItems);
 
         SearchView referralSearchView = root.findViewById(R.id.referralSearchView);
         referralSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -79,6 +86,8 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
     public void fetchReferralsToList(List<ReferralListRecyclerItem> referralUIList) {
         if (apiService.isAuthenticated()) {
+            referralUIList.clear();
+            adapter.notifyDataSetChanged();
             apiService.referralService.getReferrals().enqueue(new Callback<List<Referral>>() {
                 @Override
                 public void onResponse(Call<List<Referral>> call, Response<List<Referral>> response) {

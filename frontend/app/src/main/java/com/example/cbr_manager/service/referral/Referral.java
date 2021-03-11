@@ -147,7 +147,7 @@ public class Referral {
     public String getFormattedDate() {
         String datePython = getDateCreated().substring(0,19);
         String patternOutput = "MM/dd/yyyy  HH:mm";
-        String patternInput = "yyyy-MM-DD'T'HH:mm:ss";
+        String patternInput = "yyyy-MM-dd'T'HH:mm:ss";
 
         SimpleDateFormat sdfInput = new SimpleDateFormat(patternInput);
         SimpleDateFormat sdfOutput = new SimpleDateFormat(patternOutput);

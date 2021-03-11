@@ -3,14 +3,11 @@ package com.example.cbr_manager.ui.referral.referral_details;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,14 +15,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
-import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
-import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.createvisit.NewVisitFragment;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
-import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;

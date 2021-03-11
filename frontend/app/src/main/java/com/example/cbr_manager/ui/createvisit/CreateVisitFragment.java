@@ -36,14 +36,14 @@ import retrofit2.Response;
 
 import static android.view.View.GONE;
 
-public class NewVisitFragment extends Fragment {
+public class CreateVisitFragment extends Fragment {
     private int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
     private String username = "";
 
-    public NewVisitFragment() {
+    public CreateVisitFragment() {
     }
 
     @Override

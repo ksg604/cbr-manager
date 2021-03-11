@@ -49,9 +49,9 @@ public class AlertDetailsActivity extends AppCompatActivity {
                     Alert alert = response.body();
 
                     // Todo: dynamically set the alert info here
-                    setupTitleTextView(alert.getTitle());
-                    setupBodyTextView(alert.getBody());
-                    setupDateTextView("Date posted:  " + alert.getFormattedDate());
+                    setUpTextView(R.id.textTitle, alert.getTitle());
+                    setUpTextView(R.id.textBody, alert.getBody());
+                    setUpTextView(R.id.textDate, "Date posted:  " + alert.getFormattedDate());
                 } else{
                     Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -66,22 +66,10 @@ public class AlertDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setupTitleTextView(String title) {
-        TextView nameTextView = findViewById(R.id.textTitle);
-        nameTextView.setText(title);
+    private void setUpTextView(int textViewId, String text) {
+        TextView textView = findViewById(textViewId);
+        textView.setText(text);
     }
-
-    private void setupBodyTextView(String body) {
-        TextView locationTextView = findViewById(R.id.textBody);
-        locationTextView.setText(body);
-    }
-
-    private void setupDateTextView(String date) {
-        TextView genderTextView = findViewById(R.id.textDate);
-        genderTextView.setText(date);
-    }
-
-
 
     private void setupButtons() {
         setupBackButton();

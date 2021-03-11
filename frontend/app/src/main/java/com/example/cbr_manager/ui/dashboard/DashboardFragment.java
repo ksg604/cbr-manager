@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,10 +19,11 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
+import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,9 +45,8 @@ public class DashboardFragment extends Fragment {
     TextView dateAlertTextView;
     TextView titleTextView;
     int homeAlertId;
-
-    private DashboardViewModel dashboardViewModel;
     View root;
+    private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,8 +62,75 @@ public class DashboardFragment extends Fragment {
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
         setupVisitStats(root);
+        setupOutstandingReferralStats(root);
 
         return root;
+    }
+
+    private void setupOutstandingReferralStats(View root) {
+        if (apiService.isAuthenticated()) {
+            apiService.referralService.getReferrals().enqueue(new Callback<List<Referral>>() {
+                @Override
+                public void onResponse(Call<List<Referral>> call, Response<List<Referral>> response) {
+                    if (response.isSuccessful()) {
+                        List<Referral> referrals = response.body();
+                        int createdReferrals = 0;
+                        int completedReferrals = 0;
+                        String status;
+                        for (Referral referral : referrals) {
+                            status = referral.getStatus();
+
+                            if (status.toLowerCase().trim().equals("created")) {
+                                createdReferrals++;
+                            } else if (status.toLowerCase().trim().equals("resolved")) {
+                                completedReferrals++;
+                            }
+                        }
+
+//                        fillTopThreeOutstandingReferrals(referrals);
+
+                        TextView createdReferralsTextView = root.findViewById(R.id.dashboardOutstandingReferralsNumTextView);
+                        createdReferralsTextView.setText(Integer.toString(createdReferrals));
+                        TextView completedReferralsTextView = root.findViewById(R.id.dashboardCompletedReferralsNumTextView);
+                        completedReferralsTextView.setText(Integer.toString(completedReferrals));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Referral>> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    private void fillTopThreeOutstandingReferrals(List<Referral> referrals) {
+        if (referrals.size() == 0) {
+            // Fill nothing.
+            return;
+        } else if (referrals.size() == 1) {
+            LinearLayout outStandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
+            outStandingReferral1.setVisibility(View.VISIBLE);
+        } else if (referrals.size() == 2) {
+            LinearLayout outstandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
+            LinearLayout outstandingReferral2 = getView().findViewById(R.id.outstandingReferralPerson2);
+            outstandingReferral1.setVisibility(View.VISIBLE);
+            outstandingReferral2.setVisibility(View.VISIBLE);
+        } else {
+            LinearLayout outstandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
+            LinearLayout outstandingReferral2 = getView().findViewById(R.id.outstandingReferralPerson2);
+            LinearLayout outstandingReferral3 = getView().findViewById(R.id.outstandingReferralPerson3);
+            outstandingReferral1.setVisibility(View.VISIBLE);
+            outstandingReferral2.setVisibility(View.VISIBLE);
+            outstandingReferral3.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setupOutstandingReferralCard(int imageId, int nameTextViewId, int serviceTextViewId, int dateTextViewId, String name, String service, String date) {
+        TextView nameTextView = getView().findViewById(nameTextViewId);
+        nameTextView.setText(name);
+        TextView serviceTextView = getView().findViewById(serviceTextViewId);
+        serviceTextView.setText(service);
     }
 
     private void setupVisitStats(View root) {
@@ -117,7 +183,7 @@ public class DashboardFragment extends Fragment {
 
                         if (alerts != null & !alerts.isEmpty()) {
                             newestAlert = alerts.get(0);
-                            dateAlertTextView.setText("Date posted:  " +newestAlert.getFormattedDate());
+                            dateAlertTextView.setText("Date posted:  " + newestAlert.getFormattedDate());
                             titleTextView.setText(newestAlert.getTitle());
                             homeAlertId = newestAlert.getId();
                         }
@@ -133,7 +199,7 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    public void setAlertButtons(){
+    public void setAlertButtons() {
         seeMoreTextView = root.findViewById(R.id.seeAllTextView);
         TextView moreTextView = root.findViewById(R.id.dashboardAlertsMoreTextView);
         moreTextView.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +265,7 @@ public class DashboardFragment extends Fragment {
         addClientTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CreateClientActivity.class);
+                Intent intent = new Intent(getContext(), CreateClientStepperActivity.class);
                 startActivity(intent);
             }
         });
@@ -216,7 +282,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupViewPager(View root) {
-        clientViewPagerList =  new ArrayList<>();
+        clientViewPagerList = new ArrayList<>();
         adapter = new ViewPagerAdapter(getContext(), this.getActivity(), clientViewPagerList);
         viewPager = root.findViewById(R.id.clientPriorityList);
         viewPager.setAdapter(adapter);

@@ -2,6 +2,7 @@ package com.example.cbr_manager.utils;
 
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.cbr_manager.BuildConfig;
 import com.example.cbr_manager.service.auth.AuthResponse;
@@ -43,5 +44,13 @@ public class Helper {
         } else {
             return "#c49704";
         }
+    }
+
+    public static Boolean validateTextViewNotNull(TextView editTextView) {
+        if (editTextView.getText().toString().trim().isEmpty()) {
+            return false;
+        }
+        return true;
+
     }
 }

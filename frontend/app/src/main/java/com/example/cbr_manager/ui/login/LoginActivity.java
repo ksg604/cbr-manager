@@ -128,8 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (apiService.isAuthenticated()) {
-                            Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                            startActivity(intent);
+                            onLoginSuccess(response);
                         } else {
                             handleAuthError(view, response);
                         }
@@ -155,6 +154,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void onLoginSuccess(Response<AuthResponse> response){
+        AuthResponse authResponse = response.body();
+        Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+        intent.putExtra(NavigationActivity.KEY_SNACK_BAR_MESSAGE, "Welcome " + authResponse.user.getFirstName());
+        startActivity(intent);
     }
 
     private void handleAuthError(View view, Response response) {

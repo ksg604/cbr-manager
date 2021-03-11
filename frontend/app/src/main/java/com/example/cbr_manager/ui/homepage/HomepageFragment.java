@@ -9,14 +9,11 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.ui.clientlist.ClientListFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
-import com.example.cbr_manager.ui.dashboard.DashboardFragment;
+import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
 public class HomepageFragment extends Fragment {
     private ImageButton newClientButton, newVisitButton, dashboardButton;
@@ -35,7 +32,7 @@ public class HomepageFragment extends Fragment {
         newClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), CreateClientActivity.class);
+                Intent intent = new Intent(view.getContext(), CreateClientStepperActivity.class);
                 startActivity(intent);
             }
         });

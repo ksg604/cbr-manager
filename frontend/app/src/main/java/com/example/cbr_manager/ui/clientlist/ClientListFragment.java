@@ -22,7 +22,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     }
 
     private void launchCreateClientActivity() {
-        Intent createClientIntent = new Intent(getActivity(), CreateClientActivity.class);
+        Intent createClientIntent = new Intent(getActivity(), CreateClientStepperActivity.class);
         startActivity(createClientIntent);
     }
 
@@ -120,7 +120,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         Intent clientInfoIntent = new Intent(getContext(), ClientDetailsActivity.class);
 
         Client client = clientListAdapter.getClient(position);
-        clientInfoIntent.putExtra("clientId", client.getId());
+        clientInfoIntent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
 
         startActivity(clientInfoIntent);
     }

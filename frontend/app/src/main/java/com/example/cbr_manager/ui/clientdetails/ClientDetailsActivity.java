@@ -1,9 +1,7 @@
 package com.example.cbr_manager.ui.clientdetails;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -14,7 +12,7 @@ import com.example.cbr_manager.R;
 import java.util.Objects;
 
 public class ClientDetailsActivity extends AppCompatActivity {
-
+    public  static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +23,12 @@ public class ClientDetailsActivity extends AppCompatActivity {
         setTitle("Client Details");
 
         if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            int clientId = intent.getIntExtra(KEY_CLIENT_ID, -1);
+            ClientDetailsFragment clientDetailsFragment = ClientDetailsFragment.newInstance(clientId);
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragment_client_details, ClientDetailsFragment.class, null)
+                    .add(R.id.fragment_client_details, clientDetailsFragment)
                     .commit();
         }
     }

@@ -1,109 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal|center_vertical">
+    android:fillViewport="true"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/next"
-        android:textColor="#FFF"
-        app:backgroundTint="@color/purple_700"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/cbr_logo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="28dp"
+            android:contentDescription="@string/cbr_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="96dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/consent"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cbr_logo"
+            app:layout_constraintVertical_bias="0.061" />
 
-            <ImageView
-                android:id="@+id/cbr_logo"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:contentDescription="@string/cbr_logo"
-                app:srcCompat="@drawable/logo" />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="137dp"
+            android:layout_height="96dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
-            <TextView
-                android:id="@+id/textView"
+            <RadioButton
+                android:id="@+id/radioButtonNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:textSize="16sp"
-                android:text="@string/consent"
-                 />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="137dp"
-                android:layout_height="96dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:checked="true"
+                android:text="@string/no" />
 
-                <RadioButton
-                    android:id="@+id/radioButtonNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:checked="true"
-                    android:text="@string/no" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonYes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/yes" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textView5"
+            <RadioButton
+                android:id="@+id/radioButtonYes"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="40dp"
-                android:layout_weight="1"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:textSize="16sp"
-
-                android:text="@string/date_form_complete"
-                 />
-
-            <EditText
-                android:id="@+id/editTextDate"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Date"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
-                android:drawableEnd="@drawable/ic_date"
-                android:drawableRight="@drawable/ic_date" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/yes" />
+        </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/dateLabel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/date_form_complete"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:drawableEnd="@drawable/ic_date"
+            android:drawableRight="@drawable/ic_date"
+            android:ems="10"
+            android:hint="Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateLabel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+

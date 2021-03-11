@@ -23,7 +23,7 @@ import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,9 +45,8 @@ public class DashboardFragment extends Fragment {
     TextView dateAlertTextView;
     TextView titleTextView;
     int homeAlertId;
-
-    private DashboardViewModel dashboardViewModel;
     View root;
+    private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class DashboardFragment extends Fragment {
                                 completedReferrals++;
                             }
                         }
-                        
+
 //                        fillTopThreeOutstandingReferrals(referrals);
 
                         TextView createdReferralsTextView = root.findViewById(R.id.dashboardOutstandingReferralsNumTextView);
@@ -184,7 +183,7 @@ public class DashboardFragment extends Fragment {
 
                         if (alerts != null & !alerts.isEmpty()) {
                             newestAlert = alerts.get(0);
-                            dateAlertTextView.setText("Date posted:  " +newestAlert.getFormattedDate());
+                            dateAlertTextView.setText("Date posted:  " + newestAlert.getFormattedDate());
                             titleTextView.setText(newestAlert.getTitle());
                             homeAlertId = newestAlert.getId();
                         }
@@ -200,7 +199,7 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    public void setAlertButtons(){
+    public void setAlertButtons() {
         seeMoreTextView = root.findViewById(R.id.seeAllTextView);
         TextView moreTextView = root.findViewById(R.id.dashboardAlertsMoreTextView);
         moreTextView.setOnClickListener(new View.OnClickListener() {
@@ -266,7 +265,7 @@ public class DashboardFragment extends Fragment {
         addClientTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CreateClientActivity.class);
+                Intent intent = new Intent(getContext(), CreateClientStepperActivity.class);
                 startActivity(intent);
             }
         });
@@ -283,7 +282,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupViewPager(View root) {
-        clientViewPagerList =  new ArrayList<>();
+        clientViewPagerList = new ArrayList<>();
         adapter = new ViewPagerAdapter(getContext(), this.getActivity(), clientViewPagerList);
         viewPager = root.findViewById(R.id.clientPriorityList);
         viewPager.setAdapter(adapter);

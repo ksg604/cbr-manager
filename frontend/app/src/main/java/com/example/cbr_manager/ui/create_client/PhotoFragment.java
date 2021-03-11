@@ -22,15 +22,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
-import com.google.android.material.snackbar.Snackbar;
+import com.stepstone.stepper.Step;
+import com.stepstone.stepper.VerificationError;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,13 +34,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+public class PhotoFragment extends Fragment implements Step {
 
 
-public class PhotoFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
     private static final APIService apiService = APIService.getInstance();
@@ -62,22 +55,6 @@ public class PhotoFragment extends Fragment {
         cameraButton = view.findViewById(R.id.takePhotoButton);
         //TODO: Add Camera functionality
         setupCameraButtonListener();
-
-
-        Button submitButton = view.findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitSurvey();
-            }
-        });
-        Button prevButton = view.findViewById(R.id.prevButton);
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((CreateClientActivity) getActivity()).setViewPager(4);
-            }
-        });
 
         return view;
     }
@@ -153,53 +130,26 @@ public class PhotoFragment extends Fragment {
         }
     }
 
-    private void onSubmitSuccess(View view, Client client) {
-        Intent intent = new Intent(getActivity(), ClientDetailsActivity.class);
-        intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
-        startActivity(intent);
-        getActivity().finish();
+    public void updateFile() {
+        ((CreateClientStepperActivity) getActivity()).setPhotoFile(new File(imageFilePath));
     }
 
-    private void submitSurvey() {
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
 
-        Client client = ((CreateClientActivity) getActivity()).getClient();
-
-        Call<Client> call = apiService.clientService.createClientManual(client);
-        call.enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                if (response.isSuccessful()) {
-
-                    Client client = response.body();
-
-                    File photoFile = new File(imageFilePath);
-                    if (photoFile.exists()) {
-                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, client.getId());
-                        photoCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                            }
-                        });
-                    }
-
-                    onSubmitSuccess(view, client);
-                } else {
-                    Snackbar.make(view, "Failed to create the client.", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(view, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        updateFile();
+        return null;
     }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+
+    }
+
 }

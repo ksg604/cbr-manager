@@ -23,7 +23,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -66,7 +66,7 @@ public class NavigationActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.nav_new_client) {
-                    Intent intent = new Intent(NavigationActivity.this, CreateClientActivity.class);
+                    Intent intent = new Intent(NavigationActivity.this, CreateClientStepperActivity.class);
                     startActivity(intent);
                 }
                 NavigationUI.onNavDestinationSelected(item, navController);
@@ -108,7 +108,7 @@ public class NavigationActivity extends AppCompatActivity {
 
     public void handleIncomingSnackBarMessage(View view) {
         String message = getIntent().getStringExtra(KEY_SNACK_BAR_MESSAGE);
-        if (message != null && !message.isEmpty()){
+        if (message != null && !message.isEmpty()) {
             Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }

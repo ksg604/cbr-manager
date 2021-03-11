@@ -171,27 +171,27 @@ public class CreateVisitFragment extends Fragment {
         }
     }
 
+    private boolean checkIfChipChecked(int chipId) {
+        Chip chip = getView().findViewById(chipId);
+        return chip.isChecked();
+    }
+
+    private String getEditTextString(int editTextId) {
+        EditText editText = getView().findViewById(editTextId);
+
+        return editText.getText().toString();
+    }
+
     private void fillVisitData(Visit visit, View view) {
         ChipGroup purposeChipGroup = view.findViewById(R.id.purposeChipGroup);
         purposeChipGroup.getCheckedChipIds();
 
-        Chip cbrChip = view.findViewById(R.id.cbrChip);
-        boolean isCBR = cbrChip.isChecked();
-
-        Chip disabilityReferralChip = view.findViewById(R.id.purposeReferralChip);
-        boolean isDisabilityReferral = disabilityReferralChip.isChecked();
-
-        Chip disabilityFollowupChip = view.findViewById(R.id.purposeFollowUpChip);
-        boolean isDisabilityFollowUp = disabilityFollowupChip.isChecked();
-
-        Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
-        boolean isHealthProvision = healthProvisionChip.isChecked();
-
-        Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
-        boolean isEducationProvision = educationProvisionChip.isChecked();
-
-        Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
-        boolean isSocialProvision = socialProvisionChip.isChecked();
+        boolean isCBR = checkIfChipChecked(R.id.cbrChip);
+        boolean isDisabilityReferral = checkIfChipChecked(R.id.purposeReferralChip);
+        boolean isDisabilityFollowUp = checkIfChipChecked(R.id.purposeFollowUpChip);
+        boolean isHealthProvision = checkIfChipChecked(R.id.healthProvisionChip);
+        boolean isEducationProvision = checkIfChipChecked(R.id.educationProvisionChip);
+        boolean isSocialProvision = checkIfChipChecked(R.id.socialProvisionChip);
 
         EditText cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
         cbrWorkerName.setText(username);

@@ -9,5 +9,5 @@ Define our API request endpoints here
  */
 public interface AuthAPI {
     @POST("api/token-auth")
-    Call<AuthResponse> getToken(@Body LoginUserPass loginUserPass);
+    Call<AuthDetail> getToken(@Body LoginUserPass loginUserPass);
 }

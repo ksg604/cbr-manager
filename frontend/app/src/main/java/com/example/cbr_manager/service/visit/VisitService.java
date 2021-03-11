@@ -1,48 +1,18 @@
 package com.example.cbr_manager.service.visit;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.utils.Helper;
-import com.example.cbr_manager.service.auth.AuthResponse;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.cbr_manager.service.BaseService;
 
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class VisitService {
-    private static final String BASE_URL = BuildConfig.API_URL;
+public class VisitService extends BaseService {
+    private final VisitAPI visitAPI;
 
-    private final AuthResponse authToken;
-
-    private final String authHeader;
-
-    private VisitAPI visitAPI;
-
-    public VisitService(AuthResponse authToken) {
-        this.authToken = authToken;
-        this.authHeader = Helper.formatTokenHeader(this.authToken);
-        this.visitAPI = getVisitAPI();
-    }
-
-    public VisitService() {
-        this.authToken = null;
-        this.authHeader = null;
-        this.visitAPI = getVisitAPI();
-    }
-
-
-    private VisitAPI getVisitAPI() {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build().create(VisitAPI.class);
+    public VisitService(String authToken) {
+        super(authToken, VisitAPI.class);
+        this.visitAPI = buildRetrofitAPI();
     }
 
     public Call<List<Visit>> getVisits() {

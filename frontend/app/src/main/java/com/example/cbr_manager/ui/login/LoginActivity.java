@@ -1,7 +1,9 @@
 package com.example.cbr_manager.ui.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,8 +26,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.auth.AuthResponse;
+import com.example.cbr_manager.service.auth.AuthDetail;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.utils.ErrorParser;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,10 +41,21 @@ public class LoginActivity extends AppCompatActivity {
     private static APIService apiService = APIService.getInstance();
     private LoginViewModel loginViewModel;
 
+    static void clearCachedToken(Activity activity) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(activity.getString(R.string.auth_token_key), "");
+        editor.apply();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        handleCachedAuthToken();
+
+
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -124,11 +138,12 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
 
                 LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-                apiService.authenticate(credential, new Callback<AuthResponse>() {
+                apiService.authenticate(credential, new Callback<AuthDetail>() {
                     @Override
-                    public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                    public void onResponse(Call<AuthDetail> call, Response<AuthDetail> response) {
                         if (apiService.isAuthenticated()) {
-                            onLoginSuccess(response);
+                            AuthDetail authResponse = response.body();
+                            onLoginSuccess(authResponse);
                         } else {
                             handleAuthError(view, response);
                         }
@@ -137,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<AuthResponse> call, Throwable t) {
+                    public void onFailure(Call<AuthDetail> call, Throwable t) {
                         Snackbar.make(view, "Connection failed to server", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         hideKeyBoard(view);
@@ -146,21 +161,47 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-
-        buttonNewUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 
-    private void onLoginSuccess(Response<AuthResponse> response){
-        AuthResponse authResponse = response.body();
+    private void handleCachedAuthToken() {
+        String cachedToken = getCachedAuthToken();
+        if (!cachedToken.isEmpty()) {
+            apiService.authenticate(cachedToken, new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        onLoginSuccess(apiService.authService.getAuthDetail());
+                    } else {
+                        clearCachedToken(LoginActivity.this);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    clearCachedToken(LoginActivity.this);
+                }
+            });
+        }
+    }
+
+    private void onLoginSuccess(AuthDetail authResponse) {
+        cacheAuthToken(authResponse.token);
+
         Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
         intent.putExtra(NavigationActivity.KEY_SNACK_BAR_MESSAGE, "Welcome " + authResponse.user.getFirstName());
         startActivity(intent);
+    }
+
+    private void cacheAuthToken(String token) {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.auth_token_key), token);
+        editor.apply();
+    }
+
+    private String getCachedAuthToken() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString(getString(R.string.auth_token_key), "");
     }
 
     private void handleAuthError(View view, Response response) {

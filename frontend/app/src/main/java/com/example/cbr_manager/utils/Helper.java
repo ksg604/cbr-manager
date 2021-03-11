@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.service.auth.AuthResponse;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -18,8 +17,8 @@ public class Helper {
         return BuildConfig.API_URL;
     }
 
-    public static String formatTokenHeader(AuthResponse authToken) {
-        return "Token " + authToken.token;
+    public static String formatTokenHeader(String token) {
+        return "Token " + token;
     }
 
     public static Drawable getImageFromUrl(String url) throws IOException {

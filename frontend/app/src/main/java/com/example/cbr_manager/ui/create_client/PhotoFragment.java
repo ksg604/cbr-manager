@@ -15,21 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -45,12 +45,11 @@ import retrofit2.Response;
 
 
 public class PhotoFragment extends Fragment {
-    Button cameraButton;
-    View view;
-
-    private static final APIService apiService = APIService.getInstance();
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
+    private static final APIService apiService = APIService.getInstance();
+    Button cameraButton;
+    View view;
     private String imageFilePath = "";
 
     @Override
@@ -63,7 +62,6 @@ public class PhotoFragment extends Fragment {
         cameraButton = view.findViewById(R.id.takePhotoButton);
         //TODO: Add Camera functionality
         setupCameraButtonListener();
-
 
 
         Button submitButton = view.findViewById(R.id.submitButton);
@@ -97,7 +95,7 @@ public class PhotoFragment extends Fragment {
 
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
         } else {
             dispatchTakePictureIntent();
         }
@@ -155,12 +153,11 @@ public class PhotoFragment extends Fragment {
         }
     }
 
-    private  void onSubmitSuccess(View view){
-        Intent intent = new Intent(getActivity(), NavigationActivity.class);
+    private void onSubmitSuccess(View view, Client client) {
+        Intent intent = new Intent(getActivity(), ClientDetailsActivity.class);
+        intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
         startActivity(intent);
-
-        Snackbar.make(view, "Successfully created the client.", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        getActivity().finish();
     }
 
     private void submitSurvey() {
@@ -171,13 +168,13 @@ public class PhotoFragment extends Fragment {
         call.enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    int clientId = response.body().getId();
+                    Client client = response.body();
 
                     File photoFile = new File(imageFilePath);
                     if (photoFile.exists()) {
-                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, clientId);
+                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, client.getId());
                         photoCall.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -191,8 +188,8 @@ public class PhotoFragment extends Fragment {
                         });
                     }
 
-                    onSubmitSuccess(view);
-                } else{
+                    onSubmitSuccess(view, client);
+                } else {
                     Snackbar.make(view, "Failed to create the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -203,5 +200,6 @@ public class PhotoFragment extends Fragment {
                 Snackbar.make(view, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        }); }
+        });
+    }
 }

@@ -41,8 +41,10 @@ public class ClientDetailsFragment extends Fragment {
     private String mParam2;
 
     private APIService apiService = APIService.getInstance();
-    private int clientId = -1;
+    private int clientId;
     private View parentLayout;
+
+    public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
 
     public ClientDetailsFragment() {
         // Required empty public constructor
@@ -53,6 +55,14 @@ public class ClientDetailsFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ClientDetailsFragment newInstance(int clientId) {
+        ClientDetailsFragment fragment = new ClientDetailsFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_CLIENT_ID, clientId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,13 +85,10 @@ public class ClientDetailsFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_client_details, container, false);
 
-        parentLayout = root.findViewById(android.R.id.content);
+        parentLayout = getActivity().findViewById(android.R.id.content);
 
-        Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        clientId = getArguments().getInt(KEY_CLIENT_ID, -1);
         getClientInfo(clientId);
-
-        this.clientId = clientId;
 
         setupButtons(root);
         setupVectorImages(root);

@@ -52,7 +52,10 @@ def generate_random_clients(amount):
 
 def create_default_super_user(username, email, password):
     try:
-        User.objects.create_superuser(username, email, password)
+        user = User.objects.create_superuser(username, email, password)
+        user.first_name = "John"
+        user.last_name = "Doe"
+        user.save()
     except:
         pass
 

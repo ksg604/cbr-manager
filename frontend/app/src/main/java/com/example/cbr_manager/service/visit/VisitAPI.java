@@ -25,6 +25,13 @@ public interface VisitAPI {
     @POST("api/visits/")
     Call<Visit> createVisit(@Header("Authorization") String authHeader, @Body Visit visit);
 
+    @Multipart
+    @POST("api/visists/")
+    Call<Visit> createVisitManual(@Header("Authorization") String authHeader,
+                                    @Part("location_drop_down") RequestBody location,
+                                    @Part("datetime_created") RequestBody date,
+                                    @Part("additional_notes") RequestBody additionalInfo);
+
 }
 
 

@@ -114,6 +114,7 @@ public class DashboardFragment extends Fragment {
         } else if (referrals.size() == 1) {
             LinearLayout outStandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
             outStandingReferral1.setVisibility(View.VISIBLE);
+            Referral referral1 = referrals.get(0);
         } else if (referrals.size() == 2) {
             LinearLayout outstandingReferral1 = getView().findViewById(R.id.outstandingReferralPerson1);
             LinearLayout outstandingReferral2 = getView().findViewById(R.id.outstandingReferralPerson2);
@@ -127,6 +128,27 @@ public class DashboardFragment extends Fragment {
             outstandingReferral2.setVisibility(View.VISIBLE);
             outstandingReferral3.setVisibility(View.VISIBLE);
         }
+    }
+
+    private Client getClient(Integer clientId) {
+        if (apiService.isAuthenticated()) {
+            Client client = null;
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+
+                }
+            });
+        }
+
+        return null;
     }
 
     private void setupOutstandingReferralCard(int imageId, int nameTextViewId, int serviceTextViewId, int dateTextViewId, String name, String service, String date) {

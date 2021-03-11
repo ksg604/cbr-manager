@@ -92,12 +92,6 @@ public class VisitDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_visit_details, container, false);
         parentLayout = root.findViewById(android.R.id.content);
 
-        /*Intent intent = getActivity().getIntent();
-        this.additionalInfo = intent.getStringExtra("additionalInfo");
-        this.formattedDate = intent.getStringExtra("formattedDate");
-        this.location = intent.getStringExtra("location");
-        this.clientId = intent.getIntExtra("clientId", -1);*/
-
         visitId = getArguments().getInt(KEY_VISIT_ID, -1);
 
         getVisitInfo(visitId);
@@ -228,8 +222,13 @@ public class VisitDetailsFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("visitId", visitId);
+                VisitDetailsEditFragment visitDetailsEditFragment = new VisitDetailsEditFragment();
+                visitDetailsEditFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_visit_details, VisitDetailsEditFragment.class, null)
+                        .replace(R.id.fragment_visit_details, visitDetailsEditFragment, null)
                         .addToBackStack(null)
                         .commit();
             }

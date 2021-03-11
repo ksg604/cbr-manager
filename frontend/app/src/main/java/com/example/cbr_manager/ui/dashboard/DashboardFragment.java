@@ -129,6 +129,13 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    private void setupOutstandingReferralCard(int imageId, int nameTextViewId, int serviceTextViewId, int dateTextViewId, String name, String service, String date) {
+        TextView nameTextView = getView().findViewById(nameTextViewId);
+        nameTextView.setText(name);
+        TextView serviceTextView = getView().findViewById(serviceTextViewId);
+        serviceTextView.setText(service);
+    }
+
     private void setupVisitStats(View root) {
         if (apiService.isAuthenticated()) {
             apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {

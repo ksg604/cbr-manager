@@ -36,8 +36,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/create_visit"
                     android:textColor="@color/purple_700"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/purposeVisitTextView"
@@ -47,9 +46,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="@string/purpose_for_visit"
-                    android:textColor="@color/teal_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/purposeChipGroup"
@@ -88,9 +85,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/cbr_type"
-                    android:textColor="@color/teal_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/cbrTypeChipGroup"
@@ -129,9 +124,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/date_of_visit"
-                    android:textColor="@color/teal_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/fragmentPreambleEditTextDate"
@@ -139,7 +132,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-
                     android:ems="10"
                     android:inputType="date" />
 
@@ -151,9 +143,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/name_of_client"
-                    android:textColor="@color/teal_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/fragmentPreambleClientEditText"
@@ -172,9 +162,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Username of CBR Worker"
-                    android:textColor="@color/teal_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/fragmentPreambleCBRNameEditText"
@@ -206,8 +194,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Location"
                     android:textColor="@color/purple_700"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                    android:textSize="24dp" />
 
                 <TextView
                     android:id="@+id/textView39"
@@ -217,9 +204,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="GPS Location of Visit"
-                    android:textColor="@color/teal_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/editTextTextLocation"
@@ -239,9 +224,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Drop down list location"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700" />
+                    android:textSize="16sp" />
 
                 <Spinner
                     android:id="@+id/locationFragmentSpinner"
@@ -261,9 +244,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="Village Number"
-                    android:textColor="@color/teal_700" />
+                    android:text="Village Number" />
 
                 <EditText
                     android:id="@+id/villageNumberEditText"
@@ -296,8 +277,7 @@
                     android:gravity="center"
                     android:text="@string/health_provisions"
                     android:textColor="@color/purple_700"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                    android:textSize="24dp" />
 
                 <TextView
                     android:id="@+id/healthProvisionsTextView"
@@ -307,9 +287,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="@string/what_was_provided"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700" />
+                    android:textSize="16sp" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/healthProvisionsChipGroup"
@@ -386,8 +364,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of wheelchair"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -411,8 +387,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of prosthetic"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -436,8 +410,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of orthotic"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -461,8 +433,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of wheelchair repairs"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -486,8 +456,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of referral"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -511,8 +479,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of advice"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -536,8 +502,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of advocacy"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -561,8 +525,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Description of encouragement"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -587,9 +549,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="Goal met?"
-                    android:textColor="@color/teal_700" />
+                    android:text="Goal met?" />
 
                 <RadioGroup
                     android:id="@+id/healthProvisionsRadioGroup"
@@ -627,8 +587,6 @@
                     android:layout_marginLeft="16dp"
                     android:text="Conclusion"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -665,8 +623,7 @@
                     android:layout_marginBottom="32dp"
                     android:text="Education Provisions"
                     android:textColor="@color/purple_700"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                    android:textSize="24dp" />
 
                 <TextView
                     android:id="@+id/educationProvisionsChipGroupTextView"
@@ -675,9 +632,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:text="What was provided?"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700" />
+                    android:textSize="16sp" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/educationProvisionsChipGroup"
@@ -724,8 +679,6 @@
                     android:layout_marginTop="16dp"
                     android:text="Description of advice"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -748,8 +701,6 @@
                     android:layout_marginTop="16dp"
                     android:text="Description of advocacy"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -772,8 +723,6 @@
                     android:layout_marginTop="16dp"
                     android:text="Description of referral"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -796,8 +745,6 @@
                     android:layout_marginTop="16dp"
                     android:text="Description of encouragement"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -819,9 +766,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="16dp"
                     android:text="Goals met?"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700" />
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:id="@+id/educationProvisionRadioGroup"
@@ -858,8 +803,6 @@
                     android:layout_marginRight="16dp"
                     android:text="Conclusion"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -892,8 +835,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Social Provisions"
                     android:textColor="@color/purple_700"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                    android:textSize="24dp" />
 
                 <TextView
                     android:id="@+id/socialProvisionChipGroupTextView"
@@ -903,9 +845,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:text="What was provided?"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700" />
+                    android:textSize="16sp" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/socialProvisionChipGroup"
@@ -954,8 +894,6 @@
                     android:layout_marginRight="16dp"
                     android:text="Description of advice"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -978,8 +916,6 @@
                     android:layout_marginRight="16dp"
                     android:text="Description of advocacy"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -1002,8 +938,6 @@
                     android:layout_marginRight="16dp"
                     android:text="Description of referral"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -1026,8 +960,6 @@
                     android:layout_marginRight="16dp"
                     android:text="Description of encouragement"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText
@@ -1049,9 +981,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Goal met?"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700" />
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:id="@+id/socialProvisionRadioGroup"
@@ -1089,8 +1019,6 @@
                     android:layout_marginRight="16dp"
                     android:text="Conclusion"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
                     android:visibility="gone" />
 
                 <EditText

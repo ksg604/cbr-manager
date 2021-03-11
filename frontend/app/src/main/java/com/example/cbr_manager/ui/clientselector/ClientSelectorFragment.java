@@ -128,10 +128,12 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
             Intent referralIntent = new Intent(getContext(), CreateReferralActivity.class);
             referralIntent.putExtra("CLIENT_ID", clientId);
             startActivity(referralIntent);
+            getActivity().finish();
         } else {
             Intent visitsIntent = new Intent(getContext(), CreateVisitActivity.class);
             visitsIntent.putExtra("clientId", clientId);
             startActivity(visitsIntent);
+            getActivity().finish();
         }
     }
 }

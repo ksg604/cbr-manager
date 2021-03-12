@@ -20,6 +20,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsEditFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -134,8 +135,12 @@ public class ClientDetailsFragment extends Fragment {
                                 .replace(android.R.id.content, fragment).addToBackStack(null).commit();
                         break;
                     case R.id.editClient:
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("clientId", clientId);
+                        ClientDetailsEditFragment clientDetailsEditFragment = new ClientDetailsEditFragment();
+                        clientDetailsEditFragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+                                .replace(R.id.fragment_client_details, clientDetailsEditFragment, null)
                                 .addToBackStack(null)
                                 .commit();
                 }

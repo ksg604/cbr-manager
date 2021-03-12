@@ -1,31 +1,21 @@
 package com.example.cbr_manager.ui.visitdetails;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
-import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
-import com.example.cbr_manager.ui.visits.VisitsFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +38,8 @@ public class VisitDetailsFragment extends Fragment {
     private String location;
     private int villageNum;
     private String formattedDate;
-    private int clientId = -1;
+    public static String KEY_VISIT_ID = "KEY_VISIT_ID";
+    private int visitId = -1;
 
     public VisitDetailsFragment() {
         // Required empty public constructor
@@ -59,6 +50,14 @@ public class VisitDetailsFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static VisitDetailsFragment newInstance(int visitId) {
+        VisitDetailsFragment fragment = new VisitDetailsFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_VISIT_ID, visitId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,31 +79,15 @@ public class VisitDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_visit_details, container, false);
         parentLayout = root.findViewById(android.R.id.content);
 
-        Intent intent = getActivity().getIntent();
-        this.additionalInfo = intent.getStringExtra("additionalInfo");
-        this.formattedDate = intent.getStringExtra("formattedDate");
-        this.location = intent.getStringExtra("location");
-        this.clientId = intent.getIntExtra("clientId", -1);
+        visitId = getArguments().getInt(KEY_VISIT_ID, -1);
 
-        getClientInfo(clientId);
+        getVisitInfo(visitId);
 
         setupButtons(root);
-        setupTextViews(root);
         setupVectorImages(root);
-        setupImageViews(root);
         setupBackImageViewButton(root);
 
         return root;
-    }
-
-    private void setupBackImageViewButton(View root) {
-        ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
-        backButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
     }
 
     private void getClientInfo(int clientId){
@@ -117,8 +100,11 @@ public class VisitDetailsFragment extends Fragment {
 
                     // Todo: dynamically set the client info here
                     setupNameTextView(client.getFullName());
+                    setupImageViews(client.getPhotoURL());
+
+
                 } else{
-                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                    Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 //                    try {
 //                        JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -131,10 +117,54 @@ public class VisitDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void getVisitInfo(int visitId) {
+        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(Call<Visit> call, Response<Visit> response) {
+
+                if (response.isSuccessful()) {
+                    Visit visit = response.body();
+
+                    // Todo: dynamically set the client info here
+                    getClientInfo(visit.getClientId());
+                    setupLocationTextView(visit.getLocationDropDown());
+                    setupDateTextView(visit.getDatetimeCreated().toString());
+                    setupAdditionalInfoTextView(visit.getAdditionalInfo());
+
+
+                } else {
+                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Visit> call, Throwable t) {
+                Snackbar.make(parentLayout, "Failed to get the visit. Please try again", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void setupBackImageViewButton(View root) {
+        ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
+        backButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
+    private void setUpTextView(int textViewID, String textValue){
+        TextView textView = (TextView)getView().findViewById(textViewID);
+        textView.setText(textValue);
     }
 
     private void setupVectorImages(View root) {
@@ -146,38 +176,27 @@ public class VisitDetailsFragment extends Fragment {
         additionalInfo.setImageResource(R.drawable.ic_info);
     }
 
-    private void setupImageViews(View root) {
-        ImageView displayPicture = root.findViewById(R.id.visitDetailsDisplayPictureImageView);
-        displayPicture.setImageResource(R.drawable.client_details_placeholder);
-    }
-
-    private void setupTextViews(View root) {
-        setupLocationTextView(root);
-        setupAdditionalInfoTextView(additionalInfo, root);
-        setupDateTextView(root);
-        setupLocationTextView(root);
+    private void setupImageViews(String imageURL) {
+        ImageView displayPicture = (ImageView)getView().findViewById(R.id.visitDetailsDisplayPictureImageView);
+        Helper.setImageViewFromURL(imageURL, displayPicture, R.drawable.client_details_placeholder);
     }
 
     private void setupNameTextView(String fullName) {
-        TextView nameTextView = (TextView)getView().findViewById(R.id.visitDetailsNameTextView);
-        nameTextView.setText(fullName);
+        setUpTextView(R.id.visitDetailsNameTextView, fullName);
     }
 
-    private void setupLocationTextView(View root) {
-        TextView locationTextView = root.findViewById(R.id.visitDetailsLocationTextView);
-        locationTextView.setText(this.location);
+    private void setupLocationTextView(String location) {
+        setUpTextView(R.id.visitDetailsLocationTextView, location);
     }
 
-
-    private void setupDateTextView(View root) {
-        TextView dateTextView = root.findViewById(R.id.visitDetailsDateTextView);
-        dateTextView.setText(this.formattedDate);
+    private void setupDateTextView(String date) {
+        setUpTextView(R.id.visitDetailsDateTextView, date);
     }
 
-    private void setupAdditionalInfoTextView(String additionalInfo, View root) {
-        TextView additionalInfoTextView = root.findViewById(R.id.visitDetailsAdditionalInfoTextView);
-        additionalInfoTextView.setText(additionalInfo);
+    private void setupAdditionalInfoTextView(String additionalInfo) {
+        setUpTextView(R.id.visitDetailsAdditionalInfoTextView, additionalInfo);
     }
+
 
     private void setupButtons(View root) {
         setupBackButton(root);
@@ -190,8 +209,13 @@ public class VisitDetailsFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("visitId", visitId);
+                VisitDetailsEditFragment visitDetailsEditFragment = new VisitDetailsEditFragment();
+                visitDetailsEditFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_visit_details, VisitDetailsEditFragment.class, null)
+                        .replace(R.id.fragment_visit_details, visitDetailsEditFragment, null)
                         .addToBackStack(null)
                         .commit();
             }

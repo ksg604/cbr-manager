@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -22,9 +23,11 @@ public interface VisitAPI {
     @GET("api/visits/{id}")
     Call<Visit> getVisit(@Header("Authorization") String authHeader, @Path("id") int id);
 
+    @PUT("api/visits/{id}/")
+    Call<Visit> modifyVisit(@Header("Authorization") String authHeader, @Path("id") int id, @Body Visit visit);
+
     @POST("api/visits/")
     Call<Visit> createVisit(@Header("Authorization") String authHeader, @Body Visit visit);
-
 }
 
 

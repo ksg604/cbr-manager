@@ -2,7 +2,6 @@ package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,7 @@ public class ClientDetailsEditFragment extends Fragment {
     private Spinner genderSpinner;
     String gender="";
     Client client;
+    private int clientId;
     private static final String[] paths = {"Male", "Female"};
 
 
@@ -74,8 +74,8 @@ public class ClientDetailsEditFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
 
-        Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        Bundle bundle = this.getArguments();
+        this.clientId = bundle.getInt("clientId", -1);
 
         setupGenderSpinner(root);
         setupEditTexts(clientId, root);
@@ -92,7 +92,6 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
-                Log.d("log", client.getFirstName());
                 getActivity().onBackPressed();
             }
 
@@ -104,6 +103,7 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void getAndModifyClient(int clientId, View root) {
+
 
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
@@ -213,7 +213,7 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private void setupSubmitButton(View root) {
         Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        int clientId = this.clientId;
 
         Button submitButton = root.findViewById(R.id.clientDetailsEditSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {

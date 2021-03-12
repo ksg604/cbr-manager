@@ -2,21 +2,33 @@ package com.example.cbr_manager.ui.visitdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
+import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.utils.Helper;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VisitDetailsEditFragment extends Fragment {
 
@@ -31,27 +43,16 @@ public class VisitDetailsEditFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
-    private Spinner genderSpinner;
     private String location="";
-    Client client;
-    private static final String[] paths = {"Male", "Female"};
-
+    private int visitId = -1;
+    private Client currentClient;
 
     public VisitDetailsEditFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClientDetailsEditFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ClientDetailsEditFragment newInstance(String param1, String param2) {
-        ClientDetailsEditFragment fragment = new ClientDetailsEditFragment();
+    public static VisitDetailsEditFragment newInstance(String param1, String param2) {
+        VisitDetailsEditFragment fragment = new VisitDetailsEditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,10 +78,11 @@ public class VisitDetailsEditFragment extends Fragment {
         parentLayout = root.findViewById(android.R.id.content);
 
         Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        Bundle bundle = this.getArguments();
+        visitId = bundle.getInt("visitId", -1);
 
         setupVectorImages(root);
-        setupLocationSpinner(root);
+        getVisitInfo(visitId, root);
         setupButtons(root);
 
         return root;
@@ -95,7 +97,24 @@ public class VisitDetailsEditFragment extends Fragment {
         additionalInfo.setImageResource(R.drawable.ic_info);
     }
 
-    private void setupLocationSpinner(View root) {
+    private void getVisitInfo(int visitId, View root) {
+        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(Call<Visit> call, Response<Visit> response) {
+                Visit visit = response.body();
+                Client client = visit.getClient();
+                setupLocationSpinner(root, visit.getLocationDropDown());
+                setupEditTexts(visit, root);
+                getClientInfo(visit.getClientId());
+            }
+
+            @Override
+            public void onFailure(Call<Visit> call, Throwable t) {
+            }
+        });
+    }
+
+    private void setupLocationSpinner(View root, String locationDropDown) {
         String[] paths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
                 "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
         Spinner spinner = (Spinner) root.findViewById(R.id.visitDetailsEditLocationSpinner);
@@ -104,10 +123,20 @@ public class VisitDetailsEditFragment extends Fragment {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        int initialPosition=0;
+        for(int i=0 ; i<paths.length ; i++) {
+            if (paths[i].equalsIgnoreCase(locationDropDown)) {
+                initialPosition = i;
+                break;
+            }
+        }
+        spinner.setSelection(initialPosition);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 location = paths[position];
+                Log.d("location", location);
+                spinner.setSelection(position);
             }
 
             @Override
@@ -117,6 +146,59 @@ public class VisitDetailsEditFragment extends Fragment {
         });
     }
 
+    private void setupEditTexts(Visit visit, View root) {
+        setupDate(visit.getDatetimeCreated().toString(), root);
+        setupAdditionalInfo(visit.getAdditionalInfo(), root);
+    }
+
+    private void setupDate(String date, View root) {
+        EditText dateEditText = root.findViewById(R.id.visitDetailsEditDate);
+        dateEditText.setText(date);
+    }
+
+    private void setupAdditionalInfo(String additionalInfo, View root) {
+        EditText additionalInfoEditText = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
+        additionalInfoEditText.setText(additionalInfo);
+    }
+
+    private void getClientInfo(int clientId){
+        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+
+                if(response.isSuccessful()){
+                    Client client = response.body();
+                    setupCurrentClient(client);
+                    setupNameTextView(client.getFullName());
+                    setupImageViews(client.getPhotoURL());
+                } else{
+                    Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+                Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void setupCurrentClient(Client client) {
+        this.currentClient = client;
+    }
+
+    private void setupImageViews(String imageURL) {
+        ImageView displayPicture = (ImageView)getView().findViewById(R.id.visitDetailsEditDisplayPictureImageView);
+        Helper.setImageViewFromURL(imageURL, displayPicture, R.drawable.client_details_placeholder);
+    }
+
+    private void setupNameTextView(String fullName) {
+        TextView visitDetailsEdit = (TextView)getView().findViewById(R.id.visitDetailsEditNameTextView);
+        visitDetailsEdit.setText(fullName);
+    }
+
     private void setupButtons(View root) {
         setupBackButton(root);
         setupSubmitButton(root);
@@ -124,13 +206,68 @@ public class VisitDetailsEditFragment extends Fragment {
 
     private void setupSubmitButton(View root) {
         Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
 
         Button submitButton = root.findViewById(R.id.visitDetailsEditSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // TODO : set up GET and POST API call
+            public void onClick(View view) {
+                getAndUpdateVisit(visitId, root);
+            }
+        });
+    }
+
+    private void getAndUpdateVisit(int visitId, View root) {
+        EditText editDate = root.findViewById(R.id.visitDetailsEditDate);
+        EditText editAdditionalInfo = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
+
+        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(Call<Visit> call, Response<Visit> response) {
+                Visit visit = response.body();
+                visit.setClient(currentClient);
+                visit.setLocationDropDown(location);
+                visit.setDatetimeCreated(Timestamp.valueOf(editDate.getText().toString()));
+                visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
+                modifyVisitInfo(visit);
+            }
+            @Override
+            public void onFailure(Call<Visit> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void modifyVisitInfo(Visit visit) {
+        //Check input data
+        Log.d("input", visit.getLocationDropDown());
+        Log.d("input", visit.getDatetimeCreated().toString());
+        Log.d("input", visit.getAdditionalInfo());
+        apiService.visitService.modifyVisit(visit).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(Call<Visit> call, Response<Visit> response) {
+                if(response.isSuccessful()) {
+                    Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    Visit visit = response.body();
+                    //check result data
+                    Log.d("result", visit.getLocationDropDown());
+                    Log.d("result", visit.getDatetimeCreated().toString());
+                    Log.d("result", visit.getAdditionalInfo());
+                } else{
+                    Snackbar.make(getView(), "Failed to update user", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    try {
+                        Log.d("testing", response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                getActivity().onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Call<Visit> call, Throwable t) {
+
             }
         });
     }
@@ -139,7 +276,7 @@ public class VisitDetailsEditFragment extends Fragment {
         ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
         backButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 getActivity().onBackPressed();
             }
         });

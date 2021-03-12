@@ -42,7 +42,7 @@
                     app:cardCornerRadius="75dp">
 
                     <ImageView
-                        android:id="@+id/visitDetailsDisplayPictureImageView"
+                        android:id="@+id/visitDetailsEditDisplayPictureImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -51,7 +51,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/visitDetailsNameTextView"
+                    android:id="@+id/visitDetailsEditNameTextView"
                     android:layout_width="190dp"
                     android:layout_height="55dp"
                     android:layout_gravity="center"

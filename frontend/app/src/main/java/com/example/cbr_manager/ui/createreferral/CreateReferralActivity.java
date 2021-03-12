@@ -325,11 +325,14 @@ public class CreateReferralActivity extends AppCompatActivity {
 
         } else if (service == R.id.referralOtherRadioButton) {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
+
             TextInputEditText otherServiceEditText = findViewById(R.id.referralOtherServiceDescription);
+            validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText());
+            validationErrorListener(R.id.referralOtherServiceDescription, R.id.referralDescribeOtherTextInputLayout);
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
-            otherServiceDetail.setDescription(otherDescription);
 
+            otherServiceDetail.setDescription(otherDescription);
             referral.setServiceDetail(otherServiceDetail);
             referral.setServiceType("Other");
         }
@@ -343,7 +346,7 @@ public class CreateReferralActivity extends AppCompatActivity {
         referral.setClient(new Integer(clientId));
         referral.setUserCreator(userId);
 
-        makeServerCall(referral);
+//        makeServerCall(referral);
     }
 
     private void makeServerCall(Referral referral) {

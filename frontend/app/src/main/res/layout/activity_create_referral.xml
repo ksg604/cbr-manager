@@ -156,6 +156,7 @@
                 </RadioGroup>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/referralHipWidthTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -258,20 +259,6 @@
                     android:text="Physiotherapy"
                     android:textColor="@color/purple_700"
                     android:textSize="18sp" />
-
-<!--                <TextView-->
-<!--                    android:id="@+id/referralPhysioPhotoTextView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    android:text="Photo of client" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/referralPhysioImageView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    tools:srcCompat="@tools:sample/avatars" />-->
 
                 <TextView
                     android:id="@+id/referralClientConditionTextView"

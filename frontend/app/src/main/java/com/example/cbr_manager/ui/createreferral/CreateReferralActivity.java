@@ -247,8 +247,10 @@ public class CreateReferralActivity extends AppCompatActivity {
     }
 
     private void gatherData() {
+        boolean requiredEditTexts = true;
+
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
-        validateRadioGroup(R.id.createReferralServiceRadioGroup, R.id.referralOtherRadioButton);
+//        validateRadioGroup(R.id.createReferralServiceRadioGroup, R.id.referralOtherRadioButton);
         int service = selectedService.getCheckedRadioButtonId();
         Referral referral = new Referral();
 
@@ -264,7 +266,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             if (clientCondition.equals("Other")) {
                 otherConditionDescription = physioOtherCondition.getText().toString();
-                validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText());
+                requiredEditTexts = validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText());
                 validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
                 physiotherapyServiceDetail.setOther_description(otherConditionDescription);
             }
@@ -311,7 +313,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             boolean isRepairable = false;
 
             TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
-            validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText());
+            requiredEditTexts = validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText());
             validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
             hipWidth = hipWidthEditText.getText().toString();
             if (!hipWidth.isEmpty()) {
@@ -348,7 +350,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
 
             TextInputEditText otherServiceEditText = findViewById(R.id.referralOtherServiceDescription);
-            validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText());
+            requiredEditTexts = validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText());
             validationErrorListener(R.id.referralOtherServiceDescription, R.id.referralDescribeOtherTextInputLayout);
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
@@ -359,15 +361,18 @@ public class CreateReferralActivity extends AppCompatActivity {
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
-        validateEditText(R.id.createReferralReferToInputLayout, referTo.getText());
+        requiredEditTexts = validateEditText(R.id.createReferralReferToInputLayout, referTo.getText());
         validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
         referral.setRefer_to(referToString);
 
         referral.setClient(new Integer(clientId));
         referral.setUserCreator(userId);
-
-//        makeServerCall(referral);
+        if (requiredEditTexts) {
+            makeServerCall(referral);
+        } else {
+            Toast.makeText(this, "Missing required fields. Please check.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void makeServerCall(Referral referral) {

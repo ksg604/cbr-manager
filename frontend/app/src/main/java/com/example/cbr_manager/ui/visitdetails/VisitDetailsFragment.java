@@ -145,8 +145,7 @@ public class VisitDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Visit> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the visit. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
     }

@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -111,6 +112,19 @@ public class CreateReferralActivity extends AppCompatActivity {
         setupCameraButtonListener();
     }
 
+    private void validateEditText(int textInputEditTextId, int textInputLayoutId) {
+        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
+        TextInputLayout textInputLayout = findViewById(textInputLayoutId);
+        if (TextUtils.isEmpty(textInputEditText.getText())) {
+            textInputLayout.setErrorEnabled(true);
+            textInputLayout.setError("Required field");
+        }
+    }
+
+    private void validationErrorListener(int textInputEditTextId, int textInputLayoutId) {
+
+    }
+
     private void getUserId() {
         if (apiService.isAuthenticated()) {
             apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
@@ -196,7 +210,6 @@ public class CreateReferralActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gatherData();
-//                onBackPressed();
             }
         });
     }
@@ -305,7 +318,6 @@ public class CreateReferralActivity extends AppCompatActivity {
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
         String referToString = referTo.getText().toString();
-
         referral.setRefer_to(referToString);
 
         referral.setClient(new Integer(clientId));

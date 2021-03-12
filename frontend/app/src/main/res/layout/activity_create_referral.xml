@@ -424,8 +424,11 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/createReferralReferToInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:errorEnabled="true"
+                app:errorContentDescription="Required field"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"

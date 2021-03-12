@@ -335,11 +335,18 @@ public class CreateReferralActivity extends AppCompatActivity {
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
+        validateEditText(R.id.createReferralReferToInputLayout, referTo.getText());
+        validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
         referral.setRefer_to(referToString);
 
         referral.setClient(new Integer(clientId));
         referral.setUserCreator(userId);
+
+        makeServerCall(referral);
+    }
+
+    private void makeServerCall(Referral referral) {
         if (apiService.isAuthenticated()) {
             Call<Referral> call = apiService.getReferralService().createReferral(referral);
             call.enqueue(new Callback<Referral>() {

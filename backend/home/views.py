@@ -10,7 +10,7 @@ from cbrsite.settings import MEDIA_ROOT
 def home_view(request):
     apk_dir = os.path.join(MEDIA_ROOT, 'apk/*.apk')
 
-    file_list = glob.glob(apk_dir)
+    file_list = sorted(glob.glob(apk_dir), reverse=True)
 
     return render(request, 'home.html', {'files': file_list})
 

@@ -115,7 +115,6 @@ public class CreateReferralActivity extends AppCompatActivity {
     }
 
     private boolean validateEditText(int textInputLayoutId, Editable stringInput) {
-//        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
         TextInputLayout textInputLayout = findViewById(textInputLayoutId);
         if (TextUtils.isEmpty(stringInput)) {
             textInputLayout.setErrorEnabled(true);
@@ -241,16 +240,15 @@ public class CreateReferralActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gatherData();
+                onSubmit();
             }
         });
     }
 
-    private void gatherData() {
+    private void onSubmit() {
         boolean requiredEditTexts = true;
 
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
-//        validateRadioGroup(R.id.createReferralServiceRadioGroup, R.id.referralOtherRadioButton);
         int service = selectedService.getCheckedRadioButtonId();
         Referral referral = new Referral();
 

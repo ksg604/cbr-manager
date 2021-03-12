@@ -95,17 +95,17 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         if (apiService.isAuthenticated()) {
             apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
                 @Override
-                public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
+                public void onResponse(Call<List<Visit>> visitCall, Response<List<Visit>> response) {
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
                             int currClientID = visit.getClientId();
 
                             if (clientId == NO_SPECIFIC_CLIENT || visit.getClientId() == clientId) {
-                                Call<Client> call1 = apiService.clientService.getClient(currClientID);
-                                call1.enqueue(new Callback<Client>() {
+                                Call<Client> clientIdCall = apiService.clientService.getClient(currClientID);
+                                clientIdCall.enqueue(new Callback<Client>() {
                                     @Override
-                                    public void onResponse(Call<Client> call, Response<Client> response) {
+                                    public void onResponse(Call<Client> clientCall, Response<Client> response) {
                                         if (response.isSuccessful()) {
                                             Client client = response.body();
                                             visit.setClient(client);

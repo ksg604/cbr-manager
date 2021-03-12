@@ -114,15 +114,17 @@ public class CreateReferralActivity extends AppCompatActivity {
         setupCameraButtonListener();
     }
 
-    private void validateEditText(int textInputLayoutId, Editable s) {
+    private boolean validateEditText(int textInputLayoutId, Editable s) {
 //        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
         TextInputLayout textInputLayout = findViewById(textInputLayoutId);
         if (TextUtils.isEmpty(s)) {
             textInputLayout.setErrorEnabled(true);
             textInputLayout.setError("Required field");
+            return false;
         } else {
             textInputLayout.setErrorEnabled(false);
         }
+        return true;
     }
 
     private void validationErrorListener(int textInputEditTextId, int textInputLayoutId) {
@@ -143,6 +145,8 @@ public class CreateReferralActivity extends AppCompatActivity {
         });
     }
 
+    // The radio button passed in is the bottom most radio button of the group.
+    // This is a workaround since radio groups cannot display errors.
     private void validateRadioGroup(int radioGroupId, int radioButtonId) {
         RadioGroup radioGroup = findViewById(radioGroupId);
         RadioButton radioButton = findViewById(radioButtonId);
@@ -244,6 +248,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     private void gatherData() {
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
+        validateRadioGroup(R.id.createReferralServiceRadioGroup, R.id.referralOtherRadioButton);
         int service = selectedService.getCheckedRadioButtonId();
         Referral referral = new Referral();
 

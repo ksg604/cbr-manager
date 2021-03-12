@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'home.apps.HomeConfig',
     'clients.apps.ClientsConfig',
     'users.apps.UsersConfig',
     'referral.apps.ReferralConfig',

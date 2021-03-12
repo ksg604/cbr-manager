@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
 import retrofit2.Call;
@@ -47,7 +48,7 @@ public class VisitDetailsEditFragment extends Fragment {
     private View parentLayout;
     private String location="";
     private int visitId = -1;
-
+    private Client currentClient;
 
     public VisitDetailsEditFragment() {
         // Required empty public constructor
@@ -104,6 +105,7 @@ public class VisitDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
                 Visit visit = response.body();
+                Client client = visit.getClient();
                 setupLocationSpinner(root, visit.getLocationDropDown());
                 setupEditTexts(visit, root);
                 getClientInfo(visit.getClientId());
@@ -136,6 +138,8 @@ public class VisitDetailsEditFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 location = paths[position];
+                Log.d("location", location);
+                spinner.setSelection(position);
             }
 
             @Override
@@ -167,8 +171,7 @@ public class VisitDetailsEditFragment extends Fragment {
 
                 if(response.isSuccessful()){
                     Client client = response.body();
-
-                    // Todo: dynamically set the client info here
+                    setupCurrentClient(client);
                     setupNameTextView(client.getFullName());
                     setupImageViews(client.getPhotoURL());
                 } else{
@@ -183,6 +186,10 @@ public class VisitDetailsEditFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void setupCurrentClient(Client client) {
+        this.currentClient = client;
     }
 
     private void setupImageViews(String imageURL) {
@@ -207,7 +214,6 @@ public class VisitDetailsEditFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO : set up GET and POST API call
                 getAndUpdateVisit(visitId, root);
             }
         });
@@ -221,33 +227,42 @@ public class VisitDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
                 Visit visit = response.body();
-                Log.d("testing", Integer.toString(visit.getId()));
-                Log.d("testing",visit.getDatetimeCreated().toString());
-                Log.d("testing", visit.getLocationDropDown());
-                Log.d("testing", visit.getAdditionalInfo());
+                visit.setClient(currentClient);
                 visit.setLocationDropDown(location);
                 visit.setDatetimeCreated(Timestamp.valueOf(editDate.getText().toString()));
                 visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
-                Log.d("testing",visit.getDatetimeCreated().toString());
-                Log.d("testing", visit.getLocationDropDown());
-                Log.d("testing", visit.getAdditionalInfo());
                 modifyVisitInfo(visit);
             }
-
             @Override
             public void onFailure(Call<Visit> call, Throwable t) {
+
             }
         });
     }
 
     private void modifyVisitInfo(Visit visit) {
-
-
+        Log.d("input", visit.getLocationDropDown());
+        Log.d("input", visit.getDatetimeCreated().toString());
+        Log.d("input", visit.getAdditionalInfo());
         apiService.visitService.modifyVisit(visit).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
-                Visit visit = response.body();
-                Log.d("Testing", Integer.toString(visit.getId()));
+                if(response.isSuccessful()) {
+                    Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    Visit visit = response.body();
+                    Log.d("result", visit.getLocationDropDown());
+                    Log.d("result", visit.getDatetimeCreated().toString());
+                    Log.d("result", visit.getAdditionalInfo());
+                } else{
+                    Snackbar.make(getView(), "Failed to update user", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    try {
+                        Log.d("testing", response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 getActivity().onBackPressed();
             }
 

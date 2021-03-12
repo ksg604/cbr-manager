@@ -114,10 +114,10 @@ public class CreateReferralActivity extends AppCompatActivity {
         setupCameraButtonListener();
     }
 
-    private boolean validateEditText(int textInputLayoutId, Editable s) {
+    private boolean validateEditText(int textInputLayoutId, Editable stringInput) {
 //        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
         TextInputLayout textInputLayout = findViewById(textInputLayoutId);
-        if (TextUtils.isEmpty(s)) {
+        if (TextUtils.isEmpty(stringInput)) {
             textInputLayout.setErrorEnabled(true);
             textInputLayout.setError("Required field");
             return false;
@@ -131,16 +131,16 @@ public class CreateReferralActivity extends AppCompatActivity {
         TextInputEditText textInputEditText = findViewById(textInputEditTextId);
         textInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence stringInput, int start, int count, int after) {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence stringInput, int start, int before, int count) {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                validateEditText(textInputLayoutId, s);
+            public void afterTextChanged(Editable stringInput) {
+                validateEditText(textInputLayoutId, stringInput);
             }
         });
     }

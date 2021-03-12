@@ -22,7 +22,7 @@ from django.conf import settings
 
 from authenticate.views import CustomObtainToken
 from clients.views_api import ClientViewSet
-from home.views import home_view
+from home.views import home_view, download
 from referral.views import ReferralViewSet
 from users.views import UserViewSet
 from visits.views import VisitViewSet
@@ -40,6 +40,7 @@ router.register(r'referrals', ReferralViewSet, basename='Referral')
 urlpatterns = \
     [
         path('', home_view),
+        path('download/<path:file_path>/', download),
         path('admin/', admin.site.urls),
         path('api/token-auth', CustomObtainToken.as_view(), name='token-auth'),
         path('api/', include(router.urls)),

@@ -19,6 +19,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -111,6 +114,48 @@ public class CreateReferralActivity extends AppCompatActivity {
         setupCameraButtonListener();
     }
 
+    private boolean validateEditText(int textInputLayoutId, Editable stringInput) {
+        TextInputLayout textInputLayout = findViewById(textInputLayoutId);
+        if (TextUtils.isEmpty(stringInput)) {
+            textInputLayout.setErrorEnabled(true);
+            textInputLayout.setError("Required field");
+            return false;
+        } else {
+            textInputLayout.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private void validationErrorListener(int textInputEditTextId, int textInputLayoutId) {
+        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
+        textInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence stringInput, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence stringInput, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable stringInput) {
+                validateEditText(textInputLayoutId, stringInput);
+            }
+        });
+    }
+
+    // The radio button passed in is the bottom most radio button of the group.
+    // This is a workaround since radio groups cannot display errors.
+    private void validateRadioGroup(int radioGroupId, int radioButtonId) {
+        RadioGroup radioGroup = findViewById(radioGroupId);
+        RadioButton radioButton = findViewById(radioButtonId);
+        if (radioGroup.getCheckedRadioButtonId() == -1) {
+            radioButton.setError("Please select an item");
+        } else {
+            radioButton.setError(null);
+        }
+    }
+
     private void getUserId() {
         if (apiService.isAuthenticated()) {
             apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
@@ -195,13 +240,14 @@ public class CreateReferralActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gatherData();
-//                onBackPressed();
+                onSubmit();
             }
         });
     }
 
-    private void gatherData() {
+    private void onSubmit() {
+        boolean requiredEditTexts = true;
+
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
         int service = selectedService.getCheckedRadioButtonId();
         Referral referral = new Referral();
@@ -218,6 +264,8 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             if (clientCondition.equals("Other")) {
                 otherConditionDescription = physioOtherCondition.getText().toString();
+                requiredEditTexts = validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText());
+                validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
                 physiotherapyServiceDetail.setOther_description(otherConditionDescription);
             }
             physiotherapyServiceDetail.setCondition(clientCondition);
@@ -263,8 +311,12 @@ public class CreateReferralActivity extends AppCompatActivity {
             boolean isRepairable = false;
 
             TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
+            requiredEditTexts = validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText());
+            validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
             hipWidth = hipWidthEditText.getText().toString();
-            wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+            if (!hipWidth.isEmpty()) {
+                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+            }
 
             RadioGroup usageExperience = findViewById(R.id.referralWheelChairUsageRadioGroup);
             if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
@@ -294,22 +346,34 @@ public class CreateReferralActivity extends AppCompatActivity {
 
         } else if (service == R.id.referralOtherRadioButton) {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
+
             TextInputEditText otherServiceEditText = findViewById(R.id.referralOtherServiceDescription);
+            requiredEditTexts = validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText());
+            validationErrorListener(R.id.referralOtherServiceDescription, R.id.referralDescribeOtherTextInputLayout);
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
-            otherServiceDetail.setDescription(otherDescription);
 
+            otherServiceDetail.setDescription(otherDescription);
             referral.setServiceDetail(otherServiceDetail);
             referral.setServiceType("Other");
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
+        requiredEditTexts = validateEditText(R.id.createReferralReferToInputLayout, referTo.getText());
+        validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
-
         referral.setRefer_to(referToString);
 
         referral.setClient(new Integer(clientId));
         referral.setUserCreator(userId);
+        if (requiredEditTexts) {
+            makeServerCall(referral);
+        } else {
+            Toast.makeText(this, "Missing required fields. Please check.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void makeServerCall(Referral referral) {
         if (apiService.isAuthenticated()) {
             Call<Referral> call = apiService.getReferralService().createReferral(referral);
             call.enqueue(new Callback<Referral>() {

@@ -26,6 +26,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
+import java.sql.Timestamp;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -98,7 +100,6 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void getVisitInfo(int visitId, View root) {
-        Log.d("testing", Integer.toString(visitId));
         apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
@@ -170,8 +171,6 @@ public class VisitDetailsEditFragment extends Fragment {
                     // Todo: dynamically set the client info here
                     setupNameTextView(client.getFullName());
                     setupImageViews(client.getPhotoURL());
-
-
                 } else{
                     Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -207,8 +206,54 @@ public class VisitDetailsEditFragment extends Fragment {
         Button submitButton = root.findViewById(R.id.visitDetailsEditSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 // TODO : set up GET and POST API call
+                getAndUpdateVisit(visitId, root);
+            }
+        });
+    }
+
+    private void getAndUpdateVisit(int visitId, View root) {
+        EditText editDate = root.findViewById(R.id.visitDetailsEditDate);
+        EditText editAdditionalInfo = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
+
+        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(Call<Visit> call, Response<Visit> response) {
+                Visit visit = response.body();
+                Log.d("testing", Integer.toString(visit.getId()));
+                Log.d("testing",visit.getDatetimeCreated().toString());
+                Log.d("testing", visit.getLocationDropDown());
+                Log.d("testing", visit.getAdditionalInfo());
+                visit.setLocationDropDown(location);
+                visit.setDatetimeCreated(Timestamp.valueOf(editDate.getText().toString()));
+                visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
+                Log.d("testing",visit.getDatetimeCreated().toString());
+                Log.d("testing", visit.getLocationDropDown());
+                Log.d("testing", visit.getAdditionalInfo());
+                modifyVisitInfo(visit);
+            }
+
+            @Override
+            public void onFailure(Call<Visit> call, Throwable t) {
+            }
+        });
+    }
+
+    private void modifyVisitInfo(Visit visit) {
+
+
+        apiService.visitService.modifyVisit(visit).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(Call<Visit> call, Response<Visit> response) {
+                Visit visit = response.body();
+                Log.d("Testing", Integer.toString(visit.getId()));
+                getActivity().onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Call<Visit> call, Throwable t) {
+
             }
         });
     }
@@ -217,7 +262,7 @@ public class VisitDetailsEditFragment extends Fragment {
         ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
         backButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 getActivity().onBackPressed();
             }
         });

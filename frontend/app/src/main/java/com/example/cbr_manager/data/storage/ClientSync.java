@@ -1,6 +1,8 @@
 package com.example.cbr_manager.data.storage;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import java.io.IOException;

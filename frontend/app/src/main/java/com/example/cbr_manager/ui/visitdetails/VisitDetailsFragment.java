@@ -117,8 +117,7 @@ public class VisitDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
     }
@@ -146,8 +145,7 @@ public class VisitDetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Visit> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the visit. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
     }

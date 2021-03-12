@@ -2,20 +2,12 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,10 +19,8 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
-import com.example.cbr_manager.ui.visitdetails.VisitDetailsFragment;
 
 import java.sql.Timestamp;
 import java.text.Format;
@@ -45,9 +35,9 @@ import retrofit2.Response;
 public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener{
 
     private VisitsViewModel visitsViewModel;
-    private RecyclerView mRecyclerView;
+    private RecyclerView visitsRecyclerView;
     private VisitsRecyclerItemAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager visitsLayoutManager;
     private static int NO_SPECIFIC_CLIENT = -1;
     private int clientId = NO_SPECIFIC_CLIENT;
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
@@ -76,12 +66,12 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                 new ViewModelProvider(this).get(VisitsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_visits, container, false);
 
-        mRecyclerView = root.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
+        visitsRecyclerView = root.findViewById(R.id.recyclerView);
+        visitsRecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        visitsLayoutManager = new LinearLayoutManager(getContext());
         adapter = new VisitsRecyclerItemAdapter(visitsRecyclerItems, this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
+        visitsRecyclerView.setLayoutManager(visitsLayoutManager);
+        visitsRecyclerView.setAdapter(adapter);
 
         fetchVisitsToList(visitsRecyclerItems);
 
@@ -105,17 +95,17 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         if (apiService.isAuthenticated()) {
             apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
                 @Override
-                public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
+                public void onResponse(Call<List<Visit>> visitCall, Response<List<Visit>> response) {
                     if (response.isSuccessful()) {
                         List<Visit> visitList = response.body();
                         for (Visit visit : visitList) {
                             int currClientID = visit.getClientId();
 
                             if (clientId == NO_SPECIFIC_CLIENT || visit.getClientId() == clientId) {
-                                Call<Client> call1 = apiService.clientService.getClient(currClientID);
-                                call1.enqueue(new Callback<Client>() {
+                                Call<Client> clientIdCall = apiService.clientService.getClient(currClientID);
+                                clientIdCall.enqueue(new Callback<Client>() {
                                     @Override
-                                    public void onResponse(Call<Client> call, Response<Client> response) {
+                                    public void onResponse(Call<Client> clientCall, Response<Client> response) {
                                         if (response.isSuccessful()) {
                                             Client client = response.body();
                                             visit.setClient(client);

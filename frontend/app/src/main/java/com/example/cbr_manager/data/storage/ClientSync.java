@@ -1,26 +1,16 @@
 package com.example.cbr_manager.data.storage;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
-import com.google.gson.JsonElement;
-
 import java.io.IOException;
 import java.sql.Timestamp;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,14 +19,8 @@ public class ClientSync {
     private static ClientDBService localdb;
     private static APIService apiService;
     private static ClientSync Instance;
-    private static volatile List<Client> localClient = new ArrayList<>();
-    private static volatile List<Client> serverClient = new ArrayList<>();
-
-
-    private static volatile List<Client> localClient = new ArrayList<>();
-    private static volatile List<Client> serverClient = new ArrayList<>();
-
-
+    private static final List<Client> localClient = new ArrayList<>();
+    private static final List<Client> serverClient = new ArrayList<>();
 
     public static ClientSync getInstance(Context context){
         if(Instance == null){
@@ -64,7 +48,6 @@ public class ClientSync {
     public void performSync() throws ExecutionException, InterruptedException, IOException {
 
         refreshList();
-        // Check if any client on local database is newly created client not updated to server yet
         for(int i=0; i<localClient.size(); i++) {
             if(localClient.get(i).isNewClient()) {
                 localClient.get(i).setNewClient(false);
@@ -73,12 +56,9 @@ public class ClientSync {
             }
         }
 
-        // Refresh the client list for both server and local
         refreshList();
 
-        // Check by comparing timestamp to see if server client need to be updated from local
         int[] localUpdated = new int[localClient.size()];
-        int[] serverUpdated = new int[serverClient.size()];
 
         for(int i=0; i<localClient.size(); i++) {
             for(int j=0; j<serverClient.size(); j++){
@@ -92,21 +72,6 @@ public class ClientSync {
             }
 
         }
-        // Check by comparing timestamp to see if local client need to be updated by server
-        for(int i=0; i<serverClient.size(); i++) {
-            for(int j=0; j<localClient.size(); j++){
-                if(matchID(serverClient.get(i), localClient.get(j)) && checkTimeStamp(serverClient.get(i).getLastModifed(), localClient.get(j).getLastModifed())){
-                    // Need to modify and update since we know clients in server is modified after local client of same id
-                    if(serverUpdated[i] != 1){
-                        serverUpdated[i] = 1;
-                        localdb.update(serverClient.get(i));
-                    }
-                }
-            }
-
-        }
-
-
 
         refreshList();
         downloadLocal();

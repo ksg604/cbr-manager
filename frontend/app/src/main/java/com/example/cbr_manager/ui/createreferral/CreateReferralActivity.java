@@ -19,7 +19,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -112,17 +114,33 @@ public class CreateReferralActivity extends AppCompatActivity {
         setupCameraButtonListener();
     }
 
-    private void validateEditText(int textInputEditTextId, int textInputLayoutId) {
-        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
+    private void validateEditText(int textInputLayoutId, Editable s) {
+//        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
         TextInputLayout textInputLayout = findViewById(textInputLayoutId);
-        if (TextUtils.isEmpty(textInputEditText.getText())) {
+        if (TextUtils.isEmpty(s)) {
             textInputLayout.setErrorEnabled(true);
             textInputLayout.setError("Required field");
+        } else {
+            textInputLayout.setErrorEnabled(false);
         }
     }
 
     private void validationErrorListener(int textInputEditTextId, int textInputLayoutId) {
+        TextInputEditText textInputEditText = findViewById(textInputEditTextId);
+        textInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateEditText(textInputLayoutId, s);
+            }
+        });
     }
 
     private void getUserId() {

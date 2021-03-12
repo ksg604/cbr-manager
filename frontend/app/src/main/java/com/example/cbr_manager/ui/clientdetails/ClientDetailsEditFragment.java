@@ -41,6 +41,7 @@ public class ClientDetailsEditFragment extends Fragment {
     private Spinner genderSpinner;
     String gender="";
     Client client;
+    private int clientId;
     private static final String[] paths = {"Male", "Female"};
 
 
@@ -74,8 +75,8 @@ public class ClientDetailsEditFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
 
-        Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        Bundle bundle = this.getArguments();
+        this.clientId = bundle.getInt("clientId", -1);
 
         setupGenderSpinner(root);
         setupEditTexts(clientId, root);
@@ -104,6 +105,8 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void getAndModifyClient(int clientId, View root) {
+
+        Log.d("client", Integer.toString(clientId));
 
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
@@ -213,7 +216,7 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private void setupSubmitButton(View root) {
         Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        int clientId = this.clientId;
 
         Button submitButton = root.findViewById(R.id.clientDetailsEditSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {

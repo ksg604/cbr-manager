@@ -20,11 +20,8 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -241,6 +238,7 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void modifyVisitInfo(Visit visit) {
+        //Check input data
         Log.d("input", visit.getLocationDropDown());
         Log.d("input", visit.getDatetimeCreated().toString());
         Log.d("input", visit.getAdditionalInfo());
@@ -251,6 +249,7 @@ public class VisitDetailsEditFragment extends Fragment {
                     Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     Visit visit = response.body();
+                    //check result data
                     Log.d("result", visit.getLocationDropDown());
                     Log.d("result", visit.getDatetimeCreated().toString());
                     Log.d("result", visit.getAdditionalInfo());

@@ -1,34 +1,21 @@
 package com.example.cbr_manager.ui.visitdetails;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
-import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
-import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;

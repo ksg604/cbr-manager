@@ -2,7 +2,6 @@ package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +92,6 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
-                Log.d("log", client.getFirstName());
                 getActivity().onBackPressed();
             }
 
@@ -106,7 +104,6 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private void getAndModifyClient(int clientId, View root) {
 
-        Log.d("client", Integer.toString(clientId));
 
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);

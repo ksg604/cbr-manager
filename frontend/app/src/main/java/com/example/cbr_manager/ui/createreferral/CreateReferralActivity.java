@@ -143,6 +143,16 @@ public class CreateReferralActivity extends AppCompatActivity {
         });
     }
 
+    private void validateRadioGroup(int radioGroupId, int radioButtonId) {
+        RadioGroup radioGroup = findViewById(radioGroupId);
+        RadioButton radioButton = findViewById(radioButtonId);
+        if (radioGroup.getCheckedRadioButtonId() == -1) {
+            radioButton.setError("Please select an item");
+        } else {
+            radioButton.setError(null);
+        }
+    }
+
     private void getUserId() {
         if (apiService.isAuthenticated()) {
             apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
@@ -249,6 +259,8 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             if (clientCondition.equals("Other")) {
                 otherConditionDescription = physioOtherCondition.getText().toString();
+                validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText());
+                validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
                 physiotherapyServiceDetail.setOther_description(otherConditionDescription);
             }
             physiotherapyServiceDetail.setCondition(clientCondition);
@@ -294,8 +306,12 @@ public class CreateReferralActivity extends AppCompatActivity {
             boolean isRepairable = false;
 
             TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
+            validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText());
+            validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
             hipWidth = hipWidthEditText.getText().toString();
-            wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+            if (!hipWidth.isEmpty()) {
+                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+            }
 
             RadioGroup usageExperience = findViewById(R.id.referralWheelChairUsageRadioGroup);
             if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {

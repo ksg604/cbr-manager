@@ -91,6 +91,17 @@
                         android:text="Other" />
                 </RadioGroup>
 
+                <TextView
+                    android:id="@+id/referralNoServiceSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/referralDescribeOtherTextInputLayout"
                     android:layout_width="match_parent"
@@ -154,6 +165,16 @@
                         android:layout_weight="1"
                         android:text="Intermediate" />
                 </RadioGroup>
+                <TextView
+                    android:id="@+id/referralNoWheelchairUsageSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/referralHipWidthTextInputLayout"
@@ -202,6 +223,17 @@
                 </RadioGroup>
 
                 <TextView
+                    android:id="@+id/referralNoExisitingWheelchairTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
+                <TextView
                     android:id="@+id/referralCanRepairTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -230,6 +262,17 @@
                         android:layout_weight="1"
                         android:text="No" />
                 </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoWheelchairRepairSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
 
                 <TextView
                     android:id="@+id/referralBringWheelchairTextView"
@@ -330,6 +373,17 @@
                         android:layout_weight="1"
                         android:text="Above" />
                 </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoProstheticSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
             </LinearLayout>
 
             <LinearLayout
@@ -375,6 +429,17 @@
                         android:layout_weight="1"
                         android:text="Above" />
                 </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoOrthoticSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
             </LinearLayout>
 
             <LinearLayout

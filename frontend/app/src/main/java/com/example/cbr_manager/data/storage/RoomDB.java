@@ -9,12 +9,15 @@ import androidx.room.TypeConverters;
 
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientDao;
+import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.service.visit.VisitDao;
 
-@Database(entities = {Client.class}, version = 1, exportSchema = false)
+@Database(entities = {Client.class, Visit.class}, version = 1, exportSchema = false)
 @TypeConverters({TimeStampConverter.class})
 public abstract class RoomDB extends RoomDatabase {
 
     public abstract ClientDao clientDao();
+    public abstract VisitDao visitDao();
 
     private static volatile RoomDB Instance;
 

@@ -65,13 +65,6 @@ public class PhotoFragment extends Fragment implements Step {
                 //submitSurvey();
             }
         });
-        Button prevButton = view.findViewById(R.id.prevButton);
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((CreateClientActivity) getActivity()).setViewPager(4);
-            }
-        });
 
         return view;
     }

@@ -148,7 +148,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -173,6 +172,7 @@
                     android:drawableStart="@drawable/ic_info"
                     android:drawableLeft="@drawable/ic_info"
                     android:text="Please select an option."
+                    android:layout_marginBottom="4dp"
                     android:visibility="gone"
                     android:textColor="#fc0303" />
 
@@ -204,7 +204,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -378,7 +378,6 @@
                     android:id="@+id/referralNoProstheticSelectedTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:drawableStart="@drawable/ic_info"
                     android:drawableLeft="@drawable/ic_info"
                     android:text="Please select an option."
@@ -434,7 +433,6 @@
                     android:id="@+id/referralNoOrthoticSelectedTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:drawableStart="@drawable/ic_info"
                     android:drawableLeft="@drawable/ic_info"
                     android:text="Please select an option."

@@ -335,6 +335,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
 
             RadioGroup usageExperience = findViewById(R.id.referralWheelChairUsageRadioGroup);
+            validateRadiogroupSelection(R.id.referralWheelChairUsageRadioGroup, R.id.referralNoWheelchairUsageSelectedTextView);
             if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
                 wheelchairServiceDetail.setUsageExperience("Intermediate");
             } else {
@@ -342,6 +343,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
 
             RadioGroup isExistingWheelchair = findViewById(R.id.referralExistingWheelchairRadioGroup);
+            validateRadiogroupSelection(R.id.referralExistingWheelchairRadioGroup, R.id.referralNoExisitingWheelchairTextView);
             if (isExistingWheelchair.getCheckedRadioButtonId() == R.id.referralExistingWheelchairYes) {
                 isExisting = true;
             }
@@ -448,14 +450,23 @@ public class CreateReferralActivity extends AppCompatActivity {
     private void setupWheelchairLayout() {
         RadioGroup existingChair = findViewById(R.id.referralExistingWheelchairRadioGroup);
         RadioGroup canRepair = findViewById(R.id.referralCanRepairRadioGroup);
+        RadioGroup usageExperience = findViewById(R.id.referralWheelChairUsageRadioGroup);
         canRepair.setVisibility(View.GONE);
 
         TextView bringWheelChair = findViewById(R.id.referralBringWheelchairTextView);
         bringWheelChair.setVisibility(View.GONE);
 
+        usageExperience.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                validateRadiogroupSelection(R.id.referralWheelChairUsageRadioGroup, R.id.referralNoWheelchairUsageSelectedTextView);
+            }
+        });
+
         existingChair.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                validateRadiogroupSelection(R.id.referralExistingWheelchairRadioGroup, R.id.referralNoExisitingWheelchairTextView);
                 if (checkedId == R.id.referralExistingWheelchairYes) {
                     canRepair.setVisibility(View.VISIBLE);
                 } else {
@@ -469,6 +480,7 @@ public class CreateReferralActivity extends AppCompatActivity {
         canRepair.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                validateRadiogroupSelection(R.id.referralCanRepairRadioGroup, R.id.referralNoWheelchairRepairSelectedTextView);
                 if (checkedId == R.id.referralCanRepairYes) {
                     bringWheelChair.setVisibility(View.VISIBLE);
                 } else {

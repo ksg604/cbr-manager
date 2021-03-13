@@ -1,8 +1,11 @@
 package com.example.cbr_manager.utils;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.cbr_manager.BuildConfig;
 import com.squareup.picasso.Picasso;
@@ -12,9 +15,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Helper {
@@ -32,15 +37,15 @@ public class Helper {
         return Drawable.createFromStream(stream, url);
     }
 
-    public static void setImageViewFromURL(String url, ImageView view, int defaultDrawableResId){
+    public static void setImageViewFromURL(String url, ImageView view, int defaultDrawableResId) {
         Picasso picasso = Picasso.get();
         picasso.load(url).into(view);
-        if (view.getDrawable() == null){
+        if (view.getDrawable() == null) {
             view.setImageResource(defaultDrawableResId);
         }
     }
 
-    public static String riskToColourCode(int riskScore){
+    public static String riskToColourCode(int riskScore) {
         if (riskScore >= 10) {
             return "#b02323";
         } else if (riskScore < 10 && riskScore >= 5) {
@@ -62,5 +67,17 @@ public class Helper {
         Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         String formattedDate = formatter.format(date);
         return formattedDate;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static ZonedDateTime parseUTCDateTime(String date) {
+        DateTimeFormatter f = DateTimeFormatter.ISO_DATE_TIME;
+        return ZonedDateTime.parse(date, f);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static LocalDateTime convertToLocalDateTime(ZonedDateTime zonedDateTime, ZoneId zoneId) {
+        ZonedDateTime zdt = zonedDateTime.withZoneSameInstant(zoneId);
+        return zdt.toLocalDateTime();
     }
 }

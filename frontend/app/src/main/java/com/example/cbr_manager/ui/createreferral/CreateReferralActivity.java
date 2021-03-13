@@ -349,6 +349,9 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
 
             RadioGroup isRepairableWheelchair = findViewById(R.id.referralCanRepairRadioGroup);
+            if (isExisting) {
+                validateRadiogroupSelection(R.id.referralCanRepairRadioGroup, R.id.referralNoWheelchairRepairSelectedTextView);
+            }
             if (isRepairableWheelchair.getCheckedRadioButtonId() == R.id.referralCanRepairYes) {
                 isRepairable = true;
             }
@@ -473,6 +476,8 @@ public class CreateReferralActivity extends AppCompatActivity {
                     canRepair.setVisibility(View.GONE);
                     canRepair.clearCheck();
                     bringWheelChair.setVisibility(View.GONE);
+                    TextView textView = findViewById(R.id.referralNoWheelchairRepairSelectedTextView);
+                    textView.setVisibility(View.GONE);
                 }
             }
         });

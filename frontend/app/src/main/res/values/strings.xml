@@ -216,4 +216,17 @@
     <string name="create_referral">Create Referral</string>
     <string name="cbr_client_id">CBR Client ID:</string>
     <string name="auth_token_key">AUTH_TOKEN_KEY</string>
+
+
+    <string name="service_required">Service required<font color='#FF0000'>*</font></string>
+    <string name="describe_other">Describe Other<font color='#FF0000'>*</font></string>
+    <string name="usage_experience">Usage Experience<font color='#FF0000'>*</font></string>
+    <string name="hip_width">Hip width<font color='#FF0000'>*</font></string>
+    <string name="existing_wheelchair">Existing Wheelchair?<font color='#FF0000'>*</font></string>
+    <string name="can_the_existing_wheelchair_be_repaired">Can the existing wheelchair be repaired?<font color='#FF0000'>*</font></string>
+    <string name="client_condition">Client condition<font color='#FF0000'>*</font></string>
+    <string name="describe_other_phys">Describe Other<font color='#FF0000'>*</font></string>
+    <string name="is_injury_below_or_above_knee">Is injury below or above knee?<font color='#FF0000'>*</font></string>
+    <string name="is_injury_below_or_above_elbow">Is injury below or above elbow?<font color='#FF0000'>*</font></string>
+    <string name="refer_to">Refer To<font color='#FF0000'>*</font></string>
 </resources>

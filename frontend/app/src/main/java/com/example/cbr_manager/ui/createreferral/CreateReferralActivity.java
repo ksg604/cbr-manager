@@ -256,9 +256,11 @@ public class CreateReferralActivity extends AppCompatActivity {
     }
 
     private void onSubmit() {
-        boolean requiredEditTexts = true;
+        boolean requiredFieldsFilled = true;
 
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
+        requiredFieldsFilled = validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView);
+
         int service = selectedService.getCheckedRadioButtonId();
         Referral referral = new Referral();
 
@@ -274,7 +276,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             if (clientCondition.equals("Other")) {
                 otherConditionDescription = physioOtherCondition.getText().toString();
-                requiredEditTexts = validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText());
+                requiredFieldsFilled = validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText());
                 validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
                 physiotherapyServiceDetail.setOther_description(otherConditionDescription);
             }
@@ -286,6 +288,8 @@ public class CreateReferralActivity extends AppCompatActivity {
         } else if (service == R.id.referralProstheticRadioButton) {
             ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
             RadioGroup aboveOrBelowKnee = findViewById(R.id.referralAboveOrBelowKnee);
+            validateRadiogroupSelection(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView);
+            radioGroupErrorListener(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView);
             int getSelectedId = aboveOrBelowKnee.getCheckedRadioButtonId();
             RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
             String getRadioText = "";
@@ -301,6 +305,8 @@ public class CreateReferralActivity extends AppCompatActivity {
         } else if (service == R.id.referralOrthoticRadioButton) {
             OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
             RadioGroup aboveOrBelowElbow = findViewById(R.id.referralAboveOrBelowElbow);
+            validateRadiogroupSelection(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView);
+            radioGroupErrorListener(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView);
             int getSelectedId = aboveOrBelowElbow.getCheckedRadioButtonId();
             RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
             String getRadioText = "";
@@ -321,7 +327,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             boolean isRepairable = false;
 
             TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
-            requiredEditTexts = validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText());
+            requiredFieldsFilled = validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText());
             validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
             hipWidth = hipWidthEditText.getText().toString();
             if (!hipWidth.isEmpty()) {
@@ -358,7 +364,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
 
             TextInputEditText otherServiceEditText = findViewById(R.id.referralOtherServiceDescription);
-            requiredEditTexts = validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText());
+            requiredFieldsFilled = validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText());
             validationErrorListener(R.id.referralOtherServiceDescription, R.id.referralDescribeOtherTextInputLayout);
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
@@ -369,14 +375,14 @@ public class CreateReferralActivity extends AppCompatActivity {
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
-        requiredEditTexts = validateEditText(R.id.createReferralReferToInputLayout, referTo.getText());
+        requiredFieldsFilled = validateEditText(R.id.createReferralReferToInputLayout, referTo.getText());
         validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
         referral.setRefer_to(referToString);
 
         referral.setClient(new Integer(clientId));
         referral.setUserCreator(userId);
-        if (requiredEditTexts) {
+        if (requiredFieldsFilled) {
             makeServerCall(referral);
         } else {
             Toast.makeText(this, "Missing required fields. Please check.", Toast.LENGTH_LONG).show();
@@ -505,6 +511,8 @@ public class CreateReferralActivity extends AppCompatActivity {
                 LinearLayout orthoticLayout = findViewById(R.id.referralOrthoticLayout);
                 LinearLayout wheelchairLayout = findViewById(R.id.referralWheelchairLayout);
 
+                validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView);
+
                 if (checkedId == R.id.referralPhysioRadioButton) {
                     setAllGone();
                     physioLayout.setVisibility(View.VISIBLE);
@@ -558,7 +566,6 @@ public class CreateReferralActivity extends AppCompatActivity {
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Leave page");
-//            alertDialogBuilder.setIcon(R.drawable.ic_exit);
         alertDialogBuilder.setMessage("Are you sure you want to leave? Changes will not be saved.");
         alertDialogBuilder.setCancelable(true);
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -574,7 +581,6 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             }
         });
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

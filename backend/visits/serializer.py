@@ -95,14 +95,11 @@ class VisitSerializer(serializers.ModelSerializer):
         update_object(client, **validated_date.get("client"))
 
     def update_visit_on_put(self, visit_instance, validated_data):
-        post_update_client_json = ClientSerializer(visit_instance.client).data
 
-        # update what was changed from the original state
-        visit_instance.client_state_updated = post_update_client_json
-        visit_instance.client_info_changed = differentiate_key_value(post_update_client_json,
-                                                                         visit_instance.client_state_previous)
-
-        # update fields
-        visit_instance.user_creator = validated_data.get("user_creator", visit_instance.user_creator)
-        visit_instance.additional_notes = validated_data.get("additional_notes", visit_instance.additional_notes)
+        for key, value in validated_data.items():
+            if key == 'client':
+                client = get_object_or_404(Client, id=validated_data['client_id'])
+                setattr(visit_instance, 'client', client)
+            else:
+                setattr(visit_instance, key, value)
         visit_instance.save()

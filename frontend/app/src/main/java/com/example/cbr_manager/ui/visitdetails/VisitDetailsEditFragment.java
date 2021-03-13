@@ -186,7 +186,7 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void setupCurrentClient(Client client) {
-        this.currentClient = client;
+        currentClient = client;
     }
 
     private void setupImageViews(String imageURL) {
@@ -226,6 +226,8 @@ public class VisitDetailsEditFragment extends Fragment {
                 Visit visit = response.body();
                 visit.setClient(currentClient);
                 visit.setLocationDropDown(location);
+                visit.setLocationVisitGPS("bidibidisdfsdfsdf");
+                visit.setVillageNoVisit(5);
                 visit.setDatetimeCreated(Timestamp.valueOf(editDate.getText().toString()));
                 visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
                 modifyVisitInfo(visit);
@@ -250,6 +252,9 @@ public class VisitDetailsEditFragment extends Fragment {
                             .setAction("Action", null).show();
                     Visit visit = response.body();
                     //check result data
+
+                    Log.d("result", visit.getLocationVisitGPS());
+                    Log.d("result", visit.getVillageNoVisit().toString());
                     Log.d("result", visit.getLocationDropDown());
                     Log.d("result", visit.getDatetimeCreated().toString());
                     Log.d("result", visit.getAdditionalInfo());

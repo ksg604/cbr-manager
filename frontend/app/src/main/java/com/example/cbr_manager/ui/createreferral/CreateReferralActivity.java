@@ -477,6 +477,7 @@ public class CreateReferralActivity extends AppCompatActivity {
         canRepair.setVisibility(View.GONE);
 
         TextView bringWheelChair = findViewById(R.id.referralBringWheelchairTextView);
+        TextView canRepairedTextView = findViewById(R.id.referralCanRepairTextView);
         bringWheelChair.setVisibility(View.GONE);
 
         usageExperience.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -492,8 +493,10 @@ public class CreateReferralActivity extends AppCompatActivity {
                 validateRadiogroupSelection(R.id.referralExistingWheelchairRadioGroup, R.id.referralNoExisitingWheelchairTextView);
                 if (checkedId == R.id.referralExistingWheelchairYes) {
                     canRepair.setVisibility(View.VISIBLE);
+                    canRepairedTextView.setVisibility(View.VISIBLE);
                 } else {
                     canRepair.setVisibility(View.GONE);
+                    canRepairedTextView.setVisibility(View.GONE);
                     canRepair.clearCheck();
                     bringWheelChair.setVisibility(View.GONE);
                     TextView textView = findViewById(R.id.referralNoWheelchairRepairSelectedTextView);

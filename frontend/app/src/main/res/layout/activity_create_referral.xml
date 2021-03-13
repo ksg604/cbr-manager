@@ -238,6 +238,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:visibility="gone"
                     android:text="@string/can_the_existing_wheelchair_be_repaired" />
 
                 <RadioGroup

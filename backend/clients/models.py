@@ -1,7 +1,9 @@
 from django.db import models
 
+from tools.models import TimestampedModel
 
-class Client(models.Model):
+
+class Client(TimestampedModel):
     """
     The clients that get visited by CBR members
     """
@@ -36,10 +38,6 @@ class Client(models.Model):
     social_goal = models.TextField(blank=True)
 
     risk_score = models.IntegerField(editable=False, default=0)
-
-    # Extra fields checking Sync states
-    last_modified = models.DateTimeField(auto_now=True)
-    is_new_client = models.BooleanField(blank=True, default=False)
 
     class Meta:
         ordering = ['id']

@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.ClientSync;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+
 
 public class HomepageFragment extends Fragment {
     private ImageButton newClientButton, newVisitButton, dashboardButton;
@@ -77,11 +79,15 @@ public class HomepageFragment extends Fragment {
         });
 
         syncButton = view.findViewById(R.id.syncButton);
+        syncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClientSync.getInstance(getContext()).requestSync();
+            }
+        });
 
 
         return view;
     }
-
-
 
 }

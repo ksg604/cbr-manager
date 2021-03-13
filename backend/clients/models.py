@@ -37,6 +37,10 @@ class Client(models.Model):
 
     risk_score = models.IntegerField(editable=False, default=0)
 
+    # Extra fields checking Sync states
+    last_modified = models.DateTimeField(auto_now=True)
+    is_new_client = models.BooleanField(blank=True, default=False)
+
     class Meta:
         ordering = ['id']
 

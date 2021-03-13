@@ -56,6 +56,23 @@ public class PhotoFragment extends Fragment implements Step {
         //TODO: Add Camera functionality
         setupCameraButtonListener();
 
+
+
+        Button submitButton = view.findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //submitSurvey();
+            }
+        });
+        Button prevButton = view.findViewById(R.id.prevButton);
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CreateClientActivity) getActivity()).setViewPager(4);
+            }
+        });
+
         return view;
     }
 

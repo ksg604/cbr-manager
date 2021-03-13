@@ -1,4 +1,4 @@
-package com.example.cbr_manager.data.storage;
+package com.example.cbr_manager.service.client;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -13,8 +13,8 @@ import java.util.List;
 
 @Dao
 public interface ClientDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Client...clients);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Client client);
 
     @Delete
     void delete(Client client);
@@ -30,5 +30,9 @@ public interface ClientDao {
     // Read client by id
     @Query("SELECT * FROM client WHERE id LIKE :clientId")
     Client getClient(int clientId);
+
+    // Test function for clearing local database
+    @Query("DELETE FROM client")
+    void clearAll();
 
 }

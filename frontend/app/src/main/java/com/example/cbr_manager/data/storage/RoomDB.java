@@ -5,17 +5,20 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.client.ClientDao;
 
 @Database(entities = {Client.class}, version = 1, exportSchema = false)
+@TypeConverters({TimeStampConverter.class})
 public abstract class RoomDB extends RoomDatabase {
 
     public abstract ClientDao clientDao();
 
     private static volatile RoomDB Instance;
 
-    static RoomDB getDatabase(final Context context){
+    public static RoomDB getDatabase(final Context context){
         if (Instance == null){
             synchronized (RoomDB.class){
                 if(Instance == null){

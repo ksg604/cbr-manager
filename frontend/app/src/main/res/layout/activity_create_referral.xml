@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:text="Service required" />
+                    android:text="@string/service_required" />
 
                 <RadioGroup
                     android:id="@+id/createReferralServiceRadioGroup"
@@ -91,6 +91,17 @@
                         android:text="Other" />
                 </RadioGroup>
 
+                <TextView
+                    android:id="@+id/referralNoServiceSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/referralDescribeOtherTextInputLayout"
                     android:layout_width="match_parent"
@@ -99,7 +110,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
-                    android:hint="Describe Other">
+                    android:hint="@string/describe_other">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/referralOtherServiceDescription"
@@ -129,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:text="Usage Experience" />
+                    android:text="@string/usage_experience" />
 
                 <RadioGroup
                     android:id="@+id/referralWheelChairUsageRadioGroup"
@@ -137,7 +148,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -154,6 +164,17 @@
                         android:layout_weight="1"
                         android:text="Intermediate" />
                 </RadioGroup>
+                <TextView
+                    android:id="@+id/referralNoWheelchairUsageSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:layout_marginBottom="4dp"
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/referralHipWidthTextInputLayout"
@@ -166,7 +187,7 @@
                         android:id="@+id/referralHipWidth"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:hint="Hip width"
+                        android:hint="@string/hip_width"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,7 +196,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:text="Existing Wheelchair?" />
+                    android:text="@string/existing_wheelchair" />
 
                 <RadioGroup
                     android:id="@+id/referralExistingWheelchairRadioGroup"
@@ -183,7 +204,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -202,11 +223,23 @@
                 </RadioGroup>
 
                 <TextView
+                    android:id="@+id/referralNoExisitingWheelchairTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
+                <TextView
                     android:id="@+id/referralCanRepairTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:text="Can the existing wheelchair be repaired?" />
+                    android:visibility="gone"
+                    android:text="@string/can_the_existing_wheelchair_be_repaired" />
 
                 <RadioGroup
                     android:id="@+id/referralCanRepairRadioGroup"
@@ -230,6 +263,17 @@
                         android:layout_weight="1"
                         android:text="No" />
                 </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoWheelchairRepairSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
 
                 <TextView
                     android:id="@+id/referralBringWheelchairTextView"
@@ -264,7 +308,7 @@
                     android:id="@+id/referralClientConditionTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Client condition" />
+                    android:text="@string/client_condition" />
 
                 <Spinner
                     android:id="@+id/referralPhysioDDL"
@@ -283,7 +327,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:hint="Describe Other" />
+                        android:hint="@string/describe_other" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -308,7 +352,7 @@
                     android:id="@+id/referralProstheticWhereTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Is injury below or above knee?" />
+                    android:text="@string/is_injury_below_or_above_knee" />
 
                 <RadioGroup
                     android:id="@+id/referralAboveOrBelowKnee"
@@ -330,6 +374,16 @@
                         android:layout_weight="1"
                         android:text="Above" />
                 </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoProstheticSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
             </LinearLayout>
 
             <LinearLayout
@@ -353,7 +407,7 @@
                     android:id="@+id/referralOrthoticWhereTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Is injury below or above elbow?" />
+                    android:text="@string/is_injury_below_or_above_elbow" />
 
                 <RadioGroup
                     android:id="@+id/referralAboveOrBelowElbow"
@@ -375,6 +429,16 @@
                         android:layout_weight="1"
                         android:text="Above" />
                 </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoOrthoticSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
             </LinearLayout>
 
             <LinearLayout
@@ -426,7 +490,7 @@
                     android:id="@+id/referralReferToEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Refer To" />
+                    android:hint="@string/refer_to" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button

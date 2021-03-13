@@ -1,15 +1,26 @@
 package com.example.cbr_manager.service.visit;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.RoomWarnings;
+
 import com.example.cbr_manager.service.client.Client;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
 
+@Entity(tableName = "visit")
 public class Visit {
 
     @SerializedName("id")
     @Expose
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "visit_id")
     private int id;
 
     @SerializedName("client_id")
@@ -26,7 +37,9 @@ public class Visit {
 
     @SerializedName("client")
     @Expose
-    private Client client = new Client();
+    @Embedded
+    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
+    private Client client;
 
     @SerializedName("datetime_created")
     @Expose
@@ -224,6 +237,7 @@ public class Visit {
     @Expose
     private String conclusionSocialProvision;
 
+    @Ignore
     public Visit(String additionalInfo, int clientId, int userId, Client client) {
         this.additionalInfo = additionalInfo;
         this.clientId = clientId;
@@ -232,7 +246,58 @@ public class Visit {
     }
 
     public Visit() {
-
+        this.additionalInfo = "";
+        this.clientId = 0;
+        this.userId = 0;
+        this.client = new Client();
+        this.adviceEducationProvision = false;
+        this.adviceEducationProvisionText = "";
+        this.adviceHealthProvision = false;
+        this.adviceHealthProvisionText = "";
+        this.adviceSocialProvision = false;
+        this.adviceSocialProvisionText = "";
+        this.advocacyEducationProvision = false;
+        this.advocacyEducationProvisionText = "";
+        this.advocacyHealthProvision = false;
+        this.advocacyHealthProvisionText = "";
+        this.advocacySocialProvision = false;
+        this.advocacySocialProvisionText = "";
+        this.conclusionEducationProvision = "";
+        this.conclusionHealthProvision = "";
+        this.conclusionSocialProvision = "";
+        this.cbrWorkerName = "";
+        this.encouragementEducationProvision = false;
+        this.encouragementEducationProvisionText = "";
+        this.encouragementHealthProvision = false;
+        this.encouragementHealthProvisionText = "";
+        this.encouragementSocialProvision = false;
+        this.encouragementSocialProvisionText = "";
+        this.goalMetEducationProvision = "";
+        this.goalMetHealthProvision = "";
+        this.goalMetSocialProvision = "";
+        this.isCBRPurpose = false;
+        this.isDisabilityFollowUpPurpose = false;
+        this.isDisabilityReferralPurpose = false;
+        this.isEducationProvision = false;
+        this.isHealthProvision = false;
+        this.isSocialProvision = false;
+        this.locationDropDown = "";
+        this.locationVisitGPS = "";
+        this.orthoticHealthProvision = false;
+        this.orthoticHealthProvisionText = "";
+        this.prostheticHealthProvision = false;
+        this.prostheticHealthProvisionText = "";
+        this.repairsHealthProvision = false;
+        this.repairsHealthProvisionText = "";
+        this.referralEducationProvision = false;
+        this.referralEducationProvisionText = "";
+        this.referralHealthProvision = false;
+        this.referralHealthProvisionText = "";
+        this.referralSocialProvision = false;
+        this.referralSocialProvisionText = "";
+        this.villageNoVisit = 0;
+        this.wheelchairHealthProvision = false;
+        this.wheelchairHealthProvisionText = "";
     }
 
     public int getId() {

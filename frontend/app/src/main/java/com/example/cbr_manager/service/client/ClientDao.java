@@ -28,7 +28,7 @@ public interface ClientDao {
     List<Client> getClients();
 
     // Read client by id
-    @Query("SELECT * FROM client WHERE id LIKE :clientId")
+    @Query("SELECT * FROM client WHERE client_id = :clientId")
     Client getClient(int clientId);
 
     // Test function for clearing local database

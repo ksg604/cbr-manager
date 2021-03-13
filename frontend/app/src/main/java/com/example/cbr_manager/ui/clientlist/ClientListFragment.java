@@ -55,15 +55,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         clientListRecyclerView.setLayoutManager(mLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
-        //fetchClientsToList(clientList);
-        try {
-            clientList.addAll(ClientDBService.getInstance(getContext()).readAll());
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        clientListAdapter.notifyDataSetChanged();
+        fetchClientsToList(clientList);
 
         SearchView clientSearch = root.findViewById(R.id.clientSearchView);
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

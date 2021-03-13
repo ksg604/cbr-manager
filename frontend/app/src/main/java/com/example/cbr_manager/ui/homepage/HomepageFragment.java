@@ -2,40 +2,20 @@ package com.example.cbr_manager.ui.homepage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.data.storage.ClientDBService;
-import com.example.cbr_manager.data.storage.ClientSync;
-import com.example.cbr_manager.data.storage.RoomDB;
-import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.ui.clientlist.ClientListFragment;
+import com.example.cbr_manager.service.client.ClientSync;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
-import com.example.cbr_manager.ui.create_client.CreateClientActivity;
-import com.example.cbr_manager.ui.dashboard.DashboardFragment;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomepageFragment extends Fragment {
     private ImageButton newClientButton, newVisitButton, dashboardButton;
@@ -102,21 +82,12 @@ public class HomepageFragment extends Fragment {
         syncButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestSync();
+                ClientSync.getInstance(getContext()).requestSync();
             }
         });
 
 
         return view;
     }
-
-
-
-    private void requestSync() {
-        ClientSync.getInstance(getContext()).requestSync();
-    }
-
-
-
 
 }

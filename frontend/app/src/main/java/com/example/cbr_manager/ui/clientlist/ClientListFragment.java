@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.data.storage.ClientDBService;
+import com.example.cbr_manager.service.client.ClientDBService;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;

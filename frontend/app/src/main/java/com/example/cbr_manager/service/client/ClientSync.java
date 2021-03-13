@@ -1,10 +1,9 @@
-package com.example.cbr_manager.data.storage;
+package com.example.cbr_manager.service.client;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.client.Client;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -47,11 +46,11 @@ public class ClientSync {
     }
 
 
-    public void performSync() throws ExecutionException, InterruptedException, IOException {
+    private void performSync() throws ExecutionException, InterruptedException, IOException {
 
         refreshList();
-        for(int i=0; i<localClient.size(); i++) {
-            if(localClient.get(i).isNewClient()) {
+        for (int i = 0; i < localClient.size(); i++) {
+            if (localClient.get(i).isNewClient()) {
                 localClient.get(i).setNewClient(false);
                 serverInsert(localClient.get(i));
                 localdb.delete(localClient.get(i));
@@ -62,11 +61,11 @@ public class ClientSync {
 
         int[] localUpdated = new int[localClient.size()];
 
-        for(int i=0; i<localClient.size(); i++) {
-            for(int j=0; j<serverClient.size(); j++){
-                if(matchID(localClient.get(i), serverClient.get(j)) && checkTimeStamp(localClient.get(i).getLastModifed(), serverClient.get(j).getLastModifed())){
+        for (int i = 0; i < localClient.size(); i++) {
+            for (int j = 0; j < serverClient.size(); j++) {
+                if (matchID(localClient.get(i), serverClient.get(j)) && checkTimeStamp(localClient.get(i).getLastModifed(), serverClient.get(j).getLastModifed())) {
                     // Need to modify and update since we know clients in local is modified after server client of same id
-                    if(localUpdated[i] != 1){
+                    if (localUpdated[i] != 1) {
                         localUpdated[i] = 1;
                         serverModify(localClient.get(i));
                     }

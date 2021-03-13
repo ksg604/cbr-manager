@@ -1,4 +1,4 @@
-package com.example.cbr_manager.data.storage;
+package com.example.cbr_manager.service.client;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

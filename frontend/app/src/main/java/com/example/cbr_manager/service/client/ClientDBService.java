@@ -1,20 +1,19 @@
-package com.example.cbr_manager.data.storage;
+package com.example.cbr_manager.service.client;
 
 import android.content.Context;
 
-import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.data.storage.RoomDB;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class ClientDBService {
-    private static ClientDao clientDao;
-    private static volatile ClientDBService Instance;
+    private ClientDao clientDao;
+    private static ClientDBService Instance;
 
     public static ClientDBService getInstance(Context context){
         if(Instance == null){

@@ -206,12 +206,7 @@ public class VisitDetailsEditFragment extends Fragment {
 
     private void setupSubmitButton(View root) {
         Button submitButton = root.findViewById(R.id.visitDetailsEditSubmitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getAndUpdateVisit(visitId, root);
-            }
-        });
+        submitButton.setOnClickListener(v -> {getAndUpdateVisit(visitId,root);});
     }
 
     private void getAndUpdateVisit(int visitId, View root) {
@@ -236,10 +231,6 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void modifyVisitInfo(Visit visit) {
-        //Check input data
-        Log.d("input", visit.getLocationDropDown());
-        Log.d("input", visit.getDatetimeCreated().toString());
-        Log.d("input", visit.getAdditionalInfo());
         apiService.visitService.modifyVisit(visit).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
@@ -247,10 +238,6 @@ public class VisitDetailsEditFragment extends Fragment {
                     Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     Visit visit = response.body();
-                    //check result data
-                    Log.d("result", visit.getLocationDropDown());
-                    Log.d("result", visit.getDatetimeCreated().toString());
-                    Log.d("result", visit.getAdditionalInfo());
                 } else{
                     Snackbar.make(getView(), "Failed to update user", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

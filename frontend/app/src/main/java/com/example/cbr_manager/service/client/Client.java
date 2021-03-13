@@ -3,6 +3,7 @@ package com.example.cbr_manager.service.client;
 import android.util.Log;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -120,6 +121,7 @@ public class Client {
         this.socialRisk = 0;
         this.educationRisk = 0;
     }
+    @Ignore
     public Client(String consent, String date, String firstName, String lastName, String contactClient, int age,
                   String gender, int id, String location, int villageNo, String disability,
                   String carePresent, String contactCare) {

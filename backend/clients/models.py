@@ -20,7 +20,7 @@ class Client(models.Model):
     care_present = models.CharField(max_length=5)
     contact_care = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='images/', default='images/default.png')
-    disability = models.CharField(max_length=50)
+    disability = models.CharField(max_length=250)
     date = models.DateTimeField(auto_now_add=True)
     # Extra text field for Client information(Health/Education... etc)
     health_risk = models.IntegerField(default=0)

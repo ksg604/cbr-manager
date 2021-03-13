@@ -126,6 +126,28 @@ public class CreateReferralActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean validateRadiogroupSelection(int radiogroupId, int errorTextViewId) {
+        RadioGroup radiogroup = findViewById(radiogroupId);
+        TextView textView = findViewById(errorTextViewId);
+        if (radiogroup.getCheckedRadioButtonId() == -1) {
+            textView.setVisibility(View.VISIBLE);
+            return false;
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+        return true;
+    }
+
+    private void radioGroupErrorListener(int radiogroupId, int errorTextViewId) {
+        RadioGroup radioGroup = findViewById(radiogroupId);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                validateRadiogroupSelection(radiogroupId, errorTextViewId);
+            }
+        });
+    }
+
     private void validationErrorListener(int textInputEditTextId, int textInputLayoutId) {
         TextInputEditText textInputEditText = findViewById(textInputEditTextId);
         textInputEditText.addTextChangedListener(new TextWatcher() {

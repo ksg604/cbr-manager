@@ -259,7 +259,9 @@ public class CreateReferralActivity extends AppCompatActivity {
         boolean requiredFieldsFilled = true;
 
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
-        requiredFieldsFilled = validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView);
+        if(!validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView)) {
+            requiredFieldsFilled = false;
+        }
 
         int service = selectedService.getCheckedRadioButtonId();
         Referral referral = new Referral();
@@ -276,7 +278,9 @@ public class CreateReferralActivity extends AppCompatActivity {
 
             if (clientCondition.equals("Other")) {
                 otherConditionDescription = physioOtherCondition.getText().toString();
-                requiredFieldsFilled = validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText());
+                if (!validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText())) {
+                    requiredFieldsFilled = false;
+                }
                 validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
                 physiotherapyServiceDetail.setOther_description(otherConditionDescription);
             }
@@ -288,7 +292,9 @@ public class CreateReferralActivity extends AppCompatActivity {
         } else if (service == R.id.referralProstheticRadioButton) {
             ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
             RadioGroup aboveOrBelowKnee = findViewById(R.id.referralAboveOrBelowKnee);
-            validateRadiogroupSelection(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView);
+            if (!validateRadiogroupSelection(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView)) {
+                requiredFieldsFilled = false;
+            }
             radioGroupErrorListener(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView);
             int getSelectedId = aboveOrBelowKnee.getCheckedRadioButtonId();
             RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
@@ -305,7 +311,9 @@ public class CreateReferralActivity extends AppCompatActivity {
         } else if (service == R.id.referralOrthoticRadioButton) {
             OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
             RadioGroup aboveOrBelowElbow = findViewById(R.id.referralAboveOrBelowElbow);
-            validateRadiogroupSelection(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView);
+            if (!validateRadiogroupSelection(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView)) {
+                requiredFieldsFilled = false;
+            }
             radioGroupErrorListener(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView);
             int getSelectedId = aboveOrBelowElbow.getCheckedRadioButtonId();
             RadioButton aboveOrBelow = (RadioButton) findViewById(getSelectedId);
@@ -327,7 +335,9 @@ public class CreateReferralActivity extends AppCompatActivity {
             boolean isRepairable = false;
 
             TextInputEditText hipWidthEditText = findViewById(R.id.referralHipWidth);
-            requiredFieldsFilled = validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText());
+            if (!validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText())) {
+                requiredFieldsFilled = false;
+            }
             validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
             hipWidth = hipWidthEditText.getText().toString();
             if (!hipWidth.isEmpty()) {
@@ -335,7 +345,9 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
 
             RadioGroup usageExperience = findViewById(R.id.referralWheelChairUsageRadioGroup);
-            validateRadiogroupSelection(R.id.referralWheelChairUsageRadioGroup, R.id.referralNoWheelchairUsageSelectedTextView);
+            if (!validateRadiogroupSelection(R.id.referralWheelChairUsageRadioGroup, R.id.referralNoWheelchairUsageSelectedTextView)) {
+                requiredFieldsFilled = false;
+            }
             if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
                 wheelchairServiceDetail.setUsageExperience("Intermediate");
             } else {
@@ -343,14 +355,18 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
 
             RadioGroup isExistingWheelchair = findViewById(R.id.referralExistingWheelchairRadioGroup);
-            validateRadiogroupSelection(R.id.referralExistingWheelchairRadioGroup, R.id.referralNoExisitingWheelchairTextView);
+            if (!validateRadiogroupSelection(R.id.referralExistingWheelchairRadioGroup, R.id.referralNoExisitingWheelchairTextView)) {
+                requiredFieldsFilled = false;
+            }
             if (isExistingWheelchair.getCheckedRadioButtonId() == R.id.referralExistingWheelchairYes) {
                 isExisting = true;
             }
 
             RadioGroup isRepairableWheelchair = findViewById(R.id.referralCanRepairRadioGroup);
             if (isExisting) {
-                validateRadiogroupSelection(R.id.referralCanRepairRadioGroup, R.id.referralNoWheelchairRepairSelectedTextView);
+                if (!validateRadiogroupSelection(R.id.referralCanRepairRadioGroup, R.id.referralNoWheelchairRepairSelectedTextView)) {
+                    requiredFieldsFilled = false;
+                }
             }
             if (isRepairableWheelchair.getCheckedRadioButtonId() == R.id.referralCanRepairYes) {
                 isRepairable = true;
@@ -369,7 +385,9 @@ public class CreateReferralActivity extends AppCompatActivity {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
 
             TextInputEditText otherServiceEditText = findViewById(R.id.referralOtherServiceDescription);
-            requiredFieldsFilled = validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText());
+            if(!validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText())) {
+                requiredFieldsFilled = false;
+            }
             validationErrorListener(R.id.referralOtherServiceDescription, R.id.referralDescribeOtherTextInputLayout);
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
@@ -380,7 +398,9 @@ public class CreateReferralActivity extends AppCompatActivity {
         }
 
         TextInputEditText referTo = findViewById(R.id.referralReferToEditText);
-        requiredFieldsFilled = validateEditText(R.id.createReferralReferToInputLayout, referTo.getText());
+        if (!validateEditText(R.id.createReferralReferToInputLayout, referTo.getText())) {
+            requiredFieldsFilled = false;
+        }
         validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
         referral.setRefer_to(referToString);

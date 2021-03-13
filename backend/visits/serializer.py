@@ -30,6 +30,7 @@ class VisitSerializer(serializers.ModelSerializer):
                                     client_state_previous=pre_update_client_json,
                                     client_state_updated=post_update_client_json,
                                     client_info_changed=client_info_changed_json,
+                                    datetime_created=validated_data["datetime_created"],
                                     is_cbr_purpose=validated_data["is_cbr_purpose"],
                                     is_disability_referral_purpose=validated_data["is_disability_referral_purpose"],
                                     is_disability_follow_up_purpose=validated_data["is_disability_follow_up_purpose"],

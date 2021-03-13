@@ -76,8 +76,7 @@ public class VisitDetailsEditFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_visit_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
-
-        Intent intent = getActivity().getIntent();
+        
         Bundle bundle = this.getArguments();
         visitId = bundle.getInt("visitId", -1);
 
@@ -102,7 +101,6 @@ public class VisitDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
                 Visit visit = response.body();
-                Client client = visit.getClient();
                 setupLocationSpinner(root, visit.getLocationDropDown());
                 setupEditTexts(visit, root);
                 getClientInfo(visit.getClientId());
@@ -241,11 +239,6 @@ public class VisitDetailsEditFragment extends Fragment {
                 } else{
                     Snackbar.make(getView(), "Failed to update user", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    try {
-                        Log.d("testing", response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
                 getActivity().onBackPressed();
             }
@@ -259,11 +252,6 @@ public class VisitDetailsEditFragment extends Fragment {
 
     private void setupBackButton(View root) {
         ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
-        backButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+        backButtonImageView.setOnClickListener(v -> {getActivity().onBackPressed();});
     }
 }

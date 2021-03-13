@@ -166,18 +166,6 @@ public class CreateReferralActivity extends AppCompatActivity {
         });
     }
 
-    // The radio button passed in is the bottom most radio button of the group.
-    // This is a workaround since radio groups cannot display errors.
-    private void validateRadioGroup(int radioGroupId, int radioButtonId) {
-        RadioGroup radioGroup = findViewById(radioGroupId);
-        RadioButton radioButton = findViewById(radioButtonId);
-        if (radioGroup.getCheckedRadioButtonId() == -1) {
-            radioButton.setError("Please select an item");
-        } else {
-            radioButton.setError(null);
-        }
-    }
-
     private void getUserId() {
         if (apiService.isAuthenticated()) {
             apiService.userService.getCurrentUser().enqueue(new Callback<User>() {

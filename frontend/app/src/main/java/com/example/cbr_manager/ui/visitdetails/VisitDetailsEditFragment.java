@@ -256,7 +256,25 @@ public class VisitDetailsEditFragment extends Fragment {
                 visit.setVillageNoVisit(Integer.parseInt(editVillageNumber.getText().toString()));
                 visit.setWheelchairHealthProvisionText(editHealthWheelChairProvision.getText().toString());
                 visit.setProstheticHealthProvisionText(editHealthProstheticProvision.getText().toString());
+                visit.setOrthoticHealthProvisionText(editHealthOrthoticProvision.getText().toString());
+                visit.setRepairsHealthProvisionText(editHealthRepairsProvision.getText().toString());
+                visit.setReferralHealthProvisionText(editHealthReferralProvision.getText().toString());
+                visit.setAdviceHealthProvisionText(editHealthAdviceProvision.getText().toString());
+                visit.setAdvocacyHealthProvisionText(editHealthAdvocacyProvision.getText().toString());
+                visit.setEncouragementHealthProvisionText(editHealthEncouragementProvision.getText().toString());
+                visit.setConclusionHealthProvision(editHealthConclusionProvision.getText().toString());
 
+                visit.setReferralEducationProvisionText(editEducationReferralProvision.getText().toString());
+                visit.setAdviceEducationProvisionText(editEducationAdviceProvision.getText().toString());
+                visit.setAdvocacyEducationProvisionText(editEducationAdvocacyProvision.getText().toString());
+                visit.setEncouragementEducationProvisionText(editEducationEncouragementProvision.getText().toString());
+                visit.setConclusionEducationProvision(editEducationConclusionProvision.getText().toString());
+
+                visit.setReferralSocialProvisionText(editSocialReferralProvision.getText().toString());
+                visit.setAdviceSocialProvisionText(editSocialAdviceProvision.getText().toString());
+                visit.setAdvocacySocialProvisionText(editSocialAdvocacyProvision.getText().toString());
+                visit.setEncouragementSocialProvisionText(editSocialEncouragementProvision.getText().toString());
+                visit.setConclusionSocialProvision(editSocialConclusionProvision.getText().toString());
 
 
                 visit.setAdditionalInfo(editAdditionalInfo.getText().toString());

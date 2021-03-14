@@ -23,11 +23,11 @@ public class VisitsRecyclerItem {
         return imageResource;
     }
 
-    public String gettitleText() {
+    public String getTitleText() {
         return titleText;
     }
 
-    public String getbodyText() {
+    public String getBodyText() {
         return bodyText;
     }
 

@@ -56,7 +56,6 @@ class VisitSerializer(serializers.ModelSerializer):
                                     advice_health_provision_text=validated_data["advice_health_provision_text"],
                                     advocacy_health_provision_text=validated_data["advocacy_health_provision_text"],
                                     encouragement_health_provision_text=validated_data["encouragement_health_provision_text"],
-                                    goal_met_health_provision=validated_data["goal_met_health_provision"],
                                     conclusion_health_provision=validated_data["conclusion_health_provision"],
                                     advice_education_provision=validated_data["advice_education_provision"],
                                     advocacy_education_provision=validated_data["advocacy_education_provision"],
@@ -66,7 +65,6 @@ class VisitSerializer(serializers.ModelSerializer):
                                     advocacy_education_provision_text=validated_data["advocacy_education_provision_text"],
                                     referral_education_provision_text=validated_data["referral_education_provision_text"],
                                     encouragement_education_provision_text=validated_data["encouragement_education_provision_text"],
-                                    goal_met_education_provision=validated_data["goal_met_education_provision"],
                                     conclusion_education_provision=validated_data["conclusion_education_provision"],
                                     advice_social_provision=validated_data["advice_social_provision"],
                                     advocacy_social_provision=validated_data["advocacy_social_provision"],
@@ -76,7 +74,6 @@ class VisitSerializer(serializers.ModelSerializer):
                                     advocacy_social_provision_text=validated_data["advocacy_social_provision_text"],
                                     referral_social_provision_text=validated_data["referral_social_provision_text"],
                                     encouragement_social_provision_text=validated_data["encouragement_social_provision_text"],
-                                    goal_met_social_provision=validated_data["goal_met_social_provision"],
                                     conclusion_social_provision=validated_data["conclusion_social_provision"]
                                     )
                                     

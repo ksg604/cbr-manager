@@ -44,7 +44,6 @@ class Visit(models.Model):
     advocacy_health_provision_text = models.TextField(blank=True, max_length=255)
     encouragement_health_provision_text = models.TextField(blank=True, max_length=255)
 
-    goal_met_health_provision = models.TextField(blank=True, max_length=30)
     conclusion_health_provision = models.TextField(blank=True, max_length=255)
 
     advice_education_provision = models.BooleanField(blank=True, default=False)
@@ -57,7 +56,6 @@ class Visit(models.Model):
     referral_education_provision_text = models.TextField(blank=True, max_length=255)
     encouragement_education_provision_text = models.TextField(blank=True, max_length=255)
 
-    goal_met_education_provision = models.TextField(blank=True, max_length=30)
     conclusion_education_provision = models.TextField(blank=True, max_length=255)
 
     advice_social_provision = models.BooleanField(blank=True, default=False)
@@ -70,7 +68,6 @@ class Visit(models.Model):
     referral_social_provision_text = models.TextField(blank=True, max_length=255)
     encouragement_social_provision_text = models.TextField(blank=True, max_length=255)
 
-    goal_met_social_provision = models.TextField(blank=True, max_length=30)
     conclusion_social_provision = models.TextField(blank=True, max_length=255)
 
     # contains the specific info that was changed

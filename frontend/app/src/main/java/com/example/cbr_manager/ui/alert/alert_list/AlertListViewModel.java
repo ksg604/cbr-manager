@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 public class AlertListViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<String> myText;
 
     public AlertListViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        myText = new MutableLiveData<>();
+        myText.setValue("This is alert list fragment");
     }
 
     public LiveData<String> getText() {
-        return mText;
+        return myText;
     }
 }

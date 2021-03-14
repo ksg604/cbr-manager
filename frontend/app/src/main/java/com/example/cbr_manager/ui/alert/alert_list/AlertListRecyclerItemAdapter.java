@@ -44,7 +44,7 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
                 ArrayList<AlertListRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (AlertListRecyclerItem alertListRecyclerItem : alertListRecyclerItems) {
-                    if (alertListRecyclerItem.getmTitle().toLowerCase().trim().contains(searchString) | alertListRecyclerItem.getmBody().toLowerCase().trim().contains(searchString)) {
+                    if (alertListRecyclerItem.getmyTitle().toLowerCase().trim().contains(searchString) | alertListRecyclerItem.getmyBody().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(alertListRecyclerItem);
                     }
                 }
@@ -111,9 +111,9 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
     public void onBindViewHolder(@NonNull AlertItemViewHolder holder, int position) {
         AlertListRecyclerItem currentItem = filteredAlerts.get(position);
 
-        holder.textListTitle.setText(currentItem.getmTitle());
-        holder.textListBody.setText(currentItem.getmBody());
-        holder.textListDate.setText(currentItem.getmDate());
+        holder.textListTitle.setText(currentItem.getmyTitle());
+        holder.textListBody.setText(currentItem.getmyBody());
+        holder.textListDate.setText(currentItem.getmyDate());
     }
 
     @Override

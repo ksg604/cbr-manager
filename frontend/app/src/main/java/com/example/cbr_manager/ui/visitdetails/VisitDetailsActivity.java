@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.visitdetails;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,6 +28,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +42,9 @@ public class VisitDetailsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_details);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        setTitle("Visit Details");
 
         if (savedInstanceState == null) {
             Intent intent = getIntent();
@@ -65,5 +72,14 @@ public class VisitDetailsActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

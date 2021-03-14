@@ -9,7 +9,6 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +26,6 @@ import retrofit2.Response;
 
 public class ClientHistoryFragment extends Fragment implements ClientHistoryRecyclerItemAdapter.OnItemListener{
 
-    private ClientHistoryViewModel clientHistoryViewModel;
     private RecyclerView clientHistoryRecyclerView;
     private ClientHistoryRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager clientHistoryLayoutManager;
@@ -40,8 +38,7 @@ public class ClientHistoryFragment extends Fragment implements ClientHistoryRecy
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        clientHistoryViewModel =
-                new ViewModelProvider(this).get(ClientHistoryViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_client_history, container, false);
 
         clientHistoryRecyclerView = root.findViewById(R.id.recyclerView);

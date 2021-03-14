@@ -149,10 +149,6 @@ public class Visit {
     @Expose
     private String encouragementHealthProvisionText;
 
-    @SerializedName("goal_met_health_provision")
-    @Expose
-    private String goalMetHealthProvision;
-
     @SerializedName("conclusion_health_provision")
     @Expose
     private String conclusionHealthProvision;
@@ -189,10 +185,6 @@ public class Visit {
     @Expose
     private String encouragementEducationProvisionText;
 
-    @SerializedName("goal_met_education_provision")
-    @Expose
-    private String goalMetEducationProvision;
-
     @SerializedName("conclusion_education_provision")
     @Expose
     private String conclusionEducationProvision;
@@ -228,10 +220,6 @@ public class Visit {
     @SerializedName("encouragement_social_provision_text")
     @Expose
     private String encouragementSocialProvisionText;
-
-    @SerializedName("goal_met_social_provision")
-    @Expose
-    private String goalMetSocialProvision;
 
     @SerializedName("conclusion_social_provision")
     @Expose
@@ -272,9 +260,6 @@ public class Visit {
         this.encouragementHealthProvisionText = "";
         this.encouragementSocialProvision = false;
         this.encouragementSocialProvisionText = "";
-        this.goalMetEducationProvision = "";
-        this.goalMetHealthProvision = "";
-        this.goalMetSocialProvision = "";
         this.isCBRPurpose = false;
         this.isDisabilityFollowUpPurpose = false;
         this.isDisabilityReferralPurpose = false;
@@ -554,14 +539,6 @@ public class Visit {
         this.encouragementHealthProvisionText = encouragementHealthProvisionText;
     }
 
-    public String getGoalMetHealthProvision() {
-        return goalMetHealthProvision;
-    }
-
-    public void setGoalMetHealthProvision(String goalMetHealthProvision) {
-        this.goalMetHealthProvision = goalMetHealthProvision;
-    }
-
     public String getConclusionHealthProvision() {
         return conclusionHealthProvision;
     }
@@ -634,13 +611,6 @@ public class Visit {
         this.encouragementEducationProvisionText = encouragementEducationProvisionText;
     }
 
-    public String getGoalMetEducationProvision() {
-        return goalMetEducationProvision;
-    }
-
-    public void setGoalMetEducationProvision(String goalMetEducationProvision) {
-        this.goalMetEducationProvision = goalMetEducationProvision;
-    }
 
     public String getConclusionEducationProvision() {
         return conclusionEducationProvision;
@@ -712,14 +682,6 @@ public class Visit {
 
     public void setEncouragementSocialProvisionText(String encouragementSocialProvisionText) {
         this.encouragementSocialProvisionText = encouragementSocialProvisionText;
-    }
-
-    public String getGoalMetSocialProvision() {
-        return goalMetSocialProvision;
-    }
-
-    public void setGoalMetSocialProvision(String goalMetSocialProvision) {
-        this.goalMetSocialProvision = goalMetSocialProvision;
     }
 
     public String getConclusionSocialProvision() {

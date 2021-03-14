@@ -101,6 +101,15 @@ public class Client {
     @SerializedName("social_goal")
     @Expose
     private String socialGoal;
+    @SerializedName("goal_met_health_provision")
+    @Expose
+    private String goalMetHealthProvision;
+    @SerializedName("goal_met_education_provision")
+    @Expose
+    private String goalMetEducationProvision;
+    @SerializedName("goal_met_social_provision")
+    @Expose
+    private String goalMetSocialProvision;
 
     //Initializing fields that are needed for POST request in itr1
     public Client() {
@@ -354,6 +363,30 @@ public class Client {
 
     public void setCbrClientId(String cbrClientId) {
         this.cbrClientId = cbrClientId;
+    }
+
+    public String getGoalMetHealthProvision() {
+        return goalMetHealthProvision;
+    }
+
+    public void setGoalMetHealthProvision(String goalMetHealthProvision) {
+        this.goalMetHealthProvision = goalMetHealthProvision;
+    }
+
+    public String getGoalMetEducationProvision() {
+        return goalMetEducationProvision;
+    }
+
+    public void setGoalMetEducationProvision(String goalMetEducationProvision) {
+        this.goalMetEducationProvision = goalMetEducationProvision;
+    }
+
+    public String getGoalMetSocialProvision() {
+        return goalMetSocialProvision;
+    }
+
+    public void setGoalMetSocialProvision(String goalMetSocialProvision) {
+        this.goalMetSocialProvision = goalMetSocialProvision;
     }
 
     // Extra fields for checking sync states

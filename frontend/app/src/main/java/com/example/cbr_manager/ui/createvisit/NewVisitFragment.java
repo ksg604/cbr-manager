@@ -361,7 +361,7 @@ public class NewVisitFragment extends Fragment {
         visit.setAdvocacyHealthProvisionText(advocacyDescription);
         visit.setEncouragementHealthProvisionText(encouragementDescription);
 
-        visit.setGoalMetHealthProvision(healthGoalText);
+        visit.getClient().setGoalMetHealthProvision(healthGoalText);
         visit.setConclusionHealthProvision(healthConclusionDescription);
 
         // Education provision
@@ -374,7 +374,7 @@ public class NewVisitFragment extends Fragment {
         visit.setAdvocacyEducationProvisionText(educationAdvocacyDescription);
         visit.setReferralEducationProvisionText(educationReferralDescription);
         visit.setEncouragementEducationProvisionText(educationEncouragementDescription);
-        visit.setGoalMetEducationProvision(educationGoalText);
+        visit.getClient().setGoalMetEducationProvision(educationGoalText);
         visit.setConclusionEducationProvision(educationConclusion);
 
         // Social provision
@@ -388,7 +388,7 @@ public class NewVisitFragment extends Fragment {
         visit.setReferralSocialProvisionText(socialReferralDescription);
         visit.setEncouragementSocialProvisionText(socialEncouragementDescription);
 
-        visit.setGoalMetSocialProvision(socialGoalText);
+        visit.getClient().setGoalMetSocialProvision(socialGoalText);
         visit.setConclusionSocialProvision(socialConclusion);
     }
 

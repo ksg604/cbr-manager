@@ -569,6 +569,7 @@
                     android:background="@color/grey" />
 
                 <TextView
+                    android:id="@+id/allOutstandingReferralsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="All Outstanding"

@@ -21,7 +21,9 @@
         <activity android:name=".ui.clientselector.ClientSelectorActivity" />
         <activity android:name=".ui.createreferral.CreateReferralActivity">
         </activity>
-        <activity android:name=".ui.visitdetails.VisitDetailsActivity" />
+        <activity android:name=".ui.visitdetails.VisitDetailsActivity"
+                    android:label=".VisitDetailsActivity"
+                    android:windowSoftInputMode="adjustPan"/>/>
         <activity
             android:name=".ui.createvisit.CreateVisitActivity"
             android:windowSoftInputMode="adjustResize" />

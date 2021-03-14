@@ -21,8 +21,10 @@ import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -276,6 +278,14 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        TextView allOutstandingReferralsTextView = root.findViewById(R.id.allOutstandingReferralsTextView);
+        allOutstandingReferralsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(DashboardFragment.this)
+                        .navigate(R.id.action_nav_dashboard_to_nav_referral_list);
+            }
+        });
     }
 
     private void setupViewPager(View root) {

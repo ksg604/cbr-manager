@@ -18,16 +18,17 @@ public class ReferralListRecyclerItem {
     private final String referTo;
     private final Referral referral;
     private final int clientId;
+    private String clientName;
 
-    public ReferralListRecyclerItem(String status, String type, String referTo, Referral referral, String date,int clientId) {
+    public ReferralListRecyclerItem(String status, String type, String referTo, Referral referral, String date,int clientId, String clientName) {
         this.status = status;
         this.type = type;
         this.referTo = "Refer to: "+referTo;
         this.referral = referral;
         this.date = date;
         this.clientId = clientId;
+        this.clientName = clientName;
     }
-
 
     public String getStatus() {
         return status;
@@ -49,5 +50,9 @@ public class ReferralListRecyclerItem {
 
     public int getClientId() {
         return clientId;
+    }
+
+    public String getClientName() {
+        return clientName;
     }
 }

@@ -83,7 +83,6 @@ public class ClientDetailsFragment extends Fragment {
 
                 switch(item.getItemId()) {
                     case R.id.visitsFragment:
-                        
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(android.R.id.content, new VisitsFragment())
                                 .addToBackStack(null)
@@ -99,6 +98,7 @@ public class ClientDetailsFragment extends Fragment {
                         Intent createReferralIntent = new Intent(getActivity(), CreateReferralActivity.class);
                         createReferralIntent.putExtra("CLIENT_ID", clientId);
                         startActivity(createReferralIntent);
+                        break;
                     case R.id.referralsFragment:
                         Bundle arguments = new Bundle();
                         arguments.putInt("CLIENT_ID", clientId);
@@ -116,6 +116,7 @@ public class ClientDetailsFragment extends Fragment {
                                 .replace(R.id.fragment_client_details, clientDetailsEditFragment, null)
                                 .addToBackStack(null)
                                 .commit();
+                        break;
                 }
                 return false;
             }

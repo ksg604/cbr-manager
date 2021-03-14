@@ -53,10 +53,6 @@
         android:name="com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment"
         android:label="Referrals"
         tools:layout="@layout/fragment_referral_list" >
-        <argument
-            android:name="CLIENT_ID"
-            app:argType="integer"
-            android:defaultValue="-2" />
     </fragment>
 
     <fragment

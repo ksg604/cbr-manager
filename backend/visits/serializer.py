@@ -96,7 +96,11 @@ class VisitSerializer(serializers.ModelSerializer):
         update_object(client, **validated_date.get("client"))
 
     def update_visit_on_put(self, visit_instance, validated_data):
+        post_update_client_json = ClientSerializer(visit_instance.client).data
 
+        visit_instance.client_state_updated = post_update_client_json
+        visit_instace.client_info_changed = differentiate_key_value(post_update_client_json,
+                                                                        visit_instance.client_state_previous)
         for key, value in validated_data.items():
             if key == 'client':
                 client = get_object_or_404(Client, id=validated_data['client_id'])

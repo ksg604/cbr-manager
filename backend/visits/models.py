@@ -5,7 +5,6 @@ from django.utils import timezone
 
 from clients.models import Client
 
-
 class Visit(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True)
     user_creator = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -47,7 +46,7 @@ class Visit(models.Model):
     encouragement_health_provision_text = models.CharField(blank=True, max_length=100)
 
     goal_met_health_provision = models.CharField(blank=True, max_length=30)
-    conclusion_health_provision = models.CharField(blank=True, max_length=100)
+    conclusion_health_provision = models.CharField(blank=True, max_length=255)
 
     advice_education_provision = models.BooleanField(blank=True, default=False)
     advocacy_education_provision = models.BooleanField(blank=True, default=False)
@@ -60,7 +59,8 @@ class Visit(models.Model):
     encouragement_education_provision_text = models.CharField(blank=True, max_length=100)
 
     goal_met_education_provision = models.CharField(blank=True, max_length=30)
-    conclusion_education_provision = models.CharField(blank=True, max_length=100)
+    conclusion_education_provision = models.CharField(blank=True, max_length=255)
+
 
     advice_social_provision = models.BooleanField(blank=True, default=False)
     advocacy_social_provision = models.BooleanField(blank=True, default=False)
@@ -73,7 +73,7 @@ class Visit(models.Model):
     encouragement_social_provision_text = models.CharField(blank=True, max_length=100)
 
     goal_met_social_provision = models.CharField(blank=True, max_length=100)
-    conclusion_social_provision = models.CharField(blank=True, max_length=100)
+    conclusion_social_provision = models.CharField(blank=True, max_length=255)
 
     # contains the specific info that was changed
     client_info_changed = models.JSONField(blank=True, null=True, editable=False)

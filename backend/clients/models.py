@@ -41,6 +41,11 @@ class Client(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     is_new_client = models.BooleanField(blank=True, default=False)
 
+    # Fields updated by visits
+    goal_met_health_provision = models.TextField(blank=True, max_length=30)
+    goal_met_education_provision = models.TextField(blank=True, max_length=30)
+    goal_met_social_provision = models.TextField(blank=True, max_length=30)
+
     class Meta:
         ordering = ['id']
 

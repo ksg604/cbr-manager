@@ -147,9 +147,9 @@ public class ClientDetailsFragment extends Fragment {
                     setupLocationTextView(client.getLocation());
                     setupAgeTextView(client.getAge().toString());
                     setupGenderTextView(client.getGender());
-                    setupHealthTextView(client.getHealthGoal());
-                    setupSocialTextView(client.getSocialGoal());
-                    setupEducationTextView(client.getEducationGoal());
+                    setupHealthTextView(client.getGoalMetHealthProvision());
+                    setupSocialTextView(client.getGoalMetSocialProvision());
+                    setupEducationTextView(client.getGoalMetEducationProvision());
                     setupEducationRiskTextView(client.getEducationRisk().toString());
                     setupSocialRiskTextView(client.getSocialRisk().toString());
                     setupHealthRiskTextView(client.getHealthRisk().toString());

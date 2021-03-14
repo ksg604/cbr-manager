@@ -31,7 +31,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
     private ClientListRecyclerItemAdapter clientListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager clientSelectorLayoutManager;
     private APIService apiService = APIService.getInstance();
 
     private final int NEW_VISIT_CODE = 100;
@@ -41,8 +41,8 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
+    private String param1;
+    private String param2;
 
     public ClientSelectorFragment() {
         // Required empty public constructor
@@ -61,8 +61,8 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            param1 = getArguments().getString(ARG_PARAM1);
+            param2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -73,9 +73,9 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
         View root = inflater.inflate(R.layout.fragment_client_selector, container, false);
 
         clientListRecyclerView = root.findViewById(R.id.clientSelectorRecyclerView);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        clientSelectorLayoutManager = new LinearLayoutManager(getContext());
         clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
-        clientListRecyclerView.setLayoutManager(mLayoutManager);
+        clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
         fetchClientsToList(clientList);

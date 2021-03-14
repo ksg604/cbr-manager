@@ -10,7 +10,6 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +33,6 @@ import retrofit2.Response;
 
 public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener{
 
-    private VisitsViewModel visitsViewModel;
     private RecyclerView visitsRecyclerView;
     private VisitsRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager visitsLayoutManager;
@@ -62,8 +60,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
             }
         }
         this.clientId = clientId;
-        visitsViewModel =
-                new ViewModelProvider(this).get(VisitsViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_visits, container, false);
 
         visitsRecyclerView = root.findViewById(R.id.recyclerView);

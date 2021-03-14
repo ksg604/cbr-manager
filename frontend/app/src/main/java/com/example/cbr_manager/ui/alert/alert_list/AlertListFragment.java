@@ -9,7 +9,6 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,10 +26,9 @@ import retrofit2.Response;
 
 public class AlertListFragment extends Fragment implements AlertListRecyclerItemAdapter.OnItemListener{
 
-    private AlertListViewModel alertListViewModel;
-    private RecyclerView mRecyclerView;
+    private RecyclerView alertListRecyclerView;
     private AlertListRecyclerItemAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager alertLayoutManager;
     private SearchView searchView;
     ArrayList<AlertListRecyclerItem> alertRecyclerItems = new ArrayList<>();
 
@@ -38,16 +36,14 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        alertListViewModel =
-                new ViewModelProvider(this).get(AlertListViewModel.class);
         View root = inflater.inflate(R.layout.fragment_alert_list, container, false);
 
-        mRecyclerView = root.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
+        alertListRecyclerView = root.findViewById(R.id.recyclerView);
+        alertListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        alertLayoutManager = new LinearLayoutManager(getContext());
         adapter = new AlertListRecyclerItemAdapter(alertRecyclerItems, this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
+        alertListRecyclerView.setLayoutManager(alertLayoutManager);
+        alertListRecyclerView.setAdapter(adapter);
         fetchAlertsToList(alertRecyclerItems);
 
         SearchView alertSearchView = root.findViewById(R.id.alertSearchView);

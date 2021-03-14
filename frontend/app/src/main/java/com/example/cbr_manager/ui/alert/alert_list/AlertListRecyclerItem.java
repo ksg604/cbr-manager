@@ -4,30 +4,30 @@ import com.example.cbr_manager.service.alert.Alert;
 
 public class AlertListRecyclerItem {
 
-    private String mTitle;
-    private String mBody;
+    private String title;
+    private String body;
 
-    private String mDate;
+    private String date;
 
     private Alert alert;
 
     public AlertListRecyclerItem(String title, String body, Alert alert, String date) {
-        this.mTitle = title;
-        this.mBody = body;
+        this.title = title;
+        this.body = body;
         this.alert = alert;
-        this.mDate = date;
+        this.date = date;
     }
 
-    public String getmTitle() {
-        return mTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public String getmBody() {
-        return mBody;
+    public String getBody() {
+        return body;
     }
 
-    public String getmDate() {
-        return mDate;
+    public String getDate() {
+        return date;
     }
 
     public Alert getAlert() {

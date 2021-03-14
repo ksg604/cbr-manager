@@ -239,8 +239,8 @@ public class CreateReferralActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             File imgFile = new File(imageFilePath);
             if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                referralImageView.setImageBitmap(myBitmap);
+                Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                referralImageView.setImageBitmap(bitmap);
             }
         }
     }

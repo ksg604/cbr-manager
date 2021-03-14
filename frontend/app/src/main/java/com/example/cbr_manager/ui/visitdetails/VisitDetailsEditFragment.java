@@ -217,7 +217,6 @@ public class VisitDetailsEditFragment extends Fragment {
                 Visit visit = response.body();
                 visit.setClient(currentClient);
                 visit.setLocationDropDown(location);
-                visit.setDatetimeCreated(Timestamp.valueOf(editDate.getText().toString()));
                 visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
                 modifyVisitInfo(visit);
             }

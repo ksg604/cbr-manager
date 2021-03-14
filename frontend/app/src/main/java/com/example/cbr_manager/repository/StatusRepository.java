@@ -1,5 +1,6 @@
 package com.example.cbr_manager.repository;
 
+import com.example.cbr_manager.data.storage.RoomDB;
 import com.example.cbr_manager.service.sync.Status;
 import com.example.cbr_manager.service.sync.StatusAPI;
 import com.example.cbr_manager.service.sync.StatusDao;
@@ -28,15 +29,19 @@ public class StatusRepository {
     public Single<Status> getStatus() {
         return statusAPI.getStatus(authHeader)
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(status -> statusDao.insert(status).subscribe())
+                .doOnSuccess(status -> statusDao.insert(status))
                 .onErrorResumeNext((e) -> statusDao.getStatus());
     }
 
-    public Completable insert(Status status) {
-        return statusDao.insert(status).subscribeOn(Schedulers.io());
+    public void insert(Status status) {
+        RoomDB.databaseWriteExecutor.execute(()->{
+            statusDao.insert(status);
+        });
     }
 
-    public Completable update(Status status) {
-        return statusDao.update(status).subscribeOn(Schedulers.io());
+    public void update(Status status) {
+        RoomDB.databaseWriteExecutor.execute(()->{
+            statusDao.update(status);
+        });
     }
 }

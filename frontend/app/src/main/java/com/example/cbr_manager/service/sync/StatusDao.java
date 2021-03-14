@@ -15,10 +15,10 @@ import io.reactivex.Single;
 @Dao
 public interface StatusDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(Status status);
+    void insert(Status status);
 
     @Update
-    Completable update(Status status);
+    void update(Status status);
 
     @Query("SELECT * FROM status WHERE id = 1")
     Single<Status> getStatus();

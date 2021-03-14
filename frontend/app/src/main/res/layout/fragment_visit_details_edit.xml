@@ -8,9 +8,10 @@
 
     <ScrollView
         android:id="@+id/scrollView3"
-        android:layout_width="400dp"
-        android:layout_height="704dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -31,10 +32,11 @@
                     android:id="@+id/visitDetailsBackImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_item"
+                    android:background="@drawable/ic_android_back"
                     android:padding="16dp"
                     android:visibility="visible"
-                    app:srcCompat="@drawable/ic_back2" />
+                    app:srcCompat="@drawable/ic_back2"
+                    tools:tint="@color/purple_500" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
@@ -58,8 +60,7 @@
                     android:ems="10"
                     android:text="Visit Name"
                     android:textColor="@color/purple_700"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -148,7 +149,6 @@
                     android:orientation="vertical">
 
 
-
                     <TextView
                         android:id="@+id/visitDetailsEditHealthDetailsTextView"
                         android:layout_width="match_parent"
@@ -213,7 +213,6 @@
                         android:ems="10"
                         android:gravity="start|top"
                         android:inputType="textMultiLine" />
-
 
 
                     <LinearLayout
@@ -734,6 +733,7 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

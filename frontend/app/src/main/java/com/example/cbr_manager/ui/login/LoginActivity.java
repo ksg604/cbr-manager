@@ -1,9 +1,7 @@
 package com.example.cbr_manager.ui.login;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.di.SharedPreferencesHelper;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.auth.AuthDetail;
 import com.example.cbr_manager.service.auth.LoginUserPass;
@@ -32,21 +31,20 @@ import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.utils.ErrorParser;
 import com.google.android.material.snackbar.Snackbar;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
     private static APIService apiService = APIService.getInstance();
+    @Inject
+    SharedPreferencesHelper sharedPreferencesHelper;
     private LoginViewModel loginViewModel;
-
-    static void clearCachedToken(Activity activity) {
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(activity.getString(R.string.auth_token_key), "");
-        editor.apply();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -172,13 +170,13 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         onLoginSuccess(apiService.authService.getAuthDetail());
                     } else {
-                        clearCachedToken(LoginActivity.this);
+                        clearCachedToken();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    clearCachedToken(LoginActivity.this);
+                    clearCachedToken();
                 }
             });
         }
@@ -192,16 +190,16 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void clearCachedToken() {
+        sharedPreferencesHelper.setAuthToken("");
+    }
+
     private void cacheAuthToken(String token) {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.auth_token_key), token);
-        editor.apply();
+        sharedPreferencesHelper.setAuthToken(token);
     }
 
     private String getCachedAuthToken() {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString(getString(R.string.auth_token_key), "");
+        return sharedPreferencesHelper.getAuthToken();
     }
 
     private void handleAuthError(View view, Response response) {

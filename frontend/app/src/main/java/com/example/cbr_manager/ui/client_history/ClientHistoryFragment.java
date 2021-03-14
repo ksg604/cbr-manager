@@ -30,7 +30,7 @@ public class ClientHistoryFragment extends Fragment implements ClientHistoryRecy
     private ClientHistoryViewModel clientHistoryViewModel;
     private RecyclerView mRecyclerView;
     private ClientHistoryRecyclerItemAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager clientHistoryLayoutManager;
     private SearchView searchView;
     private int clientId;
     private String field;
@@ -46,9 +46,9 @@ public class ClientHistoryFragment extends Fragment implements ClientHistoryRecy
 
         mRecyclerView = root.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
+        clientHistoryLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ClientHistoryRecyclerItemAdapter(clientHistoryRecyclerItems, this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(clientHistoryLayoutManager);
         mRecyclerView.setAdapter(adapter);
 
         this.clientId =getArguments().getInt("clientId", -1);

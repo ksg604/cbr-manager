@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +41,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     private RecyclerView.LayoutManager referralListLayoutManager;
     private SearchView searchView;
     private int clientId=-1;
+    private final int FROM_DASHBOARD = -2;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
 
     private APIService apiService = APIService.getInstance();
@@ -58,6 +61,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         if (bundle != null) {
             clientId = bundle.getInt("CLIENT_ID", -1);
         }
+
         referralListecyclerView = root.findViewById(R.id.recyclerView);
         referralListecyclerView.setHasFixedSize(true); // if we know it won't change size.
         referralListLayoutManager = new LinearLayoutManager(getContext());
@@ -65,7 +69,20 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         referralListecyclerView.setLayoutManager(referralListLayoutManager);
         referralListecyclerView.setAdapter(adapter);
 
+        CheckBox checkBox = root.findViewById(R.id.checkBox);
+        if(clientId==FROM_DASHBOARD){
+            checkBox.setChecked(true);
+        }
         SearchView referralSearchView = root.findViewById(R.id.referralSearchView);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                CharSequence newText = referralSearchView.getQuery();
+                adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(newText);
+            }
+        });
+
         referralSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -74,7 +91,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(newText);
                 return true;
             }
         });

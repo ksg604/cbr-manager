@@ -60,6 +60,7 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/generalInformationCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
@@ -67,22 +68,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="General Information"
-                        android:textSize="16sp"
-                        android:textColor="@color/purple_700"/>
+                        android:textColor="@color/purple_700"
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@color/grey"/>
+                        android:background="@color/grey" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -95,7 +96,7 @@
                             android:layout_height="wrap_content"
                             android:text="CBR Worker:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsCBRWorkerTextView"
@@ -118,7 +119,7 @@
                             android:layout_height="wrap_content"
                             android:text="Date:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsDateTextView"
@@ -141,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:text="Location:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsLocationTextView"
@@ -165,7 +166,7 @@
                             android:layout_height="wrap_content"
                             android:text="Village Number:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsVillageNumTextView"
@@ -181,6 +182,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/healthDetailsCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
@@ -188,22 +190,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Health Details"
-                        android:textSize="16sp"
-                        android:textColor="@color/purple_700"/>
+                        android:textColor="@color/purple_700"
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@color/grey"/>
+                        android:background="@color/grey" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -216,7 +218,7 @@
                             android:layout_height="wrap_content"
                             android:text="Wheelchair Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsWheelchairHealthTextView"
@@ -239,7 +241,7 @@
                             android:layout_height="wrap_content"
                             android:text="Prosthetic Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsProstheticHealthTextView"
@@ -262,7 +264,7 @@
                             android:layout_height="wrap_content"
                             android:text="Orthotic Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsOrthoticHealthTextView"
@@ -285,7 +287,7 @@
                             android:layout_height="wrap_content"
                             android:text="Repairs Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsRepairsHealthTextView"
@@ -308,7 +310,7 @@
                             android:layout_height="wrap_content"
                             android:text="Referral Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsReferralHealthTextView"
@@ -331,7 +333,7 @@
                             android:layout_height="wrap_content"
                             android:text="Advice Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsAdviceHealthTextView"
@@ -354,7 +356,7 @@
                             android:layout_height="wrap_content"
                             android:text="Advocacy Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsAdvocacyHealthTextView"
@@ -377,7 +379,8 @@
                             android:layout_height="wrap_content"
                             android:text="Encouragement Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
+
                         <TextView
                             android:id="@+id/visitDetailsEncouragementHealthTextView"
                             android:layout_width="wrap_content"
@@ -399,7 +402,7 @@
                             android:layout_height="wrap_content"
                             android:text="Conclusion:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsConclusionHealthTextView"
@@ -414,6 +417,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/educationDetailsCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
@@ -421,22 +425,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Education Details"
-                        android:textSize="16sp"
-                        android:textColor="@color/purple_700"/>
+                        android:textColor="@color/purple_700"
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@color/grey"/>
+                        android:background="@color/grey" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -449,7 +453,7 @@
                             android:layout_height="wrap_content"
                             android:text="Referral Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsReferralEducationTextView"
@@ -472,7 +476,7 @@
                             android:layout_height="wrap_content"
                             android:text="Advice Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsAdviceEducationTextView"
@@ -495,7 +499,7 @@
                             android:layout_height="wrap_content"
                             android:text="Advocacy Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsAdvocacyEducationTextView"
@@ -519,7 +523,7 @@
                             android:layout_height="wrap_content"
                             android:text="Encouragement Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsEncouragementEducationTextView"
@@ -543,7 +547,7 @@
                             android:layout_height="wrap_content"
                             android:text="Conclusion:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsConclusionEducationTextView"
@@ -558,6 +562,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/socialDetailsCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
@@ -565,22 +570,23 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Social Details"
-                        android:textSize="16sp"
-                        android:textColor="@color/purple_700"/>
+                        android:textColor="@color/purple_700"
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@color/grey"/>
+                        android:background="@color/grey" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -592,7 +598,7 @@
                             android:layout_height="wrap_content"
                             android:text="Referral Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsReferralSocialTextView"
@@ -615,7 +621,7 @@
                             android:layout_height="wrap_content"
                             android:text="Advice Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsAdviceSocialTextView"
@@ -638,7 +644,7 @@
                             android:layout_height="wrap_content"
                             android:text="Advocacy Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsAdvocacySocialTextView"
@@ -662,7 +668,7 @@
                             android:layout_height="wrap_content"
                             android:text="Encouragement Provision:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsEncouragementSocialTextView"
@@ -686,7 +692,7 @@
                             android:layout_height="wrap_content"
                             android:text="Conclusion:"
                             android:textColor="@color/black"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/visitDetailsConclusionSocialTextView"

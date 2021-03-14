@@ -80,8 +80,6 @@ public class VisitDetailsFragment extends Fragment {
 
         getVisitInfo(visitId);
 
-        setupVectorImages(root);
-
         return root;
     }
 
@@ -180,13 +178,6 @@ public class VisitDetailsFragment extends Fragment {
     private void setUpTextView(int textViewID, String textValue) {
         TextView textView = (TextView) getView().findViewById(textViewID);
         textView.setText(textValue);
-    }
-
-    private void setupVectorImages(View root) {
-        ImageView location = root.findViewById(R.id.profileLocationImageView);
-        location.setImageResource(R.drawable.ic_place);
-        ImageView date = root.findViewById(R.id.profileDateImageView);
-        date.setImageResource(R.drawable.ic_date);
     }
 
     private void setupImageViews(String imageURL) {

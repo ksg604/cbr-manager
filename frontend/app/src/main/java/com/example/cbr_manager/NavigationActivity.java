@@ -31,7 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class NavigationActivity extends AppCompatActivity {
     public static String KEY_SNACK_BAR_MESSAGE = "KEY_SNACK_BAR_MESSAGE";
     private APIService apiService = APIService.getInstance();
-    private AppBarConfiguration myAppBarConfiguration;
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +53,12 @@ public class NavigationActivity extends AppCompatActivity {
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        myAppBarConfiguration = new AppBarConfiguration.Builder(
+        appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_dashboard, R.id.nav_client_list, R.id.nav_visits, R.id.nav_user_creation, R.id.nav_alert_creation)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, myAppBarConfiguration);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -85,7 +85,7 @@ public class NavigationActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, myAppBarConfiguration)
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 

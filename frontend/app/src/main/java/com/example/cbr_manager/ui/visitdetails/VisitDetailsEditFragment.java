@@ -84,7 +84,7 @@ public class VisitDetailsEditFragment extends Fragment {
 
 
         getVisitInfo(visitId, root);
-        setupButtons(root);
+        setupSubmitButton(root);
 
         return root;
     }
@@ -139,19 +139,38 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void setupEditTexts(Visit visit, View root) {
-        setupEditText(root.findViewById(R.id.visitDetailsEditAdditionalInfo), visit.getAdditionalInfo());
 
-        // Setup health details edit texts
+        // Setup health provision details edit texts
         setupEditText(root.findViewById(R.id.visitDetailsEditVillageNumber), visit.getVillageNoVisit().toString());
         setupEditText(root.findViewById(R.id.visitDetailsEditHealthWheelchairProvision), visit.getWheelchairHealthProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditHealthProstheticProvision), visit.getProstheticHealthProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditHealthOrthoticProvision), visit.getOrthoticHealthProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditHealthRepairsProvision), visit.getRepairsHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthReferralProvision), visit.getReferralHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthAdviceProvision), visit.getAdviceHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthAdvocacyProvision), visit.getAdvocacyHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthEncouragementProvision), visit.getEncouragementHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthConclusion), visit.getConclusionHealthProvision());
+
+        // Setup education details provision edit texts
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationReferralProvision), visit.getReferralEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationAdviceProvision), visit.getAdviceEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationAdvocacyProvision), visit.getAdvocacyEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationReferralProvision), visit.getReferralEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationEncouragementProvision), visit.getEncouragementEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationConclusion), visit.getConclusionEducationProvision());
+
+        // Setup social details provision edit texts
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialReferralProvision), visit.getReferralSocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialAdviceProvision), visit.getAdviceSocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialAdvocacyProvision), visit.getAdvocacySocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialReferralProvision), visit.getReferralSocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialEncouragementProvision), visit.getEncouragementSocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialConclusion), visit.getConclusionSocialProvision());
+
+        setupEditText(root.findViewById(R.id.visitDetailsEditAdditionalInfo), visit.getAdditionalInfo());
 
     }
-
-
-
 
     private void setupEditText(EditText editText, String editTextValue) {
         editText.setText(editTextValue);
@@ -193,10 +212,6 @@ public class VisitDetailsEditFragment extends Fragment {
     private void setupNameTextView(String fullName) {
         TextView visitDetailsEdit = (TextView)getView().findViewById(R.id.visitDetailsEditNameTextView);
         visitDetailsEdit.setText(fullName);
-    }
-
-    private void setupButtons(View root) {
-        setupSubmitButton(root);
     }
 
     private void setupSubmitButton(View root) {

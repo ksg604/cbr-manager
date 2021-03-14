@@ -27,7 +27,7 @@ import retrofit2.Response;
 
 public class AlertListFragment extends Fragment implements AlertListRecyclerItemAdapter.OnItemListener{
 
-    private RecyclerView myRecyclerView;
+    private RecyclerView alertListRecyclerView;
     private AlertListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager alertLayoutManager;
     private SearchView searchView;
@@ -39,12 +39,12 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_alert_list, container, false);
 
-        myRecyclerView = root.findViewById(R.id.recyclerView);
-        myRecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        alertListRecyclerView = root.findViewById(R.id.recyclerView);
+        alertListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         alertLayoutManager = new LinearLayoutManager(getContext());
         adapter = new AlertListRecyclerItemAdapter(alertRecyclerItems, this);
-        myRecyclerView.setLayoutManager(alertLayoutManager);
-        myRecyclerView.setAdapter(adapter);
+        alertListRecyclerView.setLayoutManager(alertLayoutManager);
+        alertListRecyclerView.setAdapter(adapter);
         fetchAlertsToList(alertRecyclerItems);
 
         SearchView alertSearchView = root.findViewById(R.id.alertSearchView);

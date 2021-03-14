@@ -41,7 +41,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
                 ArrayList<VisitsRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (VisitsRecyclerItem visitsRecyclerItem : visitsRecyclerItems) {
-                    if (visitsRecyclerItem.getmText2().toLowerCase().trim().contains(searchString)) {
+                    if (visitsRecyclerItem.getmyText2().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(visitsRecyclerItem);
                     }
                 }
@@ -105,9 +105,9 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
         VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
 
-        holder.imageView.setImageResource(currentItem.getmImageResource());
-        holder.textView1.setText(currentItem.getmText1());
-        holder.textView2.setText(currentItem.getmText2());
+        holder.imageView.setImageResource(currentItem.getmyImageResource());
+        holder.textView1.setText(currentItem.getmyText1());
+        holder.textView2.setText(currentItem.getmyText2());
     }
 
     @Override

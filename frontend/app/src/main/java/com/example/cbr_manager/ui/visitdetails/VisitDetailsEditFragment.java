@@ -156,7 +156,6 @@ public class VisitDetailsEditFragment extends Fragment {
         setupEditText(root.findViewById(R.id.visitDetailsEditEducationReferralProvision), visit.getReferralEducationProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditEducationAdviceProvision), visit.getAdviceEducationProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditEducationAdvocacyProvision), visit.getAdvocacyEducationProvisionText());
-        setupEditText(root.findViewById(R.id.visitDetailsEditEducationReferralProvision), visit.getReferralEducationProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditEducationEncouragementProvision), visit.getEncouragementEducationProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditEducationConclusion), visit.getConclusionEducationProvision());
 
@@ -164,7 +163,6 @@ public class VisitDetailsEditFragment extends Fragment {
         setupEditText(root.findViewById(R.id.visitDetailsEditSocialReferralProvision), visit.getReferralSocialProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditSocialAdviceProvision), visit.getAdviceSocialProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditSocialAdvocacyProvision), visit.getAdvocacySocialProvisionText());
-        setupEditText(root.findViewById(R.id.visitDetailsEditSocialReferralProvision), visit.getReferralSocialProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditSocialEncouragementProvision), visit.getEncouragementSocialProvisionText());
         setupEditText(root.findViewById(R.id.visitDetailsEditSocialConclusion), visit.getConclusionSocialProvision());
 
@@ -221,6 +219,31 @@ public class VisitDetailsEditFragment extends Fragment {
 
     private void getAndUpdateVisit(int visitId, View root) {
 
+        EditText editVillageNumber = root.findViewById(R.id.visitDetailsEditVillageNumber);
+
+        EditText editHealthWheelChairProvision = root.findViewById(R.id.visitDetailsEditHealthWheelchairProvision);
+        EditText editHealthProstheticProvision = root.findViewById(R.id.visitDetailsEditHealthProstheticProvision);
+        EditText editHealthOrthoticProvision = root.findViewById(R.id.visitDetailsEditHealthOrthoticProvision);
+        EditText editHealthRepairsProvision = root.findViewById(R.id.visitDetailsEditHealthRepairsProvision);
+        EditText editHealthReferralProvision = root.findViewById(R.id.visitDetailsEditHealthReferralProvision);
+        EditText editHealthAdviceProvision = root.findViewById(R.id.visitDetailsEditHealthAdviceProvision);
+        EditText editHealthAdvocacyProvision = root.findViewById(R.id.visitDetailsEditHealthAdvocacyProvision);
+        EditText editHealthEncouragementProvision = root.findViewById(R.id.visitDetailsEditHealthEncouragementProvision);
+        EditText editHealthConclusionProvision = root.findViewById(R.id.visitDetailsEditHealthConclusion);
+
+        EditText editEducationReferralProvision = root.findViewById(R.id.visitDetailsEditEducationReferralProvision);
+        EditText editEducationAdviceProvision = root.findViewById(R.id.visitDetailsEditEducationAdviceProvision);
+        EditText editEducationAdvocacyProvision = root.findViewById(R.id.visitDetailsEditEducationAdvocacyProvision);
+        EditText editEducationEncouragementProvision = root.findViewById(R.id.visitDetailsEditEducationEncouragementProvision);
+        EditText editEducationConclusionProvision = root.findViewById(R.id.visitDetailsEditEducationConclusion);
+
+
+        EditText editSocialReferralProvision = root.findViewById(R.id.visitDetailsEditSocialReferralProvision);
+        EditText editSocialAdviceProvision = root.findViewById(R.id.visitDetailsEditSocialAdviceProvision);
+        EditText editSocialAdvocacyProvision = root.findViewById(R.id.visitDetailsEditSocialAdvocacyProvision);
+        EditText editSocialEncouragementProvision = root.findViewById(R.id.visitDetailsEditSocialEncouragementProvision);
+        EditText editSocialConclusionProvision = root.findViewById(R.id.visitDetailsEditSocialConclusion);
+
         EditText editAdditionalInfo = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
 
         apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
@@ -229,6 +252,13 @@ public class VisitDetailsEditFragment extends Fragment {
                 Visit visit = response.body();
                 visit.setClient(currentClient);
                 visit.setLocationDropDown(location);
+
+                visit.setVillageNoVisit(Integer.parseInt(editVillageNumber.getText().toString()));
+                visit.setWheelchairHealthProvisionText(editHealthWheelChairProvision.getText().toString());
+                visit.setProstheticHealthProvisionText(editHealthProstheticProvision.getText().toString());
+
+
+
                 visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
                 modifyVisitInfo(visit);
             }

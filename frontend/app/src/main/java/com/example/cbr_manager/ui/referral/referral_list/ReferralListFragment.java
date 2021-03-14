@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -94,25 +96,35 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
     public void fetchReferralsToList(List<ReferralListRecyclerItem> referralUIList) {
         if (apiService.isAuthenticated()) {
-//            referralUIList.clear();
-//            adapter.notifyDataSetChanged();
+            referralUIList.clear();
             apiService.referralService.getReferrals().enqueue(new Callback<List<Referral>>() {
                 @Override
                 public void onResponse(Call<List<Referral>> call, Response<List<Referral>> response) {
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            if(referral.getClient()==clientId| clientId<0){
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(),referral.getClient()));
-                            }
+                            apiService.clientService.getClient(referral.getClient()).enqueue(new Callback<Client>() {
+                                @Override
+                                public void onResponse(Call<Client> call, Response<Client> response) {
+                                    if (response.isSuccessful()) {
+                                        Client client = response.body();
+                                        if(referral.getClient()==clientId| clientId<0){
+                                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(),referral.getClient(),client.getFullName()));
+                                        }
+                                        adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(searchView.getQuery());
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Client> call, Throwable t) {
+                                }
+                            });
                         }
-                        adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(searchView.getQuery());
-                    }
-                }
 
+
+                        }
+                    }
                 @Override
                 public void onFailure(Call<List<Referral>> call, Throwable t) {
-
                 }
             });
         }

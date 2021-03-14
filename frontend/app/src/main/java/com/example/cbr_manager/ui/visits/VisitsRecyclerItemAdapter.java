@@ -41,7 +41,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
                 ArrayList<VisitsRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (VisitsRecyclerItem visitsRecyclerItem : visitsRecyclerItems) {
-                    if (visitsRecyclerItem.getmyText2().toLowerCase().trim().contains(searchString)) {
+                    if (visitsRecyclerItem.getbodyText().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(visitsRecyclerItem);
                     }
                 }
@@ -62,15 +62,15 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
-        public TextView textView1;
-        public TextView textView2;
+        public TextView textListTitle;
+        public TextView textListBody;
         OnItemListener onItemListener;
 
         public VisitItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-            textView1 = itemView.findViewById(R.id.textListTitle);
-            textView2 = itemView.findViewById(R.id.textListBody);
+            textListTitle = itemView.findViewById(R.id.textListTitle);
+            textListBody = itemView.findViewById(R.id.textListBody);
             this.onItemListener = onItemListener;
 
             itemView.setOnClickListener(this);
@@ -105,9 +105,9 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
         VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
 
-        holder.imageView.setImageResource(currentItem.getmyImageResource());
-        holder.textView1.setText(currentItem.getmyText1());
-        holder.textView2.setText(currentItem.getmyText2());
+        holder.imageView.setImageResource(currentItem.getImageResource());
+        holder.textListTitle.setText(currentItem.gettitleText());
+        holder.textListBody.setText(currentItem.getbodyText());
     }
 
     @Override

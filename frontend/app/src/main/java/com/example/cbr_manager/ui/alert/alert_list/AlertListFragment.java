@@ -27,7 +27,6 @@ import retrofit2.Response;
 
 public class AlertListFragment extends Fragment implements AlertListRecyclerItemAdapter.OnItemListener{
 
-    private AlertListViewModel alertListViewModel;
     private RecyclerView myRecyclerView;
     private AlertListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager alertLayoutManager;
@@ -38,8 +37,6 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        alertListViewModel =
-                new ViewModelProvider(this).get(AlertListViewModel.class);
         View root = inflater.inflate(R.layout.fragment_alert_list, container, false);
 
         myRecyclerView = root.findViewById(R.id.recyclerView);

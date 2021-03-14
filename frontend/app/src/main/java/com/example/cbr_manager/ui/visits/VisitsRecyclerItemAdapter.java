@@ -61,16 +61,20 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     };
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView imageView;
+//        public ImageView imageView;
         public TextView textListTitle;
         public TextView textListBody;
+        public TextView purposeTextView;
+        public TextView locationTextView;
         OnItemListener onItemListener;
 
         public VisitItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
+//            imageView = itemView.findViewById(R.id.imageView);
             textListTitle = itemView.findViewById(R.id.textListTitle);
             textListBody = itemView.findViewById(R.id.textListBody);
+            purposeTextView = itemView.findViewById(R.id.visitItemPurposeList);
+            locationTextView = itemView.findViewById(R.id.textLocationVisitItem);
             this.onItemListener = onItemListener;
 
             itemView.setOnClickListener(this);
@@ -105,9 +109,11 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
         VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
 
-        holder.imageView.setImageResource(currentItem.getImageResource());
+//        holder.imageView.setImageResource(currentItem.getImageResource());
         holder.textListTitle.setText(currentItem.getTitleText());
         holder.textListBody.setText(currentItem.getBodyText());
+        holder.purposeTextView.setText(currentItem.getPurposeText());
+        holder.locationTextView.setText(currentItem.getLocationText());
     }
 
     @Override

@@ -36,7 +36,7 @@ import retrofit2.Response;
 public class ReferralListFragment extends Fragment implements ReferralListRecyclerItemAdapter.OnItemListener{
 
     private ReferralListViewModel referralListViewModel;
-    private RecyclerView myRecyclerView;
+    private RecyclerView referralListecyclerView;
     private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager referralListLayoutManager;
     private SearchView searchView;
@@ -61,12 +61,12 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         if (bundle != null) {
             clientId = bundle.getInt("CLIENT_ID", -1);
         }
-        myRecyclerView = root.findViewById(R.id.recyclerView);
-        myRecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        referralListecyclerView = root.findViewById(R.id.recyclerView);
+        referralListecyclerView.setHasFixedSize(true); // if we know it won't change size.
         referralListLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ReferralListRecyclerItemAdapter(referralRecyclerItems, this);
-        myRecyclerView.setLayoutManager(referralListLayoutManager);
-        myRecyclerView.setAdapter(adapter);
+        referralListecyclerView.setLayoutManager(referralListLayoutManager);
+        referralListecyclerView.setAdapter(adapter);
 
         SearchView referralSearchView = root.findViewById(R.id.referralSearchView);
         referralSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

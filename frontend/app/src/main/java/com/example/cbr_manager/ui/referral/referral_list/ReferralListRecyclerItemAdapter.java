@@ -42,7 +42,7 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
                 ArrayList<ReferralListRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (ReferralListRecyclerItem referralListRecyclerItem : referralListRecyclerItems) {
-                    if (referralListRecyclerItem.getmyReferTo().toLowerCase().trim().contains(searchString)) {
+                    if (referralListRecyclerItem.getReferTo().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(referralListRecyclerItem);
                     }
                 }
@@ -111,15 +111,15 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
     public void onBindViewHolder(@NonNull ReferralItemViewHolder holder, int position) {
         ReferralListRecyclerItem currentItem = filteredReferrals.get(position);
 
-        holder.textListStatus.setText(currentItem.getmyStatus());
-        if(currentItem.getmyReferTo().length()==0){
+        holder.textListStatus.setText(currentItem.getStatus());
+        if(currentItem.getReferTo().length()==0){
             holder.textListReferTo.setVisibility(View.GONE);
         }
         else{
-            holder.textListReferTo.setText(currentItem.getmyReferTo());
+            holder.textListReferTo.setText(currentItem.getReferTo());
         }
-        holder.textListType.setText(currentItem.getmyType());
-        holder.textListDate.setText(currentItem.getmyDate());
+        holder.textListType.setText(currentItem.getType());
+        holder.textListDate.setText(currentItem.getDate());
     }
 
     @Override

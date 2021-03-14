@@ -5,15 +5,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class UserCreationViewModel extends ViewModel {
-    private MutableLiveData<String> mText;
+    private MutableLiveData<String> myText;
 
     public UserCreationViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is user creation fragment");
+        myText = new MutableLiveData<>();
+        myText.setValue("This is user creation fragment");
     }
 
     public LiveData<String> getText() {
-        return mText;
+        return myText;
     }
 
 }

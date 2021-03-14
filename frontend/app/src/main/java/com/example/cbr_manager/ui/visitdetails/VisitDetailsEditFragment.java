@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
@@ -49,33 +51,23 @@ public class VisitDetailsEditFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_visit_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
-
-        Intent intent = getActivity().getIntent();
+        
         Bundle bundle = this.getArguments();
         visitId = bundle.getInt("visitId", -1);
 
-        setupVectorImages(root);
+
         getVisitInfo(visitId, root);
-        setupButtons(root);
+        setupSubmitButton(root);
 
         return root;
     }
 
-    private void setupVectorImages(View root) {
-        ImageView location = root.findViewById(R.id.profileLocationImageView);
-        location.setImageResource(R.drawable.ic_place);
-        ImageView date = root.findViewById(R.id.profileDateImageView);
-        date.setImageResource(R.drawable.ic_date);
-        ImageView additionalInfo = root.findViewById(R.id.profileAdditionalInfoImageView);
-        additionalInfo.setImageResource(R.drawable.ic_info);
-    }
 
     private void getVisitInfo(int visitId, View root) {
         apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
                 Visit visit = response.body();
-                Client client = visit.getClient();
                 setupLocationSpinner(root, visit.getLocationDropDown());
                 setupEditTexts(visit, root);
                 getClientInfo(visit.getClientId());
@@ -120,18 +112,39 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void setupEditTexts(Visit visit, View root) {
-        setupDate(visit.getDatetimeCreated().toString(), root);
-        setupAdditionalInfo(visit.getAdditionalInfo(), root);
+
+        // Setup health provision details edit texts
+        setupEditText(root.findViewById(R.id.visitDetailsEditVillageNumber), visit.getVillageNoVisit().toString());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthWheelchairProvision), visit.getWheelchairHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthProstheticProvision), visit.getProstheticHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthOrthoticProvision), visit.getOrthoticHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthRepairsProvision), visit.getRepairsHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthReferralProvision), visit.getReferralHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthAdviceProvision), visit.getAdviceHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthAdvocacyProvision), visit.getAdvocacyHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthEncouragementProvision), visit.getEncouragementHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthConclusion), visit.getConclusionHealthProvision());
+
+        // Setup education details provision edit texts
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationReferralProvision), visit.getReferralEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationAdviceProvision), visit.getAdviceEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationAdvocacyProvision), visit.getAdvocacyEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationEncouragementProvision), visit.getEncouragementEducationProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditEducationConclusion), visit.getConclusionEducationProvision());
+
+        // Setup social details provision edit texts
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialReferralProvision), visit.getReferralSocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialAdviceProvision), visit.getAdviceSocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialAdvocacyProvision), visit.getAdvocacySocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialEncouragementProvision), visit.getEncouragementSocialProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditSocialConclusion), visit.getConclusionSocialProvision());
+
+        setupEditText(root.findViewById(R.id.visitDetailsEditAdditionalInfo), visit.getAdditionalInfo());
+
     }
 
-    private void setupDate(String date, View root) {
-        EditText dateEditText = root.findViewById(R.id.visitDetailsEditDate);
-        dateEditText.setText(date);
-    }
-
-    private void setupAdditionalInfo(String additionalInfo, View root) {
-        EditText additionalInfoEditText = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
-        additionalInfoEditText.setText(additionalInfo);
+    private void setupEditText(EditText editText, String editTextValue) {
+        editText.setText(editTextValue);
     }
 
     private void getClientInfo(int clientId){
@@ -172,25 +185,38 @@ public class VisitDetailsEditFragment extends Fragment {
         visitDetailsEdit.setText(fullName);
     }
 
-    private void setupButtons(View root) {
-        setupBackButton(root);
-        setupSubmitButton(root);
-    }
-
     private void setupSubmitButton(View root) {
-        Intent intent = getActivity().getIntent();
-
         Button submitButton = root.findViewById(R.id.visitDetailsEditSubmitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getAndUpdateVisit(visitId, root);
-            }
-        });
+        submitButton.setOnClickListener(v -> {getAndUpdateVisit(visitId,root);});
     }
 
     private void getAndUpdateVisit(int visitId, View root) {
-        EditText editDate = root.findViewById(R.id.visitDetailsEditDate);
+
+        EditText editVillageNumber = root.findViewById(R.id.visitDetailsEditVillageNumber);
+
+        EditText editHealthWheelChairProvision = root.findViewById(R.id.visitDetailsEditHealthWheelchairProvision);
+        EditText editHealthProstheticProvision = root.findViewById(R.id.visitDetailsEditHealthProstheticProvision);
+        EditText editHealthOrthoticProvision = root.findViewById(R.id.visitDetailsEditHealthOrthoticProvision);
+        EditText editHealthRepairsProvision = root.findViewById(R.id.visitDetailsEditHealthRepairsProvision);
+        EditText editHealthReferralProvision = root.findViewById(R.id.visitDetailsEditHealthReferralProvision);
+        EditText editHealthAdviceProvision = root.findViewById(R.id.visitDetailsEditHealthAdviceProvision);
+        EditText editHealthAdvocacyProvision = root.findViewById(R.id.visitDetailsEditHealthAdvocacyProvision);
+        EditText editHealthEncouragementProvision = root.findViewById(R.id.visitDetailsEditHealthEncouragementProvision);
+        EditText editHealthConclusionProvision = root.findViewById(R.id.visitDetailsEditHealthConclusion);
+
+        EditText editEducationReferralProvision = root.findViewById(R.id.visitDetailsEditEducationReferralProvision);
+        EditText editEducationAdviceProvision = root.findViewById(R.id.visitDetailsEditEducationAdviceProvision);
+        EditText editEducationAdvocacyProvision = root.findViewById(R.id.visitDetailsEditEducationAdvocacyProvision);
+        EditText editEducationEncouragementProvision = root.findViewById(R.id.visitDetailsEditEducationEncouragementProvision);
+        EditText editEducationConclusionProvision = root.findViewById(R.id.visitDetailsEditEducationConclusion);
+
+
+        EditText editSocialReferralProvision = root.findViewById(R.id.visitDetailsEditSocialReferralProvision);
+        EditText editSocialAdviceProvision = root.findViewById(R.id.visitDetailsEditSocialAdviceProvision);
+        EditText editSocialAdvocacyProvision = root.findViewById(R.id.visitDetailsEditSocialAdvocacyProvision);
+        EditText editSocialEncouragementProvision = root.findViewById(R.id.visitDetailsEditSocialEncouragementProvision);
+        EditText editSocialConclusionProvision = root.findViewById(R.id.visitDetailsEditSocialConclusion);
+
         EditText editAdditionalInfo = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
 
         apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
@@ -199,7 +225,31 @@ public class VisitDetailsEditFragment extends Fragment {
                 Visit visit = response.body();
                 visit.setClient(currentClient);
                 visit.setLocationDropDown(location);
-                visit.setDatetimeCreated(Timestamp.valueOf(editDate.getText().toString()));
+
+                visit.setVillageNoVisit(Integer.parseInt(editVillageNumber.getText().toString()));
+                visit.setWheelchairHealthProvisionText(editHealthWheelChairProvision.getText().toString());
+                visit.setProstheticHealthProvisionText(editHealthProstheticProvision.getText().toString());
+                visit.setOrthoticHealthProvisionText(editHealthOrthoticProvision.getText().toString());
+                visit.setRepairsHealthProvisionText(editHealthRepairsProvision.getText().toString());
+                visit.setReferralHealthProvisionText(editHealthReferralProvision.getText().toString());
+                visit.setAdviceHealthProvisionText(editHealthAdviceProvision.getText().toString());
+                visit.setAdvocacyHealthProvisionText(editHealthAdvocacyProvision.getText().toString());
+                visit.setEncouragementHealthProvisionText(editHealthEncouragementProvision.getText().toString());
+                visit.setConclusionHealthProvision(editHealthConclusionProvision.getText().toString());
+
+                visit.setReferralEducationProvisionText(editEducationReferralProvision.getText().toString());
+                visit.setAdviceEducationProvisionText(editEducationAdviceProvision.getText().toString());
+                visit.setAdvocacyEducationProvisionText(editEducationAdvocacyProvision.getText().toString());
+                visit.setEncouragementEducationProvisionText(editEducationEncouragementProvision.getText().toString());
+                visit.setConclusionEducationProvision(editEducationConclusionProvision.getText().toString());
+
+                visit.setReferralSocialProvisionText(editSocialReferralProvision.getText().toString());
+                visit.setAdviceSocialProvisionText(editSocialAdviceProvision.getText().toString());
+                visit.setAdvocacySocialProvisionText(editSocialAdvocacyProvision.getText().toString());
+                visit.setEncouragementSocialProvisionText(editSocialEncouragementProvision.getText().toString());
+                visit.setConclusionSocialProvision(editSocialConclusionProvision.getText().toString());
+
+
                 visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
                 modifyVisitInfo(visit);
             }
@@ -211,10 +261,6 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void modifyVisitInfo(Visit visit) {
-        //Check input data
-        Log.d("input", visit.getLocationDropDown());
-        Log.d("input", visit.getDatetimeCreated().toString());
-        Log.d("input", visit.getAdditionalInfo());
         apiService.visitService.modifyVisit(visit).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
@@ -222,18 +268,9 @@ public class VisitDetailsEditFragment extends Fragment {
                     Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     Visit visit = response.body();
-                    //check result data
-                    Log.d("result", visit.getLocationDropDown());
-                    Log.d("result", visit.getDatetimeCreated().toString());
-                    Log.d("result", visit.getAdditionalInfo());
                 } else{
                     Snackbar.make(getView(), "Failed to update user", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    try {
-                        Log.d("testing", response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
                 getActivity().onBackPressed();
             }
@@ -245,13 +282,5 @@ public class VisitDetailsEditFragment extends Fragment {
         });
     }
 
-    private void setupBackButton(View root) {
-        ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
-        backButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
-    }
+
 }

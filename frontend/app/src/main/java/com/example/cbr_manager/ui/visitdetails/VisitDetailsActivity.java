@@ -1,6 +1,8 @@
 package com.example.cbr_manager.ui.visitdetails;
 
 import androidx.annotation.NonNull;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -12,9 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 import com.example.cbr_manager.R;
-
 import java.util.Objects;
 
 public class VisitDetailsActivity extends AppCompatActivity {
@@ -61,6 +61,7 @@ public class VisitDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }

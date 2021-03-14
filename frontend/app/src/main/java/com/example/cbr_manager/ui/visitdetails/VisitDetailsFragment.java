@@ -1,10 +1,13 @@
 package com.example.cbr_manager.ui.visitdetails;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,23 +74,54 @@ public class VisitDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_visit_details, container, false);
         parentLayout = root.findViewById(android.R.id.content);
 
+        setUpToolBar();
+
         visitId = getArguments().getInt(KEY_VISIT_ID, -1);
 
         getVisitInfo(visitId);
 
-        setupButtons(root);
         setupVectorImages(root);
-        setupBackImageViewButton(root);
 
         return root;
     }
 
-    private void getClientInfo(int clientId){
+    public void setUpToolBar() {
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.client_details, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_client) {
+            startVisitDetailsEditFragment();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void startVisitDetailsEditFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("visitId", visitId);
+        VisitDetailsEditFragment visitDetailsEditFragment = new VisitDetailsEditFragment();
+        visitDetailsEditFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_visit_details, visitDetailsEditFragment, null)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+    private void getClientInfo(int clientId) {
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Client client = response.body();
 
                     // Todo: dynamically set the client info here
@@ -95,7 +129,7 @@ public class VisitDetailsFragment extends Fragment {
                     setupImageViews(client.getPhotoURL());
 
 
-                } else{
+                } else {
                     Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -142,18 +176,9 @@ public class VisitDetailsFragment extends Fragment {
         });
     }
 
-    private void setupBackImageViewButton(View root) {
-        ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
-        backButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-    }
 
-    private void setUpTextView(int textViewID, String textValue){
-        TextView textView = (TextView)getView().findViewById(textViewID);
+    private void setUpTextView(int textViewID, String textValue) {
+        TextView textView = (TextView) getView().findViewById(textViewID);
         textView.setText(textValue);
     }
 
@@ -165,7 +190,7 @@ public class VisitDetailsFragment extends Fragment {
     }
 
     private void setupImageViews(String imageURL) {
-        ImageView displayPicture = (ImageView)getView().findViewById(R.id.visitDetailsDisplayPictureImageView);
+        ImageView displayPicture = (ImageView) getView().findViewById(R.id.visitDetailsDisplayPictureImageView);
         Helper.setImageViewFromURL(imageURL, displayPicture, R.drawable.client_details_placeholder);
     }
 
@@ -198,7 +223,7 @@ public class VisitDetailsFragment extends Fragment {
     }
 
     private void setupEducationTextViews(Visit visit) {
-            setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralEducationProvisionText());
+        setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralEducationProvisionText());
         setUpTextView(R.id.visitDetailsAdviceEducationTextView, visit.getAdviceEducationProvisionText());
         setUpTextView(R.id.visitDetailsAdvocacyEducationTextView, visit.getAdvocacyEducationProvisionText());
         setUpTextView(R.id.visitDetailsEncouragementEducationTextView, visit.getEncouragementEducationProvisionText());
@@ -211,39 +236,5 @@ public class VisitDetailsFragment extends Fragment {
         setUpTextView(R.id.visitDetailsAdvocacySocialTextView, visit.getAdvocacySocialProvisionText());
         setUpTextView(R.id.visitDetailsEncouragementSocialTextView, visit.getEncouragementSocialProvisionText());
         setUpTextView(R.id.visitDetailsConclusionSocialTextView, visit.getConclusionSocialProvision());
-    }
-
-    private void setupButtons(View root) {
-        setupBackButton(root);
-        setupEditButton(root);
-    }
-
-    private void setupEditButton(View root) {
-        ImageView editButton = root.findViewById(R.id.visitDetailsEditImageView);
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
-                bundle.putInt("visitId", visitId);
-                VisitDetailsEditFragment visitDetailsEditFragment = new VisitDetailsEditFragment();
-                visitDetailsEditFragment.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_visit_details, visitDetailsEditFragment, null)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-    }
-
-    private void setupBackButton(View root) {
-        Button backButton = root.findViewById(R.id.visitDetailsBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
     }
 }

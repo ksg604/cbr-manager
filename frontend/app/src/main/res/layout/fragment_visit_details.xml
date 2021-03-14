@@ -18,63 +18,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/high_priority_bg"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/visitDetailsBackImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        app:srcCompat="@drawable/ic_back2" />
-
-                    <ImageView
-                        android:id="@+id/visitDetailsEditImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:padding="16dp"
-                        android:src="@android:drawable/ic_menu_edit" />
-
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
                 </FrameLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
-
                     app:cardCornerRadius="75dp">
-
                     <ImageView
                         android:id="@+id/visitDetailsDisplayPictureImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         tools:srcCompat="@tools:sample/avatars" />
-
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    android:id="@+id/visitDetailsNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Client Name"
+                    android:textAllCaps="false"
+                    android:textColor="@color/purple_700"
+                    android:textSize="22sp" />
+
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/visitDetailsNameTextView"
-                android:layout_width="190dp"
-                android:layout_height="55dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:text="Client Name"
-                android:textColor="#FFF"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -978,20 +961,8 @@
                     android:text="Conclusion"
                     android:textSize="18sp" />
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/visitDetailsBackButton"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

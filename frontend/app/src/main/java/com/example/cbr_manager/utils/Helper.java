@@ -10,16 +10,17 @@ import androidx.annotation.RequiresApi;
 import com.example.cbr_manager.BuildConfig;
 import com.squareup.picasso.Picasso;
 
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.sql.Timestamp;
+import java.security.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 public class Helper {
@@ -63,13 +64,12 @@ public class Helper {
 
     }
 
-    public static String convertToString(Timestamp date){
+    public static String convertToString(Timestamp date) {
         Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         String formattedDate = formatter.format(date);
         return formattedDate;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static ZonedDateTime parseUTCDateTime(String date) {
         DateTimeFormatter f = DateTimeFormatter.ISO_DATE_TIME;
         return ZonedDateTime.parse(date, f);

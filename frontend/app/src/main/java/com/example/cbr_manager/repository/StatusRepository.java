@@ -28,7 +28,7 @@ public class StatusRepository {
     public Single<Status> getStatus() {
         return statusAPI.getStatus(authHeader)
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(status -> statusDao.insert(status))
+                .doOnSuccess(status -> statusDao.insert(status).subscribe())
                 .onErrorResumeNext((e) -> statusDao.getStatus());
     }
 

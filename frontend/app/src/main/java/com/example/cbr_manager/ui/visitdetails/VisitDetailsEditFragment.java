@@ -139,13 +139,22 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void setupEditTexts(Visit visit, View root) {
-        setupAdditionalInfo(visit.getAdditionalInfo(), root);
+        setupEditText(root.findViewById(R.id.visitDetailsEditAdditionalInfo), visit.getAdditionalInfo());
+
+        // Setup health details edit texts
+        setupEditText(root.findViewById(R.id.visitDetailsEditVillageNumber), visit.getVillageNoVisit().toString());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthWheelchairProvision), visit.getWheelchairHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthProstheticProvision), visit.getProstheticHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthOrthoticProvision), visit.getOrthoticHealthProvisionText());
+        setupEditText(root.findViewById(R.id.visitDetailsEditHealthRepairsProvision), visit.getRepairsHealthProvisionText());
+
     }
 
 
-    private void setupAdditionalInfo(String additionalInfo, View root) {
-        EditText additionalInfoEditText = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
-        additionalInfoEditText.setText(additionalInfo);
+
+
+    private void setupEditText(EditText editText, String editTextValue) {
+        editText.setText(editTextValue);
     }
 
     private void getClientInfo(int clientId){

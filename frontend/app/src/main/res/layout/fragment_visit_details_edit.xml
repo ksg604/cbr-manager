@@ -162,7 +162,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditWheelchairProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthWheelchairProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -174,7 +174,7 @@
 
 
                     <EditText
-                        android:id="@+id/visitDetailsEditWheelchairProvision"
+                        android:id="@+id/visitDetailsEditHealthWheelchairProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -187,7 +187,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditProstheticProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthProstheticProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -199,7 +199,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditProstheticProvision"
+                        android:id="@+id/visitDetailsEditHealthProstheticProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -213,7 +213,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditOrthoticProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthOrthoticProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -224,7 +224,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditOrthoticProvision"
+                        android:id="@+id/visitDetailsEditHealthOrthoticProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -237,7 +237,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditRepairsProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthRepairsProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -248,7 +248,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditRepairsProvision"
+                        android:id="@+id/visitDetailsEditHealthRepairsProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -261,7 +261,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditReferralProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthReferralProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -272,7 +272,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditReferralProvision"
+                        android:id="@+id/visitDetailsEditHealthReferralProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -285,7 +285,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditAdviceProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthAdviceProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -296,7 +296,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditAdviceProvision"
+                        android:id="@+id/visitDetailsEditHealthAdviceProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -309,7 +309,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditAdvocacyProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthAdvocacyProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -320,7 +320,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditAdvocacyProvision"
+                        android:id="@+id/visitDetailsEditHealthAdvocacyProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -333,7 +333,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditEncouragementProvisionTextView"
+                            android:id="@+id/visitDetailsEditHealthEncouragementProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -344,7 +344,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditEncouragementProvision"
+                        android:id="@+id/visitDetailsEditHealthEncouragementProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"

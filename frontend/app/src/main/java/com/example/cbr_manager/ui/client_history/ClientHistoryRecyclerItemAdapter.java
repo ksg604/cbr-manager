@@ -20,10 +20,10 @@ public class ClientHistoryRecyclerItemAdapter extends RecyclerView.Adapter<Clien
     private ArrayList<ClientHistoryRecyclerItem> clientHistoryRecyclerItems;
     private List<ClientHistoryRecyclerItem> clientHistoryRecyclerItemsFull;
     private OnItemListener onItemListener;
-    private List<ClientHistoryRecyclerItem> filteredClientHistorys;
+    private List<ClientHistoryRecyclerItem> filteredClientHistory;
 
     public ClientHistoryRecyclerItem getClientHistory(int position) {
-        return filteredClientHistorys.get(position);
+        return filteredClientHistory.get(position);
     }
 
     @Override
@@ -37,26 +37,26 @@ public class ClientHistoryRecyclerItemAdapter extends RecyclerView.Adapter<Clien
             String searchString = constraint.toString().toLowerCase().trim();
 
             if (searchString.isEmpty()) {
-                filteredClientHistorys = clientHistoryRecyclerItems;
+                filteredClientHistory = clientHistoryRecyclerItems;
             } else {
                 ArrayList<ClientHistoryRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (ClientHistoryRecyclerItem clientHistoryRecyclerItem : clientHistoryRecyclerItems) {
-                    if (clientHistoryRecyclerItem.getmValue().toLowerCase().trim().contains(searchString)) {
+                    if (clientHistoryRecyclerItem.getmyValue().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(clientHistoryRecyclerItem);
                     }
                 }
-                filteredClientHistorys = tempFilteredList;
+                filteredClientHistory = tempFilteredList;
             }
             FilterResults results = new FilterResults();
-            results.values = filteredClientHistorys;
+            results.values = filteredClientHistory;
 
             return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredClientHistorys = (ArrayList<ClientHistoryRecyclerItem>) results.values;
+            filteredClientHistory = (ArrayList<ClientHistoryRecyclerItem>) results.values;
 
             notifyDataSetChanged();
         }
@@ -91,7 +91,7 @@ public class ClientHistoryRecyclerItemAdapter extends RecyclerView.Adapter<Clien
         this.clientHistoryRecyclerItems = clientHistoryRecyclerItems;
         this.clientHistoryRecyclerItemsFull = new ArrayList<>();
         this.clientHistoryRecyclerItemsFull.addAll(clientHistoryRecyclerItems);
-        this.filteredClientHistorys = clientHistoryRecyclerItems;
+        this.filteredClientHistory = clientHistoryRecyclerItems;
         this.onItemListener = onItemListener;
     }
 
@@ -105,14 +105,14 @@ public class ClientHistoryRecyclerItemAdapter extends RecyclerView.Adapter<Clien
 
     @Override
     public void onBindViewHolder(@NonNull ClientHistoryItemViewHolder holder, int position) {
-        ClientHistoryRecyclerItem currentItem = filteredClientHistorys.get(position);
-        holder.textListValue.setText(currentItem.getmValue());
-        holder.textListDate.setText(currentItem.getmDate());
+        ClientHistoryRecyclerItem currentItem = filteredClientHistory.get(position);
+        holder.textListValue.setText(currentItem.getmyValue());
+        holder.textListDate.setText(currentItem.getmyDate());
     }
 
     @Override
     public int getItemCount() {
-        return filteredClientHistorys.size();
+        return filteredClientHistory.size();
     }
 
 

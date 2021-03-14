@@ -4,19 +4,19 @@ import com.example.cbr_manager.service.alert.Alert;
 
 public class ClientHistoryRecyclerItem {
 
-    private String mValue;
-    private String mDate;
+    private String myValue;
+    private String myDate;
 
     public ClientHistoryRecyclerItem(String value,String date) {
-        this.mValue = value;
-        this.mDate = date;
+        this.myValue = value;
+        this.myDate = date;
     }
 
-    public String getmValue() {
-        return mValue;
+    public String getmyValue() {
+        return myValue;
     }
 
-    public String getmDate() {
-        return mDate;
+    public String getmyDate() {
+        return myDate;
     }
 }

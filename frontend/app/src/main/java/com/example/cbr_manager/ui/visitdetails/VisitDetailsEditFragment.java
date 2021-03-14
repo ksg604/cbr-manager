@@ -92,8 +92,7 @@ public class VisitDetailsEditFragment extends Fragment {
         location.setImageResource(R.drawable.ic_place);
         ImageView date = root.findViewById(R.id.profileDateImageView);
         date.setImageResource(R.drawable.ic_date);
-        ImageView additionalInfo = root.findViewById(R.id.profileAdditionalInfoImageView);
-        additionalInfo.setImageResource(R.drawable.ic_info);
+
     }
 
     private void getVisitInfo(int visitId, View root) {
@@ -145,14 +144,10 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void setupEditTexts(Visit visit, View root) {
-        setupDate(visit.getDatetimeCreated().toString(), root);
+
         setupAdditionalInfo(visit.getAdditionalInfo(), root);
     }
 
-    private void setupDate(String date, View root) {
-        EditText dateEditText = root.findViewById(R.id.visitDetailsEditDate);
-        dateEditText.setText(date);
-    }
 
     private void setupAdditionalInfo(String additionalInfo, View root) {
         EditText additionalInfoEditText = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
@@ -208,7 +203,7 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void getAndUpdateVisit(int visitId, View root) {
-        EditText editDate = root.findViewById(R.id.visitDetailsEditDate);
+
         EditText editAdditionalInfo = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
 
         apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {

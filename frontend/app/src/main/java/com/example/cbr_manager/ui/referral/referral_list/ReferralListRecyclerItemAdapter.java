@@ -1,9 +1,12 @@
 package com.example.cbr_manager.ui.referral.referral_list;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -31,9 +34,48 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
     private OnItemListener onItemListener;
     private List<ReferralListRecyclerItem> filteredReferrals;
     private APIService apiService = APIService.getInstance();
+    private boolean outstandingChecked = false;
 
     public ReferralListRecyclerItem getReferral(int position) {
         return filteredReferrals.get(position);
+    }
+
+    public Filter getFilterWithCheckBox(boolean outstandingChecked){
+        this.outstandingChecked = outstandingChecked;
+        return newfilter;
+    }
+
+    public Filter newfilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String searchString = constraint.toString().toLowerCase().trim();
+
+            ArrayList<ReferralListRecyclerItem> tempFilteredList = new ArrayList<>();
+            for (ReferralListRecyclerItem referralListRecyclerItem : referralListRecyclerItems) {
+                if ((searchString.isEmpty()|referralListRecyclerItem.getReferTo().toLowerCase().trim().contains(searchString))&passCheckBoxTest(referralListRecyclerItem)) {
+                    tempFilteredList.add(referralListRecyclerItem);
+                }
+            }
+            filteredReferrals = tempFilteredList;
+            FilterResults results = new FilterResults();
+            results.values = filteredReferrals;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredReferrals = (ArrayList<ReferralListRecyclerItem>) results.values;
+            notifyDataSetChanged();
+        }
+    };
+
+    private boolean passCheckBoxTest(ReferralListRecyclerItem referralListRecyclerItem) {
+        Boolean result = true;
+        if(outstandingChecked){
+            result = (!referralListRecyclerItem.getStatus().equals("RESOLVED"));
+        }
+        return result;
     }
 
     @Override

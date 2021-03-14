@@ -4,33 +4,33 @@ import com.example.cbr_manager.service.referral.Referral;
 
 public class ReferralListRecyclerItem {
 
-    private String mStatus;
-    private String mType;
-    private String mDate;
-    private String mReferTo;
+    private String myStatus;
+    private String myType;
+    private String myDate;
+    private String myReferTo;
     private Referral referral;
 
     public ReferralListRecyclerItem(String status, String type, String referTo, Referral referral, String date) {
-        this.mStatus = status;
-        this.mType = type;
-        this.mReferTo = "Refer to: "+referTo;
+        this.myStatus = status;
+        this.myType = type;
+        this.myReferTo = "Refer to: "+referTo;
         this.referral = referral;
-        this.mDate = date;
+        this.myDate = date;
     }
 
-    public String getmStatus() {
-        return mStatus;
+    public String getmyStatus() {
+        return myStatus;
     }
 
-    public String getmType() {
-        return mType;
+    public String getmyType() {
+        return myType;
     }
 
-    public String getmDate() {
-        return mDate;
+    public String getmyDate() {
+        return myDate;
     }
 
-    public String getmReferTo() {return mReferTo;}
+    public String getmyReferTo() {return myReferTo;}
 
     public Referral getReferral() {
         return referral;

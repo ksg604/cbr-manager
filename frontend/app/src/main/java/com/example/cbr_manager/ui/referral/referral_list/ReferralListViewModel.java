@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 public class ReferralListViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<String> myText;
 
     public ReferralListViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        myText = new MutableLiveData<>();
+        myText.setValue("This is referral list fragment");
     }
 
     public LiveData<String> getText() {
-        return mText;
+        return myText;
     }
 }

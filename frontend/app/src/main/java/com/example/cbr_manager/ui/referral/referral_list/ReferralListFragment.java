@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +34,6 @@ import retrofit2.Response;
 
 public class ReferralListFragment extends Fragment implements ReferralListRecyclerItemAdapter.OnItemListener{
 
-    private ReferralListViewModel referralListViewModel;
     private RecyclerView referralListecyclerView;
     private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager referralListLayoutManager;
@@ -54,8 +52,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        referralListViewModel =
-                new ViewModelProvider(this).get(ReferralListViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_referral_list, container, false);
         Bundle bundle = this.getArguments();
         if (bundle != null) {

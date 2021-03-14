@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -46,13 +45,10 @@ public class DashboardFragment extends Fragment {
     TextView titleTextView;
     int homeAlertId;
     View root;
-    private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
         fetchNewestAlert();
         setupViewPager(root);
@@ -279,6 +275,7 @@ public class DashboardFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
     }
 
     private void setupViewPager(View root) {

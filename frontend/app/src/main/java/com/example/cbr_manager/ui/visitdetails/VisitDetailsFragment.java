@@ -27,10 +27,7 @@ import retrofit2.Response;
 
 public class VisitDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
@@ -44,8 +41,6 @@ public class VisitDetailsFragment extends Fragment {
     public static VisitDetailsFragment newInstance(String param1, String param2) {
         VisitDetailsFragment fragment = new VisitDetailsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -198,7 +193,7 @@ public class VisitDetailsFragment extends Fragment {
     }
 
     private void setupEducationTextViews(Visit visit) {
-            setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralEducationProvisionText());
+        setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralEducationProvisionText());
         setUpTextView(R.id.visitDetailsAdviceEducationTextView, visit.getAdviceEducationProvisionText());
         setUpTextView(R.id.visitDetailsAdvocacyEducationTextView, visit.getAdvocacyEducationProvisionText());
         setUpTextView(R.id.visitDetailsEncouragementEducationTextView, visit.getEncouragementEducationProvisionText());

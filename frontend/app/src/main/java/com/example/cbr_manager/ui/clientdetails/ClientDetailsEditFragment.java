@@ -32,8 +32,8 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
+    private String param1;
+    private String param2;
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
@@ -61,8 +61,8 @@ public class ClientDetailsEditFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            param1 = getArguments().getString(ARG_PARAM1);
+            param2 = getArguments().getString(ARG_PARAM2);
         }
     }
 

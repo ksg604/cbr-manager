@@ -38,7 +38,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
     private ClientListRecyclerItemAdapter clientListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager clientListLayoutManager;
     private APIService apiService = APIService.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -50,9 +50,9 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
+        clientListLayoutManager = new LinearLayoutManager(getContext());
         clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
-        clientListRecyclerView.setLayoutManager(mLayoutManager);
+        clientListRecyclerView.setLayoutManager(clientListLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
         fetchClientsToList(clientList);

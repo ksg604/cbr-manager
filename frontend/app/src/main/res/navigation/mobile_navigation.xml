@@ -42,6 +42,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_referrals"
+        android:name="com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment"
+        android:label="Referrals"
+        tools:layout="@layout/fragment_referral_list" />
+
+
+    <fragment
         android:id="@+id/nav_client_list"
         android:name="com.example.cbr_manager.ui.clientlist.ClientListFragment"
         android:label="Client List"

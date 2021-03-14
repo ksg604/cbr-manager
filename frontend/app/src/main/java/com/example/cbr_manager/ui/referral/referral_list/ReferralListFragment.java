@@ -36,11 +36,11 @@ import retrofit2.Response;
 public class ReferralListFragment extends Fragment implements ReferralListRecyclerItemAdapter.OnItemListener{
 
     private ReferralListViewModel referralListViewModel;
-    private RecyclerView mRecyclerView;
+    private RecyclerView referralListecyclerView;
     private ReferralListRecyclerItemAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager referralListLayoutManager;
     private SearchView searchView;
-    private int clientId;
+    private int clientId=-1;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
 
     private APIService apiService = APIService.getInstance();
@@ -61,12 +61,12 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         if (bundle != null) {
             clientId = bundle.getInt("CLIENT_ID", -1);
         }
-        mRecyclerView = root.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
+        referralListecyclerView = root.findViewById(R.id.recyclerView);
+        referralListecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        referralListLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ReferralListRecyclerItemAdapter(referralRecyclerItems, this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
+        referralListecyclerView.setLayoutManager(referralListLayoutManager);
+        referralListecyclerView.setAdapter(adapter);
 
         SearchView referralSearchView = root.findViewById(R.id.referralSearchView);
         referralSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -94,8 +94,8 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            if(referral.getClient()==clientId){
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated()));
+                            if(referral.getClient()==clientId| clientId==-1){
+                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(),referral.getClient()));
                         }
                         }
                     }

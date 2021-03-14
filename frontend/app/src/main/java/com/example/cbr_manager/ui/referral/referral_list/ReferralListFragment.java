@@ -40,7 +40,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager referralListLayoutManager;
     private SearchView searchView;
-    private int clientId;
+    private int clientId=-1;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
 
     private APIService apiService = APIService.getInstance();
@@ -94,8 +94,8 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            if(referral.getClient()==clientId){
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated()));
+                            if(referral.getClient()==clientId| clientId==-1){
+                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(),referral.getClient()));
                         }
                         }
                     }

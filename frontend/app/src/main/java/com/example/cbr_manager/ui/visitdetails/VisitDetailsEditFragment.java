@@ -184,7 +184,7 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void setupCurrentClient(Client client) {
-        currentClient = client;
+        this.currentClient = client;
     }
 
     private void setupImageViews(String imageURL) {

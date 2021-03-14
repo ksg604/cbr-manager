@@ -120,6 +120,9 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                                             if (visit.isDisabilityFollowUpPurpose()) {
                                                 purpose += "Disability Follow up";
                                             }
+                                            if (purpose.equals("")) {
+                                                purpose = "No purpose indicated.";
+                                            }
 
                                             visitUIList.add(new VisitsRecyclerItem(formattedDate, visit.getClient().getFullName(), visit, purpose, visit.getLocationDropDown()));
                                         }

@@ -61,7 +61,6 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     };
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        public ImageView imageView;
         public TextView textListTitle;
         public TextView textListBody;
         public TextView purposeTextView;
@@ -70,7 +69,6 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
         public VisitItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
-//            imageView = itemView.findViewById(R.id.imageView);
             textListTitle = itemView.findViewById(R.id.textListTitle);
             textListBody = itemView.findViewById(R.id.textListBody);
             purposeTextView = itemView.findViewById(R.id.visitItemPurposeList);
@@ -108,8 +106,6 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     @Override
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
         VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
-
-//        holder.imageView.setImageResource(currentItem.getImageResource());
         holder.textListTitle.setText(currentItem.getTitleText());
         holder.textListBody.setText(currentItem.getBodyText());
         holder.purposeTextView.setText(currentItem.getPurposeText());

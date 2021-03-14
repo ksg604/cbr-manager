@@ -63,6 +63,19 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/visitDetailsNameTextView"
+                android:layout_width="190dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="Client Name"
+                android:textColor="#FFF"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

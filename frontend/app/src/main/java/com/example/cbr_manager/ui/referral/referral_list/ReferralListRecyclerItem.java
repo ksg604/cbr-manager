@@ -18,9 +18,8 @@ public class ReferralListRecyclerItem {
     private final String referTo;
     private final Referral referral;
     private final int clientId;
-    private String clientName;
 
-    APIService apiService=APIService.getInstance();
+
     public ReferralListRecyclerItem(String status, String type, String referTo, Referral referral, String date,int clientId) {
         this.status = status;
         this.type = type;
@@ -29,20 +28,22 @@ public class ReferralListRecyclerItem {
         this.date = date;
         this.clientId = clientId;
 
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                if (response.isSuccessful()) {
-                    Client client = response.body();
-                    setClientName(client.getFullName());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-            }
-        });
+//        Call<Client> callSync = apiService.clientService.getClient(clientId);
+//        try
+//        {
+//            Response<Client> response = callSync.execute();
+//            Client client = response.body();
+//            setClientName(client.getFullName());
+//        }
+//        catch (Exception ex)
+//        {
+//            ex.printStackTrace();
+//        }
     }
+
+
+
+
 
 
     public String getStatus() {
@@ -67,12 +68,8 @@ public class ReferralListRecyclerItem {
         return clientId;
     }
 
-    public String getClientName() {
-        return clientName;
-    }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
+
+
 
 }

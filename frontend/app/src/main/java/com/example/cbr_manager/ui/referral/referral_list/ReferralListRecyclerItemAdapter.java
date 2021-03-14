@@ -31,7 +31,7 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
 
     private ArrayList<ReferralListRecyclerItem> referralListRecyclerItems;
     private List<ReferralListRecyclerItem> referralListRecyclerItemsFull;
-    private OnItemListener onItemListener;
+    public OnItemListener onItemListener;
     private List<ReferralListRecyclerItem> filteredReferrals;
     private APIService apiService = APIService.getInstance();
     private boolean outstandingChecked = false;
@@ -52,7 +52,7 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
 
             ArrayList<ReferralListRecyclerItem> tempFilteredList = new ArrayList<>();
             for (ReferralListRecyclerItem referralListRecyclerItem : referralListRecyclerItems) {
-                if ((searchString.isEmpty()|referralListRecyclerItem.getReferTo().toLowerCase().trim().contains(searchString)|searchString.isEmpty()|referralListRecyclerItem.getClientName().toLowerCase().trim().contains(searchString))&passCheckBoxTest(referralListRecyclerItem)) {
+                if ((searchString.isEmpty()|referralListRecyclerItem.getReferTo().toLowerCase().trim().contains(searchString)|searchString.isEmpty())&passCheckBoxTest(referralListRecyclerItem)) {
                     tempFilteredList.add(referralListRecyclerItem);
                 }
             }
@@ -170,7 +170,20 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
         holder.textListReferTo.setText(currentItem.getReferTo());
         holder.textListType.setText(currentItem.getType());
         holder.textListDate.setText(currentItem.getDate());
-        holder.textListName.setText(currentItem.getClientName());
+        apiService.clientService.getClient(currentItem.getClientId()).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                if (response.isSuccessful()) {
+                    Client client = response.body();
+                    holder.textListName.setText(client.getFullName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+            }
+        });
+
     }
 
     @Override

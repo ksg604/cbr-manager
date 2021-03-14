@@ -17,6 +17,10 @@ import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,10 +34,6 @@ public class VisitDetailsFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
-    private String additionalInfo;
-    private String location;
-    private int villageNum;
-    private String formattedDate;
     public static String KEY_VISIT_ID = "KEY_VISIT_ID";
     private int visitId = -1;
 
@@ -117,11 +117,17 @@ public class VisitDetailsFragment extends Fragment {
                     Visit visit = response.body();
 
                     // Todo: dynamically set the client info here
+                    Timestamp datetimeCreated = visit.getDatetimeCreated();
+                    Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                    String formattedDate = formatter.format(datetimeCreated);
+                    setupDateTextView(formattedDate);
+
                     getClientInfo(visit.getClientId());
                     setupLocationTextView(visit.getLocationDropDown());
-                    setupDateTextView(visit.getDatetimeCreated().toString());
-                    setupAdditionalInfoTextView(visit.getAdditionalInfo());
-
+                    setupVillageNumTextView(visit.getVillageNoVisit().toString());
+                    setupHealthTextViews(visit);
+                    setupEducationTextViews(visit);
+                    setupSocialTextViews(visit);
 
                 } else {
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
@@ -156,8 +162,6 @@ public class VisitDetailsFragment extends Fragment {
         location.setImageResource(R.drawable.ic_place);
         ImageView date = root.findViewById(R.id.profileDateImageView);
         date.setImageResource(R.drawable.ic_date);
-        ImageView additionalInfo = root.findViewById(R.id.profileAdditionalInfoImageView);
-        additionalInfo.setImageResource(R.drawable.ic_info);
     }
 
     private void setupImageViews(String imageURL) {
@@ -177,10 +181,37 @@ public class VisitDetailsFragment extends Fragment {
         setUpTextView(R.id.visitDetailsDateTextView, date);
     }
 
-    private void setupAdditionalInfoTextView(String additionalInfo) {
-        setUpTextView(R.id.visitDetailsAdditionalInfoTextView, additionalInfo);
+    private void setupVillageNumTextView(String villageNum) {
+        setUpTextView(R.id.visitDetailsVillageNumTextView, villageNum);
     }
 
+    private void setupHealthTextViews(Visit visit) {
+        setUpTextView(R.id.visitDetailsWheelchairHealthTextView, visit.getWheelchairHealthProvisionText());
+        setUpTextView(R.id.visitDetailsProstheticHealthTextView, visit.getProstheticHealthProvisionText());
+        setUpTextView(R.id.visitDetailsOrthoticHealthTextView, visit.getOrthoticHealthProvisionText());
+        setUpTextView(R.id.visitDetailsRepairsHealthTextView, visit.getRepairsHealthProvisionText());
+        setUpTextView(R.id.visitDetailsReferralHealthTextView, visit.getReferralHealthProvisionText());
+        setUpTextView(R.id.visitDetailsAdviceHealthTextView, visit.getAdviceHealthProvisionText());
+        setUpTextView(R.id.visitDetailsAdvocacyHealthTextView, visit.getAdvocacyHealthProvisionText());
+        setUpTextView(R.id.visitDetailsEncouragementHealthTextView, visit.getEncouragementHealthProvisionText());
+        setUpTextView(R.id.visitDetailsConclusionHealthTextView, visit.getConclusionHealthProvision());
+    }
+
+    private void setupEducationTextViews(Visit visit) {
+        setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralHealthProvisionText());
+        setUpTextView(R.id.visitDetailsAdviceEducationTextView, visit.getAdviceHealthProvisionText());
+        setUpTextView(R.id.visitDetailsAdvocacyEducationTextView, visit.getAdvocacyHealthProvisionText());
+        setUpTextView(R.id.visitDetailsEncouragementEducationTextView, visit.getEncouragementHealthProvisionText());
+        setUpTextView(R.id.visitDetailsConclusionEducationTextView, visit.getConclusionHealthProvision());
+    }
+
+    private void setupSocialTextViews(Visit visit) {
+        setUpTextView(R.id.visitDetailsReferralSocialTextView, visit.getReferralHealthProvisionText());
+        setUpTextView(R.id.visitDetailsAdviceSocialTextView, visit.getAdviceHealthProvisionText());
+        setUpTextView(R.id.visitDetailsAdvocacySocialTextView, visit.getAdvocacyHealthProvisionText());
+        setUpTextView(R.id.visitDetailsEncouragementSocialTextView, visit.getEncouragementHealthProvisionText());
+        setUpTextView(R.id.visitDetailsConclusionSocialTextView, visit.getConclusionHealthProvision());
+    }
 
     private void setupButtons(View root) {
         setupBackButton(root);

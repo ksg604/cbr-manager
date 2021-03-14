@@ -208,6 +208,7 @@
                         android:background="@color/grey" />
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsWheelchairHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -231,6 +232,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsProstheticHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -254,6 +256,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsOrthoticHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -277,6 +280,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsRepairsHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -300,6 +304,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsReferralHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -323,6 +328,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsAdviceHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -346,6 +352,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsAdvocacyHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -369,6 +376,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsEncouragementHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -392,6 +400,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsConclusionHealthLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -443,6 +452,7 @@
                         android:background="@color/grey" />
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsReferralEducationLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -466,6 +476,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsAdviceEducationLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -489,6 +500,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsAdvocacyEducationLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -512,6 +524,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsEncouragementEducationLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -536,6 +549,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsConclusionEducationLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -588,6 +602,7 @@
                         android:background="@color/grey" />
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsReferralSocialLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -611,6 +626,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsAdviceSocialLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -634,6 +650,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsAdvocacySocialLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -657,6 +674,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsEncouragementSocialLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -681,6 +699,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/visitDetailsConclusionSocialLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">

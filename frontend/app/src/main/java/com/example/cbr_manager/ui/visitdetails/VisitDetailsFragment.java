@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.visitdetails;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,8 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
@@ -202,30 +205,99 @@ public class VisitDetailsFragment extends Fragment {
     }
 
     private void setupHealthTextViews(Visit visit) {
+        boolean notEmpty;
+
         setUpTextView(R.id.visitDetailsWheelchairHealthTextView, visit.getWheelchairHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsWheelchairHealthLinearLayout, visit.getWheelchairHealthProvisionText(), false);
+
         setUpTextView(R.id.visitDetailsProstheticHealthTextView, visit.getProstheticHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsProstheticHealthLinearLayout, visit.getProstheticHealthProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsOrthoticHealthTextView, visit.getOrthoticHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsOrthoticHealthLinearLayout, visit.getOrthoticHealthProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsRepairsHealthTextView, visit.getRepairsHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsRepairsHealthLinearLayout, visit.getRepairsHealthProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsReferralHealthTextView, visit.getReferralHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsReferralHealthLinearLayout, visit.getReferralHealthProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsAdviceHealthTextView, visit.getAdviceHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdviceHealthLinearLayout, visit.getAdviceHealthProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsAdvocacyHealthTextView, visit.getAdvocacyHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdvocacyHealthLinearLayout, visit.getAdvocacyHealthProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsEncouragementHealthTextView, visit.getEncouragementHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsEncouragementHealthLinearLayout, visit.getEncouragementHealthProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsConclusionHealthTextView, visit.getConclusionHealthProvision());
+        notEmpty = setVisibility(R.id.visitDetailsConclusionHealthLinearLayout, visit.getConclusionHealthProvision(), notEmpty);
+
+        setCardVisibility(R.id.healthDetailsCard, notEmpty);
     }
 
     private void setupEducationTextViews(Visit visit) {
+        boolean notEmpty;
+
         setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsReferralEducationLinearLayout, visit.getReferralEducationProvisionText(), false);
+
         setUpTextView(R.id.visitDetailsAdviceEducationTextView, visit.getAdviceEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdviceEducationLinearLayout, visit.getAdviceEducationProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsAdvocacyEducationTextView, visit.getAdvocacyEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdvocacyEducationLinearLayout, visit.getAdvocacyEducationProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsEncouragementEducationTextView, visit.getEncouragementEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsEncouragementEducationLinearLayout, visit.getEncouragementEducationProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsConclusionEducationTextView, visit.getConclusionEducationProvision());
+        notEmpty = setVisibility(R.id.visitDetailsConclusionEducationLinearLayout, visit.getConclusionEducationProvision(), notEmpty);
+
+        setCardVisibility(R.id.educationDetailsCard, notEmpty);
     }
 
     private void setupSocialTextViews(Visit visit) {
+        boolean notEmpty;
+
         setUpTextView(R.id.visitDetailsReferralSocialTextView, visit.getReferralSocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsReferralSocialLinearLayout, visit.getReferralSocialProvisionText(), false);
+
         setUpTextView(R.id.visitDetailsAdviceSocialTextView, visit.getAdviceSocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdviceSocialLinearLayout, visit.getAdviceSocialProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsAdvocacySocialTextView, visit.getAdvocacySocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdvocacySocialLinearLayout, visit.getAdvocacySocialProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsEncouragementSocialTextView, visit.getEncouragementSocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsEncouragementSocialLinearLayout, visit.getEncouragementSocialProvisionText(), notEmpty);
+
         setUpTextView(R.id.visitDetailsConclusionSocialTextView, visit.getConclusionSocialProvision());
+        notEmpty = setVisibility(R.id.visitDetailsConclusionSocialLinearLayout, visit.getConclusionSocialProvision(), notEmpty);
+
+        setCardVisibility(R.id.socialDetailsCard, notEmpty);
+    }
+
+    private void setCardVisibility(int id, boolean notEmpty) {
+        View view = getView();
+        CardView card = (CardView) view.findViewById(id);
+        if(notEmpty) {
+            card.setVisibility(View.VISIBLE);
+        } else{
+            card.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean setVisibility(int id, String data, boolean notEmpty) {
+        View view = getView();
+        LinearLayout layout = view.findViewById(id);
+        if(data.length()==0) {
+            layout.setVisibility(View.GONE);
+            return (notEmpty || false);
+        } else{
+            layout.setVisibility(View.VISIBLE);
+            return (notEmpty || true);
+        }
     }
 }

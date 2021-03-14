@@ -109,6 +109,17 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                                             Timestamp datetimeCreated = visit.getDatetimeCreated();
                                             Format formatter = new SimpleDateFormat("dd-MM-yyyy");
                                             String formattedDate = formatter.format(datetimeCreated);
+
+                                            String purpose = "";
+                                            if (visit.isCBRPurpose()) {
+                                                purpose += "CBR ";
+                                            }
+                                            if (visit.isDisabilityReferralPurpose()) {
+                                                purpose += "Disability Referral ";
+                                            }
+                                            if (visit.isDisabilityFollowUpPurpose()) {
+                                                purpose += "Disability Follow up";
+                                            }
                                             visitUIList.add(new VisitsRecyclerItem(R.drawable.visit_default_pic, formattedDate, visit.getClient().getFullName(), visit));
                                         }
                                         adapter.notifyDataSetChanged();

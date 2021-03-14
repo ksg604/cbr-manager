@@ -2,16 +2,16 @@ package com.example.cbr_manager.ui.visits;
 import com.example.cbr_manager.service.visit.Visit;
 
 public class VisitsRecyclerItem {
-    private int mImageResource;
-    private String mText1;
-    private String mText2;
+    private int imageResource;
+    private String titleText;
+    private String bodyText;
 
     private Visit visit;
 
-    public VisitsRecyclerItem(int mImageResource, String mText1, String mText2, Visit visit) {
-        this.mImageResource = mImageResource;
-        this.mText1 = mText1;
-        this.mText2 = mText2;
+    public VisitsRecyclerItem(int imageResource, String titleText, String bodyText, Visit visit) {
+        this.imageResource = imageResource;
+        this.titleText = titleText;
+        this.bodyText = bodyText;
         this.visit = visit;
     }
 
@@ -19,16 +19,16 @@ public class VisitsRecyclerItem {
         return visit.getId();
     }
 
-    public int getmImageResource() {
-        return mImageResource;
+    public int getImageResource() {
+        return imageResource;
     }
 
-    public String getmText1() {
-        return mText1;
+    public String getTitleText() {
+        return titleText;
     }
 
-    public String getmText2() {
-        return mText2;
+    public String getBodyText() {
+        return bodyText;
     }
 
     public Visit getVisit() {

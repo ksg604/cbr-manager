@@ -10,13 +10,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,12 +36,12 @@ import retrofit2.Response;
 
 public class ReferralListFragment extends Fragment implements ReferralListRecyclerItemAdapter.OnItemListener{
 
-    private ReferralListViewModel referralListViewModel;
-    private RecyclerView mRecyclerView;
+    private RecyclerView referralListecyclerView;
     private ReferralListRecyclerItemAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager referralListLayoutManager;
     private SearchView searchView;
-    private int clientId;
+    private int clientId=-1;
+    private final int FROM_DASHBOARD = -2;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
 
     private APIService apiService = APIService.getInstance();
@@ -54,21 +55,34 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        referralListViewModel =
-                new ViewModelProvider(this).get(ReferralListViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_referral_list, container, false);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             clientId = bundle.getInt("CLIENT_ID", -1);
         }
-        mRecyclerView = root.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
-        adapter = new ReferralListRecyclerItemAdapter(referralRecyclerItems, this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
 
+        referralListecyclerView = root.findViewById(R.id.recyclerView);
+        referralListecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        referralListLayoutManager = new LinearLayoutManager(getContext());
+        adapter = new ReferralListRecyclerItemAdapter(referralRecyclerItems, this);
+        referralListecyclerView.setLayoutManager(referralListLayoutManager);
+        referralListecyclerView.setAdapter(adapter);
+
+        CheckBox checkBox = root.findViewById(R.id.checkBox);
+        if(clientId==FROM_DASHBOARD){
+            checkBox.setChecked(true);
+        }
         SearchView referralSearchView = root.findViewById(R.id.referralSearchView);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                CharSequence newText = referralSearchView.getQuery();
+                adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(newText);
+            }
+        });
+
         referralSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -77,7 +91,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(newText);
                 return true;
             }
         });
@@ -94,8 +108,8 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            if(referral.getClient()==clientId){
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated()));
+                            if(referral.getClient()==clientId| clientId==-1){
+                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(),referral.getClient()));
                         }
                         }
                     }

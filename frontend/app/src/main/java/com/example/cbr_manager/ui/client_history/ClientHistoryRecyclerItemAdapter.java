@@ -42,7 +42,7 @@ public class ClientHistoryRecyclerItemAdapter extends RecyclerView.Adapter<Clien
                 ArrayList<ClientHistoryRecyclerItem> tempFilteredList = new ArrayList<>();
 
                 for (ClientHistoryRecyclerItem clientHistoryRecyclerItem : clientHistoryRecyclerItems) {
-                    if (clientHistoryRecyclerItem.getmyValue().toLowerCase().trim().contains(searchString)) {
+                    if (clientHistoryRecyclerItem.getValue().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(clientHistoryRecyclerItem);
                     }
                 }
@@ -106,8 +106,8 @@ public class ClientHistoryRecyclerItemAdapter extends RecyclerView.Adapter<Clien
     @Override
     public void onBindViewHolder(@NonNull ClientHistoryItemViewHolder holder, int position) {
         ClientHistoryRecyclerItem currentItem = filteredClientHistory.get(position);
-        holder.textListValue.setText(currentItem.getmyValue());
-        holder.textListDate.setText(currentItem.getmyDate());
+        holder.textListValue.setText(currentItem.getValue());
+        holder.textListDate.setText(currentItem.getDate());
     }
 
     @Override

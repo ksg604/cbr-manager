@@ -37,33 +37,9 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String param1;
-    private String param2;
 
     public ClientSelectorFragment() {
         // Required empty public constructor
-    }
-
-    public static ClientSelectorFragment newInstance(String param1, String param2) {
-        ClientSelectorFragment fragment = new ClientSelectorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            param1 = getArguments().getString(ARG_PARAM1);
-            param2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override

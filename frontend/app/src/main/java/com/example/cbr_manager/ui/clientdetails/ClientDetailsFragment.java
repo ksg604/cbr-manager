@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
@@ -252,6 +253,9 @@ public class ClientDetailsFragment extends Fragment {
     private void setupButtons(View root) {
         setupEditButton(root);
         setupBackButton(root);
+        setupHistoryButton(root,R.id.clientDetailsEducationHistoryTextView,"education_goal");
+        setupHistoryButton(root,R.id.clientDetailsHealthHistoryTextView,"health_goal");
+        setupHistoryButton(root,R.id.clientDetailsSocialHistoryTextView,"social_goal");
     }
 
     private void setupEditButton(View root) {
@@ -263,6 +267,24 @@ public class ClientDetailsFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
+
+    private void setupHistoryButton(View root, int ViewID, String field){
+        View someView = root.findViewById(ViewID);
+        someView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("clientId", clientId);
+                bundle.putString("field",field);
+                ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
+                clientHistoryFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_client_details, clientHistoryFragment,null)
                         .addToBackStack(null)
                         .commit();
             }

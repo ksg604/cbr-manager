@@ -80,20 +80,13 @@ public class VisitDetailsEditFragment extends Fragment {
         Bundle bundle = this.getArguments();
         visitId = bundle.getInt("visitId", -1);
 
-        setupVectorImages(root);
+
         getVisitInfo(visitId, root);
         setupButtons(root);
 
         return root;
     }
 
-    private void setupVectorImages(View root) {
-        ImageView location = root.findViewById(R.id.profileLocationImageView);
-        location.setImageResource(R.drawable.ic_place);
-        ImageView date = root.findViewById(R.id.profileDateImageView);
-        date.setImageResource(R.drawable.ic_date);
-
-    }
 
     private void getVisitInfo(int visitId, View root) {
         apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
@@ -144,7 +137,6 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void setupEditTexts(Visit visit, View root) {
-
         setupAdditionalInfo(visit.getAdditionalInfo(), root);
     }
 

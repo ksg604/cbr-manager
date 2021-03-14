@@ -404,7 +404,7 @@
                         android:id="@+id/visitDetailsEditEducationDetailsTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Health Details"
+                        android:text="Education Details"
                         android:textColor="@color/purple_700"
                         android:textSize="16sp" />
 
@@ -421,18 +421,18 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditEducationReferralTextView"
+                            android:id="@+id/visitDetailsEditEducationReferralProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Conclusion:"
+                            android:text="Referral Provision:"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditEducationReferralConclusion"
+                        android:id="@+id/visitDetailsEditEducationReferralProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -445,18 +445,18 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditEducationAdviceTextView"
+                            android:id="@+id/visitDetailsEditEducationAdviceProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Conclusion:"
+                            android:text="Advice Provision:"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditEducationAdvice"
+                        android:id="@+id/visitDetailsEditEducationAdviceProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -469,18 +469,18 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditEducationAdvocacyTextView"
+                            android:id="@+id/visitDetailsEditEducationAdvocacyProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Conclusion:"
+                            android:text="Advocacy Provision:"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditAdvocacyConclusion"
+                        android:id="@+id/visitDetailsEditEducationAdvocacyProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -493,18 +493,18 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/visitDetailsEditEducationEncouragementTextView"
+                            android:id="@+id/visitDetailsEditEducationEncouragementProvisionTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Conclusion:"
+                            android:text="Encouragement Provision:"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/visitDetailsEditEncouragementConclusion"
+                        android:id="@+id/visitDetailsEditEducationEncouragementProvision"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"

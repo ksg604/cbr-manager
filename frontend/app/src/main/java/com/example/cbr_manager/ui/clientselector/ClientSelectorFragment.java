@@ -41,8 +41,8 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String myParam1;
-    private String myParam2;
+    private String param1;
+    private String param2;
 
     public ClientSelectorFragment() {
         // Required empty public constructor
@@ -61,8 +61,8 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            myParam1 = getArguments().getString(ARG_PARAM1);
-            myParam2 = getArguments().getString(ARG_PARAM2);
+            param1 = getArguments().getString(ARG_PARAM1);
+            param2 = getArguments().getString(ARG_PARAM2);
         }
     }
 

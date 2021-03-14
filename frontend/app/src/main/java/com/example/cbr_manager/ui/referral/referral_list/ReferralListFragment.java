@@ -40,8 +40,8 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager referralListLayoutManager;
     private SearchView searchView;
-    private int clientId=-1;
-    private final int FROM_DASHBOARD = -2;
+    private int clientId = -1;
+    private final int FROM_DASHBOARD = -1;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
 
     private APIService apiService = APIService.getInstance();
@@ -70,9 +70,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         referralListecyclerView.setAdapter(adapter);
 
         CheckBox checkBox = root.findViewById(R.id.checkBox);
-        if(clientId==FROM_DASHBOARD){
-            checkBox.setChecked(true);
-        }
+
         SearchView referralSearchView = root.findViewById(R.id.referralSearchView);
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
@@ -82,6 +80,10 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                 adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(newText);
             }
         });
+
+        if(clientId==FROM_DASHBOARD){
+            checkBox.setChecked(true);
+        }
 
         referralSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -108,7 +110,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     if (response.isSuccessful()) {
                         List<Referral> referralList = response.body();
                         for (Referral referral : referralList) {
-                            if(referral.getClient()==clientId| clientId==-1){
+                            if(referral.getClient()==clientId| clientId<0){
                             referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(),referral.getClient()));
                         }
                         }

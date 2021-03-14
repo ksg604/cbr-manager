@@ -198,19 +198,19 @@ public class VisitDetailsFragment extends Fragment {
     }
 
     private void setupEducationTextViews(Visit visit) {
-        setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralHealthProvisionText());
-        setUpTextView(R.id.visitDetailsAdviceEducationTextView, visit.getAdviceHealthProvisionText());
-        setUpTextView(R.id.visitDetailsAdvocacyEducationTextView, visit.getAdvocacyHealthProvisionText());
-        setUpTextView(R.id.visitDetailsEncouragementEducationTextView, visit.getEncouragementHealthProvisionText());
-        setUpTextView(R.id.visitDetailsConclusionEducationTextView, visit.getConclusionHealthProvision());
+            setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralEducationProvisionText());
+        setUpTextView(R.id.visitDetailsAdviceEducationTextView, visit.getAdviceEducationProvisionText());
+        setUpTextView(R.id.visitDetailsAdvocacyEducationTextView, visit.getAdvocacyEducationProvisionText());
+        setUpTextView(R.id.visitDetailsEncouragementEducationTextView, visit.getEncouragementEducationProvisionText());
+        setUpTextView(R.id.visitDetailsConclusionEducationTextView, visit.getConclusionEducationProvision());
     }
 
     private void setupSocialTextViews(Visit visit) {
-        setUpTextView(R.id.visitDetailsReferralSocialTextView, visit.getReferralHealthProvisionText());
-        setUpTextView(R.id.visitDetailsAdviceSocialTextView, visit.getAdviceHealthProvisionText());
-        setUpTextView(R.id.visitDetailsAdvocacySocialTextView, visit.getAdvocacyHealthProvisionText());
-        setUpTextView(R.id.visitDetailsEncouragementSocialTextView, visit.getEncouragementHealthProvisionText());
-        setUpTextView(R.id.visitDetailsConclusionSocialTextView, visit.getConclusionHealthProvision());
+        setUpTextView(R.id.visitDetailsReferralSocialTextView, visit.getReferralSocialProvisionText());
+        setUpTextView(R.id.visitDetailsAdviceSocialTextView, visit.getAdviceSocialProvisionText());
+        setUpTextView(R.id.visitDetailsAdvocacySocialTextView, visit.getAdvocacySocialProvisionText());
+        setUpTextView(R.id.visitDetailsEncouragementSocialTextView, visit.getEncouragementSocialProvisionText());
+        setUpTextView(R.id.visitDetailsConclusionSocialTextView, visit.getConclusionSocialProvision());
     }
 
     private void setupButtons(View root) {

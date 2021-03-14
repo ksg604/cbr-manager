@@ -5,6 +5,7 @@ public class VisitsRecyclerItem {
     private int imageResource;
     private String titleText;
     private String bodyText;
+    private String purposeText;
 
     private Visit visit;
 
@@ -33,5 +34,9 @@ public class VisitsRecyclerItem {
 
     public Visit getVisit() {
         return visit;
+    }
+
+    public String getPurposeText() {
+        return purposeText;
     }
 }

@@ -35,7 +35,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
     public Client formClientObj;
     public File photoFile;
-    private StepperLayout mStepperLayout;
+    private StepperLayout myStepperLayout;
     private APIService apiService = APIService.getInstance();
 
     @Override
@@ -48,9 +48,9 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
         setTitle("Create a Client");
 
-        mStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
-        mStepperLayout.setAdapter(setUpStepperAdapterWithFragments());
-        mStepperLayout.setListener(this);
+        myStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
+        myStepperLayout.setAdapter(setUpStepperAdapterWithFragments());
+        myStepperLayout.setListener(this);
     }
 
     public GenericStepperAdapter setUpStepperAdapterWithFragments() {
@@ -100,14 +100,14 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
                     onSubmitSuccess(client);
                 } else {
-                    Snackbar.make(mStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
+                    Snackbar.make( myStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(mStepperLayout, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
+                Snackbar.make( myStepperLayout, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

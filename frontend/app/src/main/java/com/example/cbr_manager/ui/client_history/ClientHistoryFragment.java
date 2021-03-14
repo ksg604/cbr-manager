@@ -28,7 +28,7 @@ import retrofit2.Response;
 public class ClientHistoryFragment extends Fragment implements ClientHistoryRecyclerItemAdapter.OnItemListener{
 
     private ClientHistoryViewModel clientHistoryViewModel;
-    private RecyclerView mRecyclerView;
+    private RecyclerView myRecyclerView;
     private ClientHistoryRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager clientHistoryLayoutManager;
     private SearchView searchView;
@@ -44,12 +44,12 @@ public class ClientHistoryFragment extends Fragment implements ClientHistoryRecy
                 new ViewModelProvider(this).get(ClientHistoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_client_history, container, false);
 
-        mRecyclerView = root.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true); // if we know it won't change size.
+        myRecyclerView = root.findViewById(R.id.recyclerView);
+        myRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         clientHistoryLayoutManager = new LinearLayoutManager(getContext());
         adapter = new ClientHistoryRecyclerItemAdapter(clientHistoryRecyclerItems, this);
-        mRecyclerView.setLayoutManager(clientHistoryLayoutManager);
-        mRecyclerView.setAdapter(adapter);
+        myRecyclerView.setLayoutManager(clientHistoryLayoutManager);
+        myRecyclerView.setAdapter(adapter);
 
         this.clientId =getArguments().getInt("clientId", -1);
         this.field = getArguments().getString("field","");

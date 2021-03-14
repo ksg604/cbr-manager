@@ -175,7 +175,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthWheelchairProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -200,7 +200,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthProstheticProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -225,7 +225,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthOrthoticProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -249,7 +249,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthRepairsProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -273,7 +273,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthReferralProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -297,7 +297,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthAdviceProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -321,7 +321,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthAdvocacyProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -345,7 +345,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthEncouragementProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -370,7 +370,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditHealthConclusion"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -424,7 +424,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditEducationReferralProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -448,7 +448,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditEducationAdviceProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -472,7 +472,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditEducationAdvocacyProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -496,7 +496,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditEducationEncouragementProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -521,7 +521,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditEducationConclusion"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -575,7 +575,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditSocialReferralProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -599,7 +599,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditSocialAdviceProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -623,7 +623,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditSocialAdvocacyProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -647,7 +647,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditSocialEncouragementProvision"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"
@@ -672,7 +672,7 @@
 
                     <EditText
                         android:id="@+id/visitDetailsEditSocialConclusion"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="start|top"

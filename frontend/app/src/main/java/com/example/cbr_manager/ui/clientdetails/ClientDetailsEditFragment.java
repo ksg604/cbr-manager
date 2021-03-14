@@ -30,11 +30,6 @@ import retrofit2.Response;
 
 public class ClientDetailsEditFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String param1;
-    private String param2;
-
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private Spinner genderSpinner;
@@ -46,24 +41,6 @@ public class ClientDetailsEditFragment extends Fragment {
 
     public ClientDetailsEditFragment() {
         // Required empty public constructor
-    }
-
-    public static ClientDetailsEditFragment newInstance(String param1, String param2) {
-        ClientDetailsEditFragment fragment = new ClientDetailsEditFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            param1 = getArguments().getString(ARG_PARAM1);
-            param2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override

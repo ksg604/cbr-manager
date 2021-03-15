@@ -455,6 +455,19 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 
 * Modified the create clients page such that it uses fragments rather than activities. This would give some performance gain.
 
+## Jonathan's Contribution
+
+### Iteration 2
+
+For this iteration I mostly focused on UI enhancement and research on the architecture to support offline functionality of the app. Here are some highlights
+
+1. Improve the Client creation to be more user friendly by adding error checking, and a visual stepper to inform the user where they are on the form.
+2. Introduce cached logins so users do not need to login every time the app closes. The users authentication token is cached using SharedPreferences.
+3. Introduce a ClientHistoryRecord model to track changes made to the client.
+4. Add and generate CBR client ids that are based off of their first and last name.
+5. Fix some bugs to production deployment and add a home page to our API where the user can download the APK.
+6. Research into architecture to support offline app usage. Will hopefully be setup and usable for iteration 3.
+
 # Deployment with Docker
 
 Use docker to deploy

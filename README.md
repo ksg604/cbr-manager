@@ -425,20 +425,21 @@ As an admin, I want to be able to edit all user (CBR worker, clinician) data, so
 
 ## William Tran's Contribution
 
-### Creation of New Clients
+### Iteration 1 Creation of New Clients
 **User story:** (#4)
 As a user, I want to be able to record my client's data to a remote server so I can manage my duties.
 
 *Client models and image root for upload and saving client data.
 
-**Unfinished parts:**
+### Iteration 2 Integrating with Room database
+Integrating app with local database to persistently save data onto devices in offline conditions
+All these tasks deals with Business logic for utilizing the data under the abstraction of the UI
 
-1. Implement search function from Backend
+* Update Client and Visit as entity for Room database inclusion
+* Create database access object interface for Client and Visit
+* Implement basic CRUD operations with local database using executuors threads
+* Create a mock-up of sync logic to be used when making the synchronization architecture for the app
 
-**Questions for the customer:**
-
-1. If given the keyword options to search clients from the list, what kind of options would you like to for search function? For example you can search by locations, name, type of disability.
-It is possible to search for multiple keywords if all of the keywords are relevant to the client's data, but it is difficult to search for client's data using keyword from the visit data.
 
 
 ## Vincent's Contribution

@@ -375,36 +375,25 @@ As an admin, I want to be able to create new clients' data, so I can track their
 
 * Client creation ,including making the client creation page in android and uploading the new client info to the backend.
 
+**Iteration 2:**
 
-**Unfinished parts:**
+### Design / Create Home page
 
-1. Implementing the camera when taking photo of the client + caretaker if they are present.
+**User story:**
+   As a admin/user, I want to be directed to a home page after login, so I can have a general overview of the app and choose which task to complete.
 
-2. Handling errors so that there is more flexibility with the input + show errors. Currently it has to follow a specific format, otherwise it will return a HTTP 400(Bad Request)
 
-3. Other survey requirements such as health risk, social risk, and education risk. Currently they are set to 0.
+### Visit Details Edit
 
-**Format of the inputs:**
-1. Consent : either Yes or No works.
-2. Date : One number per column only. No alphabets or special characters.
-3. ID : One number only. No alphabets or special characters.
-4. Location : All location works.
-5. Village number : same as #3.
-6. First Name : Everything works.
-7. Last Name : Evertying works.
-8. Gender : either gender works.
-9. Age : same as #3.
-10. Client contact number : same as #3. N/A option does not work currently.
-11. All types of disabilities work.
-12. Caregiver present : both options work
-13. Caregiver contact number : same as #10.
-14. photo : not implemented yet.
+**User story:**
+   As a user, I want to be able to edit the visit details, so I can update new informations.
+
+* Improved UI experience by making visit details page show only filled fields, so that the user doesn't see unnecessary blank spaces.
+* Linked the visit details and visit details edit page to backend database so it properly stores and updates new data.
 
 **Questions for the customer:**
 
-1. Is the flow of the create client survey page okay? Or do you want us to follow the exact order of the powerpoint slides?
-
-2. There are two parts to the survey, one part where the client can fill out information themselves, and another part where they fill it out together with a CBR worker. Currently only the first part is implemented. For the second part, would a separate survey page be better? Or combine them into one?
+1. Is the Homepage simple and informative enough? Is there other features or shortcuts that you would like us to add / change?
 
 
 ## Sean's Contribution

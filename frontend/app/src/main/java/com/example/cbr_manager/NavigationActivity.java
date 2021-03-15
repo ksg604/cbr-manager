@@ -90,9 +90,9 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onStart() {
+        super.onStart();
         setupAlertsBadge(navigationView);
-        super.onResume();
     }
 
     private void setupAlertsBadge(NavigationView navigationView) {
@@ -112,7 +112,6 @@ public class NavigationActivity extends AppCompatActivity {
                         }
                     }
                 }
-
                 @Override
                 public void onFailure(Call<List<Alert>> call, Throwable t) {
 

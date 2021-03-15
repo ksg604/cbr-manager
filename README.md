@@ -1,5 +1,5 @@
 # Introduction
-Welcome to the HHA CBR Manager project by team Saturn! 
+Welcome to the HHA CBR Manager project by team Saturn!
 
 The goal of the project is to create an Android app that satisfies the customers requirements as stated in the initial presentation and any requirements to be modified or added through feedback.
 
@@ -259,7 +259,7 @@ This was an additional task undertook to ensure that the interface has a consist
 3. We have tried to include a minimal amount of colours, leaving most of the app to be white. In terms of visuals, would you like the user interface to be more colourful? Or to have more images?
 4. Are there any comparable sections in apps that you enivision this app could look like (for example, the profile section of the Facebook app, the lists of songs in the Spotify app)? This could help us to modify the interface to look more as you imagine it to look.
 
-### New Referrals Creation 
+### New Referrals Creation
 **User story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties
 
 Implemented the user interface, front end logic, and referral uploading. Also ensured that the required fields are filled out.
@@ -323,7 +323,7 @@ At the request of the customer, redid the UI of the dashboard to be much less cl
 
 **User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
 
-* Implemented resuable filtering logic with checkboxes. Currently used for filtering outstanding referral items . If referral status is resolved then it won't show if "Outstanding" is checked. 
+* Implemented resuable filtering logic with checkboxes. Currently used for filtering outstanding referral items . If referral status is resolved then it won't show if "Outstanding" is checked.
 * It works in conjunction with the search bar that looks for matching substrings, so if either is changed the results refresh.
 
 
@@ -433,27 +433,26 @@ All these tasks deals with Business logic for utilizing the data under the abstr
 
 ## Vincent's Contribution
 
-### Initial creation of user creations for the backend
+
+### Iteration 1
 
 **User story:**  (#1)
 As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
 
 * Created the backend info for the user such that we can create or modify users in the backend. This includes a username, password, email, first name, last name
 
-**Unfinished parts:**
-
-1. May need to include other information associated with the user.
-
-**Questions for the customer:**
-
-1. Are there additional fields that you want to add to users? such as age or location?
-
-### Optimizing and refactoring of client creation
-
 **User story:**  (#4)
 As a user, I want to be able to record and edit client/visit data, so I can better manage my duties.
 
 * Modified the create clients page such that it uses fragments rather than activities. This would give some performance gain.
+
+### Iteration 2
+
+For this iteration, I've done some minor changes to the home page, fixed a few bugs, and done some research on the frontend history.
+
+1. Added a navigation drawer to the homepage
+2. Fixed a bug where some buttons on homepage was not working
+3. Researched some techniques on having history on the frontend (likely be done by iteration 3).
 
 ## Jonathan's Contribution
 
@@ -472,7 +471,7 @@ For this iteration I mostly focused on UI enhancement and research on the archit
 
 Use docker to deploy
 
-## Prerequisites 
+## Prerequisites
 
 `.env.dev` used to store development secrets
 

@@ -203,7 +203,7 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 ## Peter's Contribution
 
-### Dashboard
+### Dashboard (Iteration 1)
 
 The dashboard was created with the vision of something like a newsfeed, where a user can view important information such as the alerts and statistics drawn from all sections of the app.
 
@@ -213,33 +213,14 @@ The dashboard was created with the vision of something like a newsfeed, where a 
 * The dashboard is split into sections: alerts, high priority clients, visits, and referrals (for the future).  The Alerts section shows the most recent alert sent by an admin. The High Priority Clients Section shows the top 5 highest risk clients, along with two buttons to view all clients and add clients.
 * The Visits section show statistics about visits: total visits made, locations visited, total clients visited.
 
-**Unfinished parts:**
-1. The referral section of the dashboard needs to be filled out.
-2. Further statistics on clients likely to be added (Ex: total number of clients, "hotspot" locations that have many clients, ...)
 
-**Questions for the customer:**
-1. What is your impression of the dashboard? Are there any further statistics you would like the dashboard to show?
-2. Are there any sections you would like to see added to the dashboard?
-3. In slide 16, it seems that "dashboard with alert system" is different from the "home" page. Is there a difference between dashboard and home page, and would you like a "home" page separate from the dashboard?
-
-### Clients List
+### Clients List (Iteration 1)
 The clients list allows the user to quickly view basic information about all clients. If necessary, the user may select a user in order to view more specific information.
 
 **User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
 * The client list currently shows the profile picture, name, location, and risk rating for each client. The client and then be selected so the user may view additional details and create a visit.
 
-**Unfinished:**
-
-1. The Client list is currently not searchable.
-2. Determine how the list should be sorted.
-
-**Questions for the customer:**
-
-1. Would you like any additional information to be shown for each client on the list?
-2. Currently, the list is sorted by the date the client was added. How would you like the list to be sorted? (By last name, by risk level, by first name, ...)
-3. Are there any other features you would like added to the client list?
-
-### Creation of New Visits
+### Creation of New Visits (Iteration 1)
 
 The creation of a new visit can currently be accessed through a button found in the details of a client. The survey is compiled into one scrollable activity. Once submitted, the data is uploaded to the backend.
 
@@ -256,19 +237,13 @@ The flow of the survey is an adaptation of our Piazza post, question #47.
 
 1. Implementation of required fields is missing. User must not be able to submit a visit survey unless required fields are filled out.
 
-**Questions for the customer:**
-
-1. Is the flow of the visit survey correct? It seems that if CBR is **NOT** selected as a purpose, then the provisions were to still be shown. They are only optionally hidden when CBR **IS** selected as a purpose.
-
-2. In terms of user interface, are there any further suggestions for how the survey should look? Would you like the font sizes to be larger? Would you like more visuals such as colours or images?
-
-### Navigation Drawer
+### Navigation Drawer (Iteration 1)
 The navigation bar acts as an index for the app, where the user can quickly jump between different sections such as client list, visit list, dashboard, and client creation.
 
 **Unfinished parts:**
 1. A logout/close button within the navigation drawer.
 
-### User Interface Consistency
+### User Interface Consistency (Iteration 1)
 
 This was an additional task undertook to ensure that the interface has a consistency (such as the same font, same background colour for buttons).
 
@@ -279,6 +254,25 @@ This was an additional task undertook to ensure that the interface has a consist
 3. We have tried to include a minimal amount of colours, leaving most of the app to be white. In terms of visuals, would you like the user interface to be more colourful? Or to have more images?
 4. Are there any comparable sections in apps that you enivision this app could look like (for example, the profile section of the Facebook app, the lists of songs in the Spotify app)? This could help us to modify the interface to look more as you imagine it to look.
 
+### New Referrals Creation 
+**User story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties
+
+Implemented the user interface, front end logic, and referral uploading. Also ensured that the required fields are filled out.
+
+### Search bars
+**User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
+
+For lists within the app, I implemented the searchview to help the user quickly find the item they are looking for.
+
+### Client Details UI Redo
+**User story:** As a user, I want to be able to view all my clients/visits, so I can monitor and record client related activity
+
+Redid the client details UI to be more clean and consistent by removing colours, adding margins, and manipulating layouts.
+
+### Dashboard UI Redo
+**User story:** As an admin, I want to be able to view various CBR statistics, so I can monitor the CBR team's progress.
+
+At the request of the customer, redid the UI of the dashboard to be much less cluttered by adding whitespace, removing colours, and redoing the general look.
 
 ## Andrew's Contribution
 

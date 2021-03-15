@@ -8,10 +8,15 @@ The goal of the project is to create an Android app that satisfies the customers
 Our development tools include using Android Studio for the frontend including all UI elements and Django as the backend server which is used to communicate with the database and handle any additional logic performed on the data.
 
 ## Progress
+
+### Iteration 1
 In iteration 1, we've designed the UI for the majority of required pages and created the classes and models for users, clients, visits and alerts. So now all users can create, store and retrieve their clients' and visits' data to and from the server, either ran locally or through the one deployed on Heroku. The admin can also send alerts to all and create new users that have seperate sets of clients and visit data.
 
+### Iteration 2
+In iteration 2, we focused on adding the ability for users to create referrals for clients, which can then be viewed and edited. Speaking of editing, this was another area we focused on this iteration. Now clients and visits can also be edited through the app as well. We also placed a search feature in a lot of the pages, which will be handy once the number of clients and visits grows. Another focus this iteration was on using a local db with syncing to allow users to use the app offline. Finally, we improved a lot of the app's UI this iteration, based on feedback from the customer, and also based on having a better understanding of the flow of the app and how to use Android at this point. One of these changes was login caching, which we feel definitely makes the app more convenient to use (and to test!).
+
 ## Upcoming
-For next iteration we plan to add the local database so work can be done without an internet connection and sync with the server once connection is resumed. We will also add in referrals and seperate user permissions for admins and other users.
+For next iteration we plan to finalize the risk algorithm, finish work on local database syncing, add the ability to easily view historical changes, and improve client goal tracking. We also will finalize the UI across the board to get everything looking and feeling as good as possible. And of course we'll make changes based on the customer's feedback of our iteration 2 demo!
 
 
 # How to setup Local Development
@@ -415,15 +420,13 @@ As a user, I want to be able to view all my clients/visits, So I can monitor and
 * The per-client visits page uses nearly all the same logic as the full visits page, but it is passed the clientID and filters by it.
 * The visits details page for each visit also shows additional details
 
-**Unfinished parts:**
+**Iteration 2:**
 
-1. The visit list should show the date of the visit, and perhaps sort by that date
-
-2. Some information on the visits details page is currently hardcoded for display purposes. This should be fixed.
-
-**Questions for the customer:**
-
-1. Would it ever be useful to view all visits in one place, or would it only be useful to view visits on a per-client basis?
+* The visit list now displays the date of the visit
+* The visit details page now shows all the desired information with no hardcoding and writes properly to the backend database
+* Reorganized the client and visit backend models so that much of the information that new visits were writing to the client model now write to the visit model
+* When a health goal, education goal, or social goal is inputted in a visit, it now updates the visit's respective client and shows  this new information on the client details page
+* Decoupled the per-client visit list and the general visit list so that they could be contained in one fragment
 
 ### Login page
 The login page allows users to log in to reach their personalized home screen
@@ -538,11 +541,15 @@ Development will be deployed on port 8001
 
 # How to Navigate Application
 
-Once the app is running, you will be on the login screen. Input "user1" as the username and "password" as the password.
+Once the app is running, you will be on the login screen. Input "user1" as the username and "password123" as the password. If you have logged in before on the same device, it may skip past this screen automatically.
 
 <img src="/readme-images/login.png"  width="432" height="888">
 
-After logging in, you will see the dashboard. Here, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
+After logging in, you will see the homepage. Here, you can click different icons to quickly go to their pages. The sync button will sync your local database with the global one, so that you can use the app safely without internet.
+
+<img src="/readme-images/homepage.png"  width="432" height="888">
+
+If you click on the dashboard, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
 
 <img src="/readme-images/dashboard.png"  width="432" height="888">
 
@@ -574,9 +581,17 @@ To view clients, click on "Client List" from the navigation bar.
 
 <img src="/readme-images/client_list.png"  width="432" height="888">
 
+To make it easier, you can use the search bar
+
+<img src="/readme-images/client_search.png"  width="432" height="888">
+
 From here, you can select a client to see more details about them.
 
 <img src="/readme-images/client_details.png"  width="432" height="888">
+
+You can edit a client by clicking on the edit button on the client details page.
+
+<img src="/readme-images/edit_client.png"  width="432" height="888">
 
 From the client details page, you can see a client's visits by clicking on "See Visits".
 
@@ -586,37 +601,49 @@ You can click on any individual visit to see more visit details.
 
 <img src="/readme-images/visit_details.png"  width="432" height="888">
 
+You can also edit a visit by clicking on the edit button.
+
+<img src="/readme-images/edit_visit.png"  width="432" height="888">
+
 You can also view all visits for all clients by clicking on "Visits" on the navigation bar.
 
 <img src="/readme-images/all_visits.png"  width="432" height="888">
 
-You can register a new client by clicking on "New Client" from the navigation bar. This will take you to the new client page. Here, you will go through several screens of questions including some drop down menus before being able to submit the new client. Please follow the following suggestions for now for a bug-free client creation experience.
-
-**Format of the inputs:**
-1. Consent : either Yes or No works.
-2. Date : One number per column only. No alphabets or special characters.
-3. ID : One number only. No alphabets or special characters.
-4. Location : All location works.
-5. Village number : same as #3.
-6. First Name : Everything works.
-7. Last Name : Evertying works.
-8. Gender : either gender works.
-9. Age : same as #3.
-10. Client contact number : same as #3. N/A option does not work currently.
-11. All types of disabilities work.
-12. Caregiver present : both options work
-13. Caregiver contact number : same as #10.
-14. photo : not implemented yet.
+You can register a new client by clicking on "New Client" from the navigation bar. This will take you to the new client page. Here, you will go through several screens of questions including some drop down menus before being able to submit the new client.
 
 <img src="/readme-images/create_client_1.png"  width="432" height="888">
 
-To create a visit for a client, go to that client's details page and click on "Create Visit". From here, fill out the fields and select options from the drop down menu(s).
+To create a visit for a client, go to that client's details page and click on "New Visit". From here, fill out the fields and select options from the drop down menu(s).
 
 <img src="/readme-images/create_visit_1.png"  width="432" height="888">
 
 Certain selections will prompt you with other questions. For example, if you select CBR for the "Purpose of Visit" question, you will be prompted with another "CBR Type" question.
 
 <img src="/readme-images/create_visit_2.png"  width="432" height="888">
+
+To create a referral for a client, go to that client's details page and click on "New Referral". From here, fill out the fields and select options from the drop down menu(s).
+
+<img src="/readme-images/create_referral.png"  width="432" height="888">
+
+To create a referral for a client, go to that client's details page and click on "New Referral". From here, fill out the fields and select options from the drop down menu(s).
+
+<img src="/readme-images/all_referrals.png"  width="432" height="888">
+
+You can toggle this page so that it only show outstanding referrals.
+
+<img src="/readme-images/outstanding_referrals.png"  width="432" height="888">
+
+Click on a referral to see its details.
+
+<img src="/readme-images/referral.png"  width="432" height="888">
+
+You can edit a referral by clicking the edit button. One major thing you might edit is to change a referral status from CREATED to RESOLVED.
+
+<img src="/readme-images/edit_referral.png"  width="432" height="888">
+
+Once a referral is marked RESOLVED, it will no longer show up in the outstanding toggle
+
+<img src="/readme-images/no_outstanding_referrals.png"  width="432" height="888">
 
 Note: you may need to use the back button built into Android devices and emulators to exit from certain pages. This is something that will be addressed in the next iteration.
 

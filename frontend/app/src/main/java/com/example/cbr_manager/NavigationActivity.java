@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -17,25 +18,56 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.sync.Status;
+import com.example.cbr_manager.ui.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 
+@AndroidEntryPoint
 public class NavigationActivity extends AppCompatActivity {
+
     public static String KEY_SNACK_BAR_MESSAGE = "KEY_SNACK_BAR_MESSAGE";
+    private final String TAG = "Navigation Activity";
+    StatusViewModel statusViewModel;
+
     private APIService apiService = APIService.getInstance();
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // TODO: Sample usage of a ViewModel
+        statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
+        statusViewModel.getStatus().subscribe(new SingleObserver<Status>() {
+            @Override
+            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+                Log.d(TAG, "onSubscribe: ");
+            }
+
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull Status status) {
+                Log.d(TAG, "onSuccess: " + status.toString());
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+            }
+        });
+
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

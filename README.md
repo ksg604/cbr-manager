@@ -547,7 +547,7 @@ Once the app is running, you will be on the login screen. Input "user1" as the u
 
 After logging in, you will see the homepage. Here, you can click different icons to quickly go to their pages. The sync button will sync your local database with the global one, so that you can use the app safely without internet.
 
-<img src="/readme-images/homepage.pngs"  width="432" height="888">
+<img src="/readme-images/homepage.png"  width="432" height="888">
 
 If you click on the dashboard, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
 
@@ -583,7 +583,7 @@ To view clients, click on "Client List" from the navigation bar.
 
 To make it easier, you can use the search bar
 
-<img src="/readme-images/client_search.pngs"  width="432" height="888">
+<img src="/readme-images/client_search.png"  width="432" height="888">
 
 From here, you can select a client to see more details about them.
 
@@ -627,27 +627,23 @@ To create a referral for a client, go to that client's details page and click on
 
 To create a referral for a client, go to that client's details page and click on "New Referral". From here, fill out the fields and select options from the drop down menu(s).
 
-<img src="/readme-images/create_referral.png"  width="432" height="888">
-
-You can view these referrals through either the referral list on the navigation bar, or the per-client referral list accessible through the client details page.
-
-<img src="/readme-images/all_referrals.pngs"  width="432" height="888">
+<img src="/readme-images/all_referrals.png"  width="432" height="888">
 
 You can toggle this page so that it only show outstanding referrals.
 
-<img src="/readme-images/outstanding_referrals.pngs"  width="432" height="888">
+<img src="/readme-images/outstanding_referrals.png"  width="432" height="888">
 
 Click on a referral to see its details.
 
-<img src="/readme-images/referral.pngs"  width="432" height="888">
+<img src="/readme-images/referral.png"  width="432" height="888">
 
 You can edit a referral by clicking the edit button. One major thing you might edit is to change a referral status from CREATED to RESOLVED.
 
-<img src="/readme-images/edit_referral.pngs"  width="432" height="888">
+<img src="/readme-images/edit_referral.png"  width="432" height="888">
 
 Once a referral is marked RESOLVED, it will no longer show up in the outstanding toggle
 
-<img src="/readme-images/no_outstanding_referrals.pngs"  width="432" height="888">
+<img src="/readme-images/no_outstanding_referrals.png"  width="432" height="888">
 
 Note: you may need to use the back button built into Android devices and emulators to exit from certain pages. This is something that will be addressed in the next iteration.
 

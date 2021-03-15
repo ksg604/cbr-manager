@@ -14,6 +14,9 @@
             android:id="@+id/action_nav_home_to_nav_visits"
             app:destination="@id/nav_visits" />
         <action
+            android:id="@+id/action_nav_home_to_nav_referrals"
+            app:destination="@id/nav_referrals" />
+        <action
             android:id="@+id/action_nav_home_to_nav_client_list"
             app:destination="@id/nav_client_list" />
         <action
@@ -38,7 +41,18 @@
         <action
             android:id="@+id/action_nav_dashboard_to_nav_alert_list"
             app:destination="@id/nav_alert_list" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_referral_list"
+            app:destination="@id/nav_referrals" />
 
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_referrals"
+        android:name="com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment"
+        android:label="Referrals"
+        tools:layout="@layout/fragment_referral_list" >
     </fragment>
 
     <fragment

@@ -10,7 +10,6 @@ import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-// Todo: figure out image upload
 @Entity(tableName = "client")
 public class Client extends CBRTimestamp {
     @SerializedName("id")
@@ -95,6 +94,15 @@ public class Client extends CBRTimestamp {
     @SerializedName("social_goal")
     @Expose
     private String socialGoal;
+    @SerializedName("goal_met_health_provision")
+    @Expose
+    private String goalMetHealthProvision;
+    @SerializedName("goal_met_education_provision")
+    @Expose
+    private String goalMetEducationProvision;
+    @SerializedName("goal_met_social_provision")
+    @Expose
+    private String goalMetSocialProvision;
 
     private boolean isNewClient;
 
@@ -352,6 +360,30 @@ public class Client extends CBRTimestamp {
 
     public void setCbrClientId(String cbrClientId) {
         this.cbrClientId = cbrClientId;
+    }
+
+    public String getGoalMetHealthProvision() {
+        return goalMetHealthProvision;
+    }
+
+    public void setGoalMetHealthProvision(String goalMetHealthProvision) {
+        this.goalMetHealthProvision = goalMetHealthProvision;
+    }
+
+    public String getGoalMetEducationProvision() {
+        return goalMetEducationProvision;
+    }
+
+    public void setGoalMetEducationProvision(String goalMetEducationProvision) {
+        this.goalMetEducationProvision = goalMetEducationProvision;
+    }
+
+    public String getGoalMetSocialProvision() {
+        return goalMetSocialProvision;
+    }
+
+    public void setGoalMetSocialProvision(String goalMetSocialProvision) {
+        this.goalMetSocialProvision = goalMetSocialProvision;
     }
 
     public boolean isNewClient() {

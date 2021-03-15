@@ -39,6 +39,11 @@ class Client(TimestampedModel):
 
     risk_score = models.IntegerField(editable=False, default=0)
 
+    # Fields updated by visits
+    goal_met_health_provision = models.TextField(blank=True, max_length=30)
+    goal_met_education_provision = models.TextField(blank=True, max_length=30)
+    goal_met_social_provision = models.TextField(blank=True, max_length=30)
+
     class Meta:
         ordering = ['id']
 

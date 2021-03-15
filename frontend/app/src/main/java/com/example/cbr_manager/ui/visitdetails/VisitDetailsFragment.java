@@ -1,13 +1,19 @@
 package com.example.cbr_manager.ui.visitdetails;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
@@ -17,27 +23,20 @@ import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VisitDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
-    private String additionalInfo;
-    private String location;
-    private int villageNum;
-    private String formattedDate;
     public static String KEY_VISIT_ID = "KEY_VISIT_ID";
     private int visitId = -1;
 
@@ -48,8 +47,6 @@ public class VisitDetailsFragment extends Fragment {
     public static VisitDetailsFragment newInstance(String param1, String param2) {
         VisitDetailsFragment fragment = new VisitDetailsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,10 +62,6 @@ public class VisitDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -79,23 +72,52 @@ public class VisitDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_visit_details, container, false);
         parentLayout = root.findViewById(android.R.id.content);
 
+        setUpToolBar();
+
         visitId = getArguments().getInt(KEY_VISIT_ID, -1);
 
         getVisitInfo(visitId);
 
-        setupButtons(root);
-        setupVectorImages(root);
-        setupBackImageViewButton(root);
-
         return root;
     }
 
-    private void getClientInfo(int clientId){
+    public void setUpToolBar() {
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.client_details, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_client) {
+            startVisitDetailsEditFragment();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void startVisitDetailsEditFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("visitId", visitId);
+        VisitDetailsEditFragment visitDetailsEditFragment = new VisitDetailsEditFragment();
+        visitDetailsEditFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_visit_details, visitDetailsEditFragment, null)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+    private void getClientInfo(int clientId) {
         apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Client client = response.body();
 
                     // Todo: dynamically set the client info here
@@ -103,15 +125,9 @@ public class VisitDetailsFragment extends Fragment {
                     setupImageViews(client.getPhotoURL());
 
 
-                } else{
+                } else {
                     Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        Toast.makeText(this, jObjError.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
-//                    } catch (Exception e) {
-//                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//                    }
                 }
             }
 
@@ -131,11 +147,17 @@ public class VisitDetailsFragment extends Fragment {
                     Visit visit = response.body();
 
                     // Todo: dynamically set the client info here
+                    Timestamp datetimeCreated = visit.getDatetimeCreated();
+                    Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                    String formattedDate = formatter.format(datetimeCreated);
+                    setupDateTextView(formattedDate);
+
                     getClientInfo(visit.getClientId());
                     setupLocationTextView(visit.getLocationDropDown());
-                    setupDateTextView(visit.getDatetimeCreated().toString());
-                    setupAdditionalInfoTextView(visit.getAdditionalInfo());
-
+                    setupVillageNumTextView(visit.getVillageNoVisit().toString());
+                    setupHealthTextViews(visit);
+                    setupEducationTextViews(visit);
+                    setupSocialTextViews(visit);
 
                 } else {
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
@@ -150,32 +172,14 @@ public class VisitDetailsFragment extends Fragment {
         });
     }
 
-    private void setupBackImageViewButton(View root) {
-        ImageView backButtonImageView = root.findViewById(R.id.visitDetailsBackImageView);
-        backButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-    }
 
-    private void setUpTextView(int textViewID, String textValue){
-        TextView textView = (TextView)getView().findViewById(textViewID);
+    private void setUpTextView(int textViewID, String textValue) {
+        TextView textView = (TextView) getView().findViewById(textViewID);
         textView.setText(textValue);
     }
 
-    private void setupVectorImages(View root) {
-        ImageView location = root.findViewById(R.id.profileLocationImageView);
-        location.setImageResource(R.drawable.ic_place);
-        ImageView date = root.findViewById(R.id.profileDateImageView);
-        date.setImageResource(R.drawable.ic_date);
-        ImageView additionalInfo = root.findViewById(R.id.profileAdditionalInfoImageView);
-        additionalInfo.setImageResource(R.drawable.ic_info);
-    }
-
     private void setupImageViews(String imageURL) {
-        ImageView displayPicture = (ImageView)getView().findViewById(R.id.visitDetailsDisplayPictureImageView);
+        ImageView displayPicture = (ImageView) getView().findViewById(R.id.visitDetailsDisplayPictureImageView);
         Helper.setImageViewFromURL(imageURL, displayPicture, R.drawable.client_details_placeholder);
     }
 
@@ -191,42 +195,104 @@ public class VisitDetailsFragment extends Fragment {
         setUpTextView(R.id.visitDetailsDateTextView, date);
     }
 
-    private void setupAdditionalInfoTextView(String additionalInfo) {
-        setUpTextView(R.id.visitDetailsAdditionalInfoTextView, additionalInfo);
+    private void setupVillageNumTextView(String villageNum) {
+        setUpTextView(R.id.visitDetailsVillageNumTextView, villageNum);
     }
 
+    private void setupHealthTextViews(Visit visit) {
+        boolean notEmpty;
 
-    private void setupButtons(View root) {
-        setupBackButton(root);
-        setupEditButton(root);
+        setUpTextView(R.id.visitDetailsWheelchairHealthTextView, visit.getWheelchairHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsWheelchairHealthLinearLayout, visit.getWheelchairHealthProvisionText(), false);
+
+        setUpTextView(R.id.visitDetailsProstheticHealthTextView, visit.getProstheticHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsProstheticHealthLinearLayout, visit.getProstheticHealthProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsOrthoticHealthTextView, visit.getOrthoticHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsOrthoticHealthLinearLayout, visit.getOrthoticHealthProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsRepairsHealthTextView, visit.getRepairsHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsRepairsHealthLinearLayout, visit.getRepairsHealthProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsReferralHealthTextView, visit.getReferralHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsReferralHealthLinearLayout, visit.getReferralHealthProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsAdviceHealthTextView, visit.getAdviceHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdviceHealthLinearLayout, visit.getAdviceHealthProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsAdvocacyHealthTextView, visit.getAdvocacyHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdvocacyHealthLinearLayout, visit.getAdvocacyHealthProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsEncouragementHealthTextView, visit.getEncouragementHealthProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsEncouragementHealthLinearLayout, visit.getEncouragementHealthProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsConclusionHealthTextView, visit.getConclusionHealthProvision());
+        notEmpty = setVisibility(R.id.visitDetailsConclusionHealthLinearLayout, visit.getConclusionHealthProvision(), notEmpty);
+
+        setCardVisibility(R.id.healthDetailsCard, notEmpty);
     }
 
-    private void setupEditButton(View root) {
-        ImageView editButton = root.findViewById(R.id.visitDetailsEditImageView);
+    private void setupEducationTextViews(Visit visit) {
+        boolean notEmpty;
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        setUpTextView(R.id.visitDetailsReferralEducationTextView, visit.getReferralEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsReferralEducationLinearLayout, visit.getReferralEducationProvisionText(), false);
 
-                Bundle bundle = new Bundle();
-                bundle.putInt("visitId", visitId);
-                VisitDetailsEditFragment visitDetailsEditFragment = new VisitDetailsEditFragment();
-                visitDetailsEditFragment.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_visit_details, visitDetailsEditFragment, null)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+        setUpTextView(R.id.visitDetailsAdviceEducationTextView, visit.getAdviceEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdviceEducationLinearLayout, visit.getAdviceEducationProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsAdvocacyEducationTextView, visit.getAdvocacyEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdvocacyEducationLinearLayout, visit.getAdvocacyEducationProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsEncouragementEducationTextView, visit.getEncouragementEducationProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsEncouragementEducationLinearLayout, visit.getEncouragementEducationProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsConclusionEducationTextView, visit.getConclusionEducationProvision());
+        notEmpty = setVisibility(R.id.visitDetailsConclusionEducationLinearLayout, visit.getConclusionEducationProvision(), notEmpty);
+
+        setCardVisibility(R.id.educationDetailsCard, notEmpty);
     }
 
-    private void setupBackButton(View root) {
-        Button backButton = root.findViewById(R.id.visitDetailsBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+    private void setupSocialTextViews(Visit visit) {
+        boolean notEmpty;
+
+        setUpTextView(R.id.visitDetailsReferralSocialTextView, visit.getReferralSocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsReferralSocialLinearLayout, visit.getReferralSocialProvisionText(), false);
+
+        setUpTextView(R.id.visitDetailsAdviceSocialTextView, visit.getAdviceSocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdviceSocialLinearLayout, visit.getAdviceSocialProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsAdvocacySocialTextView, visit.getAdvocacySocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsAdvocacySocialLinearLayout, visit.getAdvocacySocialProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsEncouragementSocialTextView, visit.getEncouragementSocialProvisionText());
+        notEmpty = setVisibility(R.id.visitDetailsEncouragementSocialLinearLayout, visit.getEncouragementSocialProvisionText(), notEmpty);
+
+        setUpTextView(R.id.visitDetailsConclusionSocialTextView, visit.getConclusionSocialProvision());
+        notEmpty = setVisibility(R.id.visitDetailsConclusionSocialLinearLayout, visit.getConclusionSocialProvision(), notEmpty);
+
+        setCardVisibility(R.id.socialDetailsCard, notEmpty);
+    }
+
+    private void setCardVisibility(int id, boolean notEmpty) {
+        View view = getView();
+        CardView card = (CardView) view.findViewById(id);
+        if(notEmpty) {
+            card.setVisibility(View.VISIBLE);
+        } else{
+            card.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean setVisibility(int id, String data, boolean notEmpty) {
+        View view = getView();
+        LinearLayout layout = view.findViewById(id);
+        if(data.length()==0) {
+            layout.setVisibility(View.GONE);
+            return (notEmpty || false);
+        } else{
+            layout.setVisibility(View.VISIBLE);
+            return (notEmpty || true);
+        }
     }
 }

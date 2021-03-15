@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
@@ -32,15 +33,6 @@ import retrofit2.Response;
 
 public class ClientDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private APIService apiService = APIService.getInstance();
     private int clientId;
     private View parentLayout;
@@ -51,15 +43,6 @@ public class ClientDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ClientDetailsFragment newInstance(String param1, String param2) {
-        ClientDetailsFragment fragment = new ClientDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     public static ClientDetailsFragment newInstance(int clientId) {
         ClientDetailsFragment fragment = new ClientDetailsFragment();
         Bundle args = new Bundle();
@@ -67,16 +50,6 @@ public class ClientDetailsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -110,7 +83,6 @@ public class ClientDetailsFragment extends Fragment {
 
                 switch(item.getItemId()) {
                     case R.id.visitsFragment:
-                        
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(android.R.id.content, new VisitsFragment())
                                 .addToBackStack(null)
@@ -126,6 +98,7 @@ public class ClientDetailsFragment extends Fragment {
                         Intent createReferralIntent = new Intent(getActivity(), CreateReferralActivity.class);
                         createReferralIntent.putExtra("CLIENT_ID", clientId);
                         startActivity(createReferralIntent);
+                        break;
                     case R.id.referralsFragment:
                         Bundle arguments = new Bundle();
                         arguments.putInt("CLIENT_ID", clientId);
@@ -143,6 +116,7 @@ public class ClientDetailsFragment extends Fragment {
                                 .replace(R.id.fragment_client_details, clientDetailsEditFragment, null)
                                 .addToBackStack(null)
                                 .commit();
+                        break;
                 }
                 return false;
             }
@@ -174,9 +148,9 @@ public class ClientDetailsFragment extends Fragment {
                     setupLocationTextView(client.getLocation());
                     setupAgeTextView(client.getAge().toString());
                     setupGenderTextView(client.getGender());
-                    setupHealthTextView(client.getHealthGoal());
-                    setupSocialTextView(client.getSocialGoal());
-                    setupEducationTextView(client.getEducationGoal());
+                    setupHealthTextView(client.getGoalMetHealthProvision());
+                    setupSocialTextView(client.getGoalMetSocialProvision());
+                    setupEducationTextView(client.getGoalMetEducationProvision());
                     setupEducationRiskTextView(client.getEducationRisk().toString());
                     setupSocialRiskTextView(client.getSocialRisk().toString());
                     setupHealthRiskTextView(client.getHealthRisk().toString());
@@ -252,6 +226,9 @@ public class ClientDetailsFragment extends Fragment {
     private void setupButtons(View root) {
         setupEditButton(root);
         setupBackButton(root);
+        setupHistoryButton(root,R.id.clientDetailsEducationHistoryTextView,"education_goal");
+        setupHistoryButton(root,R.id.clientDetailsHealthHistoryTextView,"health_goal");
+        setupHistoryButton(root,R.id.clientDetailsSocialHistoryTextView,"social_goal");
     }
 
     private void setupEditButton(View root) {
@@ -263,6 +240,24 @@ public class ClientDetailsFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_client_details, ClientDetailsEditFragment.class, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
+
+    private void setupHistoryButton(View root, int ViewID, String field){
+        View someView = root.findViewById(ViewID);
+        someView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("clientId", clientId);
+                bundle.putString("field",field);
+                ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
+                clientHistoryFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_client_details, clientHistoryFragment,null)
                         .addToBackStack(null)
                         .commit();
             }

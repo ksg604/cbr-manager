@@ -345,25 +345,14 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 * User will be able to access their visits which correspond with the client they are viewing on the client details page by clicking a button
 * User will be able to create a new visit through the client details page
 
-**Unfinished parts: **
+**Iteration 2:**
 
-1. Implement the PUT request portion of where a user will be able to update client details by submitting new information to the backend
-2. Implement ability to edit visit information by swiping on visit items in visit list
-
-**Questions for the customer:**
-
-1. On the visits page, do you want to be able to edit visits by swiping the visit items to see a menu?  Or to
- have a button on the visit details page which is accessible by tapping the visit items in the visits list
-
-2. On the clients details page, how is the layout of the buttons at the bottom? (New visit, see visits, edit and back).
-Are these too many buttons?
-
-3. Would you prefer to have a dedicated back button integrated into each accessible part of the user interface (such as the back button on the client details page)
-or are you okay with just using the back button which is supplied with Android OS?
-
-4. Is the button size too large on the visits page?  How do you feel about the overall UI of the visits page.  Should the create button be relocated elsewhere?
-
-5. How do you feel about the attributes which are present on the client details page?  (such as health, social, education) are there any more which you would like to add?
+* Updated client details and client edit details page UI
+* Revamped visit edit details page to be more consistent with client edit details
+* User will be able to edit client information through the client details page.  
+* User has the ability to edit visit information by accessing a client's details, navigating to their visit list, selecting a visit and then tapping edit button (pencil) on the visit
+* Fixed backend problem with visit model not processing PUT requests properly to edit visit information
+* Added additional fields to visit edit details which are more intuitive to be editable by the user
 
 
 ## Kun Hyung Park(Arthur)'s Contribution

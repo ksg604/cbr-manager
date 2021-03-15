@@ -274,34 +274,22 @@ Redid the client details UI to be more clean and consistent by removing colours,
 
 At the request of the customer, redid the UI of the dashboard to be much less cluttered by adding whitespace, removing colours, and redoing the general look.
 
+
 ## Andrew's Contribution
 
-### Creation of New Users
+### Creation of New Users (Iteration 1)
 
-**User story:**  (#1)
-As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
+**User story:** As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
 
 * User creation(new user registration),including making the user creation page in android and uploading the new user info to the backend.
 
 **Unfinished parts:**
 
-1. Implementing the different levels of permission for each type of user (admin being able to delete/create new users and send alerts while normal users should not)
+1. Implementing the different levels of permission for each type of user
 
-2. Other requirements related to management that comes up during feedback
+### Alerts Creation, List and Details (Iteration 1)
 
-**Questions for the customer:**
-
-1. Is two levels of user permission enough? (CBR workers, admin) Or do we need a seperate user type for another class of people, e.g. Clinicians
-
-2. If so, what should the difference be in what data and functions they can access?
-
-3. Would deleting a user be of priority? Or would disabling a user be fine? (other fields such as visits/clients have dependencies on user information and would need to be deleted as well)
-
-
-### Alerts Creation, List and Details
-
-**User story:**  (#7)
-As a user, I want to be able to see alerts from the dashboard, so I can prioritize clients/activities based on urgency
+**User story:** As a user, I want to be able to see alerts from the dashboard, so I can prioritize clients/activities based on urgency
 
 * The alerts Object was created both in the backend and frontend, so the admin/user can broadcast alert messages to the server where other users will retrieve from.
 * The alerts include a title, body and date.
@@ -309,15 +297,29 @@ As a user, I want to be able to see alerts from the dashboard, so I can prioriti
 
 **Unfinished parts:**
 
-1. Adding the ability to specify which users the alert messages are desginated to.
+1. Specifying which users the alert messages are desginated to. (Needs user permission)
 
-2. Adding an urgency tag/flag and the ability to mark each message as read.
+2. Adding an urgency tag/flag and the ability to mark each message as read. (Needs local database)
 
-**Questions for the customer:**
+### Referrals List and Details
 
-1. Are there any additional function apart from "urgency tag/flag and mark each message as read" the customer needs?
+**User story:** As a user, I want to be able to view all my clients/visits, so I can monitor and record client related activity
 
-2. Any UI tinkering needed on the alert list/ alert details pages?
+* Referral List to hold either referrals of a specific client or all, depending on where the list was accessed from(client details for that client, all for from dashboard/nav bar)
+* Referral Details to show all fields related to a certain referral.
+
+### Referrals Editing
+
+**User story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties
+
+* Referral Editing page for editing and updating a referral's status and other info intended for update (refer to field, outcome descriptions etc.).
+
+### Tag Filtering logic
+
+**User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
+
+* Implemented resuable filtering logic with checkboxes. Currently used for filtering outstanding referral items . If referral status is resolved then it won't show if "Outstanding" is checked. 
+* It works in conjunction with the search bar that looks for matching substrings, so if either is changed the results refresh.
 
 
 ## Kevin's Contribution

@@ -7,11 +7,16 @@ import com.google.gson.annotations.SerializedName;
 abstract public class CBRTimestamp {
     @SerializedName("updated_at")
     @Expose
-    String updatedAt;
+    private String updatedAt;
 
     @SerializedName("created_at")
     @Expose
-    String createdAt;
+    private String createdAt;
+
+    public CBRTimestamp(String updatedAt, String createdAt) {
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
+    }
 
     public String getUpdatedAt() {
         return updatedAt;

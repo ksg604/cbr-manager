@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.cbr_manager.utils.CBRTimestamp;
+import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -95,8 +96,11 @@ public class Client extends CBRTimestamp {
     @Expose
     private String socialGoal;
 
+    private boolean isNewClient;
+
     //Initializing fields that are needed for POST request in itr1
     public Client() {
+        super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
         this.consent = "";
         this.date = "";
         this.firstName = "";
@@ -115,12 +119,14 @@ public class Client extends CBRTimestamp {
         this.healthRequire = "";
         this.socialRisk = 0;
         this.educationRisk = 0;
+        this.isNewClient = true;
     }
 
     @Ignore
     public Client(String consent, String date, String firstName, String lastName, String contactClient, int age,
                   String gender, int id, String location, int villageNo, String disability,
                   String carePresent, String contactCare) {
+        super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
         this.consent = consent;
         this.date = date;
         this.firstName = firstName;
@@ -348,4 +354,11 @@ public class Client extends CBRTimestamp {
         this.cbrClientId = cbrClientId;
     }
 
+    public boolean isNewClient() {
+        return isNewClient;
+    }
+
+    public void setNewClient(boolean newClient) {
+        isNewClient = newClient;
+    }
 }

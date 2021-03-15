@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import com.example.cbr_manager.BuildConfig;
 import com.squareup.picasso.Picasso;
 
+import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
@@ -79,5 +80,9 @@ public class Helper {
     public static LocalDateTime convertToLocalDateTime(ZonedDateTime zonedDateTime, ZoneId zoneId) {
         ZonedDateTime zdt = zonedDateTime.withZoneSameInstant(zoneId);
         return zdt.toLocalDateTime();
+    }
+
+    public static Instant getCurrentUTCTime(){
+        return Instant.now();
     }
 }

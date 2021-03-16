@@ -33,11 +33,9 @@ public class ConsentFragment extends Fragment implements Step {
 
     private View view;
     private EditText dateEditTextView;
-    private RadioGroup radioGroup;
     private CheckBox clientConsent;
     private TextView clientNoConsent;
     private Client client;
-
     private TextView errorTextView;
 
     @Override
@@ -49,7 +47,6 @@ public class ConsentFragment extends Fragment implements Step {
 
         client = ((CreateClientStepperActivity) getActivity()).formClientObj;
 
-//        radioGroup = view.findViewById(R.id.radioGroup);
         clientConsent = view.findViewById(R.id.clientConsentCheckBox);
         clientNoConsent = view.findViewById(R.id.clientNoConsentTextView);
         clientConsent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -96,16 +93,12 @@ public class ConsentFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
-        int radioId = radioGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = view.findViewById(radioId);
-
         if (!clientConsent.isChecked()) {
             clientNoConsent.setVisibility(View.VISIBLE);
             return new VerificationError("Required");
         }
 
         try {
-//            validateStepperTextViewNotNull(radioButton, "Required");
             validateStepperTextViewNotNull(dateEditTextView, "Required");
         } catch (InvalidCreateClientFormException e) {
             errorTextView = e.view;
@@ -131,16 +124,12 @@ public class ConsentFragment extends Fragment implements Step {
     }
 
     private void updateClient() {
-//        int radioId = radioGroup.getCheckedRadioButtonId();
-//        RadioButton radioButton = getView().findViewById(radioId);
         client.setDate(dateEditTextView.getText().toString().trim());
         if (clientConsent.isChecked()) {
-            client.setConsent("yes");
+            client.setConsent("Yes");
         } else {
-            client.setConsent("no");
+            client.setConsent("No");
         }
-
-//        client.setConsent(radioButton.getText().toString().trim());
     }
 
 }

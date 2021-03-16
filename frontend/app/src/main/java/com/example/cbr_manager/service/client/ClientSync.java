@@ -3,39 +3,42 @@ package com.example.cbr_manager.service.client;
 import android.content.Context;
 
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.utils.Helper;
+
+import org.threeten.bp.ZonedDateTime;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ClientSync {
+    private static final List<Client> localClient = new ArrayList<>();
+    private static final List<Client> serverClient = new ArrayList<>();
     private static ClientDBService localdb;
     private static APIService apiService;
     private static ClientSync Instance;
-    private static final List<Client> localClient = new ArrayList<>();
-    private static final List<Client> serverClient = new ArrayList<>();
-
-    public static ClientSync getInstance(Context context){
-        if(Instance == null){
-            Instance = new ClientSync(context);
-        }
-        return Instance;
-    }
 
     private ClientSync(Context context) {
         localdb = ClientDBService.getInstance(context);
         apiService = APIService.getInstance();
     }
 
-    public void requestSync(){
+    public static ClientSync getInstance(Context context) {
+        if (Instance == null) {
+            Instance = new ClientSync(context);
+        }
+        return Instance;
+    }
+
+    public void requestSync() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Callable<Integer> callable = () -> {
             performSync();
@@ -63,7 +66,8 @@ public class ClientSync {
 
         for (int i = 0; i < localClient.size(); i++) {
             for (int j = 0; j < serverClient.size(); j++) {
-                if (matchID(localClient.get(i), serverClient.get(j)) && checkTimeStamp(localClient.get(i).getLastModifed(), serverClient.get(j).getLastModifed())) {
+                System.out.println("");
+                if (matchID(localClient.get(i), serverClient.get(j)) && compareZoneDateTime(localClient.get(i).getUpdatedAt(), serverClient.get(j).getUpdatedAt())) {
                     // Need to modify and update since we know clients in local is modified after server client of same id
                     if (localUpdated[i] != 1) {
                         localUpdated[i] = 1;
@@ -87,24 +91,25 @@ public class ClientSync {
     }
 
 
-    private boolean matchID(Client client1, Client client2){
+    private boolean matchID(Client client1, Client client2) {
         return client1.getId() == client2.getId();
     }
 
-    private boolean checkTimeStamp(Timestamp date1, Timestamp date2){
-        long Time1 = date1.getTime();
-        long Time2 = date2.getTime();
-        return Time1 > Time2;
+    private boolean compareZoneDateTime(String date1, String date2) {
+        ZonedDateTime zdt1 = Helper.parseUTCDateTime(date1);
+        ZonedDateTime zdt2 = Helper.parseUTCDateTime(date1);
+        int result = zdt1.compareTo(zdt2);
+        return result > 0;
     }
 
-    private void downloadLocal(){
+    private void downloadLocal() {
         localdb.clearAll();
-        for(int i=0; i<serverClient.size(); i++){
+        for (int i = 0; i < serverClient.size(); i++) {
             localdb.insert(serverClient.get(i));
         }
     }
 
-    private void serverInsert(Client client){
+    private void serverInsert(Client client) {
         if (apiService.isAuthenticated()) {
             Call<Client> call = apiService.clientService.createClientManual(client);
             call.enqueue(new Callback<Client>() {
@@ -122,7 +127,7 @@ public class ClientSync {
         }
     }
 
-    private void serverModify(Client client){
+    private void serverModify(Client client) {
         if (apiService.isAuthenticated()) {
             apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
                 @Override
@@ -139,21 +144,16 @@ public class ClientSync {
     }
 
 
-
-
     public void fetchClientsToList(List<Client> clientList) throws IOException {
         if (apiService.isAuthenticated()) {
             Call<List<Client>> callSync = apiService.clientService.getClients();
             Response<List<Client>> response = callSync.execute();
-            if(response.isSuccessful()){
+            if (response.isSuccessful()) {
                 List<Client> clients = response.body();
                 clientList.addAll(clients);
             }
         }
     }
-
-
-
 
 
 }

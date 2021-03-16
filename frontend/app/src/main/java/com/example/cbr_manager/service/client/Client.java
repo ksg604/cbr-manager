@@ -1,24 +1,17 @@
 package com.example.cbr_manager.service.client;
 
-import android.util.Log;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.cbr_manager.utils.CBRTimestamp;
+import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-
-// Todo: figure out image upload
 @Entity(tableName = "client")
-public class Client {
+public class Client extends CBRTimestamp {
     @SerializedName("id")
     @Expose
     @PrimaryKey(autoGenerate = true)
@@ -111,8 +104,11 @@ public class Client {
     @Expose
     private String goalMetSocialProvision;
 
+    private boolean isNewClient;
+
     //Initializing fields that are needed for POST request in itr1
     public Client() {
+        super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
         this.consent = "";
         this.date = "";
         this.firstName = "";
@@ -131,13 +127,14 @@ public class Client {
         this.healthRequire = "";
         this.socialRisk = 0;
         this.educationRisk = 0;
-        this.lastModifed = new Timestamp(new Date().getTime());
-        this.newClient = true;
+        this.isNewClient = true;
     }
+
     @Ignore
     public Client(String consent, String date, String firstName, String lastName, String contactClient, int age,
                   String gender, int id, String location, int villageNo, String disability,
                   String carePresent, String contactCare) {
+        super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
         this.consent = consent;
         this.date = date;
         this.firstName = firstName;
@@ -389,30 +386,11 @@ public class Client {
         this.goalMetSocialProvision = goalMetSocialProvision;
     }
 
-    // Extra fields for checking sync states
-    @SerializedName("last_modified")
-    @Expose
-    private Timestamp lastModifed;
-
-    @SerializedName("is_new_client")
-    @Expose
-    private boolean newClient;
-
-    public Timestamp getLastModifed(){
-        return lastModifed;
+    public boolean isNewClient() {
+        return isNewClient;
     }
 
-    public void setLastModifed(Timestamp date){
-        this.lastModifed = date;
+    public void setNewClient(boolean newClient) {
+        isNewClient = newClient;
     }
-
-    public boolean isNewClient(){
-        return newClient;
-    }
-
-    public void setNewClient(boolean newClient){
-        this.newClient = newClient;
-    }
-
-
 }

@@ -80,7 +80,7 @@
             android:text="@string/date_form_complete"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/clientNoConsentTextView" />
 
         <EditText
             android:id="@+id/editTextDate"
@@ -107,7 +107,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/clientNoConsentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -115,6 +115,7 @@
             android:drawableLeft="@drawable/ic_error_red"
             android:text="Client must express their consent."
             android:textColor="#fc0303"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clientConsentCheckBox" />
     </androidx.constraintlayout.widget.ConstraintLayout>

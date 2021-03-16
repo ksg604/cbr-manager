@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -32,6 +34,8 @@ public class ConsentFragment extends Fragment implements Step {
     private View view;
     private EditText dateEditTextView;
     private RadioGroup radioGroup;
+    private CheckBox clientConsent;
+    private TextView clientNoConsent;
     private Client client;
 
     private TextView errorTextView;
@@ -46,6 +50,18 @@ public class ConsentFragment extends Fragment implements Step {
         client = ((CreateClientStepperActivity) getActivity()).formClientObj;
 
         radioGroup = view.findViewById(R.id.radioGroup);
+        clientConsent = view.findViewById(R.id.clientConsentCheckBox);
+        clientNoConsent = view.findViewById(R.id.clientNoConsentTextView);
+        clientConsent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    clientNoConsent.setVisibility(View.GONE);
+                } else {
+                    clientNoConsent.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         setupDatePicker();
         return view;
@@ -82,6 +98,11 @@ public class ConsentFragment extends Fragment implements Step {
     public VerificationError verifyStep() {
         int radioId = radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = view.findViewById(radioId);
+
+        if (!clientConsent.isChecked()) {
+            clientNoConsent.setVisibility(View.VISIBLE);
+            return new VerificationError("Required");
+        }
 
         try {
             validateStepperTextViewNotNull(radioButton, "Required");

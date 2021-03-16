@@ -18,9 +18,8 @@ public class Status extends CBRTimestamp {
     @Expose
     private String clientLastUpdated;
 
-    public Status(Integer id, String createdAt, String updatedAt, String clientLastUpdated) {
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
+    Status(Integer id, String createdAt, String updatedAt, String clientLastUpdated) {
+        super(updatedAt, createdAt);
         this.id = id;
         this.clientLastUpdated = clientLastUpdated;
     }

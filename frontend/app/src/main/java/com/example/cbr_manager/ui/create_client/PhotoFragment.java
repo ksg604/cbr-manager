@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,10 +32,14 @@ import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class PhotoFragment extends Fragment implements Step {
@@ -43,6 +48,8 @@ public class PhotoFragment extends Fragment implements Step {
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
     private static final APIService apiService = APIService.getInstance();
+    private static final int REQUEST_GALLERY = 103;
+    private static final int PICK_FROM_GALLERY = 104;
     Button cameraButton;
     View view;
     private String imageFilePath = "";
@@ -99,6 +106,19 @@ public class PhotoFragment extends Fragment implements Step {
         takePhotoDialog.show();
     }
 
+    private void askGalleryPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_GALLERY);
+        } else {
+            dispatchGalleryIntent();
+        }
+    }
+
+    private void dispatchGalleryIntent() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_FROM_GALLERY);
+
+    }
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
@@ -112,6 +132,10 @@ public class PhotoFragment extends Fragment implements Step {
         if (requestCode == REQUEST_CAMERA_USE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
+            }
+        } else if (requestCode == REQUEST_GALLERY) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchGalleryIntent();
             }
         }
     }
@@ -156,6 +180,29 @@ public class PhotoFragment extends Fragment implements Step {
                 Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 referralImageView.setImageBitmap(bitmap);
             }
+        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+//            String test = "hello";
+            try {
+//                Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
+                Uri selectedImage = data.getData();
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(selectedImage);
+                referralImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imageFilePath = cursor.getString(columnIndex);
+                cursor.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

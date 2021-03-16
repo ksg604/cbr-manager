@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.createvisit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -39,6 +41,7 @@ import static android.view.View.GONE;
 public class NewVisitFragment extends Fragment {
     private int clientId = -1;
     private Integer userId = -1;
+    private int visitId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
     private String username = "";
@@ -138,6 +141,7 @@ public class NewVisitFragment extends Fragment {
                     if (response.isSuccessful()) {
                         client = response.body();
                         Visit visit = new Visit("", clientId, userId, client);
+
                         fillVisitData(visit, view);
 
                         Call<Visit> call1 = apiService.visitService.createVisit(visit);
@@ -145,9 +149,9 @@ public class NewVisitFragment extends Fragment {
                             @Override
                             public void onResponse(Call<Visit> call, Response<Visit> response) {
                                 if (response.isSuccessful()) {
+                                    visitId = response.body().getId();
                                     Toast.makeText(getActivity(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
-
-                                    ((CreateVisitActivity) getActivity()).finish();
+                                    onSubmitSuccess();
                                 } else {
                                     Toast.makeText(getActivity(), "Response error creating visit.", Toast.LENGTH_LONG).show();
                                 }
@@ -169,6 +173,13 @@ public class NewVisitFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void onSubmitSuccess() {
+        Intent intent = new Intent(getContext(), VisitDetailsActivity.class);
+        intent.putExtra(VisitDetailsActivity.KEY_VISIT_ID, visitId);
+        startActivity(intent);
+        ((CreateVisitActivity) getActivity()).finish();
     }
 
     private void fillVisitData(Visit visit, View view) {

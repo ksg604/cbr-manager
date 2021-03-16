@@ -73,6 +73,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
+    private static final int PICK_FROM_GALLERY = 1;
     int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
@@ -165,6 +166,45 @@ public class CreateReferralActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void showTakePhotoDialog() {
+        AlertDialog.Builder takePhotoDialog = new AlertDialog.Builder(this);
+        takePhotoDialog.setTitle("Upload a photo");
+        takePhotoDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        String[] dialogItems = {"Select from gallery", "Take photo"};
+        takePhotoDialog.setItems(dialogItems, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which) {
+                    case 0:
+                        askGalleryPermission();
+                        break;
+                    case 1:
+                        askCameraPermission();
+                        break;
+                }
+            }
+        });
+        takePhotoDialog.show();
+    }
+
+    private void askGalleryPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+        } else {
+            dispatchGalleryIntent();
+        }
+    }
+
+    private void dispatchGalleryIntent() {
+    }
+
 
     private void getUserId() {
         if (apiService.isAuthenticated()) {

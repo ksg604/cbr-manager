@@ -46,8 +46,10 @@ import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticService
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.homepage.HomepageFragment;
+import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
 import com.google.android.material.textfield.TextInputEditText;
@@ -77,6 +79,8 @@ public class CreateReferralActivity extends AppCompatActivity {
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private String imageFilePath = "";
+    public Client client;
+    private int referralId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +96,7 @@ public class CreateReferralActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Client> call, Response<Client> response) {
                     if (response.isSuccessful()) {
-                        Client client = response.body();
+                        client = response.body();
                         clientName.setText(client.getFullName());
                         clientName.setFocusable(false);
                     }
@@ -422,6 +426,7 @@ public class CreateReferralActivity extends AppCompatActivity {
                 public void onResponse(Call<Referral> call, Response<Referral> response) {
                     if (response.isSuccessful()) {
                         Referral submittedReferral = response.body();
+                        referralId = submittedReferral.getId();
                         File photoFile = new File(imageFilePath);
                         if (photoFile.exists()) {
                             Call<ResponseBody> photoCall = apiService.getReferralService().uploadPhoto(photoFile, submittedReferral.getId().intValue());
@@ -443,8 +448,7 @@ public class CreateReferralActivity extends AppCompatActivity {
                         }
 
                         Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(CreateReferralActivity.this, NavigationActivity.class);
-                        startActivity(intent);
+                        onSubmitSuccess();
                     } else {
                         Toast.makeText(CreateReferralActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
                     }
@@ -456,6 +460,13 @@ public class CreateReferralActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void onSubmitSuccess() {
+        Intent intent = new Intent(CreateReferralActivity.this, ReferralDetailsActivity.class);
+        intent.putExtra("referralId", referralId);
+        startActivity(intent);
+        finish();
     }
 
     private File createImageFile() throws IOException {

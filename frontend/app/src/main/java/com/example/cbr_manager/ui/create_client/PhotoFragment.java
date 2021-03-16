@@ -181,19 +181,14 @@ public class PhotoFragment extends Fragment implements Step {
                 referralImageView.setImageBitmap(bitmap);
             }
         } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
-//            String test = "hello";
             try {
-//                Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
                 Uri selectedImage = data.getData();
                 InputStream inputStream = getActivity().getContentResolver().openInputStream(selectedImage);
                 referralImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream));
 
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-                // Get the cursor
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
-                // Move to first row
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);

@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_dashboard"
             app:destination="@id/nav_dashboard" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_alert_list"
+            app:destination="@id/nav_alert_list" />
     </fragment>
 
     <fragment

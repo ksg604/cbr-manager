@@ -1,5 +1,5 @@
 # Introduction
-Welcome to the HHA CBR Manager project by team Saturn! 
+Welcome to the HHA CBR Manager project by team Saturn!
 
 The goal of the project is to create an Android app that satisfies the customers requirements as stated in the initial presentation and any requirements to be modified or added through feedback.
 
@@ -8,10 +8,15 @@ The goal of the project is to create an Android app that satisfies the customers
 Our development tools include using Android Studio for the frontend including all UI elements and Django as the backend server which is used to communicate with the database and handle any additional logic performed on the data.
 
 ## Progress
+
+### Iteration 1
 In iteration 1, we've designed the UI for the majority of required pages and created the classes and models for users, clients, visits and alerts. So now all users can create, store and retrieve their clients' and visits' data to and from the server, either ran locally or through the one deployed on Heroku. The admin can also send alerts to all and create new users that have seperate sets of clients and visit data.
 
+### Iteration 2
+In iteration 2, we focused on adding the ability for users to create referrals for clients, which can then be viewed and edited. Speaking of editing, this was another area we focused on this iteration. Now clients and visits can also be edited through the app as well. We also placed a search feature in a lot of the pages, which will be handy once the number of clients and visits grows. Another focus this iteration was on using a local db with syncing to allow users to use the app offline. Finally, we improved a lot of the app's UI this iteration, based on feedback from the customer, and also based on having a better understanding of the flow of the app and how to use Android at this point. One of these changes was login caching, which we feel definitely makes the app more convenient to use (and to test!).
+
 ## Upcoming
-For next iteration we plan to add the local database so work can be done without an internet connection and sync with the server once connection is resumed. We will also add in referrals and seperate user permissions for admins and other users.
+For next iteration we plan to finalize the risk algorithm, finish work on local database syncing, add the ability to easily view historical changes, and improve client goal tracking. We also will finalize the UI across the board to get everything looking and feeling as good as possible. And of course we'll make changes based on the customer's feedback of our iteration 2 demo!
 
 
 # How to setup Local Development
@@ -203,7 +208,7 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 
 ## Peter's Contribution
 
-### Dashboard
+### Dashboard (Iteration 1)
 
 The dashboard was created with the vision of something like a newsfeed, where a user can view important information such as the alerts and statistics drawn from all sections of the app.
 
@@ -213,33 +218,14 @@ The dashboard was created with the vision of something like a newsfeed, where a 
 * The dashboard is split into sections: alerts, high priority clients, visits, and referrals (for the future).  The Alerts section shows the most recent alert sent by an admin. The High Priority Clients Section shows the top 5 highest risk clients, along with two buttons to view all clients and add clients.
 * The Visits section show statistics about visits: total visits made, locations visited, total clients visited.
 
-**Unfinished parts:**
-1. The referral section of the dashboard needs to be filled out.
-2. Further statistics on clients likely to be added (Ex: total number of clients, "hotspot" locations that have many clients, ...)
 
-**Questions for the customer:**
-1. What is your impression of the dashboard? Are there any further statistics you would like the dashboard to show?
-2. Are there any sections you would like to see added to the dashboard?
-3. In slide 16, it seems that "dashboard with alert system" is different from the "home" page. Is there a difference between dashboard and home page, and would you like a "home" page separate from the dashboard?
-
-### Clients List
+### Clients List (Iteration 1)
 The clients list allows the user to quickly view basic information about all clients. If necessary, the user may select a user in order to view more specific information.
 
 **User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
 * The client list currently shows the profile picture, name, location, and risk rating for each client. The client and then be selected so the user may view additional details and create a visit.
 
-**Unfinished:**
-
-1. The Client list is currently not searchable.
-2. Determine how the list should be sorted.
-
-**Questions for the customer:**
-
-1. Would you like any additional information to be shown for each client on the list?
-2. Currently, the list is sorted by the date the client was added. How would you like the list to be sorted? (By last name, by risk level, by first name, ...)
-3. Are there any other features you would like added to the client list?
-
-### Creation of New Visits
+### Creation of New Visits (Iteration 1)
 
 The creation of a new visit can currently be accessed through a button found in the details of a client. The survey is compiled into one scrollable activity. Once submitted, the data is uploaded to the backend.
 
@@ -256,19 +242,13 @@ The flow of the survey is an adaptation of our Piazza post, question #47.
 
 1. Implementation of required fields is missing. User must not be able to submit a visit survey unless required fields are filled out.
 
-**Questions for the customer:**
-
-1. Is the flow of the visit survey correct? It seems that if CBR is **NOT** selected as a purpose, then the provisions were to still be shown. They are only optionally hidden when CBR **IS** selected as a purpose.
-
-2. In terms of user interface, are there any further suggestions for how the survey should look? Would you like the font sizes to be larger? Would you like more visuals such as colours or images?
-
-### Navigation Drawer
+### Navigation Drawer (Iteration 1)
 The navigation bar acts as an index for the app, where the user can quickly jump between different sections such as client list, visit list, dashboard, and client creation.
 
 **Unfinished parts:**
 1. A logout/close button within the navigation drawer.
 
-### User Interface Consistency
+### User Interface Consistency (Iteration 1)
 
 This was an additional task undertook to ensure that the interface has a consistency (such as the same font, same background colour for buttons).
 
@@ -279,35 +259,42 @@ This was an additional task undertook to ensure that the interface has a consist
 3. We have tried to include a minimal amount of colours, leaving most of the app to be white. In terms of visuals, would you like the user interface to be more colourful? Or to have more images?
 4. Are there any comparable sections in apps that you enivision this app could look like (for example, the profile section of the Facebook app, the lists of songs in the Spotify app)? This could help us to modify the interface to look more as you imagine it to look.
 
+### New Referrals Creation
+**User story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties
+
+Implemented the user interface, front end logic, and referral uploading. Also ensured that the required fields are filled out.
+
+### Search bars
+**User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
+
+For lists within the app, I implemented the searchview to help the user quickly find the item they are looking for.
+
+### Client Details UI Redo
+**User story:** As a user, I want to be able to view all my clients/visits, so I can monitor and record client related activity
+
+Redid the client details UI to be more clean and consistent by removing colours, adding margins, and manipulating layouts.
+
+### Dashboard UI Redo
+**User story:** As an admin, I want to be able to view various CBR statistics, so I can monitor the CBR team's progress.
+
+At the request of the customer, redid the UI of the dashboard to be much less cluttered by adding whitespace, removing colours, and redoing the general look.
+
 
 ## Andrew's Contribution
 
-### Creation of New Users
+### Creation of New Users (Iteration 1)
 
-**User story:**  (#1)
-As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
+**User story:** As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
 
 * User creation(new user registration),including making the user creation page in android and uploading the new user info to the backend.
 
 **Unfinished parts:**
 
-1. Implementing the different levels of permission for each type of user (admin being able to delete/create new users and send alerts while normal users should not)
+1. Implementing the different levels of permission for each type of user
 
-2. Other requirements related to management that comes up during feedback
+### Alerts Creation, List and Details (Iteration 1)
 
-**Questions for the customer:**
-
-1. Is two levels of user permission enough? (CBR workers, admin) Or do we need a seperate user type for another class of people, e.g. Clinicians
-
-2. If so, what should the difference be in what data and functions they can access?
-
-3. Would deleting a user be of priority? Or would disabling a user be fine? (other fields such as visits/clients have dependencies on user information and would need to be deleted as well)
-
-
-### Alerts Creation, List and Details
-
-**User story:**  (#7)
-As a user, I want to be able to see alerts from the dashboard, so I can prioritize clients/activities based on urgency
+**User story:** As a user, I want to be able to see alerts from the dashboard, so I can prioritize clients/activities based on urgency
 
 * The alerts Object was created both in the backend and frontend, so the admin/user can broadcast alert messages to the server where other users will retrieve from.
 * The alerts include a title, body and date.
@@ -315,15 +302,29 @@ As a user, I want to be able to see alerts from the dashboard, so I can prioriti
 
 **Unfinished parts:**
 
-1. Adding the ability to specify which users the alert messages are desginated to.
+1. Specifying which users the alert messages are desginated to. (Needs user permission)
 
-2. Adding an urgency tag/flag and the ability to mark each message as read.
+2. Adding an urgency tag/flag and the ability to mark each message as read. (Needs local database)
 
-**Questions for the customer:**
+### Referrals List and Details
 
-1. Are there any additional function apart from "urgency tag/flag and mark each message as read" the customer needs?
+**User story:** As a user, I want to be able to view all my clients/visits, so I can monitor and record client related activity
 
-2. Any UI tinkering needed on the alert list/ alert details pages?
+* Referral List to hold either referrals of a specific client or all, depending on where the list was accessed from(client details for that client, all for from dashboard/nav bar)
+* Referral Details to show all fields related to a certain referral.
+
+### Referrals Editing
+
+**User story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties
+
+* Referral Editing page for editing and updating a referral's status and other info intended for update (refer to field, outcome descriptions etc.).
+
+### Tag Filtering logic
+
+**User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
+
+* Implemented resuable filtering logic with checkboxes. Currently used for filtering outstanding referral items . If referral status is resolved then it won't show if "Outstanding" is checked.
+* It works in conjunction with the search bar that looks for matching substrings, so if either is changed the results refresh.
 
 
 ## Kevin's Contribution
@@ -344,25 +345,14 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 * User will be able to access their visits which correspond with the client they are viewing on the client details page by clicking a button
 * User will be able to create a new visit through the client details page
 
-**Unfinished parts: **
+**Iteration 2:**
 
-1. Implement the PUT request portion of where a user will be able to update client details by submitting new information to the backend
-2. Implement ability to edit visit information by swiping on visit items in visit list
-
-**Questions for the customer:**
-
-1. On the visits page, do you want to be able to edit visits by swiping the visit items to see a menu?  Or to
- have a button on the visit details page which is accessible by tapping the visit items in the visits list
-
-2. On the clients details page, how is the layout of the buttons at the bottom? (New visit, see visits, edit and back).
-Are these too many buttons?
-
-3. Would you prefer to have a dedicated back button integrated into each accessible part of the user interface (such as the back button on the client details page)
-or are you okay with just using the back button which is supplied with Android OS?
-
-4. Is the button size too large on the visits page?  How do you feel about the overall UI of the visits page.  Should the create button be relocated elsewhere?
-
-5. How do you feel about the attributes which are present on the client details page?  (such as health, social, education) are there any more which you would like to add?
+* Updated client details and client edit details page UI
+* Revamped visit edit details page to be more consistent with client edit details
+* User will be able to edit client information through the client details page.  
+* User has the ability to edit visit information by accessing a client's details, navigating to their visit list, selecting a visit and then tapping edit button (pencil) on the visit
+* Fixed backend problem with visit model not processing PUT requests properly to edit visit information
+* Added additional fields to visit edit details which are more intuitive to be editable by the user
 
 
 ## Kun Hyung Park(Arthur)'s Contribution
@@ -374,36 +364,25 @@ As an admin, I want to be able to create new clients' data, so I can track their
 
 * Client creation ,including making the client creation page in android and uploading the new client info to the backend.
 
+**Iteration 2:**
 
-**Unfinished parts:**
+### Design / Create Home page
 
-1. Implementing the camera when taking photo of the client + caretaker if they are present.
+**User story:**
+   As a admin/user, I want to be directed to a home page after login, so I can have a general overview of the app and choose which task to complete.
 
-2. Handling errors so that there is more flexibility with the input + show errors. Currently it has to follow a specific format, otherwise it will return a HTTP 400(Bad Request)
 
-3. Other survey requirements such as health risk, social risk, and education risk. Currently they are set to 0.
+### Visit Details Edit
 
-**Format of the inputs:**
-1. Consent : either Yes or No works.
-2. Date : One number per column only. No alphabets or special characters.
-3. ID : One number only. No alphabets or special characters.
-4. Location : All location works.
-5. Village number : same as #3.
-6. First Name : Everything works.
-7. Last Name : Evertying works.
-8. Gender : either gender works.
-9. Age : same as #3.
-10. Client contact number : same as #3. N/A option does not work currently.
-11. All types of disabilities work.
-12. Caregiver present : both options work
-13. Caregiver contact number : same as #10.
-14. photo : not implemented yet.
+**User story:**
+   As a user, I want to be able to edit the visit details, so I can update new informations.
+
+* Improved UI experience by making visit details page show only filled fields, so that the user doesn't see unnecessary blank spaces.
+* Linked the visit details and visit details edit page to backend database so it properly stores and updates new data.
 
 **Questions for the customer:**
 
-1. Is the flow of the create client survey page okay? Or do you want us to follow the exact order of the powerpoint slides?
-
-2. There are two parts to the survey, one part where the client can fill out information themselves, and another part where they fill it out together with a CBR worker. Currently only the first part is implemented. For the second part, would a separate survey page be better? Or combine them into one?
+1. Is the Homepage simple and informative enough? Is there other features or shortcuts that you would like us to add / change?
 
 
 ## Sean's Contribution
@@ -419,15 +398,13 @@ As a user, I want to be able to view all my clients/visits, So I can monitor and
 * The per-client visits page uses nearly all the same logic as the full visits page, but it is passed the clientID and filters by it.
 * The visits details page for each visit also shows additional details
 
-**Unfinished parts:**
+**Iteration 2:**
 
-1. The visit list should show the date of the visit, and perhaps sort by that date
-
-2. Some information on the visits details page is currently hardcoded for display purposes. This should be fixed.
-
-**Questions for the customer:**
-
-1. Would it ever be useful to view all visits in one place, or would it only be useful to view visits on a per-client basis?
+* The visit list now displays the date of the visit
+* The visit details page now shows all the desired information with no hardcoding and writes properly to the backend database
+* Reorganized the client and visit backend models so that much of the information that new visits were writing to the client model now write to the visit model
+* When a health goal, education goal, or social goal is inputted in a visit, it now updates the visit's respective client and shows  this new information on the client details page
+* Decoupled the per-client visit list and the general visit list so that they could be contained in one fragment
 
 ### Login page
 The login page allows users to log in to reach their personalized home screen
@@ -437,45 +414,58 @@ As an admin, I want to be able to edit all user (CBR worker, clinician) data, so
 
 ## William Tran's Contribution
 
-### Creation of New Clients
+### Iteration 1 Creation of New Clients
 **User story:** (#4)
 As a user, I want to be able to record my client's data to a remote server so I can manage my duties.
 
 *Client models and image root for upload and saving client data.
 
-**Unfinished parts:**
+### Iteration 2 Integrating with Room database
+Integrating app with local database to persistently save data onto devices in offline conditions
+All these tasks deals with Business logic for utilizing the data under the abstraction of the UI
 
-1. Implement search function from Backend
+* Update Client and Visit as entity for Room database inclusion
+* Create database access object interface for Client and Visit
+* Implement basic CRUD operations with local database using executuors threads
+* Create a mock-up of sync logic to be used when making the synchronization architecture for the app
 
-**Questions for the customer:**
-
-1. If given the keyword options to search clients from the list, what kind of options would you like to for search function? For example you can search by locations, name, type of disability.
-It is possible to search for multiple keywords if all of the keywords are relevant to the client's data, but it is difficult to search for client's data using keyword from the visit data.
 
 
 ## Vincent's Contribution
 
-### Initial creation of user creations for the backend
+
+### Iteration 1
 
 **User story:**  (#1)
 As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
 
 * Created the backend info for the user such that we can create or modify users in the backend. This includes a username, password, email, first name, last name
 
-**Unfinished parts:**
-
-1. May need to include other information associated with the user.
-
-**Questions for the customer:**
-
-1. Are there additional fields that you want to add to users? such as age or location?
-
-### Optimizing and refactoring of client creation
-
 **User story:**  (#4)
 As a user, I want to be able to record and edit client/visit data, so I can better manage my duties.
 
 * Modified the create clients page such that it uses fragments rather than activities. This would give some performance gain.
+
+### Iteration 2
+
+For this iteration, I've done some minor changes to the home page, fixed a few bugs, and done some research on the frontend history.
+
+1. Added a navigation drawer to the homepage
+2. Fixed a bug where some buttons on homepage was not working
+3. Researched some techniques on having history on the frontend (likely be done by iteration 3).
+
+## Jonathan's Contribution
+
+### Iteration 2
+
+For this iteration I mostly focused on UI enhancement and research on the architecture to support offline functionality of the app. Here are some highlights
+
+1. Improve the Client creation to be more user friendly by adding error checking, and a visual stepper to inform the user where they are on the form.
+2. Introduce cached logins so users do not need to login every time the app closes. The users authentication token is cached using SharedPreferences.
+3. Introduce a ClientHistoryRecord model to track changes made to the client.
+4. Add and generate CBR client ids that are based off of their first and last name.
+5. Fix some bugs to production deployment and add a home page to our API where the user can download the APK.
+6. Research into architecture to support offline app usage. Will hopefully be setup and usable for iteration 3.
 
 
 
@@ -498,7 +488,7 @@ For this iteration I mostly focused on UI enhancement and research on the archit
 
 Use docker to deploy
 
-## Prerequisites 
+## Prerequisites
 
 `.env.dev` used to store development secrets
 
@@ -559,11 +549,15 @@ Development will be deployed on port 8001
 
 # How to Navigate Application
 
-Once the app is running, you will be on the login screen. Input "user1" as the username and "password" as the password.
+Once the app is running, you will be on the login screen. Input "user1" as the username and "password123" as the password. If you have logged in before on the same device, it may skip past this screen automatically.
 
 <img src="/readme-images/login.png"  width="432" height="888">
 
-After logging in, you will see the dashboard. Here, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
+After logging in, you will see the homepage. Here, you can click different icons to quickly go to their pages. The sync button will sync your local database with the global one, so that you can use the app safely without internet.
+
+<img src="/readme-images/homepage.png"  width="432" height="888">
+
+If you click on the dashboard, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
 
 <img src="/readme-images/dashboard.png"  width="432" height="888">
 
@@ -595,9 +589,17 @@ To view clients, click on "Client List" from the navigation bar.
 
 <img src="/readme-images/client_list.png"  width="432" height="888">
 
+To make it easier, you can use the search bar
+
+<img src="/readme-images/client_search.png"  width="432" height="888">
+
 From here, you can select a client to see more details about them.
 
 <img src="/readme-images/client_details.png"  width="432" height="888">
+
+You can edit a client by clicking on the edit button on the client details page.
+
+<img src="/readme-images/edit_client.png"  width="432" height="888">
 
 From the client details page, you can see a client's visits by clicking on "See Visits".
 
@@ -607,37 +609,49 @@ You can click on any individual visit to see more visit details.
 
 <img src="/readme-images/visit_details.png"  width="432" height="888">
 
+You can also edit a visit by clicking on the edit button.
+
+<img src="/readme-images/edit_visit.png"  width="432" height="888">
+
 You can also view all visits for all clients by clicking on "Visits" on the navigation bar.
 
 <img src="/readme-images/all_visits.png"  width="432" height="888">
 
-You can register a new client by clicking on "New Client" from the navigation bar. This will take you to the new client page. Here, you will go through several screens of questions including some drop down menus before being able to submit the new client. Please follow the following suggestions for now for a bug-free client creation experience.
-
-**Format of the inputs:**
-1. Consent : either Yes or No works.
-2. Date : One number per column only. No alphabets or special characters.
-3. ID : One number only. No alphabets or special characters.
-4. Location : All location works.
-5. Village number : same as #3.
-6. First Name : Everything works.
-7. Last Name : Evertying works.
-8. Gender : either gender works.
-9. Age : same as #3.
-10. Client contact number : same as #3. N/A option does not work currently.
-11. All types of disabilities work.
-12. Caregiver present : both options work
-13. Caregiver contact number : same as #10.
-14. photo : not implemented yet.
+You can register a new client by clicking on "New Client" from the navigation bar. This will take you to the new client page. Here, you will go through several screens of questions including some drop down menus before being able to submit the new client.
 
 <img src="/readme-images/create_client_1.png"  width="432" height="888">
 
-To create a visit for a client, go to that client's details page and click on "Create Visit". From here, fill out the fields and select options from the drop down menu(s).
+To create a visit for a client, go to that client's details page and click on "New Visit". From here, fill out the fields and select options from the drop down menu(s).
 
 <img src="/readme-images/create_visit_1.png"  width="432" height="888">
 
 Certain selections will prompt you with other questions. For example, if you select CBR for the "Purpose of Visit" question, you will be prompted with another "CBR Type" question.
 
 <img src="/readme-images/create_visit_2.png"  width="432" height="888">
+
+To create a referral for a client, go to that client's details page and click on "New Referral". From here, fill out the fields and select options from the drop down menu(s).
+
+<img src="/readme-images/create_referral.png"  width="432" height="888">
+
+To create a referral for a client, go to that client's details page and click on "New Referral". From here, fill out the fields and select options from the drop down menu(s).
+
+<img src="/readme-images/all_referrals.png"  width="432" height="888">
+
+You can toggle this page so that it only show outstanding referrals.
+
+<img src="/readme-images/outstanding_referrals.png"  width="432" height="888">
+
+Click on a referral to see its details.
+
+<img src="/readme-images/referral.png"  width="432" height="888">
+
+You can edit a referral by clicking the edit button. One major thing you might edit is to change a referral status from CREATED to RESOLVED.
+
+<img src="/readme-images/edit_referral.png"  width="432" height="888">
+
+Once a referral is marked RESOLVED, it will no longer show up in the outstanding toggle
+
+<img src="/readme-images/no_outstanding_referrals.png"  width="432" height="888">
 
 Note: you may need to use the back button built into Android devices and emulators to exit from certain pages. This is something that will be addressed in the next iteration.
 

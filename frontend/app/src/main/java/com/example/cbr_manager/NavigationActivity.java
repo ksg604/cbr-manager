@@ -3,8 +3,10 @@ package com.example.cbr_manager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -17,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -25,23 +28,28 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.sync.Status;
 import com.example.cbr_manager.ui.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @AndroidEntryPoint
 public class NavigationActivity extends AppCompatActivity {
-
     public static String KEY_SNACK_BAR_MESSAGE = "KEY_SNACK_BAR_MESSAGE";
     private final String TAG = "Navigation Activity";
     StatusViewModel statusViewModel;
-
+    NavigationView navigationView;
     private APIService apiService = APIService.getInstance();
     private AppBarConfiguration appBarConfiguration;
 
@@ -73,7 +81,7 @@ public class NavigationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         handleIncomingSnackBarMessage(navigationView);
 
@@ -86,7 +94,7 @@ public class NavigationActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_dashboard, R.id.nav_client_list, R.id.nav_visits, R.id.nav_user_creation, R.id.nav_alert_creation,R.id.nav_referrals)
+                R.id.nav_home, R.id.nav_dashboard, R.id.nav_client_list, R.id.nav_visits, R.id.nav_user_creation, R.id.nav_alert_creation, R.id.nav_referrals, R.id.nav_alert_list)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -106,7 +114,42 @@ public class NavigationActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        setupAlertsBadge(navigationView);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setupAlertsBadge(navigationView);
+    }
+
+    private void setupAlertsBadge(NavigationView navigationView) {
+
+        if (apiService.isAuthenticated()) {
+            apiService.alertService.getAlerts().enqueue(new Callback<List<Alert>>() {
+                @Override
+                public void onResponse(Call<List<Alert>> call, Response<List<Alert>> response) {
+                    if (response.isSuccessful()) {
+                        List<Alert> alerts = response.body();
+                        TextView alertsTV = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_alert_list));
+                        alertsTV.setGravity(Gravity.CENTER_VERTICAL);
+                        alertsTV.setTypeface(null, Typeface.BOLD);
+                        alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
+                        if (alerts.size() > 0) {
+                            alertsTV.setText(Integer.toString(alerts.size()));
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Alert>> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

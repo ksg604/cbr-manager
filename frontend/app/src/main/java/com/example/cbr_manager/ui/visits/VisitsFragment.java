@@ -107,9 +107,24 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                                             Client client = response.body();
                                             visit.setClient(client);
                                             Timestamp datetimeCreated = visit.getDatetimeCreated();
-                                            Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                                            Format formatter = new SimpleDateFormat("dd-MM-yyyy");
                                             String formattedDate = formatter.format(datetimeCreated);
-                                            visitUIList.add(new VisitsRecyclerItem(R.drawable.visit_default_pic, formattedDate, visit.getClient().getFullName(), visit));
+
+                                            String purpose = "";
+                                            if (visit.isCBRPurpose()) {
+                                                purpose += "CBR ";
+                                            }
+                                            if (visit.isDisabilityReferralPurpose()) {
+                                                purpose += "Disability Referral ";
+                                            }
+                                            if (visit.isDisabilityFollowUpPurpose()) {
+                                                purpose += "Disability Follow up";
+                                            }
+                                            if (purpose.equals("")) {
+                                                purpose = "No purpose indicated.";
+                                            }
+
+                                            visitUIList.add(new VisitsRecyclerItem(formattedDate, visit.getClient().getFullName(), visit, purpose, visit.getLocationDropDown()));
                                         }
                                         adapter.notifyDataSetChanged();
                                     }

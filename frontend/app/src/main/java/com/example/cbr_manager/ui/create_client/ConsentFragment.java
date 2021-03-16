@@ -49,7 +49,7 @@ public class ConsentFragment extends Fragment implements Step {
 
         client = ((CreateClientStepperActivity) getActivity()).formClientObj;
 
-        radioGroup = view.findViewById(R.id.radioGroup);
+//        radioGroup = view.findViewById(R.id.radioGroup);
         clientConsent = view.findViewById(R.id.clientConsentCheckBox);
         clientNoConsent = view.findViewById(R.id.clientNoConsentTextView);
         clientConsent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -105,7 +105,7 @@ public class ConsentFragment extends Fragment implements Step {
         }
 
         try {
-            validateStepperTextViewNotNull(radioButton, "Required");
+//            validateStepperTextViewNotNull(radioButton, "Required");
             validateStepperTextViewNotNull(dateEditTextView, "Required");
         } catch (InvalidCreateClientFormException e) {
             errorTextView = e.view;
@@ -131,10 +131,16 @@ public class ConsentFragment extends Fragment implements Step {
     }
 
     private void updateClient() {
-        int radioId = radioGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = getView().findViewById(radioId);
+//        int radioId = radioGroup.getCheckedRadioButtonId();
+//        RadioButton radioButton = getView().findViewById(radioId);
         client.setDate(dateEditTextView.getText().toString().trim());
-        client.setConsent(radioButton.getText().toString().trim());
+        if (clientConsent.isChecked()) {
+            client.setConsent("yes");
+        } else {
+            client.setConsent("no");
+        }
+
+//        client.setConsent(radioButton.getText().toString().trim());
     }
 
 }

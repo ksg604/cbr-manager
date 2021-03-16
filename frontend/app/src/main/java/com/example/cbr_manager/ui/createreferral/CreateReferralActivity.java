@@ -74,6 +74,7 @@ public class CreateReferralActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
     private static final int PICK_FROM_GALLERY = 1;
+    private static final int REQUEST_GALLERY = 103;
     int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
@@ -196,13 +197,29 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     private void askGalleryPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_GALLERY);
         } else {
             dispatchGalleryIntent();
         }
     }
 
     private void dispatchGalleryIntent() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+
+        } catch (ActivityNotFoundException | IOException e) {
+            Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
+        }
+
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(this,
+                    "com.example.android.fileprovider", photoFile);
+            galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+        }
     }
 
 
@@ -230,7 +247,8 @@ public class CreateReferralActivity extends AppCompatActivity {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                askCameraPermission();
+//                askCameraPermission();
+                showTakePhotoDialog();
             }
         });
     }
@@ -248,6 +266,10 @@ public class CreateReferralActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CAMERA_USE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
+            }
+        } else if (requestCode == REQUEST_GALLERY) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchGalleryIntent();
             }
         }
     }
@@ -281,6 +303,10 @@ public class CreateReferralActivity extends AppCompatActivity {
             if (imgFile.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 referralImageView.setImageBitmap(bitmap);
+            }
+        } else if (requestCode == PICK_FROM_GALLERY) {
+            if (imageFilePath != null) {
+                Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
             }
         }
     }

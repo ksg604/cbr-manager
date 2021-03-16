@@ -210,22 +210,6 @@ public class CreateReferralActivity extends AppCompatActivity {
     private void dispatchGalleryIntent() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_FROM_GALLERY);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_FROM_GALLERY);
-
-//        File photoFile = null;
-//        try {
-//            photoFile = createImageFile();
-//
-//        } catch (ActivityNotFoundException | IOException e) {
-//            Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        if (photoFile != null) {
-//            Uri photoURI = FileProvider.getUriForFile(this,
-//                    "com.example.android.fileprovider", photoFile);
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//            startActivityForResult(intent, PICK_FROM_GALLERY);
-//        }
     }
 
 
@@ -253,7 +237,6 @@ public class CreateReferralActivity extends AppCompatActivity {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                askCameraPermission();
                 showTakePhotoDialog();
             }
         });
@@ -311,19 +294,15 @@ public class CreateReferralActivity extends AppCompatActivity {
                 referralImageView.setImageBitmap(bitmap);
             }
         } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
-//            String test = "hello";
             try {
-//                Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
                 Uri selectedImage = data.getData();
                 InputStream inputStream = getContentResolver().openInputStream(selectedImage);
                 referralImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream));
 
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-                // Get the cursor
                 Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
-                // Move to first row
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);

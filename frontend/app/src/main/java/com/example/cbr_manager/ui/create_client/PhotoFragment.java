@@ -73,7 +73,6 @@ public class PhotoFragment extends Fragment implements Step {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                askCameraPermission();
                 showTakePictureDialog();
             }
         });

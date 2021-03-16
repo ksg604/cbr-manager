@@ -7,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -54,7 +56,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -204,22 +208,24 @@ public class CreateReferralActivity extends AppCompatActivity {
     }
 
     private void dispatchGalleryIntent() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_FROM_GALLERY);
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_FROM_GALLERY);
 
-        File photoFile = null;
-        try {
-            photoFile = createImageFile();
-
-        } catch (ActivityNotFoundException | IOException e) {
-            Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
-        }
-
-        if (photoFile != null) {
-            Uri photoURI = FileProvider.getUriForFile(this,
-                    "com.example.android.fileprovider", photoFile);
-            galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
-        }
+//        File photoFile = null;
+//        try {
+//            photoFile = createImageFile();
+//
+//        } catch (ActivityNotFoundException | IOException e) {
+//            Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        if (photoFile != null) {
+//            Uri photoURI = FileProvider.getUriForFile(this,
+//                    "com.example.android.fileprovider", photoFile);
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//            startActivityForResult(intent, PICK_FROM_GALLERY);
+//        }
     }
 
 
@@ -304,10 +310,29 @@ public class CreateReferralActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 referralImageView.setImageBitmap(bitmap);
             }
-        } else if (requestCode == PICK_FROM_GALLERY) {
-            if (imageFilePath != null) {
-                Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
+        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+//            String test = "hello";
+            try {
+//                Toast.makeText(this, imageFilePath, Toast.LENGTH_SHORT).show();
+                Uri selectedImage = data.getData();
+                InputStream inputStream = getContentResolver().openInputStream(selectedImage);
+                referralImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+               imageFilePath = cursor.getString(columnIndex);
+                cursor.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+
         }
     }
 

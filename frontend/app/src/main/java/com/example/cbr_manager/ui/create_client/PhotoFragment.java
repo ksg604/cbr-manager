@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.create_client;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -53,7 +55,6 @@ public class PhotoFragment extends Fragment implements Step {
         view = inflater.inflate(R.layout.activity_create_client_photo, container, false);
 
         cameraButton = view.findViewById(R.id.takePhotoButton);
-        //TODO: Add Camera functionality
         setupCameraButtonListener();
 
         return view;
@@ -65,9 +66,37 @@ public class PhotoFragment extends Fragment implements Step {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                askCameraPermission();
+//                askCameraPermission();
+                showTakePictureDialog();
             }
         });
+    }
+
+    private void showTakePictureDialog() {
+        AlertDialog.Builder takePhotoDialog = new AlertDialog.Builder(getContext());
+        takePhotoDialog.setTitle("Upload a photo");
+        takePhotoDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        String[] dialogItems = {"Select from gallery", "Take photo"};
+        takePhotoDialog.setItems(dialogItems, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which) {
+                    case 0:
+                        askGalleryPermission();
+                        break;
+                    case 1:
+                        askCameraPermission();
+                        break;
+                }
+            }
+        });
+        takePhotoDialog.show();
     }
 
     private void askCameraPermission() {

@@ -18,6 +18,7 @@ class AssistiveDevice(models.TextChoices):
     GLASSES = "Glasses"
     STANDING_FRAME = "Standing Frame"
     CORNER_SEAT = "Corner Seat"
+    NONE = "None"
 
 
 class HealthServiceSatisfaction(models.TextChoices):
@@ -37,3 +38,9 @@ class ChildNourishment(models.TextChoices):
     MALNOURISHED = "Malnourished"
     UNDERNOURISHED = "Undernourished"
     WELL_NOURISHED = "Well Nourished"
+
+
+class YesNoBlank(models.TextChoices):
+    YES = "Yes"
+    NO = "NO"
+    BLANK = ""

@@ -33,6 +33,8 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     private StepAdapter setupStepperAdapterWithFragments() {
         GenericStepperAdapter baselineStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
         baselineStepperAdapter.addFragment(new BaselineHealthFragment(), "Health");
+        baselineStepperAdapter.addFragment(new BaselineEducationFragment(), "Education");
+        baselineStepperAdapter.addFragment(new BaselineSocialFragment(), "Social");
 
         return baselineStepperAdapter;
     }

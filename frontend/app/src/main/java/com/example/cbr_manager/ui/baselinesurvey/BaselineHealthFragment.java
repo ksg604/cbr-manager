@@ -2,6 +2,8 @@ package com.example.cbr_manager.ui.baselinesurvey;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cbr_manager.R;
+import com.stepstone.stepper.Step;
+import com.stepstone.stepper.VerificationError;
 
-public class BaselineHealthFragment extends Fragment {
+public class BaselineHealthFragment extends Fragment implements Step {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -44,5 +48,21 @@ public class BaselineHealthFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_baseline_health, container, false);
+    }
+
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
+        return null;
+    }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+
     }
 }

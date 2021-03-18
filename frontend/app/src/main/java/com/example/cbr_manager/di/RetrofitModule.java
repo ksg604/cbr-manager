@@ -1,6 +1,7 @@
 package com.example.cbr_manager.di;
 
 import com.example.cbr_manager.BuildConfig;
+import com.example.cbr_manager.service.auth.AuthAPI;
 import com.example.cbr_manager.service.sync.StatusAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,6 +40,12 @@ public class RetrofitModule {
     @Provides
     StatusAPI provideStatusAPI(Retrofit retrofit) {
         return retrofit.create(StatusAPI.class);
+    }
+
+    @Singleton
+    @Provides
+    AuthAPI provideAuthAPI(Retrofit retrofit) {
+        return retrofit.create(AuthAPI.class);
     }
 
     @Singleton

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.baselinesurvey.BaselineSocialFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/purple_700"
+                android:layout_marginBottom="16dp"
+                android:text="Social" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select all the statements that apply to you:" />
+
+            <CheckBox
+                android:id="@+id/baselineSocialValuedCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I feel valued as a member of my community." />
+
+            <CheckBox
+                android:id="@+id/baselineSocialIndependentCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I feel independent." />
+
+            <CheckBox
+                android:id="@+id/baselineSocialParticipateCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I am able to participate in community.social events." />
+
+            <CheckBox
+                android:id="@+id/baselineSocialDisabilityAffectCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My disability affects my ability to interact socially." />
+
+            <CheckBox
+                android:id="@+id/baselineSocialDiscriminationCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I have experienced discrimination because of my disability." />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

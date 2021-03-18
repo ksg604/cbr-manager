@@ -53,3 +53,10 @@ class BaselineSurvey(models.model):
     child_nourishment = models.CharField(choices=ChildNourishment)
 
     # empowerment
+    member_of_organizations = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)
+    aware_of_rights = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)
+    able_to_influence = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)
+
+    # Shelter
+    adequate_shelter = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)
+    access_essentials = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)

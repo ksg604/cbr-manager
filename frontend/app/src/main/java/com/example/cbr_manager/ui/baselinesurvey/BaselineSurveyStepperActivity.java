@@ -35,6 +35,10 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         baselineStepperAdapter.addFragment(new BaselineHealthFragment(), "Health");
         baselineStepperAdapter.addFragment(new BaselineEducationFragment(), "Education");
         baselineStepperAdapter.addFragment(new BaselineSocialFragment(), "Social");
+        baselineStepperAdapter.addFragment(new BaselineLivelihoodFragment(), "Livelihood");
+        baselineStepperAdapter.addFragment(new BaselineFoodNutritionFragment(), "Food & Nutrition");
+        baselineStepperAdapter.addFragment(new BaselineEmpowermentFragment(), "Empowerment");
+        baselineStepperAdapter.addFragment(new BaselineShelterCareFragment(), "Shelter & Care");
 
         return baselineStepperAdapter;
     }

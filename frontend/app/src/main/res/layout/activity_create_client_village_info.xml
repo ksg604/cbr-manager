@@ -23,7 +23,7 @@
             android:layout_marginTop="36dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
-            android:text="4. What is your location?"
+            android:text="@string/_4_what_is_your_location"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -8,8 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+import com.stepstone.stepper.adapter.StepAdapter;
 
 public class BaselineSurveyStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
@@ -22,6 +24,17 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         setTitle("Baseline Survey");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        baseLineSurveyStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
+        baseLineSurveyStepperLayout.setAdapter(setupStepperAdapterWithFragments());
+        baseLineSurveyStepperLayout.setListener(this);
+    }
+
+    private StepAdapter setupStepperAdapterWithFragments() {
+        GenericStepperAdapter baselineStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
+        baselineStepperAdapter.addFragment(new BaselineHealthFragment(), "Health");
+
+        return baselineStepperAdapter;
     }
 
     @Override

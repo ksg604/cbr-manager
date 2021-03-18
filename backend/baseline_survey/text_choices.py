@@ -40,6 +40,11 @@ class ChildNourishment(models.TextChoices):
     WELL_NOURISHED = "Well Nourished"
 
 
+class EmploymentType(models.TextChoices):
+    EMPLOYED = "Employed"
+    SELF_EMPLOYED = "Self Employed"
+
+
 class YesNoBlank(models.TextChoices):
     YES = "Yes"
     NO = "NO"

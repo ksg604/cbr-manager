@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from clients.models import Client
-from baseline_survey.text_choices import AssistiveDevice, GeneralHealth, HealthServiceSatisfaction, NoSchoolReason, ChildNourishment, YesNoBlank
+from baseline_survey.text_choices import AssistiveDevice, GeneralHealth, HealthServiceSatisfaction, NoSchoolReason, ChildNourishment, YesNoBlank, EmploymentType
 
 
 # Create your models here.
@@ -31,3 +31,25 @@ class BaselineSurvey(models.model):
     reason_no_school = models.CharField(choices=NoSchoolReason, max_length=50)
     been_to_school = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)
     want_to_go_school = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)
+
+    # social
+    feel_valued = models.TextField(max_length=50, default="")
+    feel_independent = models.TextField(max_length=50, default="")
+    able_to_participate = models.TextField(max_length=50, default="")
+    disability_affects_social = models.TextField(max_length=50, default="")
+    discriminated = models.TextField(max_length=50, default="")
+
+    # livelihood
+    working = models.TextField(max_length=50, default="")
+    job = models.TextField(max_length=50, default="")
+    employment = models.CharField(choices=EmploymentType)
+    meets_finanicial = models.TextField(max_length=50, default="")
+    disability_affects_work = models.TextField(max_length=50, default="")
+    want_work = models.TextField(max_length=50, default="")
+
+    # food, nutrition
+    food_security = models.CharField(choices=GeneralHealth.choices)
+    enough_food = models.TextField(max_length=50, default=20)
+    child_nourishment = models.CharField(choices=ChildNourishment)
+
+    # empowerment

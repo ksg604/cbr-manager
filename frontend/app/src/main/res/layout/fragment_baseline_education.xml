@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.baselinesurvey.BaselineHealthFragment">
-
+    tools:context=".ui.baselinesurvey.BaselineEducationFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,32 +15,21 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+
             <TextView
-                android:id="@+id/baselineHealthTitleTextView"
-                android:layout_width="wrap_content"
+                android:id="@+id/baselineEducationTitleTextView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="Health"
                 android:textColor="@color/purple_700"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:layout_marginBottom="32dp"
+                android:text="Education" />
 
             <TextView
-                android:id="@+id/baselineHealthRateHealthTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rate your general health." />
-
-            <Spinner
-                android:id="@+id/baselineHealthRateSpinner"
+                android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
-            <TextView
-                android:id="@+id/baselineHealthAccessTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Do you have access to rehabilitation services?" />
+                android:text="Do you go to school?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -53,96 +38,98 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/baselineEducationSchoolYesRadioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Yes" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/baselineEducationSchoolNoRadioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textView9"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Do you have an assistive device?" />
+                android:layout_height="match_parent">
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/baselineAssistiveYesRadioButton"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="100dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Yes" />
-
-                <RadioButton
-                    android:id="@+id/baselineAssistiveNoRadioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="No" />
-            </RadioGroup>
+                    android:inputType="number"
+                    android:hint="Grade" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/textView21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Is your assistive device working well?" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/baselineAssistiveWellYesRadioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Yes" />
-
-                <RadioButton
-                    android:id="@+id/baselineAssistiveWellNoRadioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="No" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="What assistive device do you need?" />
+                android:text="Reason for not going to school:" />
 
             <Spinner
-                android:id="@+id/baselineAssistiveDeviceNeedSpinner"
+                android:id="@+id/baselineEducationNoSchoolSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Satisfaction with received health services:" />
-
-            <Spinner
-                android:id="@+id/baselineHealthSatisfactionSpinner"
-                android:layout_width="match_parent"
+                android:layout_marginBottom="16dp"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Have you ever been to school before?" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineEducationBeenToSchoolYesRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineEducationBeenToSchoolNoRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/baselineEducationWant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Do you want to go to school?" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineEducationSchoolWantYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineEducationSchoolWantNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+            </RadioGroup>
+
 
         </LinearLayout>
     </ScrollView>

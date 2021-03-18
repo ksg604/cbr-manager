@@ -7,6 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.example.cbr_manager.service.auth.AuthDetail;
+import com.example.cbr_manager.service.auth.AuthDetailDao;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientDao;
 import com.example.cbr_manager.service.sync.Status;
@@ -19,7 +21,7 @@ import com.example.cbr_manager.service.visit.VisitDao;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Client.class, Visit.class, Status.class, User.class}, version = 1, exportSchema = false)
+@Database(entities = {Client.class, Visit.class, Status.class, User.class, AuthDetail.class}, version = 1, exportSchema = false)
 @TypeConverters({TimeStampConverter.class})
 public abstract class RoomDB extends RoomDatabase {
 
@@ -27,6 +29,7 @@ public abstract class RoomDB extends RoomDatabase {
     public abstract VisitDao visitDao();
     public abstract StatusDao statusDao();
     public abstract UserDao userDao();
+    public abstract AuthDetailDao authDetailDao();
 
     private static volatile RoomDB Instance;
 

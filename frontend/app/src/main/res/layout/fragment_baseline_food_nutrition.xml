@@ -42,8 +42,9 @@
             <Spinner
                 android:id="@+id/foodSecuritySpinner"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_height="wrap_content" />
+                android:entries="@array/general_health" />
 
             <TextView
                 android:id="@+id/baselineEnoughFoodTextView"
@@ -88,8 +89,9 @@
             <Spinner
                 android:id="@+id/baselineChildNutritionSpinner"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_height="wrap_content" />
+                android:entries="@array/child_nourishment" />
 
             <TextView
                 android:id="@+id/textView32"

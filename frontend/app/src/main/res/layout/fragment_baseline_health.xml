@@ -46,7 +46,8 @@
                 android:id="@+id/baselineHealthRateSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:entries="@array/general_health" />
 
             <TextView
                 android:id="@+id/baselineHealthAccessTextView"
@@ -160,7 +161,8 @@
                 android:id="@+id/baselineAssistiveDeviceNeedSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:entries="@array/assistive_devices" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -171,7 +173,8 @@
             <Spinner
                 android:id="@+id/baselineHealthSatisfactionSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:entries="@array/health_satisfaction" />
 
         </LinearLayout>
     </ScrollView>

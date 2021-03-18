@@ -27,6 +27,14 @@
                 android:text="Empowerment" />
 
             <TextView
+                android:id="@+id/textView31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_marginBottom="16dp"
+                android:text="Select 'Yes' or 'No' to the questions that apply to you, otherwise leave as 'N/A':" />
+
+            <TextView
                 android:id="@+id/baselineEmpowermentMember"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,6 +59,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineOrganizationNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
             </RadioGroup>
 
             <TextView
@@ -79,6 +94,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineAwareRightsNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
             </RadioGroup>
 
             <TextView
@@ -106,6 +128,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineCanInfluenceNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
             </RadioGroup>
 
 

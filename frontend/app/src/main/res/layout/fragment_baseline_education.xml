@@ -26,6 +26,14 @@
                 android:text="Education" />
 
             <TextView
+                android:id="@+id/textView29"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:textColor="#000"
+                android:text="Select an option for all that apply, otherwise leave as blank or 'N/A':" />
+
+            <TextView
                 android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

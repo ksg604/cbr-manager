@@ -26,6 +26,14 @@
                 android:text="Shelter &amp; Care" />
 
             <TextView
+                android:id="@+id/textView34"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_marginBottom="16dp"
+                android:text="Select 'Yes' or 'No' for the questions that apply to you, otherwise leave as 'N/A':" />
+
+            <TextView
                 android:id="@+id/baselineShelterAdequateTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

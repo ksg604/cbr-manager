@@ -26,6 +26,14 @@
                 android:text="Livelihood" />
 
             <TextView
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_marginBottom="16dp"
+                android:text="Select an option for those that apply to you, otherwise leave as blank or 'N/A':" />
+
+            <TextView
                 android:id="@+id/baselineLivelihoodWorking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,6 +58,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWorkingNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
             </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -100,6 +115,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodFinanceNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
             </RadioGroup>
 
             <TextView
@@ -127,6 +149,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWantWorkNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
             </RadioGroup>
 
 

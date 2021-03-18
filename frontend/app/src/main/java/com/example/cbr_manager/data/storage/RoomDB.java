@@ -11,19 +11,22 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientDao;
 import com.example.cbr_manager.service.sync.Status;
 import com.example.cbr_manager.service.sync.StatusDao;
+import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.service.user.UserDao;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.service.visit.VisitDao;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Client.class, Visit.class, Status.class}, version = 1, exportSchema = false)
+@Database(entities = {Client.class, Visit.class, Status.class, User.class}, version = 1, exportSchema = false)
 @TypeConverters({TimeStampConverter.class})
 public abstract class RoomDB extends RoomDatabase {
 
     public abstract ClientDao clientDao();
     public abstract VisitDao visitDao();
     public abstract StatusDao statusDao();
+    public abstract UserDao userDao();
 
     private static volatile RoomDB Instance;
 

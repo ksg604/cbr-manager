@@ -17,7 +17,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView28"
+                android:id="@+id/baselineFoodTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Food &amp; Nutrition"
@@ -26,7 +26,7 @@
                 android:textColor="@color/purple_700"/>
 
             <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/baselineFoodSecurityTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Food security:" />
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView30"
+                android:id="@+id/baselineEnoughFoodTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Do you have enough food each month?" />
@@ -65,7 +65,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/textView31"
+                android:id="@+id/baselineFoodNutritionChild"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nutrition of child:" />

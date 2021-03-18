@@ -18,7 +18,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView33"
+                android:id="@+id/baselineEmpowermentTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple_700"
@@ -27,7 +27,7 @@
                 android:text="Empowerment" />
 
             <TextView
-                android:id="@+id/textView34"
+                android:id="@+id/baselineEmpowermentMember"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Are you a member of any organizations which assist people with disabilities?" />
@@ -54,7 +54,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/baselineEmpowermentRights"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Are you aware of your rights as a citizen living with disabilities?" />
@@ -82,7 +82,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/textView42"
+                android:id="@+id/baselineEmpowermentDifference"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Do you feel like you are able to influence people around you?" />

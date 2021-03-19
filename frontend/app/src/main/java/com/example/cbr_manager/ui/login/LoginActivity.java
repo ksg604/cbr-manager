@@ -188,10 +188,10 @@ public class LoginActivity extends AppCompatActivity {
     private void onLoginSuccess(AuthDetail authDetail, LoginUserPass loginUserPass) {
         loadingProgressBar.setVisibility(View.INVISIBLE);
 
-        // todo: remove these functions
+        // todo: Keep until new architecture is integrated. Keeps components functional on old architecture
         APIService apiService = APIService.getInstance();
         apiService.initializeServices(authDetail.token);
-        apiService.authService = new AuthService(loginUserPass);
+        apiService.authService = new AuthService(loginUserPass, authDetail);
 
         Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
         intent.putExtra(NavigationActivity.KEY_SNACK_BAR_MESSAGE, "Welcome " + authDetail.user.getFirstName());

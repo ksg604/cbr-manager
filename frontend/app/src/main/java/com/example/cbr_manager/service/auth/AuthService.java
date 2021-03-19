@@ -14,7 +14,8 @@ public class AuthService {
 
     private AuthDetail authToken;
 
-    public AuthService(LoginUserPass loginUserPass) {
+    public AuthService(LoginUserPass loginUserPass, AuthDetail authDetail) {
+        this.authToken = authDetail;
         this.loginUserPass = loginUserPass; // Todo: credentials are stored in plaintext!
     }
 
@@ -25,10 +26,6 @@ public class AuthService {
 
     public AuthDetail getAuthDetail() {
         return this.authToken;
-    }
-
-    public void setAuthDetail(AuthDetail authToken) {
-        this.authToken = authToken;
     }
 
     private AuthAPI getAuthAPI() {

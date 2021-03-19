@@ -81,15 +81,15 @@ public class NavigationActivity extends AppCompatActivity {
         });
 
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-        clientViewModel.getAllClients().subscribe(new Observer<Client>() {
+        clientViewModel.getAllClients().subscribe(new Observer<List<Client>>() {
             @Override
             public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
                 Log.d(TAG, "onSubscribe: ");
             }
 
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull Client client) {
-                Log.d(TAG, "OnNext: new client id is " + client.getId());
+            public void onNext(@io.reactivex.annotations.NonNull List<Client> client) {
+                Log.d(TAG, "OnNext: number of client is " + client.size());
             }
 
             @Override

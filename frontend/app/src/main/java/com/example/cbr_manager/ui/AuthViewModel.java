@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Single;
-import kotlin.NotImplementedError;
 
 @HiltViewModel
 public class AuthViewModel extends ViewModel {
@@ -33,7 +32,7 @@ public class AuthViewModel extends ViewModel {
         return authRepository.cachedLogin();
     }
 
-    public Single<Boolean> isAuthenticated() {
+    public Boolean isAuthenticated() {
         return authRepository.isAuthenticated();
     }
 

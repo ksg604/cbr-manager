@@ -66,11 +66,8 @@ public class AuthRepository {
                 .map(authDetail -> authDetail.user);
     }
 
-    public Single<Boolean> isAuthenticated() {
-        return userAPI.getCurrentUser(authHeader)
-                .subscribeOn(Schedulers.io())
-                .flatMap(user -> Single.just(true))
-                .onErrorReturnItem(false);
+    public Boolean isAuthenticated() {
+        return !sharedPreferencesHelper.getAuthToken().equals("");
     }
 
 

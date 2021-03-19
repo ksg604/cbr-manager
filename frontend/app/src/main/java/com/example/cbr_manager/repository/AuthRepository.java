@@ -56,6 +56,7 @@ public class AuthRepository {
         return userAPI.getCurrentUserObs(authHeader)
                 .subscribeOn(Schedulers.io())
                 .flatMap(user -> authDetailDao.getAuthDetail())
+                .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(throwable -> authDetailDao.getAuthDetail());
     }
 

@@ -29,8 +29,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.sync.Status;
-import com.example.cbr_manager.ui.StatusViewModel;
+import com.example.cbr_manager.ui.viewmodel.ClientViewModel;
+import com.example.cbr_manager.ui.viewmodel.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -38,6 +40,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Call;
@@ -49,6 +52,7 @@ public class NavigationActivity extends AppCompatActivity {
     public static String KEY_SNACK_BAR_MESSAGE = "KEY_SNACK_BAR_MESSAGE";
     private final String TAG = "Navigation Activity";
     StatusViewModel statusViewModel;
+    ClientViewModel clientViewModel;
     NavigationView navigationView;
     private APIService apiService = APIService.getInstance();
     private AppBarConfiguration appBarConfiguration;
@@ -73,6 +77,29 @@ public class NavigationActivity extends AppCompatActivity {
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
+            }
+        });
+
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        clientViewModel.getAllClients().subscribe(new Observer<Client>() {
+            @Override
+            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+                Log.d(TAG, "onSubscribe: ");
+            }
+
+            @Override
+            public void onNext(@io.reactivex.annotations.NonNull Client client) {
+                Log.d(TAG, "OnNext: new client id is " + client.getId());
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: ");
             }
         });
 

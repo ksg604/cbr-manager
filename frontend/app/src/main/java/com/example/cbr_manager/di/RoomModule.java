@@ -7,6 +7,7 @@ import androidx.room.Room;
 
 import com.example.cbr_manager.data.storage.RoomDB;
 import com.example.cbr_manager.service.auth.AuthDetailDao;
+import com.example.cbr_manager.service.client.ClientDao;
 import com.example.cbr_manager.service.sync.StatusDao;
 import com.example.cbr_manager.service.user.UserDao;
 
@@ -46,5 +47,11 @@ public class RoomModule {
     @Provides
     AuthDetailDao provideAuthDetailDao(RoomDB roomDB) {
         return roomDB.authDetailDao();
+    }
+
+    @Singleton
+    @Provides
+    ClientDao provideClientDao(RoomDB roomDB) {
+        return roomDB.clientDao();
     }
 }

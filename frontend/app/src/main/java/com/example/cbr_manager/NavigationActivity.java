@@ -33,7 +33,6 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.sync.Status;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
-import com.example.cbr_manager.ui.StatusViewModel;
 import com.example.cbr_manager.ui.viewmodel.ClientViewModel;
 import com.example.cbr_manager.ui.viewmodel.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
@@ -128,7 +127,6 @@ public class NavigationActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull User user) {
-                Log.d(TAG, "onSuccess: ");
                 navFirstName.setText(user.getFirstName());
                 navEmail.setText(user.getEmail());
             }

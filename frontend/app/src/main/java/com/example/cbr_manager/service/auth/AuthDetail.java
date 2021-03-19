@@ -34,9 +34,9 @@ public class AuthDetail {
         this.user = user;
     }
 
-    public AuthDetail(String token, User user, LoginUserPass credentials) {
+    public AuthDetail(String token, User user, LoginUserPass loginUserPass) {
         this.token = token;
         this.user = user;
-        this.loginUserPass = credentials;
+        this.loginUserPass = loginUserPass;
     }
 }

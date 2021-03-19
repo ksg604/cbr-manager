@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".ui.visitdetails.VisitDetailsActivity"
                     android:label=".VisitDetailsActivity"
-                    android:windowSoftInputMode="adjustPan"/>/>
+                    android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.createvisit.CreateVisitActivity"
             android:windowSoftInputMode="adjustResize" />

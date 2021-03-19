@@ -26,7 +26,7 @@ public interface ClientAPI {
     Call<List<Client>> getClients(@Header("Authorization") String authHeader);
 
     @GET("api/clients/")
-    Single<List<Client>> getAllClients(@Header("Authorization") String authHeader);
+    Observable<Client> getAllClients(@Header("Authorization") String authHeader);
 
     @GET("api/clients/{id}/")
     Call<Client> getClient(@Header("Authorization") String authHeader, @Path("id") int id);

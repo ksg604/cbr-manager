@@ -40,6 +40,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Call;
@@ -80,20 +81,25 @@ public class NavigationActivity extends AppCompatActivity {
         });
 
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-        clientViewModel.getAllClients().subscribe(new SingleObserver<List<Client>>() {
+        clientViewModel.getAllClients().subscribe(new Observer<Client>() {
             @Override
             public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
                 Log.d(TAG, "onSubscribe: ");
             }
 
             @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull List<Client> clients) {
-                Log.d(TAG, "onSuccess: " + clients.size());
+            public void onNext(@io.reactivex.annotations.NonNull Client client) {
+                Log.d(TAG, "OnNext: new client id is " + client.getId());
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: ");
             }
         });
 

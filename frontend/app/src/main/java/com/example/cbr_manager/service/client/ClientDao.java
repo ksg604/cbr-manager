@@ -20,28 +20,21 @@ public interface ClientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Client client);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Client> client);
-
     @Delete
     void delete(Client client);
 
-    // This function update every client where the @PrimaryKey matches, in this case it is id
     @Update
     void update(Client client);
 
-    // Read all clients in client table
     @Query("SELECT * FROM client")
     List<Client> getClients();
 
     @Query("SELECT * FROM client")
-    Single<List<Client>> getAllClients();
+    Observable<Client> getAllClients();
 
-    // Read client by id
     @Query("SELECT * FROM client WHERE client_id = :clientId")
     Client getClient(int clientId);
 
-    // Test function for clearing local database
     @Query("DELETE FROM client")
     void clearAll();
 

@@ -5,12 +5,15 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 public class ClientRepository {
@@ -21,19 +24,24 @@ public class ClientRepository {
 
     private String authHeader;
 
+    private List<Client> clientCache;
+
 
     @Inject
     ClientRepository(ClientDao clientDao, ClientAPI clientAPI, String authHeader) {
         this.clientAPI = clientAPI;
         this.clientDao = clientDao;
         this.authHeader = authHeader;
+        this.clientCache = new ArrayList<>();
     }
 
-    public Single<List<Client>> getAllClient(){
+    public Observable<Client> getAllClient(){
+        clientCache.clear();
         return clientAPI.getAllClients(authHeader)
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(client -> clientDao.insertAll(client))
-                .onErrorResumeNext((e) -> clientDao.getAllClients());
+                .doOnNext(client -> clientCache.add(client))
+                .doOnError((e) -> clientDao.getAllClients())
+                .doOnComplete(() -> insertList(clientCache));
     }
 
     public void insert(Client client) {
@@ -46,6 +54,19 @@ public class ClientRepository {
         RoomDB.databaseWriteExecutor.execute(()->{
             clientDao.update(client);
         });
+    }
+
+    private void insertList(List<Client> clients) {
+        RoomDB.databaseWriteExecutor.execute(()->{
+            for(int i = 0; i < clients.size(); i++){
+                clientDao.insert(clients.get(i));
+            }
+        });
+
+    }
+
+    public List<Client> getCache() {
+        return this.clientCache;
     }
 
 

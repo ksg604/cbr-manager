@@ -43,7 +43,7 @@ class BaselineSurvey(models.model):
     working = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
     job = models.TextField(max_length=50, default="")
     employment = models.CharField(choices=EmploymentType)
-    meets_finanicial = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
+    meets_financial = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
     disability_affects_work = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
     want_work = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
 

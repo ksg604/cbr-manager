@@ -21,7 +21,7 @@ public class AuthDetail {
 
     @Embedded
     @Expose
-    public LoginUserPass credentials;
+    public LoginUserPass loginUserPass;
 
     @Embedded
     @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
@@ -37,6 +37,6 @@ public class AuthDetail {
     public AuthDetail(String token, User user, LoginUserPass credentials) {
         this.token = token;
         this.user = user;
-        this.credentials = credentials;
+        this.loginUserPass = credentials;
     }
 }

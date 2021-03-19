@@ -30,6 +30,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.sync.Status;
+import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -47,15 +49,17 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class NavigationActivity extends AppCompatActivity {
     public static String KEY_SNACK_BAR_MESSAGE = "KEY_SNACK_BAR_MESSAGE";
-    private final String TAG = "Navigation Activity";
+    private final String TAG = "NavigationActivity";
     StatusViewModel statusViewModel;
     NavigationView navigationView;
+    AuthViewModel authViewModel;
     private APIService apiService = APIService.getInstance();
     private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         // TODO: Sample usage of a ViewModel
         statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
@@ -88,8 +92,24 @@ public class NavigationActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navFirstName = headerView.findViewById(R.id.nav_first_name);
         TextView navEmail = headerView.findViewById(R.id.nav_email);
-        navFirstName.setText(apiService.currentUser.getFirstName());
-        navEmail.setText(apiService.currentUser.getEmail());
+
+        authViewModel.getUser().subscribe(new SingleObserver<User>() {
+            @Override
+            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+            }
+
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                Log.d(TAG, "onSuccess: ");
+                navFirstName.setText(user.getFirstName());
+                navEmail.setText(user.getEmail());
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+            }
+        });
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

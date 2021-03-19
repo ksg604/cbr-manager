@@ -65,6 +65,8 @@ public class ClientRepository {
 
     }
 
-
+    public List<Client> getCache() {
+        return this.clientCache;
+    }
 
 }

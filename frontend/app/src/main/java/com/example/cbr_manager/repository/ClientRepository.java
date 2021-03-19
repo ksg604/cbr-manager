@@ -35,11 +35,11 @@ public class ClientRepository {
         this.clientCache = new ArrayList<>();
     }
 
-    public Observable<Client> getAllClient(){
+    public Observable<List<Client>> getAllClient(){
         clientCache.clear();
         return clientAPI.getAllClients(authHeader)
                 .subscribeOn(Schedulers.io())
-                .doOnNext(client -> clientCache.add(client))
+                .doOnNext(client -> clientCache.addAll(client))
                 .doOnError((e) -> clientDao.getAllClients())
                 .doOnComplete(() -> insertList(clientCache));
     }

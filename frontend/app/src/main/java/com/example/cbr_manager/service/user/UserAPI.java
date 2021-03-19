@@ -1,7 +1,9 @@
 package com.example.cbr_manager.service.user;
 
 import java.util.List;
+import java.util.Observable;
 
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -26,6 +28,6 @@ public interface UserAPI {
     @POST("api/users/")
     Call<User> createUser(@Header("Authorization") String authHeader, @Body User user);
 
-    @GET("api/users/current_user")
-    Call<User> getCurrentUser(@Header("Authorization") String authHeader);
+    @GET("api/users/current_user/")
+    Single<User> getCurrentUser(@Header("Authorization") String authHeader);
 }

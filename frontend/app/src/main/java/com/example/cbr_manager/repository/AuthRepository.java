@@ -53,7 +53,7 @@ public class AuthRepository {
 
 
     public Single<AuthDetail> cachedLogin() {
-        return userAPI.getCurrentUserObs(authHeader)
+        return userAPI.getCurrentUser(authHeader)
                 .subscribeOn(Schedulers.io())
                 .flatMap(user -> authDetailDao.getAuthDetail())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,7 +67,7 @@ public class AuthRepository {
     }
 
     public Single<Boolean> isAuthenticated() {
-        return userAPI.getCurrentUserObs(authHeader)
+        return userAPI.getCurrentUser(authHeader)
                 .subscribeOn(Schedulers.io())
                 .flatMap(user -> Single.just(true))
                 .onErrorReturnItem(false);

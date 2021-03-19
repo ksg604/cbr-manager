@@ -27,15 +27,11 @@ public class ClientRepository {
 
     private List<Client> clientCache;
 
-    private ClientSync clientSync;
-
-
     @Inject
-    ClientRepository(ClientDao clientDao, ClientAPI clientAPI, String authHeader, ClientSync clientSync) {
+    ClientRepository(ClientDao clientDao, ClientAPI clientAPI, String authHeader) {
         this.clientAPI = clientAPI;
         this.clientDao = clientDao;
         this.authHeader = authHeader;
-        this.clientSync = clientSync;
         this.clientCache = new ArrayList<>();
     }
 
@@ -69,13 +65,6 @@ public class ClientRepository {
 
     }
 
-    public List<Client> getCache() {
-        return this.clientCache;
-    }
-
-    public void sync(){
-        clientSync.requestSync();
-    }
 
 
 }

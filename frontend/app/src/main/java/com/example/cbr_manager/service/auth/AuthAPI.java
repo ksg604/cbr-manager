@@ -9,9 +9,9 @@ import retrofit2.http.POST;
 Define our API request endpoints here
  */
 public interface AuthAPI {
-    @POST("api/token-auth")
+    @POST("api/token-auth/")
     Call<AuthDetail> getToken(@Body LoginUserPass loginUserPass);
 
-    @POST("api/token-auth")
-    Single<AuthDetail> getTokenObs(@Body LoginUserPass loginUserPass);
+    @POST("api/token-auth/")
+    Single<AuthDetail> authenticate(@Body LoginUserPass loginUserPass);
 }

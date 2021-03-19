@@ -8,9 +8,14 @@ import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserAPI;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.net.SocketTimeoutException;
+
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
@@ -39,26 +44,19 @@ public class AuthRepository {
     public Single<AuthDetail> login(LoginUserPass loginUserPass) {
         return authAPI.authenticate(loginUserPass)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(authDetail -> {
-                    authDetailDao.insert(authDetail).subscribeOn(Schedulers.io()).subscribe();
-                    sharedPreferencesHelper.setAuthToken(authDetail.token);
-                })
-                .doOnError(throwable -> {
-                    if (throwable instanceof HttpException) {
-                        sharedPreferencesHelper.setAuthToken("");
-                    }
-                });
+                .doOnSuccess(this::onLoginSuccess)
+                .doOnError(this::onLoginError)
+                .observeOn(AndroidSchedulers.mainThread());
     }
-
 
     public Single<AuthDetail> cachedLogin() {
         return userAPI.getCurrentUser(authHeader)
                 .subscribeOn(Schedulers.io())
                 .flatMap(user -> authDetailDao.getAuthDetail())
-                .onErrorResumeNext(throwable -> authDetailDao.getAuthDetail().observeOn(Schedulers.io()))
+                .onErrorResumeNext(this::handleOfflineCachedLogin)
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
 
     public Single<User> getUser() {
         return authDetailDao.getAuthDetail()
@@ -68,6 +66,29 @@ public class AuthRepository {
 
     public Boolean isAuthenticated() {
         return !sharedPreferencesHelper.getAuthToken().equals("");
+    }
+
+
+    private void onLoginError(Throwable throwable) {
+        if (throwable instanceof HttpException) {
+            sharedPreferencesHelper.setAuthToken("");
+        }
+    }
+
+    private void onLoginSuccess(AuthDetail authDetail) {
+        authDetailDao.insert(authDetail).subscribeOn(Schedulers.io()).subscribe();
+        sharedPreferencesHelper.setAuthToken(authDetail.token);
+    }
+
+
+    @NotNull
+    private SingleSource<? extends AuthDetail> handleOfflineCachedLogin(Throwable throwable) {
+        if (throwable instanceof SocketTimeoutException) {
+            // Fallback to local database
+            return authDetailDao.getAuthDetail().observeOn(Schedulers.io());
+        }
+        // API Authentication error
+        return Single.error(throwable);
     }
 
 

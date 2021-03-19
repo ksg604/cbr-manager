@@ -178,8 +178,6 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onError(@NonNull Throwable e) {
                     onLoginFailure(e.getMessage());
-                    Log.d(TAG, "onError: failed to authenticate token. Reason: " + e.getMessage());
-                    sharedPreferencesHelper.setAuthToken("");
                 }
             });
         }

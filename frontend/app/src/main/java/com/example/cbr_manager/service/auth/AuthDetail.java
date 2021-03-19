@@ -8,20 +8,25 @@ import androidx.room.PrimaryKey;
 import androidx.room.RoomWarnings;
 
 import com.example.cbr_manager.service.user.User;
+import com.google.gson.annotations.Expose;
 
 @Entity(tableName = "authdetail")
 public class AuthDetail {
     @PrimaryKey
     @ColumnInfo(name = "AuthDetailId")
+    @Expose
     public int id = 1;
 
+    @Expose
     public String token;
 
     @Embedded
+    @Expose
     public LoginUserPass credentials;
 
     @Embedded
     @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
+    @Expose
     public User user;
 
     @Ignore

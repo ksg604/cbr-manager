@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'referral.apps.ReferralConfig',
     'visits.apps.VisitsConfig',
+    'baseline_survey.apps.BaselineSurveyConfig',
     'authenticate.apps.AuthenticateConfig',
     'alerts.apps.AlertsConfig',
     'django.contrib.admin',

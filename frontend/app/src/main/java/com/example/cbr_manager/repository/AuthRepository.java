@@ -53,7 +53,7 @@ public class AuthRepository {
         return userAPI.getCurrentUser(authHeader)
                 .subscribeOn(Schedulers.io())
                 .flatMap(user -> authDetailDao.getAuthDetail())
-                .onErrorResumeNext(this::handleOfflineCachedLogin)
+                .onErrorResumeNext(this::handleOfflineCachedLoginError)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -82,7 +82,7 @@ public class AuthRepository {
 
 
     @NotNull
-    private SingleSource<? extends AuthDetail> handleOfflineCachedLogin(Throwable throwable) {
+    private SingleSource<? extends AuthDetail> handleOfflineCachedLoginError(Throwable throwable) {
         if (throwable instanceof SocketTimeoutException) {
             // Fallback to local database
             return authDetailDao.getAuthDetail().observeOn(Schedulers.io());

@@ -14,8 +14,7 @@ import com.google.gson.annotations.Expose;
 public class AuthDetail {
     @PrimaryKey
     @ColumnInfo(name = "AuthDetailId")
-    @Expose
-    public int id = 1;
+    public int id = 0;
 
     @Expose
     public String token;

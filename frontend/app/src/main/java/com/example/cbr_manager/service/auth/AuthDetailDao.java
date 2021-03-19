@@ -21,6 +21,6 @@ public interface AuthDetailDao {
     Completable delete(AuthDetail authDetail);
 
     // Read client by id
-    @Query("SELECT * FROM authdetail WHERE id = 1")
+    @Query("SELECT * FROM authdetail WHERE AuthDetailId = 0")
     Single<AuthDetail> getAuthDetail();
 }

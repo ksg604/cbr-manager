@@ -26,7 +26,7 @@ public class ClientViewModel extends ViewModel {
         this.clientRepository = clientRepository;
     }
 
-    public Observable<Client> getAllClients() {
+    public Observable<List<Client>> getAllClients() {
         return this.clientRepository.getAllClient();
     }
 

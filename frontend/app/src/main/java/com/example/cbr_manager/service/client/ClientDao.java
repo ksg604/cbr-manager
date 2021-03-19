@@ -30,7 +30,7 @@ public interface ClientDao {
     List<Client> getClients();
 
     @Query("SELECT * FROM client")
-    Observable<Client> getAllClients();
+    Observable<List<Client>> getAllClients();
 
     @Query("SELECT * FROM client WHERE client_id = :clientId")
     Client getClient(int clientId);

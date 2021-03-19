@@ -4,6 +4,7 @@ import com.example.cbr_manager.data.storage.RoomDB;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
+import com.example.cbr_manager.service.client.ClientSync;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ public class ClientRepository {
 
     private List<Client> clientCache;
 
-
     @Inject
     ClientRepository(ClientDao clientDao, ClientAPI clientAPI, String authHeader) {
         this.clientAPI = clientAPI;
@@ -35,11 +35,11 @@ public class ClientRepository {
         this.clientCache = new ArrayList<>();
     }
 
-    public Observable<Client> getAllClient(){
+    public Observable<List<Client>> getAllClient(){
         clientCache.clear();
         return clientAPI.getAllClients(authHeader)
                 .subscribeOn(Schedulers.io())
-                .doOnNext(client -> clientCache.add(client))
+                .doOnNext(client -> clientCache.addAll(client))
                 .doOnError((e) -> clientDao.getAllClients())
                 .doOnComplete(() -> insertList(clientCache));
     }
@@ -68,6 +68,5 @@ public class ClientRepository {
     public List<Client> getCache() {
         return this.clientCache;
     }
-
 
 }

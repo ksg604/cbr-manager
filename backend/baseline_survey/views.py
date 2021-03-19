@@ -11,7 +11,7 @@ class BaselineSurveyViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = BaselineSurvey.objects.all()
-        client_id = self.request.query_params.get('client_id', None)
-        if client_id is not None:
-            return queryset.filter(client__id=client_id)
+        # client_id = self.request.query_params.get('client_id', None)
+        # if client_id is not None:
+        #     return queryset.filter(client__id=client_id)
         return queryset

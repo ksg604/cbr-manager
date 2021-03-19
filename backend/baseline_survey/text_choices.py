@@ -45,7 +45,6 @@ class EmploymentType(models.TextChoices):
     SELF_EMPLOYED = "Self Employed"
 
 
-class YesNoBlank(models.TextChoices):
+class YesNo(models.TextChoices):
     YES = "Yes"
-    NO = "NO"
-    BLANK = ""
+    NO = "No"

@@ -33,23 +33,23 @@ class BaselineSurvey(models.model):
     want_to_go_school = models.CharField(choices=YesNoBlank, default=YesNoBlank.BLANK)
 
     # social
-    feel_valued = models.TextField(max_length=50, default="")
-    feel_independent = models.TextField(max_length=50, default="")
-    able_to_participate = models.TextField(max_length=50, default="")
-    disability_affects_social = models.TextField(max_length=50, default="")
-    discriminated = models.TextField(max_length=50, default="")
+    feel_valued = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
+    feel_independent = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
+    able_to_participate = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
+    disability_affects_social = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
+    discriminated = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
 
     # livelihood
-    working = models.TextField(max_length=50, default="")
+    working = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
     job = models.TextField(max_length=50, default="")
     employment = models.CharField(choices=EmploymentType)
-    meets_finanicial = models.TextField(max_length=50, default="")
-    disability_affects_work = models.TextField(max_length=50, default="")
-    want_work = models.TextField(max_length=50, default="")
+    meets_finanicial = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
+    disability_affects_work = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
+    want_work = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
 
     # food, nutrition
     food_security = models.CharField(choices=GeneralHealth.choices)
-    enough_food = models.TextField(max_length=50, default=20)
+    enough_food = models.CharField(choices=YesNoBlank.choices, max_length=50, default=YesNoBlank.BLANK)
     child_nourishment = models.CharField(choices=ChildNourishment)
 
     # empowerment

@@ -49,4 +49,46 @@ public class BaselineSurvey {
     @SerializedName("health_satisfaction")
     @Expose
     private String healthSatisfaction;
+
+    // education
+    @SerializedName("attend_school")
+    @Expose
+    private String attendSchool;
+
+    @SerializedName("grade")
+    @Expose
+    private Integer grade;
+
+    @SerializedName("reason_no_school")
+    @Expose
+    private String reasonNoSchool;
+
+    @SerializedName("been_to_school")
+    @Expose
+    private String beenToSchool;
+
+    @SerializedName("want_to_go_school")
+    @Expose
+    private String wantToGoSchool;
+
+    // social
+    @SerializedName("feel_valued")
+    @Expose
+    private String feelValued;
+
+    @SerializedName("feel_independent")
+    @Expose
+    private String feelIndependent;
+
+    @SerializedName("able_to_participate")
+    @Expose
+    private String ableToParticipate;
+
+    @SerializedName("disability_affects_social")
+    @Expose
+    private String disabilityAffectsSocial;
+
+    @SerializedName("discriminated")
+    @Expose
+    private String discriminated;
 }

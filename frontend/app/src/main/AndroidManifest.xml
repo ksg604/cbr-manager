@@ -19,11 +19,6 @@
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="n">
         <activity android:name=".ui.baselinesurvey.BaselineSurveyStepperActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.create_client.CreateClientStepperActivity" />
         <activity android:name=".ui.clientselector.ClientSelectorActivity" />
@@ -56,11 +51,11 @@
             android:name=".ui.login.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Cbr_manager.NoActionBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <provider

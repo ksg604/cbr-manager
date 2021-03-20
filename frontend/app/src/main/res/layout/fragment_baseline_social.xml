@@ -202,36 +202,6 @@
                     android:layout_height="wrap_content"
                     android:text="N/A" />
             </RadioGroup>
-
-            <!--            <CheckBox-->
-<!--                android:id="@+id/baselineSocialValuedCheckBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="I feel valued as a member of my community." />-->
-
-<!--            <CheckBox-->
-<!--                android:id="@+id/baselineSocialIndependentCheckBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="I feel independent." />-->
-
-<!--            <CheckBox-->
-<!--                android:id="@+id/baselineSocialParticipateCheckBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="I am able to participate in community.social events." />-->
-
-<!--            <CheckBox-->
-<!--                android:id="@+id/baselineSocialDisabilityAffectCheckBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="My disability affects my ability to interact socially." />-->
-
-<!--            <CheckBox-->
-<!--                android:id="@+id/baselineSocialDiscriminationCheckBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="I have experienced discrimination because of my disability." />-->
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

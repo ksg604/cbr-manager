@@ -91,4 +91,64 @@ public class BaselineSurvey {
     @SerializedName("discriminated")
     @Expose
     private String discriminated;
+
+    // livelihood
+    @SerializedName("working")
+    @Expose
+    private String working;
+
+    @SerializedName("job")
+    @Expose
+    private String job;
+
+    @SerializedName("employment")
+    @Expose
+    private String employment;
+
+    @SerializedName("meets_financial")
+    @Expose
+    private String meetsEmployment;
+
+    @SerializedName("disability_affects_work")
+    @Expose
+    private String disabilityAffectsWork;
+
+    @SerializedName("want_work")
+    @Expose
+    private String wantWork;
+
+    // food, nutrition
+    @SerializedName("food_security")
+    @Expose
+    private String foodSecurity;
+
+    @SerializedName("enough_food")
+    @Expose
+    private String enoughFood;
+
+    @SerializedName("child_nourishment")
+    @Expose
+    private String childNourishment;
+
+    // empowerment
+    @SerializedName("member_of_organizations")
+    @Expose
+    private String memberOfOrganizations;
+
+    @SerializedName("aware_of_rights")
+    @Expose
+    private String awareOfRights;
+
+    @SerializedName("able_to_influence")
+    @Expose
+    private String ableToInfluence;
+
+    // shelter
+    @SerializedName("adequate_shelter")
+    @Expose
+    private String adequateShelter;
+
+    @SerializedName("access_essentials")
+    @Expose
+    private String accessEssentials;
 }

@@ -43,7 +43,7 @@ urlpatterns = \
         path('', home_view),
         path('download/<path:file_path>/', download),
         path('admin/', admin.site.urls),
-        path('api/token-auth', CustomObtainToken.as_view(), name='token-auth'),
+        path('api/token-auth/', CustomObtainToken.as_view(), name='token-auth'),
         path('api/status/', StatusViewSet.as_view()),
         path('api/', include(router.urls)),
 

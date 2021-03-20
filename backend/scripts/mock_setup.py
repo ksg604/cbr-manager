@@ -50,11 +50,11 @@ def generate_random_clients(amount):
             time.sleep(1)
 
 
-def create_default_super_user(username, email, password):
+def create_default_super_user(username, email, password, firstName, lastName):
     try:
         user = User.objects.create_superuser(username, email, password)
-        user.first_name = "John"
-        user.last_name = "Doe"
+        user.first_name = firstName
+        user.last_name = lastName
         user.save()
     except:
         pass
@@ -66,5 +66,6 @@ def download_image(image_url):
 
 
 if __name__ == '__main__':
-    create_default_super_user("user1", "email@email.com", "password123")
+    create_default_super_user("user1", "user1@email.com", "password123", "John", "Doe")
+    create_default_super_user("user2", "user2@email.com", "password123", "Jane", "Doe")
     generate_random_clients(2)

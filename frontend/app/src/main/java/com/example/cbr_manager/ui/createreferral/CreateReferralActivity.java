@@ -1,14 +1,5 @@
 package com.example.cbr_manager.ui.createreferral;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.loader.content.CursorLoader;
-
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -36,7 +27,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cbr_manager.NavigationActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
@@ -45,15 +44,10 @@ import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDe
 import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
-import com.example.cbr_manager.ui.homepage.HomepageFragment;
+import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -66,6 +60,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import io.reactivex.observers.DisposableSingleObserver;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,10 +82,13 @@ public class CreateReferralActivity extends AppCompatActivity {
     private String imageFilePath = "";
     public Client client;
     private int referralId = -1;
+    private AuthViewModel authViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
         setContentView(R.layout.activity_create_referral);
         clientId = getIntent().getIntExtra("CLIENT_ID", -1);
         setTitle("Create Referral");
@@ -218,21 +216,17 @@ public class CreateReferralActivity extends AppCompatActivity {
 
 
     private void getUserId() {
-        if (apiService.isAuthenticated()) {
-            apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful()) {
-                        User user = response.body();
-                        userId = user.getId();
-                    }
-                }
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                userId = user.getId();
+            }
 
-                }
-            });
-        }
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
     }
 
     private void setupCameraButtonListener() {
@@ -256,6 +250,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CAMERA_USE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();

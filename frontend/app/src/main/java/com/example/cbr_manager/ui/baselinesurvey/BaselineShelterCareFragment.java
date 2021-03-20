@@ -16,12 +16,6 @@ import com.stepstone.stepper.VerificationError;
 
 public class BaselineShelterCareFragment extends Fragment implements Step {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     public BaselineShelterCareFragment() {
         // Required empty public constructor
     }
@@ -29,8 +23,6 @@ public class BaselineShelterCareFragment extends Fragment implements Step {
     public static BaselineShelterCareFragment newInstance(String param1, String param2) {
         BaselineShelterCareFragment fragment = new BaselineShelterCareFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,10 +30,6 @@ public class BaselineShelterCareFragment extends Fragment implements Step {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override

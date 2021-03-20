@@ -4,6 +4,7 @@ import com.example.cbr_manager.service.alert.AlertService;
 import com.example.cbr_manager.service.auth.AuthDetail;
 import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.example.cbr_manager.service.baseline_survey.BaselineSurveyService;
 import com.example.cbr_manager.service.client.ClientService;
 import com.example.cbr_manager.service.referral.ReferralService;
 import com.example.cbr_manager.service.user.User;
@@ -24,6 +25,7 @@ public class APIService {
     public VisitService visitService;
     public AlertService alertService;
     public ReferralService referralService;
+    public BaselineSurveyService baselineSurveyService;
 
     private APIService() {
     }
@@ -41,6 +43,7 @@ public class APIService {
         this.visitService = new VisitService(token);
         this.alertService = new AlertService(token);
         this.referralService = initializeReferralService(token);
+        this.baselineSurveyService = new BaselineSurveyService(token);
     }
 
     public boolean isAuthenticated() {

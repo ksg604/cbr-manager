@@ -9,10 +9,12 @@ import androidx.room.Update;
 
 import com.example.cbr_manager.service.client.Client;
 
+import java.sql.Ref;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public interface ReferralDao {
@@ -23,8 +25,8 @@ public interface ReferralDao {
     Completable delete(Referral referral);
 
     @Query("SELECT * FROM referral")
-    List<Referral> getReferrals();
+    Observable<List<Referral>> getReferrals();
 
     @Query("SELECT * FROM referral WHERE referralId = :referralId")
-    Referral getReferral(int referralId);
+    Single<Referral> getReferral(int referralId);
 }

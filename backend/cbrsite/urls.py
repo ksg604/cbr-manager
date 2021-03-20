@@ -28,6 +28,7 @@ from sync.views import StatusViewSet
 from users.views import UserViewSet
 from visits.views import VisitViewSet
 from alerts.views import AlertViewSet
+from baseline_survey.views import BaselineSurveyViewSet
 
 router = routers.DefaultRouter()
 
@@ -37,6 +38,7 @@ router.register(r'users', UserViewSet, basename="User")
 router.register(r'visits', VisitViewSet)
 router.register(r'alerts', AlertViewSet)
 router.register(r'referrals', ReferralViewSet, basename='Referral')
+router.register(r'surveys', BaselineSurveyViewSet, basename='Survey')
 
 urlpatterns = \
     [

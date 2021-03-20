@@ -1,5 +1,11 @@
 package com.example.cbr_manager.service.referral;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,14 +14,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity
 public class Referral {
-    @SerializedName("service_detail")
-    @Expose
-    private ServiceDetail serviceDetail;
-
+    @PrimaryKey
+    @ColumnInfo(name = "referralId")
     @SerializedName("id")
     @Expose
     private Integer id;
+
+    @Embedded
+    @SerializedName("service_detail")
+    @Expose
+    private ServiceDetail serviceDetail;
 
     @SerializedName("date_created")
     @Expose
@@ -25,6 +35,7 @@ public class Referral {
     @Expose
     private String status;
 
+    @Ignore
     public Referral() {
     }
 

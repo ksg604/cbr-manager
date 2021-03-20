@@ -60,6 +60,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableSingleObserver;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -69,7 +70,7 @@ import retrofit2.Response;
 // REFERENCES: https://medium.com/android-news/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
 //             https://developer.android.com/training/camera/photobasics
 // dispatchCameraIntent() and gatherData() methods both draw from the above references.
-
+@AndroidEntryPoint
 public class CreateReferralActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 102;

@@ -27,9 +27,4 @@ public class UserService extends BaseService {
     public Call<User> getUser(int userId) {
         return this.userAPI.getUser(authHeader, userId);
     }
-
-    public Call<User> getCurrentUser() {
-        return this.userAPI.getCurrentUser(authHeader);
-    }
-
 }

@@ -27,4 +27,8 @@ public class SharedPreferencesHelper {
     public void setAuthToken(String token) {
         sharedPref.edit().putString(AUTH_TOKEN_KEY, token).apply();
     }
+
+    public void clearAuthToken() {
+        setAuthToken("");
+    }
 }

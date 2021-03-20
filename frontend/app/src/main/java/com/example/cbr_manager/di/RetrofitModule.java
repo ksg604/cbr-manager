@@ -1,8 +1,9 @@
 package com.example.cbr_manager.di;
 
 import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.auth.AuthAPI;
+import com.example.cbr_manager.service.client.ClientAPI;
+import com.example.cbr_manager.service.referral.ReferralAPI;
 import com.example.cbr_manager.service.sync.StatusAPI;
 import com.example.cbr_manager.service.user.UserAPI;
 import com.example.cbr_manager.utils.Helper;
@@ -73,6 +74,12 @@ public class RetrofitModule {
     @Provides
     ClientAPI provideClientAPI(Retrofit retrofit) {
         return retrofit.create(ClientAPI.class);
+    }
+
+    @Singleton
+    @Provides
+    ReferralAPI provideReferralAPI(Retrofit retrofit) {
+        return retrofit.create(ReferralAPI.class);
     }
 
     @Singleton

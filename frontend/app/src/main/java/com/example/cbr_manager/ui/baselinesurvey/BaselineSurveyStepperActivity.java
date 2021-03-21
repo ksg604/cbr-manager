@@ -94,7 +94,8 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
                 @Override
                 public void onResponse(Call<BaselineSurvey> call, Response<BaselineSurvey> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(BaselineSurveyStepperActivity.this, "Call successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaselineSurveyStepperActivity.this, "Survey successfully submitted!", Toast.LENGTH_SHORT).show();
+                        finish();
                     } else {
                         Toast.makeText(BaselineSurveyStepperActivity.this, "Response error.", Toast.LENGTH_SHORT).show();
                         Log.d("Response", response.errorBody().toString());

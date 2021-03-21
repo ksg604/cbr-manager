@@ -46,6 +46,7 @@ public class BaselineShelterCareFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_shelter_care, container, false);
+        baselineSurvey = ((BaselineSurveyStepperActivity) getActivity()).formBaselineSurveyObj;
         adequateRadioGroup = view.findViewById(R.id.shelterAdequateRadioGroup);
         essentialRadioGroup = view.findViewById(R.id.shelterEssentialRadioGroup);
         return view;

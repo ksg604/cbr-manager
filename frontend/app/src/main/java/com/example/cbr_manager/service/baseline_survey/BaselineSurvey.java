@@ -111,7 +111,7 @@ public class BaselineSurvey {
 
     @SerializedName("meets_financial")
     @Expose
-    private String meetsEmployment;
+    private String meetsFinancial;
 
     @SerializedName("disability_affects_work")
     @Expose
@@ -349,12 +349,12 @@ public class BaselineSurvey {
         this.employment = employment;
     }
 
-    public String getMeetsEmployment() {
-        return meetsEmployment;
+    public String getMeetsFinancial() {
+        return meetsFinancial;
     }
 
-    public void setMeetsEmployment(String meetsEmployment) {
-        this.meetsEmployment = meetsEmployment;
+    public void setMeetsFinancial(String meetsFinancial) {
+        this.meetsFinancial = meetsFinancial;
     }
 
     public String getDisabilityAffectsWork() {

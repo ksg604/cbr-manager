@@ -40,6 +40,7 @@
                 android:text="Are you working?" />
 
             <RadioGroup
+                android:id="@+id/livelihoodWorkingRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -72,6 +73,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/livelihoodWhatWorkEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
@@ -97,6 +99,7 @@
                 android:text="Does this meet your financial needs?" />
 
             <RadioGroup
+                android:id="@+id/livelihoodFinancialRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -131,6 +134,7 @@
                 android:text="Do you want to work?" />
 
             <RadioGroup
+                android:id="@+id/livelihoodWantWorkRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"

@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar loadingProgressBar;
     private LoginViewModel loginViewModel;
 
+    private APIService apiService = APIService.getInstance();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
         loadingProgressBar.setVisibility(View.INVISIBLE);
 
         // todo: Keep until new architecture is integrated. Keeps components functional on old architecture
-        APIService apiService = APIService.getInstance();
         apiService.initializeServices(authDetail.token);
         apiService.authService = new AuthService(loginUserPass, authDetail);
 

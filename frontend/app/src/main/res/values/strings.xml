@@ -75,7 +75,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... </string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="health_provisions">Health Provisions</string>
     <string name="what_was_provided">What was provided?</string>
@@ -230,4 +229,53 @@
     <string name="is_injury_below_or_above_elbow">Is injury below or above elbow?<font color='#FF0000'>*</font></string>
     <string name="refer_to">Refer To<font color='#FF0000'>*</font></string>
     <string name="_4_what_is_your_location">4. What is your location?<font color='#FF0000'>*</font></string>
+
+    <string-array name="general_health">
+        <item>N/A</item>
+        <item>Very Poor</item>
+        <item>Poor</item>
+        <item>Fine</item>
+        <item>Good</item>
+    </string-array>
+
+    <string-array name="assistive_devices">
+        <item>N/A</item>
+        <item>Wheelchair</item>
+        <item>Prosthetic</item>
+        <item>Orthotic</item>
+        <item>Crutch</item>
+        <item>Walking Stick</item>
+        <item>Hearing Aid</item>
+        <item>Glasses</item>
+        <item>Standing Frame</item>
+        <item>Corner</item>
+    </string-array>
+
+    <string-array name="health_satisfaction">
+        <item>N/A</item>
+        <item>Very Unsatisfied</item>
+        <item>Unsatisfied</item>
+        <item>Satisfied</item>
+        <item>Very Satisfied</item>
+    </string-array>
+
+    <string-array name="no_school_reason">
+        <item>N/A</item>
+        <item>Lack of Funding</item>
+        <item>My Disability Stops Me</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="employment">
+        <item>N/A</item>
+        <item>Self Employed</item>
+        <item>Employed</item>
+    </string-array>
+
+    <string-array name="child_nourishment">
+        <item>N/A</item>
+        <item>Malnourished</item>
+        <item>Undernourished</item>
+        <item>Well Nourished</item>
+    </string-array>
 </resources>

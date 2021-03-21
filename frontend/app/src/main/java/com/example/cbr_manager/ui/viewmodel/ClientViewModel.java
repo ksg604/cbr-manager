@@ -34,5 +34,9 @@ public class ClientViewModel extends ViewModel {
         clientRepository.insert(client);
     }
 
+    public Observable<List<Client>> sync() {
+        return clientRepository.sync();
+    }
+
 
 }

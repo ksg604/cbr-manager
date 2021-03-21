@@ -107,6 +107,28 @@ public class NavigationActivity extends AppCompatActivity {
             }
         });
 
+        clientViewModel.sync().subscribe(new Observer<List<Client>>() {
+            @Override
+            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+                Log.d(TAG, "sync nothing here: ");
+            }
+
+            @Override
+            public void onNext(@io.reactivex.annotations.NonNull List<Client> client) {
+                Log.d(TAG, "sync happening here ");
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Log.d(TAG, "sync onError: " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "sync onComplete: ");
+            }
+        });
+
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

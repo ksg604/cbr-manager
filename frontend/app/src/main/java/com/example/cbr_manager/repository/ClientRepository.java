@@ -93,7 +93,8 @@ public class ClientRepository {
         int[] localUpdated = new int[localClient.size()];
         for (int i = 0; i < localClient.size(); i++) {
             for (int j = 0; j < serverClient.size(); j++) {
-                if (matchID(localClient.get(i), serverClient.get(j)) && compareZoneDateTime(localClient.get(i).getUpdatedAt(), serverClient.get(j).getUpdatedAt())) {
+                if (matchID(localClient.get(i), serverClient.get(j))
+                        && compareZoneDateTime(localClient.get(i).getUpdatedAt(), serverClient.get(j).getUpdatedAt())) {
                     // Need to modify and update since we know clients in local is modified after server client of same id
                     if (localUpdated[i] != 1) {
                         localUpdated[i] = 1;

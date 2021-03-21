@@ -108,7 +108,8 @@ public class HomepageFragment extends Fragment {
         newSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), BaselineSurveyStepperActivity.class);
+                Intent intent = new Intent(getContext(), ClientSelectorActivity.class);
+                intent.putExtra("CODE", NEW_BASELINE_CODE);
                 startActivity(intent);
             }
         });

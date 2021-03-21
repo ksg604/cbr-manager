@@ -3,23 +3,28 @@ package com.example.cbr_manager.ui.baselinesurvey;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
+import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
 
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +34,9 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     private StepperLayout baseLineSurveyStepperLayout;
     public BaselineSurvey formBaselineSurveyObj;
     private APIService apiService = APIService.getInstance();
+    private int clientId = -1;
+    private int userCreatorId = 1;
+    private AuthViewModel authViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +44,28 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         setContentView(R.layout.stepper);
         setTitle("Baseline Survey");
 
+        clientId = getIntent().getIntExtra("CLIENT_ID", -1);
         formBaselineSurveyObj = new BaselineSurvey();
+//        getUserCreator();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         baseLineSurveyStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         baseLineSurveyStepperLayout.setAdapter(setupStepperAdapterWithFragments());
         baseLineSurveyStepperLayout.setListener(this);
+    }
+
+    private void getUserCreator() {
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                userCreatorId = user.getId();
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            }
+        });
     }
 
     private StepAdapter setupStepperAdapterWithFragments() {
@@ -65,9 +88,8 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
 
     private void submitSurvey() {
         if (apiService.isAuthenticated()) {
-            // TODO: TESTING.
-            formBaselineSurveyObj.setUserCreator(1);
-            formBaselineSurveyObj.setClient(1);
+            formBaselineSurveyObj.setUserCreator(userCreatorId);
+            formBaselineSurveyObj.setClient(clientId);
             apiService.baselineSurveyService.createBaselineSurvey(formBaselineSurveyObj).enqueue(new Callback<BaselineSurvey>() {
                 @Override
                 public void onResponse(Call<BaselineSurvey> call, Response<BaselineSurvey> response) {

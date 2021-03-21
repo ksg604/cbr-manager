@@ -6,16 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
+import com.google.android.material.snackbar.Snackbar;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BaselineSurveyStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
@@ -53,7 +60,31 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
 
     @Override
     public void onCompleted(View completeButton) {
+        submitSurvey();
+    }
 
+    private void submitSurvey() {
+        if (apiService.isAuthenticated()) {
+            // TODO: TESTING.
+            formBaselineSurveyObj.setUserCreator(1);
+            formBaselineSurveyObj.setClient(1);
+            apiService.baselineSurveyService.createBaselineSurvey(formBaselineSurveyObj).enqueue(new Callback<BaselineSurvey>() {
+                @Override
+                public void onResponse(Call<BaselineSurvey> call, Response<BaselineSurvey> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(BaselineSurveyStepperActivity.this, "Call successful!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(BaselineSurveyStepperActivity.this, "Response error.", Toast.LENGTH_SHORT).show();
+                        Log.d("Response", response.errorBody().toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaselineSurvey> call, Throwable t) {
+                    Toast.makeText(BaselineSurveyStepperActivity.this, "Call error.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override

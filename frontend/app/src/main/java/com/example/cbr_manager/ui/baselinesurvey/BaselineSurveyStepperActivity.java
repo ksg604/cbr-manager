@@ -1,13 +1,17 @@
 package com.example.cbr_manager.ui.baselinesurvey;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -16,6 +20,8 @@ import com.stepstone.stepper.adapter.StepAdapter;
 public class BaselineSurveyStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
     private StepperLayout baseLineSurveyStepperLayout;
+    public BaselineSurvey formBaselineSurveyObj;
+    private APIService apiService = APIService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,5 +75,29 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Leave page");
+        alertDialogBuilder.setMessage("Are you sure you want to leave? Changes will not be saved.");
+        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

@@ -11,13 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
 public class BaselineSocialFragment extends Fragment implements Step {
 
+    private View view;
+    private final String NOT_AVAILABLE = "N/A";
+    private BaselineSurvey baselineSurvey;
+
     public BaselineSocialFragment() {
-        // Required empty public constructor
     }
 
     public static BaselineSocialFragment newInstance(String param1, String param2) {
@@ -36,7 +40,9 @@ public class BaselineSocialFragment extends Fragment implements Step {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_baseline_social, container, false);
+        view = inflater.inflate(R.layout.fragment_baseline_social, container, false);
+
+        return view;
     }
 
     @Nullable

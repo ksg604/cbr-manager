@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineValuedNA"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -77,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineIndependentNA"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -111,6 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineCanParticipateNA"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -145,6 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineAffectsSocialNA"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -179,6 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineDiscriminatedNA"
                 android:orientation="horizontal">
 
                 <RadioButton

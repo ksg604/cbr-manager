@@ -41,6 +41,7 @@
                 android:text="Are you a member of any organizations which assist people with disabilities?" />
 
             <RadioGroup
+                android:id="@+id/empowermentOrganizationsRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -76,6 +77,7 @@
 
 
             <RadioGroup
+                android:id="@+id/empowermentRightsRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -110,6 +112,7 @@
                 android:text="Do you feel like you are able to influence people around you?" />
 
             <RadioGroup
+                android:id="@+id/empowermentInfluenceRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"

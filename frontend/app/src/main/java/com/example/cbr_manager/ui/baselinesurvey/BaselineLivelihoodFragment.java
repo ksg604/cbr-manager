@@ -51,6 +51,7 @@ public class BaselineLivelihoodFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_baseline_livelihood, container, false);
+        baselineSurvey = ((BaselineSurveyStepperActivity) getActivity()).formBaselineSurveyObj;
         workingRadioGroup = view.findViewById(R.id.livelihoodWorkingRadioGroup);
         whatJobEditText = view.findViewById(R.id.livelihoodWhatWorkEditText);
         enrollmentTypeSpinner = view.findViewById(R.id.baselineEmploymentTypeSpinner);

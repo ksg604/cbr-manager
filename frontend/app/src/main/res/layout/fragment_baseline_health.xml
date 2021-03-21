@@ -56,27 +56,29 @@
                 android:text="Do you have access to rehabilitation services?" />
 
             <RadioGroup
+                android:id="@+id/rehabAccessRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/rehabAccessNA"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/rehabAccessYes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Yes" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/rehabAccessNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No" />
 
                 <RadioButton
-                    android:id="@+id/radioButton3"
+                    android:id="@+id/rehabAccessNA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -90,9 +92,11 @@
                 android:text="Do you have an assistive device?" />
 
             <RadioGroup
+                android:id="@+id/assistiveDeviceHaveRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineAssistiveNARadioButton"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -124,9 +128,11 @@
                 android:text="Is your assistive device working well?" />
 
             <RadioGroup
+                android:id="@+id/assistiveDeviceWorkingRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineAssistiveWellNARadioButton"
                 android:orientation="horizontal">
 
                 <RadioButton

@@ -29,6 +29,8 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         setContentView(R.layout.stepper);
         setTitle("Baseline Survey");
 
+        formBaselineSurveyObj = new BaselineSurvey();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         baseLineSurveyStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);

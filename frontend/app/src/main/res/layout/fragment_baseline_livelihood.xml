@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineLivelihoodWorkingNA"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -89,8 +90,9 @@
             <Spinner
                 android:id="@+id/baselineEmploymentTypeSpinner"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_height="wrap_content" />
+                android:entries="@array/employment" />
 
             <TextView
                 android:id="@+id/baselineLivelihoodFinance"
@@ -102,6 +104,7 @@
                 android:id="@+id/livelihoodFinancialRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checkedButton="@+id/baselineLivelihoodFinanceNA"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
@@ -138,6 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineLivelihoodWantWorkNA"
                 android:orientation="horizontal">
 
                 <RadioButton

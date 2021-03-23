@@ -40,9 +40,11 @@
                 android:text="Do you have adequate shelter?" />
 
             <RadioGroup
+                android:id="@+id/shelterAdequateRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineAdequateShelterNA"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -74,9 +76,11 @@
                 android:text="Do you have access to essential items for your household?" />
 
             <RadioGroup
+                android:id="@+id/shelterEssentialRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineEssentialItemsNA"
                 android:orientation="horizontal">
 
                 <RadioButton

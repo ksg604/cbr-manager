@@ -40,9 +40,11 @@
                 android:text="Do you go to school?" />
 
             <RadioGroup
+                android:id="@+id/goToSchoolRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineEducationSchoolNARadioButton"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -72,6 +74,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/baselineGradeEditText"
                     android:layout_width="100dp"
                     android:layout_marginBottom="16dp"
                     android:layout_height="wrap_content"
@@ -88,8 +91,9 @@
             <Spinner
                 android:id="@+id/baselineEducationNoSchoolSpinner"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_height="wrap_content" />
+                android:entries="@array/no_school_reason" />
 
             <TextView
                 android:id="@+id/textView22"
@@ -98,9 +102,11 @@
                 android:text="Have you ever been to school before?" />
 
             <RadioGroup
+                android:id="@+id/beenToSchoolRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineEducationBeenToSchoolNARadioButton"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -132,9 +138,11 @@
                 android:text="Do you want to go to school?" />
 
             <RadioGroup
+                android:id="@+id/wantGoSchoolRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineEducationSchoolWantNA"
                 android:orientation="horizontal">
 
                 <RadioButton

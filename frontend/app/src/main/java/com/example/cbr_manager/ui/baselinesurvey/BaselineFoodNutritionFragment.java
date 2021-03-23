@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
@@ -26,6 +28,7 @@ public class BaselineFoodNutritionFragment extends Fragment implements Step {
     Spinner foodSecuritySpinner;
     RadioGroup enoughFoodRadioGroup;
     Spinner nutritionSpinner;
+    TextView referToHealthTextView;
 
     public BaselineFoodNutritionFragment() {
         // Required empty public constructor
@@ -52,7 +55,27 @@ public class BaselineFoodNutritionFragment extends Fragment implements Step {
         foodSecuritySpinner = view.findViewById(R.id.foodSecuritySpinner);
         enoughFoodRadioGroup = view.findViewById(R.id.foodEnoughFoodRadioGroup);
         nutritionSpinner = view.findViewById(R.id.baselineChildNutritionSpinner);
+        referToHealthTextView = view.findViewById(R.id.foodReferToHealthCentreTextView);
+        setVisibilityListener();
         return view;
+    }
+
+    private void setVisibilityListener() {
+        nutritionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 1) {
+                    referToHealthTextView.setVisibility(View.VISIBLE);
+                } else {
+                    referToHealthTextView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                referToHealthTextView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Nullable

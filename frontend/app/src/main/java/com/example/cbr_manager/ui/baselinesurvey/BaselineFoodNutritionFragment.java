@@ -67,13 +67,13 @@ public class BaselineFoodNutritionFragment extends Fragment implements Step {
                 if (position == 1) {
                     referToHealthTextView.setVisibility(View.VISIBLE);
                 } else {
-                    referToHealthTextView.setVisibility(View.VISIBLE);
+                    referToHealthTextView.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                referToHealthTextView.setVisibility(View.VISIBLE);
+                referToHealthTextView.setVisibility(View.GONE);
             }
         });
     }

@@ -70,16 +70,18 @@
             </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/educationWhatGradeTextInput"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/baselineGradeEditText"
                     android:layout_width="100dp"
-                    android:layout_marginBottom="16dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="Grade" />
+                    android:layout_marginBottom="16dp"
+                    android:hint="Grade"
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

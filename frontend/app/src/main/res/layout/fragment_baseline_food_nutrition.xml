@@ -96,12 +96,13 @@
                 android:entries="@array/child_nourishment" />
 
             <TextView
-                android:id="@+id/textView32"
+                android:id="@+id/foodReferToHealthCentreTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#fc0303"
                 android:drawableLeft="@drawable/ic_error_red"
-                android:text="Please refer to the health centre." />
+                android:text="Please refer to the health centre."
+                android:textColor="#fc0303"
+                android:visibility="gone" />
 
 
         </LinearLayout>

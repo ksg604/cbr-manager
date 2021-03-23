@@ -85,15 +85,17 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/reasonNoSchoolTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="Reason for not going to school:" />
 
             <Spinner
                 android:id="@+id/baselineEducationNoSchoolSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginBottom="16dp"
                 android:entries="@array/no_school_reason" />
 

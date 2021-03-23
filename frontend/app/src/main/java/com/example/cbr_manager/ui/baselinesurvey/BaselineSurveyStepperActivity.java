@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
@@ -37,22 +38,54 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     private int clientId = -1;
     private int userCreatorId = 1;
     private AuthViewModel authViewModel;
+    public Client client;
+    int age;
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stepper);
         setTitle("Baseline Survey");
+        client = new Client();
 
         clientId = getIntent().getIntExtra("CLIENT_ID", -1);
         formBaselineSurveyObj = new BaselineSurvey();
-//        getUserCreator();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
+
+
+
         baseLineSurveyStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
-        baseLineSurveyStepperLayout.setAdapter(setupStepperAdapterWithFragments());
-        baseLineSurveyStepperLayout.setListener(this);
+        getClientAge(baseLineSurveyStepperLayout);
+//        baseLineSurveyStepperLayout.setAdapter(setupStepperAdapterWithFragments(age));
+//        baseLineSurveyStepperLayout.setListener(this);
+    }
+
+    private void getClientAge(StepperLayout baseLineSurveyStepperLayout) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+                        client = response.body();
+                        age = client.getAge();
+                        Toast.makeText(BaselineSurveyStepperActivity.this, Integer.toString(age), Toast.LENGTH_SHORT).show();
+                        setupStepperAdapterWithFragments(age);
+                    } else {
+                        Toast.makeText(BaselineSurveyStepperActivity.this, "Failed.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+                    Toast.makeText(BaselineSurveyStepperActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void getUserCreator() {
@@ -68,16 +101,23 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         });
     }
 
-    private StepAdapter setupStepperAdapterWithFragments() {
+    private StepAdapter setupStepperAdapterWithFragments(int clientAge) {
         GenericStepperAdapter baselineStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
         baselineStepperAdapter.addFragment(new BaselineHealthFragment(), "Health");
-        baselineStepperAdapter.addFragment(new BaselineEducationFragment(), "Education");
+        Toast.makeText(this,  Integer.toString(client.getAge()), Toast.LENGTH_SHORT).show();
+        if (clientAge <= 18) {
+            baselineStepperAdapter.addFragment(new BaselineEducationFragment(), "Education");
+        }
         baselineStepperAdapter.addFragment(new BaselineSocialFragment(), "Social");
-        baselineStepperAdapter.addFragment(new BaselineLivelihoodFragment(), "Livelihood");
+        if (clientAge >= 16) {
+            baselineStepperAdapter.addFragment(new BaselineLivelihoodFragment(), "Livelihood");
+        }
         baselineStepperAdapter.addFragment(new BaselineFoodNutritionFragment(), "Food & Nutrition");
         baselineStepperAdapter.addFragment(new BaselineEmpowermentFragment(), "Empowerment");
         baselineStepperAdapter.addFragment(new BaselineShelterCareFragment(), "Shelter & Care");
 
+        baseLineSurveyStepperLayout.setAdapter(baselineStepperAdapter);
+        baseLineSurveyStepperLayout.setListener(this);
         return baselineStepperAdapter;
     }
 

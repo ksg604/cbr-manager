@@ -1,7 +1,9 @@
 from django.db import models
 
+from tools.models import TimestampedModel
 
-class Client(models.Model):
+
+class Client(TimestampedModel):
     """
     The clients that get visited by CBR members
     """
@@ -20,7 +22,7 @@ class Client(models.Model):
     care_present = models.CharField(max_length=5)
     contact_care = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='images/', default='images/default.png')
-    disability = models.CharField(max_length=50)
+    disability = models.CharField(max_length=250)
     date = models.DateTimeField(auto_now_add=True)
     # Extra text field for Client information(Health/Education... etc)
     health_risk = models.IntegerField(default=0)
@@ -36,6 +38,11 @@ class Client(models.Model):
     social_goal = models.TextField(blank=True)
 
     risk_score = models.IntegerField(editable=False, default=0)
+
+    # Fields updated by visits
+    goal_met_health_provision = models.TextField(blank=True, max_length=30)
+    goal_met_education_provision = models.TextField(blank=True, max_length=30)
+    goal_met_social_provision = models.TextField(blank=True, max_length=30)
 
     class Meta:
         ordering = ['id']

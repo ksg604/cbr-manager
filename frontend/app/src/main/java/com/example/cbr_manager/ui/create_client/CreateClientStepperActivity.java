@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,31 +31,29 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateClientStepperActivity extends AppCompatActivity  implements StepperLayout.StepperListener {
-
-    private StepperLayout mStepperLayout;
-
-    private APIService apiService = APIService.getInstance();
+public class CreateClientStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
     public Client formClientObj;
-
     public File photoFile;
+    private StepperLayout CreateClientStepperLayout;
+    private APIService apiService = APIService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stepper);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         formClientObj = new Client();
 
         setTitle("Create a Client");
 
-        mStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
-        mStepperLayout.setAdapter(setUpStepperAdapterWithFragments());
-        mStepperLayout.setListener(this);
+        CreateClientStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
+        CreateClientStepperLayout.setAdapter(setUpStepperAdapterWithFragments());
+        CreateClientStepperLayout.setListener(this);
     }
 
-    public GenericStepperAdapter setUpStepperAdapterWithFragments(){
+    public GenericStepperAdapter setUpStepperAdapterWithFragments() {
         // order of these fragments added matters
         GenericStepperAdapter createClientStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
 
@@ -79,7 +79,7 @@ public class CreateClientStepperActivity extends AppCompatActivity  implements S
         call.enqueue(new Callback<Client>() {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     Client client = response.body();
 
@@ -99,18 +99,27 @@ public class CreateClientStepperActivity extends AppCompatActivity  implements S
                     }
 
                     onSubmitSuccess(client);
-                } else{
-                    Snackbar.make(mStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
+                } else {
+                    Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(mStepperLayout, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
+                Snackbar.make( CreateClientStepperLayout, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        }); }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     @Override
@@ -141,10 +150,10 @@ public class CreateClientStepperActivity extends AppCompatActivity  implements S
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             View view = getCurrentFocus();
-            if ( view instanceof EditText) {
+            if (view instanceof EditText) {
                 Rect outRect = new Rect();
                 view.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     view.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -174,7 +183,7 @@ public class CreateClientStepperActivity extends AppCompatActivity  implements S
 
     }
 
-    public void setPhotoFile(File file){
+    public void setPhotoFile(File file) {
         photoFile = file;
     }
 }

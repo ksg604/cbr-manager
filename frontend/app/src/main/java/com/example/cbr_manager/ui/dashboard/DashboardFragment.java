@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,8 +21,10 @@ import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,13 +47,10 @@ public class DashboardFragment extends Fragment {
     TextView titleTextView;
     int homeAlertId;
     View root;
-    private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
         fetchNewestAlert();
         setupViewPager(root);
@@ -277,6 +275,15 @@ public class DashboardFragment extends Fragment {
                 Intent intent = new Intent(getContext(), ClientSelectorActivity.class);
                 intent.putExtra("CODE", NEW_VISIT_CODE);
                 startActivity(intent);
+            }
+        });
+
+        TextView allOutstandingReferralsTextView = root.findViewById(R.id.allOutstandingReferralsTextView);
+        allOutstandingReferralsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(DashboardFragment.this)
+                        .navigate(R.id.action_nav_dashboard_to_nav_referral_list);
             }
         });
     }

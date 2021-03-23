@@ -1,25 +1,45 @@
 package com.example.cbr_manager.ui.homepage;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.alert.Alert;
+import com.example.cbr_manager.service.client.ClientSync;
+import com.example.cbr_manager.ui.baselinesurvey.BaselineSurveyStepperActivity;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class HomepageFragment extends Fragment {
+    private APIService apiService = APIService.getInstance();
     private ImageButton newClientButton, newVisitButton, dashboardButton;
     private ImageButton newReferralButton, clientListButton, syncButton;
+    private Button newSurvey;
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
+    private final int NEW_BASELINE_CODE = 102;
 
     View view;
 
@@ -77,11 +97,23 @@ public class HomepageFragment extends Fragment {
         });
 
         syncButton = view.findViewById(R.id.syncButton);
+        syncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClientSync.getInstance(getContext()).requestSync();
+            }
+        });
 
+        newSurvey = view.findViewById(R.id.baselineSurveyButton);
+        newSurvey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ClientSelectorActivity.class);
+                intent.putExtra("CODE", NEW_BASELINE_CODE);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
-
-
-
 }

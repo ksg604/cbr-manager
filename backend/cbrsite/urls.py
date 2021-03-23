@@ -22,10 +22,13 @@ from django.conf import settings
 
 from authenticate.views import CustomObtainToken
 from clients.views_api import ClientViewSet
+from home.views import home_view, download
 from referral.views import ReferralViewSet
+from sync.views import StatusViewSet
 from users.views import UserViewSet
 from visits.views import VisitViewSet
 from alerts.views import AlertViewSet
+from baseline_survey.views import BaselineSurveyViewSet
 
 router = routers.DefaultRouter()
 
@@ -35,11 +38,16 @@ router.register(r'users', UserViewSet, basename="User")
 router.register(r'visits', VisitViewSet)
 router.register(r'alerts', AlertViewSet)
 router.register(r'referrals', ReferralViewSet, basename='Referral')
+router.register(r'surveys', BaselineSurveyViewSet, basename='Survey')
 
 urlpatterns = \
     [
+        path('', home_view),
+        path('download/<path:file_path>/', download),
         path('admin/', admin.site.urls),
-        path('api/token-auth', CustomObtainToken.as_view(), name='token-auth'),
+        path('api/token-auth/', CustomObtainToken.as_view(), name='token-auth'),
+        path('api/status/', StatusViewSet.as_view()),
         path('api/', include(router.urls)),
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
-                                                                               document_root=settings.STATIC_ROOT)
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
+                                                                           document_root=settings.STATIC_ROOT)

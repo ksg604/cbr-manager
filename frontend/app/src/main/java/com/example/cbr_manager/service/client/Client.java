@@ -1,22 +1,21 @@
 package com.example.cbr_manager.service.client;
 
-import android.util.Log;
-
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.cbr_manager.utils.CBRTimestamp;
+import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-
-// Todo: figure out image upload
 @Entity(tableName = "client")
-public class Client {
+public class Client extends CBRTimestamp {
     @SerializedName("id")
     @Expose
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "client_id")
     private Integer id;
 
     @SerializedName("cbr_client_id")
@@ -95,9 +94,21 @@ public class Client {
     @SerializedName("social_goal")
     @Expose
     private String socialGoal;
+    @SerializedName("goal_met_health_provision")
+    @Expose
+    private String goalMetHealthProvision;
+    @SerializedName("goal_met_education_provision")
+    @Expose
+    private String goalMetEducationProvision;
+    @SerializedName("goal_met_social_provision")
+    @Expose
+    private String goalMetSocialProvision;
+
+    private boolean isNewClient;
 
     //Initializing fields that are needed for POST request in itr1
     public Client() {
+        super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
         this.consent = "";
         this.date = "";
         this.firstName = "";
@@ -112,12 +123,18 @@ public class Client {
         this.carePresent = "";
         this.contactCare = "";
         this.healthRisk = 0;
+        this.healthGoal = "";
+        this.healthRequire = "";
         this.socialRisk = 0;
         this.educationRisk = 0;
+        this.isNewClient = true;
     }
+
+    @Ignore
     public Client(String consent, String date, String firstName, String lastName, String contactClient, int age,
                   String gender, int id, String location, int villageNo, String disability,
                   String carePresent, String contactCare) {
+        super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
         this.consent = consent;
         this.date = date;
         this.firstName = firstName;
@@ -343,5 +360,37 @@ public class Client {
 
     public void setCbrClientId(String cbrClientId) {
         this.cbrClientId = cbrClientId;
+    }
+
+    public String getGoalMetHealthProvision() {
+        return goalMetHealthProvision;
+    }
+
+    public void setGoalMetHealthProvision(String goalMetHealthProvision) {
+        this.goalMetHealthProvision = goalMetHealthProvision;
+    }
+
+    public String getGoalMetEducationProvision() {
+        return goalMetEducationProvision;
+    }
+
+    public void setGoalMetEducationProvision(String goalMetEducationProvision) {
+        this.goalMetEducationProvision = goalMetEducationProvision;
+    }
+
+    public String getGoalMetSocialProvision() {
+        return goalMetSocialProvision;
+    }
+
+    public void setGoalMetSocialProvision(String goalMetSocialProvision) {
+        this.goalMetSocialProvision = goalMetSocialProvision;
+    }
+
+    public boolean isNewClient() {
+        return isNewClient;
+    }
+
+    public void setNewClient(boolean newClient) {
+        isNewClient = newClient;
     }
 }

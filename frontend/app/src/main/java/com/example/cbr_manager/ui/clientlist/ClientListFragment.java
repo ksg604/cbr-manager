@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.ClientDBService;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
@@ -26,6 +27,7 @@ import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +38,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
     private ClientListRecyclerItemAdapter clientListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager clientListLayoutManager;
     private APIService apiService = APIService.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -48,12 +50,13 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        mLayoutManager = new LinearLayoutManager(getContext());
+        clientListLayoutManager = new LinearLayoutManager(getContext());
         clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
-        clientListRecyclerView.setLayoutManager(mLayoutManager);
+        clientListRecyclerView.setLayoutManager(clientListLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
         fetchClientsToList(clientList);
+
         SearchView clientSearch = root.findViewById(R.id.clientSearchView);
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -11,19 +11,19 @@
     <string name="client_information">Client Information</string>
     <string name="visits">Visits</string>
     <string name="cbr_logo">CBR Logo</string>
-    <string name="consent">1. Do you consent to this interview?</string>
+    <string name="consent">1. Do you consent to this interview?<font color='#FF0000'>*</font></string>
     <string name="date_form_complete">2. Date form completed</string>
     <string name="what_is_your_id">3. What is your ID Number?</string>
     <string name="client_creation_location">4. Location</string>
-    <string name="what_is_your_village_number">5. What is your village number?</string>
-    <string name="first_name">6. First Name</string>
-    <string name="last_name">7. Last Name</string>
-    <string name="gender">8. Gender</string>
-    <string name="age">9. Age</string>
-    <string name="contact_number">10. Contact Number(insert N/A if not available)</string>
+    <string name="what_is_your_village_number">5. What is your village number?<font color='#FF0000'>*</font></string>
+    <string name="first_name">6. First Name<font color='#FF0000'>*</font></string>
+    <string name="last_name">7. Last Name<font color='#FF0000'>*</font></string>
+    <string name="gender">8. Gender<font color='#FF0000'>*</font></string>
+    <string name="age">9. Age<font color='#FF0000'>*</font></string>
+    <string name="contact_number">10. Contact Number(insert N/A if not available)<font color='#FF0000'>*</font></string>
     <string name="type_of_disability">11. Type of disability</string>
-    <string name="caregiver_present">12. Caregiver present for interview</string>
-    <string name="caregiver_contact_number">13. If yes, caregiver contact number(insert N/A if not available)</string>
+    <string name="caregiver_present">12. Caregiver present for interview<font color='#FF0000'>*</font></string>
+    <string name="caregiver_contact_number">13. If yes, caregiver contact number(insert N/A if not available)<font color='#FF0000'>*</font></string>
     <string name="photo_of_client">14. Photo of client + caregiver if present</string>
     <string name="Year">Year</string>
     <string name="Month">Month</string>
@@ -75,7 +75,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... </string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="health_provisions">Health Provisions</string>
     <string name="what_was_provided">What was provided?</string>
@@ -215,4 +214,68 @@
     <string name="hint_search">Search</string>
     <string name="create_referral">Create Referral</string>
     <string name="cbr_client_id">CBR Client ID:</string>
+    <string name="auth_token_key">AUTH_TOKEN_KEY</string>
+
+
+    <string name="service_required">Service required<font color='#FF0000'>*</font></string>
+    <string name="describe_other">Describe Other<font color='#FF0000'>*</font></string>
+    <string name="usage_experience">Usage Experience<font color='#FF0000'>*</font></string>
+    <string name="hip_width">Hip width<font color='#FF0000'>*</font></string>
+    <string name="existing_wheelchair">Existing Wheelchair?<font color='#FF0000'>*</font></string>
+    <string name="can_the_existing_wheelchair_be_repaired">Can the existing wheelchair be repaired?<font color='#FF0000'>*</font></string>
+    <string name="client_condition">Client condition<font color='#FF0000'>*</font></string>
+    <string name="describe_other_phys">Describe Other<font color='#FF0000'>*</font></string>
+    <string name="is_injury_below_or_above_knee">Is injury below or above knee?<font color='#FF0000'>*</font></string>
+    <string name="is_injury_below_or_above_elbow">Is injury below or above elbow?<font color='#FF0000'>*</font></string>
+    <string name="refer_to">Refer To<font color='#FF0000'>*</font></string>
+    <string name="_4_what_is_your_location">4. What is your location?<font color='#FF0000'>*</font></string>
+
+    <string-array name="general_health">
+        <item>N/A</item>
+        <item>Very Poor</item>
+        <item>Poor</item>
+        <item>Fine</item>
+        <item>Good</item>
+    </string-array>
+
+    <string-array name="assistive_devices">
+        <item>N/A</item>
+        <item>Wheelchair</item>
+        <item>Prosthetic</item>
+        <item>Orthotic</item>
+        <item>Crutch</item>
+        <item>Walking Stick</item>
+        <item>Hearing Aid</item>
+        <item>Glasses</item>
+        <item>Standing Frame</item>
+        <item>Corner</item>
+    </string-array>
+
+    <string-array name="health_satisfaction">
+        <item>N/A</item>
+        <item>Very Unsatisfied</item>
+        <item>Unsatisfied</item>
+        <item>Satisfied</item>
+        <item>Very Satisfied</item>
+    </string-array>
+
+    <string-array name="no_school_reason">
+        <item>N/A</item>
+        <item>Lack of Funding</item>
+        <item>My Disability Stops Me</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="employment">
+        <item>N/A</item>
+        <item>Self Employed</item>
+        <item>Employed</item>
+    </string-array>
+
+    <string-array name="child_nourishment">
+        <item>N/A</item>
+        <item>Malnourished</item>
+        <item>Undernourished</item>
+        <item>Well Nourished</item>
+    </string-array>
 </resources>

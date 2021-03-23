@@ -1,7 +1,6 @@
 package com.example.cbr_manager.service.referral;
 
 import com.example.cbr_manager.service.BaseService;
-import com.example.cbr_manager.service.auth.AuthResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,9 +19,9 @@ public class ReferralService extends BaseService {
 
     ReferralAPI referralAPI;
 
-    public ReferralService(AuthResponse authToken) {
+    public ReferralService(String authToken) {
         super(authToken, ReferralAPI.class);
-        this.referralAPI = this.getAPI();
+        this.referralAPI = this.buildRetrofitAPI();
     }
 
     public Call<List<Referral>> getReferrals() {
@@ -48,7 +47,7 @@ public class ReferralService extends BaseService {
     }
 
     @Override
-    protected ReferralAPI getAPI() {
+    protected ReferralAPI buildRetrofitAPI() {
         GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
 
         ReferralSerializer referralSerializer = new ReferralSerializer();

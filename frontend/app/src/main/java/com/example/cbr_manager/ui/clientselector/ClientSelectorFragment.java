@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.baselinesurvey.BaselineSurveyStepperActivity;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
@@ -31,39 +32,16 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
     private ClientListRecyclerItemAdapter clientListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager clientSelectorLayoutManager;
     private APIService apiService = APIService.getInstance();
 
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
+    private final int NEW_BASELINE_CODE = 102;
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     public ClientSelectorFragment() {
         // Required empty public constructor
-    }
-
-    public static ClientSelectorFragment newInstance(String param1, String param2) {
-        ClientSelectorFragment fragment = new ClientSelectorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -73,9 +51,9 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
         View root = inflater.inflate(R.layout.fragment_client_selector, container, false);
 
         clientListRecyclerView = root.findViewById(R.id.clientSelectorRecyclerView);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        clientSelectorLayoutManager = new LinearLayoutManager(getContext());
         clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
-        clientListRecyclerView.setLayoutManager(mLayoutManager);
+        clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
         fetchClientsToList(clientList);
@@ -128,10 +106,17 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
             Intent referralIntent = new Intent(getContext(), CreateReferralActivity.class);
             referralIntent.putExtra("CLIENT_ID", clientId);
             startActivity(referralIntent);
-        } else {
+            getActivity().finish();
+        } else if (code == NEW_VISIT_CODE) {
             Intent visitsIntent = new Intent(getContext(), CreateVisitActivity.class);
             visitsIntent.putExtra("clientId", clientId);
             startActivity(visitsIntent);
+            getActivity().finish();
+        } else if (code == NEW_BASELINE_CODE) {
+            Intent baselineIntent = new Intent(getContext(), BaselineSurveyStepperActivity.class);
+            baselineIntent.putExtra("CLIENT_ID", clientId);
+            startActivity(baselineIntent);
+            getActivity().finish();
         }
     }
 }

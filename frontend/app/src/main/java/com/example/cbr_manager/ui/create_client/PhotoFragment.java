@@ -2,8 +2,10 @@ package com.example.cbr_manager.ui.create_client;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -29,10 +32,14 @@ import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class PhotoFragment extends Fragment implements Step {
@@ -41,6 +48,8 @@ public class PhotoFragment extends Fragment implements Step {
     static final int REQUEST_IMAGE_CAPTURE = 102;
     static final int REQUEST_CAMERA_USE = 101;
     private static final APIService apiService = APIService.getInstance();
+    private static final int REQUEST_GALLERY = 103;
+    private static final int PICK_FROM_GALLERY = 104;
     Button cameraButton;
     View view;
     private String imageFilePath = "";
@@ -53,7 +62,6 @@ public class PhotoFragment extends Fragment implements Step {
         view = inflater.inflate(R.layout.activity_create_client_photo, container, false);
 
         cameraButton = view.findViewById(R.id.takePhotoButton);
-        //TODO: Add Camera functionality
         setupCameraButtonListener();
 
         return view;
@@ -65,11 +73,51 @@ public class PhotoFragment extends Fragment implements Step {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                askCameraPermission();
+                showTakePictureDialog();
             }
         });
     }
 
+    private void showTakePictureDialog() {
+        AlertDialog.Builder takePhotoDialog = new AlertDialog.Builder(getContext());
+        takePhotoDialog.setTitle("Upload a photo");
+        takePhotoDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        String[] dialogItems = {"Select from gallery", "Take photo"};
+        takePhotoDialog.setItems(dialogItems, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which) {
+                    case 0:
+                        askGalleryPermission();
+                        break;
+                    case 1:
+                        askCameraPermission();
+                        break;
+                }
+            }
+        });
+        takePhotoDialog.show();
+    }
+
+    private void askGalleryPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_GALLERY);
+        } else {
+            dispatchGalleryIntent();
+        }
+    }
+
+    private void dispatchGalleryIntent() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_FROM_GALLERY);
+
+    }
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
@@ -83,6 +131,10 @@ public class PhotoFragment extends Fragment implements Step {
         if (requestCode == REQUEST_CAMERA_USE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
+            }
+        } else if (requestCode == REQUEST_GALLERY) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchGalleryIntent();
             }
         }
     }
@@ -124,9 +176,27 @@ public class PhotoFragment extends Fragment implements Step {
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             File imgFile = new File(imageFilePath);
             if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                referralImageView.setImageBitmap(myBitmap);
+                Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                referralImageView.setImageBitmap(bitmap);
             }
+        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+            try {
+                Uri selectedImage = data.getData();
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(selectedImage);
+                referralImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imageFilePath = cursor.getString(columnIndex);
+                cursor.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

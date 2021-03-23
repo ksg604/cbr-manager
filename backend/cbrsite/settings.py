@@ -32,10 +32,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'home.apps.HomeConfig',
+    'sync.apps.SyncConfig',
+    'tools.apps.ToolsConfig',
     'clients.apps.ClientsConfig',
     'users.apps.UsersConfig',
     'referral.apps.ReferralConfig',
     'visits.apps.VisitsConfig',
+    'baseline_survey.apps.BaselineSurveyConfig',
     'authenticate.apps.AuthenticateConfig',
     'alerts.apps.AlertsConfig',
     'django.contrib.admin',
@@ -85,7 +89,7 @@ WSGI_APPLICATION = 'cbrsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': BASE_DIR / os.getenv('DB_NAME', 'db.sqlite3'),
+        'NAME': os.getenv('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASS', 'postgres'),
         'HOST': os.getenv('DB_HOST', 'localhost'),

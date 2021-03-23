@@ -1,51 +1,30 @@
 package com.example.cbr_manager.service.client;
 
-import com.example.cbr_manager.BuildConfig;
-import com.example.cbr_manager.service.auth.AuthResponse;
-import com.example.cbr_manager.utils.Helper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.cbr_manager.service.BaseService;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ClientService {
-
-    private static final String BASE_URL = BuildConfig.API_URL;
-
-    private final AuthResponse authToken;
-
-    private final String authHeader;
+public class ClientService extends BaseService {
 
     private ClientAPI clientAPI;
 
-    public ClientService(AuthResponse auth) {
-        this.authToken = auth;
-
-        this.authHeader = Helper.formatTokenHeader(this.authToken);
-
-        this.clientAPI = getClientAPI();
-    }
-
-    private ClientAPI getClientAPI() {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build().create(ClientAPI.class);
+    public ClientService(String authToken) {
+        super(authToken, ClientAPI.class);
+        this.clientAPI = buildRetrofitAPI();
     }
 
     public Call<List<Client>> getClients() {
         return this.clientAPI.getClients(authHeader);
     }
+
 
     public Call<Client> modifyClient(Client client) {
         return this.clientAPI.modifyClient(authHeader, client.getId(), client);
@@ -93,7 +72,7 @@ public class ClientService {
         );
     }
 
-    public Call<Client> createClient(Client client){
+    public Call<Client> createClient(Client client) {
         return this.clientAPI.createClient(authHeader, client);
     }
 
@@ -103,11 +82,11 @@ public class ClientService {
         return this.clientAPI.uploadPhoto(authHeader, clientId, body);
     }
 
-    public Call<List<ClientHistoryRecord>> getClientHistoryRecords(int clientId){
+    public Call<List<ClientHistoryRecord>> getClientHistoryRecords(int clientId) {
         return this.clientAPI.getClientHistoryRecords(authHeader, clientId);
     }
 
-    public Call<List<ClientHistoryRecord>> getClientHistoryRecords(int clientId, String filterByField){
+    public Call<List<ClientHistoryRecord>> getClientHistoryRecords(int clientId, String filterByField) {
         return this.clientAPI.getClientHistoryRecords(authHeader, clientId, filterByField);
     }
 

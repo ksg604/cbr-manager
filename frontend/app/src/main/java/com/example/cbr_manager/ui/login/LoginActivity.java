@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,33 +24,51 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.NavigationActivity;
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.di.SharedPreferencesHelper;
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.auth.AuthResponse;
+import com.example.cbr_manager.service.auth.AuthDetail;
+import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.LoginUserPass;
+import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.utils.ErrorParser;
 import com.google.android.material.snackbar.Snackbar;
 
-import retrofit2.Call;
-import retrofit2.Callback;
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.SingleObserver;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
-    private static APIService apiService = APIService.getInstance();
+    private static String TAG = "LoginActivity";
+
+    @Inject
+    SharedPreferencesHelper sharedPreferencesHelper;
+    AuthViewModel authViewModel;
+    ProgressBar loadingProgressBar;
     private LoginViewModel loginViewModel;
 
+    private APIService apiService = APIService.getInstance();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
-        final Button buttonNewUser = findViewById(R.id.buttonNewUser);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        loadingProgressBar = findViewById(R.id.loading);
+
+        handleCachedAuthToken();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -81,9 +100,6 @@ public class LoginActivity extends AppCompatActivity {
                     updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
-
-//                //Complete and destroy login activity once successful
-//                finish();
             }
         });
 
@@ -123,44 +139,73 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
 
-                LoginUserPass credential = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-                apiService.authenticate(credential, new Callback<AuthResponse>() {
+                LoginUserPass loginUserPass = new LoginUserPass(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+
+                authViewModel.login(loginUserPass).subscribe(new SingleObserver<AuthDetail>() {
                     @Override
-                    public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                        if (apiService.isAuthenticated()) {
-                            onLoginSuccess(response);
-                        } else {
-                            handleAuthError(view, response);
-                        }
+                    public void onSubscribe(@NonNull Disposable d) {
                         hideKeyBoard(view);
-                        loadingProgressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
-                    public void onFailure(Call<AuthResponse> call, Throwable t) {
-                        Snackbar.make(view, "Connection failed to server", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                        hideKeyBoard(view);
-                        loadingProgressBar.setVisibility(View.INVISIBLE);
+                    public void onSuccess(@NonNull AuthDetail authDetail) {
+                        onLoginSuccess(authDetail, loginUserPass);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        onLoginFailure(e.getMessage());
                     }
                 });
             }
         });
-
-        buttonNewUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 
-    private void onLoginSuccess(Response<AuthResponse> response){
-        AuthResponse authResponse = response.body();
+    private void handleCachedAuthToken() {
+        String cachedToken = getCachedAuthToken();
+        if (!cachedToken.isEmpty()) {
+            authViewModel.cachedLogin().subscribe(new SingleObserver<AuthDetail>() {
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                    loadingProgressBar.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onSuccess(@NonNull AuthDetail authDetail) {
+                    Log.d(TAG, "onSuccess: caching token");
+                    onLoginSuccess(authDetail, null);
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    onLoginFailure(e.getMessage());
+                }
+            });
+        }
+    }
+
+    private void onLoginSuccess(AuthDetail authDetail, LoginUserPass loginUserPass) {
+        loadingProgressBar.setVisibility(View.INVISIBLE);
+
+        // todo: Keep until new architecture is integrated. Keeps components functional on old architecture
+        apiService.initializeServices(authDetail.token);
+        apiService.authService = new AuthService(loginUserPass, authDetail);
+
         Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-        intent.putExtra(NavigationActivity.KEY_SNACK_BAR_MESSAGE, "Welcome " + authResponse.user.getFirstName());
+        intent.putExtra(NavigationActivity.KEY_SNACK_BAR_MESSAGE, "Welcome " + authDetail.user.getFirstName());
         startActivity(intent);
+
+//        finish();
+    }
+
+    private void onLoginFailure(String errorMessage) {
+        loadingProgressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+
+    private String getCachedAuthToken() {
+        return sharedPreferencesHelper.getAuthToken();
     }
 
     private void handleAuthError(View view, Response response) {
@@ -176,7 +221,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 

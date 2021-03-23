@@ -5,26 +5,49 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.example.cbr_manager.service.auth.AuthDetail;
+import com.example.cbr_manager.service.auth.AuthDetailDao;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.client.ClientDao;
+import com.example.cbr_manager.service.sync.Status;
+import com.example.cbr_manager.service.sync.StatusDao;
+import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.service.user.UserDao;
+import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.service.visit.VisitDao;
 
-@Database(entities = {Client.class}, version = 1, exportSchema = false)
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+@Database(entities = {Client.class, Visit.class, Status.class, User.class, AuthDetail.class}, version = 1, exportSchema = false)
+@TypeConverters({TimeStampConverter.class})
 public abstract class RoomDB extends RoomDatabase {
 
     public abstract ClientDao clientDao();
+    public abstract VisitDao visitDao();
+    public abstract StatusDao statusDao();
+    public abstract UserDao userDao();
+    public abstract AuthDetailDao authDetailDao();
 
     private static volatile RoomDB Instance;
 
-    static RoomDB getDatabase(final Context context){
+    public static String DATABASE_NAME = "app_database";
+
+    private static final int NUMBER_OF_THREADS = 4;
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+
+    public static RoomDB getDatabase(final Context context){
         if (Instance == null){
             synchronized (RoomDB.class){
                 if(Instance == null){
                     Instance = Room.databaseBuilder(context.getApplicationContext(),
-                            RoomDB.class, "app_database").build();
+                            RoomDB.class, DATABASE_NAME).build();
                 }
             }
         }
         return Instance;
     }
-
 }

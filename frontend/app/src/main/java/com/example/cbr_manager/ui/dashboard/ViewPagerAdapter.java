@@ -71,7 +71,7 @@ public class ViewPagerAdapter extends PagerAdapter {
             public void onClick(View v) {
                 Intent clientInfoIntent = new Intent(context, ClientDetailsActivity.class);
 
-                clientInfoIntent.putExtra("clientId", client.getId());
+                clientInfoIntent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
 
                 activity.startActivity(clientInfoIntent);
             }

@@ -1,10 +1,12 @@
 package com.example.cbr_manager.ui.createvisit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,8 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -30,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,15 +44,18 @@ import static android.view.View.GONE;
 public class CreateVisitFragment extends Fragment {
     private int clientId = -1;
     private Integer userId = -1;
+    private int visitId = -1;
     private APIService apiService = APIService.getInstance();
     private Client client = new Client();
     private String username = "";
+    private AuthViewModel authViewModel;
 
     public CreateVisitFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         super.onCreate(savedInstanceState);
     }
 
@@ -100,24 +108,19 @@ public class CreateVisitFragment extends Fragment {
                 }
             });
 
-            apiService.userService.getCurrentUser().enqueue(new Callback<User>() {
+            authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
                 @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful()) {
-                        User user = response.body();
-                        userId = user.getId();
+                public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                    userId = user.getId();
 
-                        EditText cbrWorkerName = (EditText) view.findViewById(R.id.fragmentPreambleCBRNameEditText);
-                        cbrWorkerName.setText(user.getUsername());
-                        cbrWorkerName.setEnabled(false);
-                    } else {
-                        Toast.makeText(getContext(), "User response error.", Toast.LENGTH_SHORT).show();
-                    }
+                    EditText cbrWorkerName = (EditText) view.findViewById(R.id.fragmentPreambleCBRNameEditText);
+                    cbrWorkerName.setText(user.getUsername());
+                    cbrWorkerName.setEnabled(false);
                 }
 
                 @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(getContext(), "User failure error.", Toast.LENGTH_SHORT).show();
+                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                    Toast.makeText(getContext(), "User response error. " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -138,6 +141,7 @@ public class CreateVisitFragment extends Fragment {
                     if (response.isSuccessful()) {
                         client = response.body();
                         Visit visit = new Visit("", clientId, userId, client);
+
                         fillVisitData(visit, view);
 
                         Call<Visit> call1 = apiService.visitService.createVisit(visit);
@@ -145,9 +149,9 @@ public class CreateVisitFragment extends Fragment {
                             @Override
                             public void onResponse(Call<Visit> call, Response<Visit> response) {
                                 if (response.isSuccessful()) {
+                                    visitId = response.body().getId();
                                     Toast.makeText(getActivity(), "Visit creation successful!", Toast.LENGTH_SHORT).show();
-
-                                    ((CreateVisitActivity) getActivity()).finish();
+                                    onSubmitSuccess();
                                 } else {
                                     Toast.makeText(getActivity(), "Response error creating visit.", Toast.LENGTH_LONG).show();
                                 }
@@ -169,6 +173,13 @@ public class CreateVisitFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void onSubmitSuccess() {
+        Intent intent = new Intent(getContext(), VisitDetailsActivity.class);
+        intent.putExtra(VisitDetailsActivity.KEY_VISIT_ID, visitId);
+        startActivity(intent);
+        ((CreateVisitActivity) getActivity()).finish();
     }
 
     private boolean checkIfChipChecked(int chipId) {
@@ -359,7 +370,7 @@ public class CreateVisitFragment extends Fragment {
         visit.setAdvocacyHealthProvisionText(advocacyDescription);
         visit.setEncouragementHealthProvisionText(encouragementDescription);
 
-        visit.setGoalMetHealthProvision(healthGoalText);
+        visit.getClient().setGoalMetHealthProvision(healthGoalText);
         visit.setConclusionHealthProvision(healthConclusionDescription);
 
         // Education provision
@@ -372,7 +383,7 @@ public class CreateVisitFragment extends Fragment {
         visit.setAdvocacyEducationProvisionText(educationAdvocacyDescription);
         visit.setReferralEducationProvisionText(educationReferralDescription);
         visit.setEncouragementEducationProvisionText(educationEncouragementDescription);
-        visit.setGoalMetEducationProvision(educationGoalText);
+        visit.getClient().setGoalMetEducationProvision(educationGoalText);
         visit.setConclusionEducationProvision(educationConclusion);
 
         // Social provision
@@ -386,7 +397,7 @@ public class CreateVisitFragment extends Fragment {
         visit.setReferralSocialProvisionText(socialReferralDescription);
         visit.setEncouragementSocialProvisionText(socialEncouragementDescription);
 
-        visit.setGoalMetSocialProvision(socialGoalText);
+        visit.getClient().setGoalMetSocialProvision(socialGoalText);
         visit.setConclusionSocialProvision(socialConclusion);
     }
 

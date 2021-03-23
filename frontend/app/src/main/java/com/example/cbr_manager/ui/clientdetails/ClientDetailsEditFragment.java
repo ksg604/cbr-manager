@@ -2,7 +2,6 @@ package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,39 +30,17 @@ import retrofit2.Response;
 
 public class ClientDetailsEditFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
-
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private Spinner genderSpinner;
     String gender="";
     Client client;
+    private int clientId;
     private static final String[] paths = {"Male", "Female"};
 
 
     public ClientDetailsEditFragment() {
         // Required empty public constructor
-    }
-
-    public static ClientDetailsEditFragment newInstance(String param1, String param2) {
-        ClientDetailsEditFragment fragment = new ClientDetailsEditFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -74,8 +51,8 @@ public class ClientDetailsEditFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
 
-        Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        Bundle bundle = this.getArguments();
+        this.clientId = bundle.getInt("clientId", -1);
 
         setupGenderSpinner(root);
         setupEditTexts(clientId, root);
@@ -92,7 +69,6 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
-                Log.d("log", client.getFirstName());
                 getActivity().onBackPressed();
             }
 
@@ -104,6 +80,7 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void getAndModifyClient(int clientId, View root) {
+
 
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
@@ -213,7 +190,7 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private void setupSubmitButton(View root) {
         Intent intent = getActivity().getIntent();
-        int clientId = intent.getIntExtra("clientId", -1);
+        int clientId = this.clientId;
 
         Button submitButton = root.findViewById(R.id.clientDetailsEditSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {

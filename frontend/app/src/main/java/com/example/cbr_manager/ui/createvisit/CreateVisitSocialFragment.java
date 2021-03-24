@@ -10,11 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.cbr_manager.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateVisitSocialFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CreateVisitSocialFragment extends Fragment {
 
     public CreateVisitSocialFragment() {

@@ -2,15 +2,45 @@ package com.example.cbr_manager.ui.createvisit;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.AuthViewModel;
+import com.stepstone.stepper.Step;
+import com.stepstone.stepper.VerificationError;
 
-public class CreateVisitPurposeFragment extends Fragment {
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import io.reactivex.observers.DisposableSingleObserver;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class CreateVisitPurposeFragment extends Fragment implements Step {
+
+    private View view;
+    private AuthViewModel authViewModel;
+    private APIService apiService = APIService.getInstance();
+    private int clientId = -1;
+    private int userId = -1;
+
+    EditText clientNameEditText;
+    EditText cbrWorkerName;
+    EditText dateEditText;
 
     public CreateVisitPurposeFragment() {
         // Required empty public constructor
@@ -23,6 +53,7 @@ public class CreateVisitPurposeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         super.onCreate(savedInstanceState);
     }
 
@@ -30,6 +61,71 @@ public class CreateVisitPurposeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_visit_purpose, container, false);
+        view = inflater.inflate(R.layout.fragment_create_visit_purpose, container, false);
+        clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
+
+        clientNameEditText = view.findViewById(R.id.fragmentPreambleClientEditText);
+        cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
+        dateEditText = view.findViewById(R.id.fragmentPreambleEditTextDate);
+        setupAutoFilledTextViews(view);
+        return view;
+    }
+
+    private void setupAutoFilledTextViews(View view) {
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+                        Client client = response.body();
+                        clientNameEditText.setText(client.getFullName());
+                        clientNameEditText.setEnabled(false);
+                    }
+                }
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+                }
+            });
+
+            authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+                @Override
+                public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                    userId = user.getId();
+                    cbrWorkerName.setText(user.getUsername());
+                    cbrWorkerName.setEnabled(false);
+                }
+
+                @Override
+                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                    Toast.makeText(getContext(), "User response error. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String todayString = format.format(today);
+        dateEditText.setText(todayString);
+        dateEditText.setEnabled(false);
+    }
+
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
+        updateCreateVisit();
+        return null;
+    }
+
+    private void updateCreateVisit() {
+    }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+
     }
 }

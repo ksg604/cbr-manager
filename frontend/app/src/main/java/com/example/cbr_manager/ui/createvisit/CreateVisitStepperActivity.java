@@ -18,8 +18,8 @@ import com.stepstone.stepper.VerificationError;
 public class CreateVisitStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
     private StepperLayout createVisitStepperLayout;
-    private int clientId = -1;
-    private int userCreatorId = -1;
+    public int clientId = -1;
+    public int userCreatorId = -1;
     public Visit formVisitObj;
     private APIService apiService = APIService.getInstance();
 

@@ -218,190 +218,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/healthProvisionsWheelChairTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of wheelchair"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/wheelchairTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/protheticTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of prosthetic"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/protheticTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/orthoticTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of orthotic"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/orthoticTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/wheelchairRepairsTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of wheelchair repairs"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/wheelchairRepairsTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/referralTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of referral"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/referralTextMultiLine5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/adviceTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of advice"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/adviceTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/advocacyTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of advocacy"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/advocacyTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/encouragementTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Description of encouragement"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/encouragementTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
-
-            <TextView
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -412,13 +228,20 @@
                 android:textSize="16sp"
                 android:text="Goal met?" />
 
+            <TextView
+                android:id="@+id/healthProvisionCurrentGoalTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textColor="#000"
+                android:text="Current goal: " />
+
             <RadioGroup
                 android:id="@+id/healthProvisionsRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp">
 
                 <RadioButton

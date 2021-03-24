@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.referral.referral_list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
+
 @AndroidEntryPoint
 public class ReferralListFragment extends Fragment implements ReferralListRecyclerItemAdapter.OnItemListener{
-
+    private static final String TAG = "ReferralListFragment";
     private RecyclerView referralListRecyclerView;
     private ReferralListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager referralListLayoutManager;
@@ -98,10 +100,10 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     public void fetchReferralsToList(List<ReferralListRecyclerItem> referralUIList) {
         if (apiService.isAuthenticated()) {
             referralUIList.clear();
-
-            referralViewModel.getReferrals().subscribe(new DisposableObserver<List<Referral>>() {
+            Log.d(TAG, "fetchReferralsToList: ");
+            referralViewModel.getReferrals().subscribe(new DisposableSingleObserver<List<Referral>>() {
                 @Override
-                public void onNext(@io.reactivex.annotations.NonNull List<Referral> referrals) {
+                public void onSuccess(@io.reactivex.annotations.NonNull List<Referral> referrals) {
                     for (Referral referral : referrals) {
                         if (referral.getClient() == clientId | clientId < 0) {
                             referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(), referral.getClient(), referral.getFullName()));
@@ -112,11 +114,6 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
 
                 @Override
                 public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
-                }
-
-                @Override
-                public void onComplete() {
 
                 }
             });

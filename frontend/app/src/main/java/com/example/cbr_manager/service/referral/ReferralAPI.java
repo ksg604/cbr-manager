@@ -2,6 +2,7 @@ package com.example.cbr_manager.service.referral;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,6 +18,9 @@ import retrofit2.http.Path;
 public interface ReferralAPI {
     @GET("api/referrals/")
     Call<List<Referral>> getReferrals(@Header("Authorization") String authHeader);
+
+    @GET("api/referrals/")
+    Single<List<Referral>> getReferralsSingle(@Header("Authorization") String authHeader);
 
     @POST("api/referrals/")
     Call<Referral> createReferral(@Header("Authorization") String authHeader, @Body Referral referral);

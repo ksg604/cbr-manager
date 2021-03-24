@@ -25,7 +25,7 @@ public interface ReferralDao {
     Completable delete(Referral referral);
 
     @Query("SELECT * FROM referral")
-    Observable<List<Referral>> getReferrals();
+    Single<List<Referral>> getReferrals();
 
     @Query("SELECT * FROM referral WHERE referralId = :referralId")
     Single<Referral> getReferral(int referralId);

@@ -11,6 +11,9 @@ import com.example.cbr_manager.R;
 
 import java.util.Objects;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ClientDetailsActivity extends AppCompatActivity {
     public  static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
 

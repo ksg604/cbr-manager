@@ -263,28 +263,22 @@
                     android:text="Concluded" />
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/healthProvisionConclusionTextView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/healthGoalConclusionInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Conclusion"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                android:layout_margin="16dp"
+                android:visibility="gone"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/healthProvisionConclusionTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/healthGoalConclusionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Conclusion" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

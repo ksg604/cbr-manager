@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
@@ -29,6 +30,7 @@ public class CreateVisitHealthFragment extends Fragment {
     TextInputLayout adviceInput;
     TextInputLayout advocacyInput;
     TextInputLayout encouragementInput;
+    TextInputLayout conclusionInput;
     Chip wheelchairChip;
     Chip prostheticChip;
     Chip orthoticChip;
@@ -37,6 +39,7 @@ public class CreateVisitHealthFragment extends Fragment {
     Chip adviceChip;
     Chip advocacyChip;
     Chip encouragementChip;
+    RadioGroup goalOutcomeRadioGroup;
 
     public CreateVisitHealthFragment() {
         // Required empty public constructor
@@ -60,8 +63,23 @@ public class CreateVisitHealthFragment extends Fragment {
         
         initializeInputLayouts(view);
         initializeChips(view);
+        initializeRadioGroups(view);
         setupInputLayoutVisibility(view);
         return view;
+    }
+
+    private void initializeRadioGroups(View view) {
+        goalOutcomeRadioGroup = view.findViewById(R.id.healthProvisionsRadioGroup);
+        goalOutcomeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.concludedHPRadioButton) {
+                    conclusionInput.setVisibility(View.VISIBLE);
+                } else {
+                    conclusionInput.setVisibility(GONE);
+                }
+            }
+        });
     }
 
     private void setupInputLayoutVisibility(View view) {
@@ -97,6 +115,7 @@ public class CreateVisitHealthFragment extends Fragment {
         adviceInput = view.findViewById(R.id.healthAdviceInputLayout);
         advocacyInput = view.findViewById(R.id.healthAdvocacyInputLayout);
         encouragementInput = view.findViewById(R.id.healthEncouragementInputLayout);
+        conclusionInput = view.findViewById(R.id.healthGoalConclusionInputLayout);
     }
 
     private void initializeChips(View view) {

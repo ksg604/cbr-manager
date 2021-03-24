@@ -74,100 +74,73 @@
                     android:text="Encouragement" />
             </com.google.android.material.chip.ChipGroup>
 
-            <TextView
-                android:id="@+id/educationProvisionAdviceTextView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/educationAdviceInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Description of advice"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/educationProvisionAdviceTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/educationProvisionAdvocacyTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Description of advocacy"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/educationAdviceEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Advice" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/educationProvisionAdvocacyTextMultiLine"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/educationAdvocacyInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/educationProvisionReferralTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Description of referral"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/educationAdvocacyEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Advocacy" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/educationProvisionReferralTextMultiLine"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/educationReferralInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/educationProvisionEncouragementTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Description of encouragement"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/educationReferralEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Referral" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/educationProvisionEncouragementTextMultiLine"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/educationEncouragementInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/educationEncouragementEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Encouragement" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/educationProvisionRadioGroupTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:text="Goals met?"
                 android:textSize="16sp" />
@@ -198,27 +171,6 @@
                     android:text="Concluded" />
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/educationProvisionConclusionTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginRight="16dp"
-                android:text="Conclusion"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/educationProvisionConclusionTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

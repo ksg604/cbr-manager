@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Entity
+@Entity (tableName = "referral")
 public class Referral {
     @PrimaryKey
     @ColumnInfo(name = "referralId")
@@ -39,13 +39,14 @@ public class Referral {
     public Referral() {
     }
 
-    public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer client, Integer userCreator, String refer_to, String photoURL) {
+    public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer client, String fullName, Integer userCreator, String refer_to, String photoURL) {
         this.serviceDetail = serviceDetail;
         this.dateCreated = dateCreated;
         this.status = status;
         this.outcome = outcome;
         this.serviceType = serviceType;
         this.client = client;
+        this.fullName = fullName;
         this.userCreator = userCreator;
         this.refer_to = refer_to;
         this.photoURL = photoURL;
@@ -62,6 +63,10 @@ public class Referral {
     @SerializedName("client")
     @Expose
     private Integer client;
+
+    @SerializedName("client_name")
+    @Expose(serialize = false) // read only field
+    private String fullName;
 
     @SerializedName("user_creator")
     @Expose
@@ -105,6 +110,14 @@ public class Referral {
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getStatus() {

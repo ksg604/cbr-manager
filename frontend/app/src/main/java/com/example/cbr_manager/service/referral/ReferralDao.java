@@ -19,7 +19,7 @@ import io.reactivex.Single;
 @Dao
 public interface ReferralDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(Referral referral);
+    void insert(Referral referral);
 
     @Delete
     Completable delete(Referral referral);

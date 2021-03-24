@@ -28,6 +28,9 @@ public interface ReferralAPI {
     @GET("api/referrals/{id}/")
     Call<Referral> getReferral(@Header("Authorization") String authHeader, @Path("id") int id);
 
+    @GET("api/referrals/{id}/")
+    Single<Referral> getReferralSingle(@Header("Authorization") String authHeader, @Path("id") int id);
+
     @PUT("api/referrals/{id}/")
     Call<Referral> updateReferral(@Header("Authorization") String authHeader, @Path("id") int id, @Body Referral referral);
 

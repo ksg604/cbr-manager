@@ -110,6 +110,7 @@
                 android:id="@+id/healthWheelChairInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -123,6 +124,7 @@
                 android:id="@+id/healthProstheticInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/healthProstheticEditText"
@@ -135,6 +137,7 @@
                 android:id="@+id/healthOrthoticInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -148,6 +151,7 @@
                 android:id="@+id/healthWheelchairRepairsInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -161,6 +165,7 @@
                 android:id="@+id/healthReferralInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -174,6 +179,7 @@
                 android:id="@+id/healthAdviceInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -187,6 +193,7 @@
                 android:id="@+id/healthAdvocacyInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -200,6 +207,7 @@
                 android:id="@+id/healthEncouragementInputLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText

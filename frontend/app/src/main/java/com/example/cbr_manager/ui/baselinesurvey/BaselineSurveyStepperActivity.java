@@ -41,10 +41,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     public Client client;
     int age;
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +57,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
 
         baseLineSurveyStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         getClientAge(baseLineSurveyStepperLayout);
-//        baseLineSurveyStepperLayout.setAdapter(setupStepperAdapterWithFragments(age));
-//        baseLineSurveyStepperLayout.setListener(this);
     }
 
     private void getClientAge(StepperLayout baseLineSurveyStepperLayout) {
@@ -73,7 +67,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
                     if (response.isSuccessful()) {
                         client = response.body();
                         age = client.getAge();
-                        Toast.makeText(BaselineSurveyStepperActivity.this, Integer.toString(age), Toast.LENGTH_SHORT).show();
                         setupStepperAdapterWithFragments(age);
                     } else {
                         Toast.makeText(BaselineSurveyStepperActivity.this, "Failed.", Toast.LENGTH_SHORT).show();
@@ -104,7 +97,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     private StepAdapter setupStepperAdapterWithFragments(int clientAge) {
         GenericStepperAdapter baselineStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
         baselineStepperAdapter.addFragment(new BaselineHealthFragment(), "Health");
-        Toast.makeText(this,  Integer.toString(client.getAge()), Toast.LENGTH_SHORT).show();
         if (clientAge <= 18) {
             baselineStepperAdapter.addFragment(new BaselineEducationFragment(), "Education");
         }

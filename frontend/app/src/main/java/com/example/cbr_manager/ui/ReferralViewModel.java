@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.cbr_manager.repository.ReferralRepository;
 import com.example.cbr_manager.service.referral.Referral;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -29,8 +27,11 @@ public class ReferralViewModel extends ViewModel {
         return referralRepository.getReferral(id);
     }
 
-    public Single<List<Referral>> getReferrals(){
+    public Observable<Referral> getReferrals(){
         return referralRepository.getReferrals();
     }
 
+    public Single<Referral> createReferral(Referral referral) {
+        return referralRepository.createReferral(referral);
+    }
 }

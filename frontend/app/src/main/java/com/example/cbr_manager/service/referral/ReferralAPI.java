@@ -2,6 +2,7 @@ package com.example.cbr_manager.service.referral;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -20,10 +21,13 @@ public interface ReferralAPI {
     Call<List<Referral>> getReferrals(@Header("Authorization") String authHeader);
 
     @GET("api/referrals/")
-    Single<List<Referral>> getReferralsSingle(@Header("Authorization") String authHeader);
+    Observable<List<Referral>> getReferralsObs(@Header("Authorization") String authHeader);
 
     @POST("api/referrals/")
     Call<Referral> createReferral(@Header("Authorization") String authHeader, @Body Referral referral);
+
+    @POST("api/referrals/")
+    Single<Referral> createReferralSingle(@Header("Authorization") String authHeader, @Body Referral referral);
 
     @GET("api/referrals/{id}/")
     Call<Referral> getReferral(@Header("Authorization") String authHeader, @Path("id") int id);

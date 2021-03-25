@@ -18,14 +18,18 @@ import io.reactivex.Single;
 
 @Dao
 public interface ReferralDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Referral referral);
+    long[] insertAll(List<Referral> referrals);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(Referral referral);
 
     @Delete
     Completable delete(Referral referral);
 
     @Query("SELECT * FROM referral")
-    Single<List<Referral>> getReferrals();
+    Observable<List<Referral>> getReferrals();
 
     @Query("SELECT * FROM referral WHERE referralId = :referralId")
     Single<Referral> getReferral(int referralId);

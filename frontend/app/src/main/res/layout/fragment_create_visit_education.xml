@@ -80,6 +80,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -95,6 +96,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -109,6 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:visibility="gone"
                 android:layout_marginBottom="16dp"
                 android:layout_height="match_parent">
 
@@ -123,6 +126,7 @@
                 android:id="@+id/educationEncouragementInputLayout"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="16dp"
+                android:visibility="gone"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_height="match_parent">
@@ -177,6 +181,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText

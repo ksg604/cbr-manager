@@ -21,6 +21,7 @@ public class CreateVisitEducationFragment extends Fragment {
     TextInputLayout advocacyInput;
     TextInputLayout referralInput;
     TextInputLayout encouragementInput;
+    TextInputLayout conclusionInput;
     Chip adviceChip;
     Chip advocacyChip;
     Chip referralChip;
@@ -49,6 +50,7 @@ public class CreateVisitEducationFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_create_visit_education, container, false);
         initializeInputLayouts(view);
         initializeChips(view);
+        initializeRadioGroups(view);
         setupInputLayoutVisibility();
         return view;
     }
@@ -58,6 +60,20 @@ public class CreateVisitEducationFragment extends Fragment {
         setChipListener(advocacyChip, advocacyInput);
         setChipListener(referralChip, referralInput);
         setChipListener(encouragementChip, encouragementInput);
+    }
+
+    private void initializeRadioGroups(View view) {
+        goalsMetRadioGroup = view.findViewById(R.id.healthProvisionsRadioGroup);
+        goalsMetRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.concludedHPRadioButton) {
+                    conclusionInput.setVisibility(View.VISIBLE);
+                } else {
+                    conclusionInput.setVisibility(GONE);
+                }
+            }
+        });
     }
 
     private void setChipListener(Chip chip, TextInputLayout textInputLayout) {
@@ -85,5 +101,6 @@ public class CreateVisitEducationFragment extends Fragment {
         advocacyInput = view.findViewById(R.id.educationAdvocacyInputLayout);
         referralInput = view.findViewById(R.id.educationReferralInputLayout);
         encouragementInput = view.findViewById(R.id.educationEncouragementInputLayout);
+        conclusionInput = view.findViewById(R.id.educationConclusionInputLayout);
     }
 }

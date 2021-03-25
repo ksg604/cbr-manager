@@ -31,6 +31,7 @@ public class ReferralRepository {
     public Observable<Referral> getReferrals() {
         return referralAPI.getReferralsObs(authHeader)
                 .flatMap(Observable::fromIterable)
+                .doOnNext(referral -> referralDao.insert(referral))
                 .onErrorResumeNext(this::getLocalReferrals)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

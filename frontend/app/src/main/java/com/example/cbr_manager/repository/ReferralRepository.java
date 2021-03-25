@@ -5,10 +5,11 @@ import com.example.cbr_manager.service.referral.ReferralAPI;
 import com.example.cbr_manager.service.referral.ReferralDao;
 
 import java.net.SocketTimeoutException;
-import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,25 +28,19 @@ public class ReferralRepository {
         this.authHeader = authHeader;
     }
 
-    public Single<List<Referral>> getReferrals() {
-        return referralAPI.getReferralsSingle(authHeader)
+    public Observable<Referral> getReferrals() {
+        return referralAPI.getReferralsObs(authHeader)
+                .flatMap(Observable::fromIterable)
+                .onErrorResumeNext(this::getLocalReferrals)
                 .subscribeOn(Schedulers.io())
-                .map(referrals -> {
-                    for (Referral referral :
-                            referrals) {
-                        referralDao.insert(referral);
-                    }
-                    return referrals;
-                })
-                .onErrorResumeNext(this::handleOfflineReferrals)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private SingleSource<? extends List<Referral>> handleOfflineReferrals(Throwable throwable) {
+    private ObservableSource<? extends Referral> getLocalReferrals(Throwable throwable) {
         if (throwable instanceof SocketTimeoutException) {
-            return referralDao.getReferrals();
+            return referralDao.getReferrals().flatMap(Observable::fromIterable);
         }
-        return Single.error(throwable);
+        return Observable.error(throwable);
     }
 
     public Single<Referral> getReferral(int id) {

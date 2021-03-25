@@ -26,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
 @AndroidEntryPoint
 public class ReferralListFragment extends Fragment implements ReferralListRecyclerItemAdapter.OnItemListener{
@@ -98,26 +100,31 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     }
 
     public void fetchReferralsToList(List<ReferralListRecyclerItem> referralUIList) {
-        if (apiService.isAuthenticated()) {
-            referralUIList.clear();
-            Log.d(TAG, "fetchReferralsToList: ");
-            referralViewModel.getReferrals().subscribe(new DisposableSingleObserver<List<Referral>>() {
+            referralViewModel.getReferrals().subscribe(new Observer<Referral>() {
                 @Override
-                public void onSuccess(@io.reactivex.annotations.NonNull List<Referral> referrals) {
-                    for (Referral referral : referrals) {
-                        if (referral.getClient() == clientId | clientId < 0) {
-                            referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(), referral.getClient(), referral.getFullName()));
-                        }
-                        adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(searchView.getQuery());
+                public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+                    referralUIList.clear();
+                }
+
+                @Override
+                public void onNext(@io.reactivex.annotations.NonNull Referral referral) {
+                    if (referral.getClient() == clientId | clientId < 0) {
+                        Log.d(TAG, "onNext: " + referral.getId());
+                        referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(), referral.getClient(), referral.getFullName()));
                     }
                 }
 
                 @Override
                 public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                    Log.d(TAG, "onError: " + e.getMessage());
+                }
 
+                @Override
+                public void onComplete() {
+                    Log.d(TAG, "onComplete: ");
+                    adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(searchView.getQuery());
                 }
             });
-        }
     }
 
     @Override

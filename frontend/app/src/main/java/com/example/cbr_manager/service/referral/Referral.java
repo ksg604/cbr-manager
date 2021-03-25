@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Entity (tableName = "referral")
 public class Referral {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "referralId")
     @SerializedName("id")
     @Expose

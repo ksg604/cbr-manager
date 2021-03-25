@@ -23,7 +23,7 @@ class BaselineSurvey(models.Model):
     assistive_device_working = models.CharField(choices=YesNo.choices, max_length=50, blank=True)
     assistive_device_need = models.CharField(choices=YesNo.choices, max_length=50, blank=True)
     assistive_device = models.CharField(choices=AssistiveDevice.choices, default=AssistiveDevice.NONE, max_length=50, blank=True)
-    health_satisfaction = models.CharField(choices=HealthServiceSatisfaction.choices, max_length=50)
+    health_satisfaction = models.CharField(choices=HealthServiceSatisfaction.choices, max_length=50, blank=True)
 
     # education
     attend_school = models.CharField(choices=YesNo.choices, max_length=50, blank=True)

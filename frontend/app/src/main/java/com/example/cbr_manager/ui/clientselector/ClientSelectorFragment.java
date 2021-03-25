@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.baselinesurvey.BaselineSurveyStepperActivity;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
@@ -36,6 +37,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
 
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
+    private final int NEW_BASELINE_CODE = 102;
 
 
     public ClientSelectorFragment() {
@@ -105,10 +107,15 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
             referralIntent.putExtra("CLIENT_ID", clientId);
             startActivity(referralIntent);
             getActivity().finish();
-        } else {
+        } else if (code == NEW_VISIT_CODE) {
             Intent visitsIntent = new Intent(getContext(), CreateVisitActivity.class);
             visitsIntent.putExtra("clientId", clientId);
             startActivity(visitsIntent);
+            getActivity().finish();
+        } else if (code == NEW_BASELINE_CODE) {
+            Intent baselineIntent = new Intent(getContext(), BaselineSurveyStepperActivity.class);
+            baselineIntent.putExtra("CLIENT_ID", clientId);
+            startActivity(baselineIntent);
             getActivity().finish();
         }
     }

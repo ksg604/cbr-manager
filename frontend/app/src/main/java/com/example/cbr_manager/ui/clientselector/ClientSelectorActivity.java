@@ -16,6 +16,7 @@ public class ClientSelectorActivity extends AppCompatActivity {
     boolean isNewReferral = false;
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
+    private final int NEW_BASELINE_CODE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

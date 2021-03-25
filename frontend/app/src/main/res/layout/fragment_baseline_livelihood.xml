@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.baselinesurvey.BaselineLivelihoodFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/baselineLivelihoodTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:layout_marginBottom="32dp"
+                android:textColor="@color/purple_700"
+                android:text="Livelihood" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_marginBottom="16dp"
+                android:text="Select an option for those that apply to you, otherwise leave as blank or 'N/A':" />
+
+            <TextView
+                android:id="@+id/baselineLivelihoodWorking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Are you working?" />
+
+            <RadioGroup
+                android:id="@+id/livelihoodWorkingRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineLivelihoodWorkingNA"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWorkingYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWorkingNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWorkingNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/livelihoodWhatJobTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/livelihoodWhatWorkEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:hint="What do you do?" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/baselineLivelihoodEmployment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Employment type:" />
+
+            <Spinner
+                android:id="@+id/baselineEmploymentTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:entries="@array/employment" />
+
+            <TextView
+                android:id="@+id/baselineLivelihoodFinance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Does this meet your financial needs?" />
+
+            <RadioGroup
+                android:id="@+id/livelihoodFinancialRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/baselineLivelihoodFinanceNA"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodFinanceYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodFinanceNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodFinanceNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/baselineLivelihoodWantWork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Do you want to work?" />
+
+            <RadioGroup
+                android:id="@+id/livelihoodWantWorkRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineLivelihoodWantWorkNA"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWantWorkYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWantWorkNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineLivelihoodWantWorkNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
+            </RadioGroup>
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

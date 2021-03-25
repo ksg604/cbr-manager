@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.baselinesurvey.BaselineFoodNutritionFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/baselineFoodTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Food &amp; Nutrition"
+                android:layout_marginBottom="32dp"
+                android:textSize="24sp"
+                android:textColor="@color/purple_700"/>
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_marginBottom="16dp"
+                android:text="Select an option for each that apply to you, otherwise leave as 'N/A':" />
+
+            <TextView
+                android:id="@+id/baselineFoodSecurityTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Food security:" />
+
+            <Spinner
+                android:id="@+id/foodSecuritySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:entries="@array/general_health" />
+
+            <TextView
+                android:id="@+id/baselineEnoughFoodTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Do you have enough food each month?" />
+
+            <RadioGroup
+                android:id="@+id/foodEnoughFoodRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineEnoughFoodNA"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineEnoughFoodYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineEnoughFoodNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineEnoughFoodNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/baselineFoodNutritionChild"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nutrition of child:" />
+
+            <Spinner
+                android:id="@+id/baselineChildNutritionSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:entries="@array/child_nourishment" />
+
+            <TextView
+                android:id="@+id/foodReferToHealthCentreTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_error_red"
+                android:text="Please refer to the health centre."
+                android:textColor="#fc0303"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

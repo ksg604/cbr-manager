@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.baselinesurvey.BaselineEmpowermentFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/baselineEmpowermentTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_700"
+                android:textSize="24dp"
+                android:layout_marginBottom="32dp"
+                android:text="Empowerment" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_marginBottom="16dp"
+                android:text="Select 'Yes' or 'No' to the questions that apply to you, otherwise leave as 'N/A':" />
+
+            <TextView
+                android:id="@+id/baselineEmpowermentMember"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Are you a member of any organizations which assist people with disabilities?" />
+
+            <RadioGroup
+                android:id="@+id/empowermentOrganizationsRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineOrganizationNA"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineOrganizationYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineOrganizationNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineOrganizationNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/baselineEmpowermentRights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Are you aware of your rights as a citizen living with disabilities?" />
+
+
+            <RadioGroup
+                android:id="@+id/empowermentRightsRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineAwareRightsNA"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineAwareRightsYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineAwareRightsNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineAwareRightsNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/baselineEmpowermentDifference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Do you feel like you are able to influence people around you?" />
+
+            <RadioGroup
+                android:id="@+id/empowermentInfluenceRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@+id/baselineCanInfluenceNA"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/baselineCanInfluenceYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/baselineCanInfluenceNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No" />
+
+                <RadioButton
+                    android:id="@+id/baselineCanInfluenceNA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="N/A" />
+            </RadioGroup>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

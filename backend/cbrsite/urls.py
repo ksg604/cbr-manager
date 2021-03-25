@@ -29,6 +29,7 @@ from users.views import UserViewSet
 from visits.views import VisitViewSet
 from alerts.views import AlertViewSet
 from baseline_survey.views import BaselineSurveyViewSet
+from goals.views import GoalViewSet
 
 router = routers.DefaultRouter()
 
@@ -39,6 +40,7 @@ router.register(r'visits', VisitViewSet)
 router.register(r'alerts', AlertViewSet)
 router.register(r'referrals', ReferralViewSet, basename='Referral')
 router.register(r'surveys', BaselineSurveyViewSet, basename='Survey')
+router.register(r'goals', GoalViewSet, basename='Goal')
 
 urlpatterns = \
     [

@@ -30,6 +30,7 @@ import com.example.cbr_manager.service.auth.AuthDetail;
 import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.utils.ErrorParser;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar loadingProgressBar;
     private LoginViewModel loginViewModel;
 
+    private APIService apiService = APIService.getInstance();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,7 +189,6 @@ public class LoginActivity extends AppCompatActivity {
         loadingProgressBar.setVisibility(View.INVISIBLE);
 
         // todo: Keep until new architecture is integrated. Keeps components functional on old architecture
-        APIService apiService = APIService.getInstance();
         apiService.initializeServices(authDetail.token);
         apiService.authService = new AuthService(loginUserPass, authDetail);
 

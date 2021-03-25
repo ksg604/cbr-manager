@@ -58,6 +58,9 @@ class Client(TimestampedModel):
 
         super(Client, self).save(*args, **kwargs)
 
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+
     def _generate_cbr_client_id(self):
         def get_first_letter(text):
             if text and len(text) > 0:

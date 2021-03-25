@@ -48,7 +48,7 @@ public class APIService {
 
     public boolean isAuthenticated() {
         // Todo needs a better check, maybe a specific endpoint to check validity of auth token
-        return authService.getAuthDetail() != null;
+        return true;
     }
 
     private ReferralService initializeReferralService(String authResponse) {

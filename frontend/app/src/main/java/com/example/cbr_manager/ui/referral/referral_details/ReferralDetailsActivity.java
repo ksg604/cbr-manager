@@ -10,6 +10,9 @@ import com.example.cbr_manager.R;
 
 import java.util.Objects;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ReferralDetailsActivity extends AppCompatActivity {
 
     @Override

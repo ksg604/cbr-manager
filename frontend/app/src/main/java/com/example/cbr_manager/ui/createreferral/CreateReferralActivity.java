@@ -47,6 +47,7 @@ import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticService
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -77,18 +78,20 @@ public class CreateReferralActivity extends AppCompatActivity {
     static final int REQUEST_CAMERA_USE = 101;
     private static final int PICK_FROM_GALLERY = 1;
     private static final int REQUEST_GALLERY = 103;
+    public Client client;
     int clientId = -1;
     private Integer userId = -1;
     private APIService apiService = APIService.getInstance();
     private String imageFilePath = "";
-    public Client client;
     private int referralId = -1;
     private AuthViewModel authViewModel;
+    private ReferralViewModel referralViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
 
         setContentView(R.layout.activity_create_referral);
         clientId = getIntent().getIntExtra("CLIENT_ID", -1);
@@ -189,7 +192,7 @@ public class CreateReferralActivity extends AppCompatActivity {
         takePhotoDialog.setItems(dialogItems, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch(which) {
+                switch (which) {
                     case 0:
                         askGalleryPermission();
                         break;
@@ -204,7 +207,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     private void askGalleryPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_GALLERY);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_GALLERY);
         } else {
             dispatchGalleryIntent();
         }
@@ -243,7 +246,7 @@ public class CreateReferralActivity extends AppCompatActivity {
 
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_USE);
         } else {
             dispatchTakePictureIntent();
         }
@@ -266,20 +269,20 @@ public class CreateReferralActivity extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
 
-            } catch (ActivityNotFoundException | IOException e) {
-                Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
-            }
+        } catch (ActivityNotFoundException | IOException e) {
+            Toast.makeText(this, "Error making file.", Toast.LENGTH_SHORT).show();
+        }
 
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider", photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(this,
+                    "com.example.android.fileprovider", photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
 
     }
 
@@ -299,14 +302,14 @@ public class CreateReferralActivity extends AppCompatActivity {
                 InputStream inputStream = getContentResolver().openInputStream(selectedImage);
                 referralImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream));
 
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-               imageFilePath = cursor.getString(columnIndex);
+                imageFilePath = cursor.getString(columnIndex);
                 cursor.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -329,7 +332,7 @@ public class CreateReferralActivity extends AppCompatActivity {
         boolean requiredFieldsFilled = true;
 
         RadioGroup selectedService = findViewById(R.id.createReferralServiceRadioGroup);
-        if(!validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView)) {
+        if (!validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView)) {
             requiredFieldsFilled = false;
         }
 
@@ -455,7 +458,7 @@ public class CreateReferralActivity extends AppCompatActivity {
             OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
 
             TextInputEditText otherServiceEditText = findViewById(R.id.referralOtherServiceDescription);
-            if(!validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText())) {
+            if (!validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText())) {
                 requiredFieldsFilled = false;
             }
             validationErrorListener(R.id.referralOtherServiceDescription, R.id.referralDescribeOtherTextInputLayout);
@@ -485,47 +488,38 @@ public class CreateReferralActivity extends AppCompatActivity {
     }
 
     private void makeServerCall(Referral referral) {
-        if (apiService.isAuthenticated()) {
-            Call<Referral> call = apiService.getReferralService().createReferral(referral);
-            call.enqueue(new Callback<Referral>() {
-                @Override
-                public void onResponse(Call<Referral> call, Response<Referral> response) {
-                    if (response.isSuccessful()) {
-                        Referral submittedReferral = response.body();
-                        referralId = submittedReferral.getId();
-                        File photoFile = new File(imageFilePath);
-                        if (photoFile.exists()) {
-                            Call<ResponseBody> photoCall = apiService.getReferralService().uploadPhoto(photoFile, submittedReferral.getId().intValue());
-                            photoCall.enqueue(new Callback<ResponseBody>() {
-                                @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    if (response.isSuccessful()) {
-                                        Toast.makeText(CreateReferralActivity.this, "Referral Photo successfully uploaded!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(CreateReferralActivity.this, "Referral photo upload failed.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                                }
-                            });
+        referralViewModel.createReferral(referral).subscribe(new DisposableSingleObserver<Referral>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull Referral submittedReferral) {
+                referralId = submittedReferral.getId();
+                File photoFile = new File(imageFilePath);
+                if (photoFile.exists()) {
+                    Call<ResponseBody> photoCall = apiService.getReferralService().uploadPhoto(photoFile, submittedReferral.getId().intValue());
+                    photoCall.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(CreateReferralActivity.this, "Referral Photo successfully uploaded!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CreateReferralActivity.this, "Referral photo upload failed.", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
-                        Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
-                        onSubmitSuccess();
-                    } else {
-                        Toast.makeText(CreateReferralActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                @Override
-                public void onFailure(Call<Referral> call, Throwable t) {
-                    Toast.makeText(CreateReferralActivity.this, "Failure connecting to server.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-            });
-        }
+                Toast.makeText(CreateReferralActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
+                onSubmitSuccess();
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Toast.makeText(CreateReferralActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void onSubmitSuccess() {
@@ -666,7 +660,6 @@ public class CreateReferralActivity extends AppCompatActivity {
         TextInputLayout referralServiceOther = findViewById(R.id.referralDescribeOtherTextInputLayout);
         referralServiceOther.setVisibility(View.GONE);
     }
-
 
 
     @Override

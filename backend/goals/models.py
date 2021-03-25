@@ -6,8 +6,8 @@ from clients.models import Client
 
 class Goal(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True)
-    datetime_completed = models.DateTimeField(blank=True)
-    user_creator = models.ForeignKey(User, on_delete=models.SET_NULL)
+    datetime_completed = models.DateTimeField(blank=True, null=True)
+    user_creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
 
     client_state_previous = models.JSONField(blank=True, null=True, editable=False)

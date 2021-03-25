@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class VisitsConfig(AppConfig):
-    name = 'visits'
+class GoalsConfig(AppConfig):
+    name = 'goals'

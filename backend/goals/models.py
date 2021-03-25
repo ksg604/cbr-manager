@@ -3,13 +3,12 @@ from django.db import models
 from django.utils import timezone
 
 from clients.models import Client
-from visits.models import Visit
 
 class Goal(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True)
+    datetime_completed = models.DateTimeField(blank=True)
     user_creator = models.ForeignKey(User, on_delete=models.SET_NULL)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    initial_visit = models.ForeignKey(Visit, on_delete=models.SET_NULL)
 
     client_state_previous = models.JSONField(blank=True, null=True, editable=False)
     client_state_updated = models.JSONField(blank=True, null=True, editable=False)

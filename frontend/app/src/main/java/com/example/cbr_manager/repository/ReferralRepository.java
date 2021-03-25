@@ -49,4 +49,20 @@ public class ReferralRepository {
                 .onErrorResumeNext(throwable -> referralDao.getReferral(id))
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<Referral> createReferral(Referral referral) {
+        return referralAPI.createReferralSingle(authHeader, referral)
+                .subscribeOn(Schedulers.io())
+                .onErrorResumeNext(throwable -> handleOfflineCreateReferral(referral, throwable))
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private SingleSource<? extends Referral> handleOfflineCreateReferral(Referral referral, Throwable throwable) {
+        if (throwable instanceof SocketTimeoutException) {
+            long id = referralDao.insert(referral);
+            referral.setId((int) id);
+            return Single.just(referral);
+        }
+        return Single.error(throwable);
+    }
 }

@@ -1,5 +1,11 @@
 package com.example.cbr_manager.service.referral;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,14 +14,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity (tableName = "referral")
 public class Referral {
-    @SerializedName("service_detail")
-    @Expose
-    private ServiceDetail serviceDetail;
-
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "referralId")
     @SerializedName("id")
     @Expose
     private Integer id;
+
+    @Embedded
+    @SerializedName("service_detail")
+    @Expose
+    private ServiceDetail serviceDetail;
 
     @SerializedName("date_created")
     @Expose
@@ -25,16 +35,18 @@ public class Referral {
     @Expose
     private String status;
 
+    @Ignore
     public Referral() {
     }
 
-    public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer client, Integer userCreator, String refer_to, String photoURL) {
+    public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer client, String fullName, Integer userCreator, String refer_to, String photoURL) {
         this.serviceDetail = serviceDetail;
         this.dateCreated = dateCreated;
         this.status = status;
         this.outcome = outcome;
         this.serviceType = serviceType;
         this.client = client;
+        this.fullName = fullName;
         this.userCreator = userCreator;
         this.refer_to = refer_to;
         this.photoURL = photoURL;
@@ -51,6 +63,10 @@ public class Referral {
     @SerializedName("client")
     @Expose
     private Integer client;
+
+    @SerializedName("client_name")
+    @Expose(serialize = false) // read only field
+    private String fullName;
 
     @SerializedName("user_creator")
     @Expose
@@ -94,6 +110,14 @@ public class Referral {
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getStatus() {

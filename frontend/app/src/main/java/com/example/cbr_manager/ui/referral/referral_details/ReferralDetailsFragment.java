@@ -3,9 +3,10 @@ package com.example.cbr_manager.ui.referral.referral_details;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
+import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
@@ -29,6 +31,13 @@ import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,12 +45,13 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
+@AndroidEntryPoint
 public class ReferralDetailsFragment extends Fragment {
 
-    private APIService apiService = APIService.getInstance();
     private int referralId = -1;
     private View parentLayout;
-
+    private ReferralViewModel referralViewModel;
+    private static final String TAG = "ReferralDetailsFragment";
     public ReferralDetailsFragment() {
         // Required empty public constructor
     }
@@ -55,6 +65,7 @@ public class ReferralDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_referral_details, container, false);
 
@@ -72,30 +83,21 @@ public class ReferralDetailsFragment extends Fragment {
     }
 
     private void getReferralInfo(int referralId) {
-        apiService.referralService.getReferral(referralId).enqueue(new Callback<Referral>() {
+        referralViewModel.getReferral(referralId).subscribe(new DisposableSingleObserver<Referral>() {
             @Override
-            public void onResponse(Call<Referral> call, Response<Referral> response) {
-
-                if (response.isSuccessful()) {
-                    Referral referral = response.body();
-
-                    setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
-                    setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
-                    setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
-                    setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
-                    setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
-                    setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getFormattedDate());
-                    setupImageViews(referral.getPhotoURL());
-                    setupClientTextView(referral.getClient());
-
-                } else {
-                    Snackbar.make(parentLayout, "Failed to get the referral. Please try again", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+            public void onSuccess(@NonNull Referral referral) {
+                setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
+                setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
+                setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
+                setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
+                setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
+                setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getFormattedDate());
+                setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
+                setupImageViews(referral.getPhotoURL());
             }
 
             @Override
-            public void onFailure(Call<Referral> call, Throwable t) {
+            public void onError(@NonNull Throwable e) {
                 Snackbar.make(parentLayout, "Failed to get the referral. Please try again", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -108,27 +110,6 @@ public class ReferralDetailsFragment extends Fragment {
             text="None";
         }
         textView.setText(text);
-    }
-
-    private void setupClientTextView(int clientId) {
-        TextView clientNameTextView = (TextView)getView().findViewById(R.id.referralDetailsClientTextView);
-
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-                @Override
-                public void onResponse(Call<Client> call, Response<Client> response) {
-                    if (response.isSuccessful()) {
-                        Client client = response.body();
-                        clientNameTextView.setText(client.getFullName());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Client> call, Throwable t) {
-
-                }
-            });
-        }
     }
 
     private void setupImageViews(String imageURL) {

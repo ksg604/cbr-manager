@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
@@ -26,6 +27,7 @@ public class BaselineLivelihoodFragment extends Fragment implements Step {
     Spinner enrollmentTypeSpinner;
     RadioGroup meetFinanceRadioGroup;
     RadioGroup wantWorkRadioGroup;
+    TextInputLayout whatWorkInputLayout;
     private View view;
     private final String NOT_AVAILABLE = "N/A";
     private BaselineSurvey baselineSurvey;
@@ -57,8 +59,22 @@ public class BaselineLivelihoodFragment extends Fragment implements Step {
         enrollmentTypeSpinner = view.findViewById(R.id.baselineEmploymentTypeSpinner);
         meetFinanceRadioGroup = view.findViewById(R.id.livelihoodFinancialRadioGroup);
         wantWorkRadioGroup = view.findViewById(R.id.livelihoodWantWorkRadioGroup);
-        
+        whatWorkInputLayout = view.findViewById(R.id.livelihoodWhatJobTextInput);
+        setVisibilityListener();
         return view;
+    }
+
+    private void setVisibilityListener() {
+        workingRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.baselineLivelihoodWorkingYes) {
+                    whatWorkInputLayout.setVisibility(View.VISIBLE);
+                } else {
+                    whatWorkInputLayout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Nullable

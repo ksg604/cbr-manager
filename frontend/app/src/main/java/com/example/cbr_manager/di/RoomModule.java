@@ -1,6 +1,5 @@
 package com.example.cbr_manager.di;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.room.Room;
@@ -8,6 +7,7 @@ import androidx.room.Room;
 import com.example.cbr_manager.data.storage.RoomDB;
 import com.example.cbr_manager.service.auth.AuthDetailDao;
 import com.example.cbr_manager.service.client.ClientDao;
+import com.example.cbr_manager.service.referral.ReferralDao;
 import com.example.cbr_manager.service.sync.StatusDao;
 import com.example.cbr_manager.service.user.UserDao;
 
@@ -53,5 +53,11 @@ public class RoomModule {
     @Provides
     ClientDao provideClientDao(RoomDB roomDB) {
         return roomDB.clientDao();
+    }
+
+    @Singleton
+    @Provides
+    ReferralDao provideReferralDao(RoomDB roomDB) {
+        return roomDB.referralDao();
     }
 }

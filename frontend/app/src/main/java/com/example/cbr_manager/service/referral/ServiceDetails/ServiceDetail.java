@@ -1,5 +1,7 @@
 package com.example.cbr_manager.service.referral.ServiceDetails;
 
+import androidx.room.ColumnInfo;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +10,7 @@ public class ServiceDetail {
     @Expose
     private String type;
 
+    @ColumnInfo(name = "serviceId")
     @SerializedName("id")
     @Expose
     private int id;

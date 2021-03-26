@@ -30,6 +30,7 @@ import com.example.cbr_manager.service.auth.AuthDetail;
 import com.example.cbr_manager.service.auth.AuthService;
 import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.utils.ErrorParser;
 import com.google.android.material.snackbar.Snackbar;
 

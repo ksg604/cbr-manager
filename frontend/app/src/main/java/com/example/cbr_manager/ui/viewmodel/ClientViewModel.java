@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.cbr_manager.repository.ClientRepository;
 import com.example.cbr_manager.service.client.Client;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 
 @HiltViewModel
 public class ClientViewModel extends ViewModel {
@@ -30,8 +32,12 @@ public class ClientViewModel extends ViewModel {
         return this.clientRepository.getAllClient();
     }
 
-    public void insert(Client client) {
-        clientRepository.insert(client);
+    public Disposable insert(Client client, File photo) {
+        return this.clientRepository.insert(client, photo);
+    }
+
+    public Disposable update(Client client, File photo) {
+        return this.clientRepository.update(client, photo);
     }
 
     public Observable<List<Client>> sync() {

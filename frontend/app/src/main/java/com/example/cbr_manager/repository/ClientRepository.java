@@ -4,11 +4,11 @@ import com.example.cbr_manager.data.storage.RoomDB;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
-import com.example.cbr_manager.service.client.ClientSync;
 import com.example.cbr_manager.utils.Helper;
 
 import org.threeten.bp.ZonedDateTime;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +16,12 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class ClientRepository {
 
@@ -46,16 +47,24 @@ public class ClientRepository {
                 .doOnComplete(() -> {} );
     }
 
-    public void insert(Client client) {
-        RoomDB.databaseWriteExecutor.execute(()->{
-            clientDao.insert(client);
-        });
+    public Disposable insert(Client client, File file) {
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        return clientAPI.createClientRx(authHeader, client)
+                .doOnComplete(() -> clientAPI.uploadPhotoRx(authHeader, client.getId(), body))
+                .mergeWith(clientDao.insertRx(client))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
-    public void update(Client client) {
-        RoomDB.databaseWriteExecutor.execute(()->{
-            clientDao.update(client);
-        });
+    public Disposable update(Client client, File file) {
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        return clientAPI.modifyClientRx(authHeader, client.getId(), client)
+                .doOnComplete(() -> clientAPI.uploadPhotoRx(authHeader, client.getId(), body))
+                .mergeWith(clientDao.updateRx(client))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     private void insertList(List<Client> clients) {
@@ -72,6 +81,10 @@ public class ClientRepository {
             if (localClient.get(i).isNewClient()) {
                 localClient.get(i).setNewClient(false);
                 clientAPI.createClient(authHeader, localClient.get(i));
+                File file = new File(localClient.get(i).getPhotoURL());
+                RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+                MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+                clientAPI.uploadPhoto(authHeader, localClient.get(i).getId(), body);
                 clientDao.delete(localClient.get(i));
             }
         }
@@ -99,6 +112,10 @@ public class ClientRepository {
                     if (localUpdated[i] != 1) {
                         localUpdated[i] = 1;
                         clientAPI.modifyClient(authHeader, localClient.get(i).getId(), localClient.get(i));
+                        File file = new File(localClient.get(i).getPhotoURL());
+                        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+                        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+                        clientAPI.uploadPhoto(authHeader, localClient.get(i).getId(), body);
                     }
                 }
             }

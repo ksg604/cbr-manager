@@ -20,11 +20,17 @@ public interface ClientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Client client);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertRx(Client client);
+
     @Delete
     void delete(Client client);
 
     @Update
     void update(Client client);
+
+    @Update
+    Completable updateRx(Client client);
 
     @Query("SELECT * FROM client")
     List<Client> getClients();

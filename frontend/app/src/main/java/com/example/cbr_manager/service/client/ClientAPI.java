@@ -2,6 +2,7 @@ package com.example.cbr_manager.service.client;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -16,6 +17,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 /*
@@ -34,12 +36,22 @@ public interface ClientAPI {
     @PUT("api/clients/{id}/")
     Call<Client> modifyClient(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
 
+    @PUT("api/clients/{id}/")
+    Completable modifyClientRx(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
+
     @POST("api/clients/")
     Call<Client> createClient(@Header("Authorization") String authHeader, @Body Client client);
+
+    @POST("api/clients/")
+    Completable createClientRx(@Header("Authorization") String authHeader, @Body Client client);
 
     @Multipart
     @POST("api/clients/{id}/upload/")
     Call<ResponseBody> uploadPhoto(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
+
+    @Multipart
+    @POST("api/clients/{id}/upload/")
+    Completable uploadPhotoRx(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
 
     @Multipart
     @POST("api/clients/")

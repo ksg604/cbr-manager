@@ -76,93 +76,57 @@
 
             </com.google.android.material.chip.ChipGroup>
 
-            <TextView
-                android:id="@+id/socialProvisionAdviceTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="Description of advice"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/socialProvisionAdviceTextMultiLine"
+                android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/socialProvisionAdvocacyTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Description of advocacy"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Advice" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/socialProvisionAdvocacyMultiLineText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/socialProvisionReferralTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Description of referral"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Advocacy" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/socialProvisionReferralTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/socialProvisionEncouragementTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Description of encouragement"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Referral" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/socialProvisionEncouragementTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description of Encouragement" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/socialProvisionGoalMetTextView"
@@ -201,28 +165,18 @@
                     android:text="Concluded" />
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/socialProvisionConclusionTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="Conclusion"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/socialProvisionConclusionTextMultiLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Conclusion" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

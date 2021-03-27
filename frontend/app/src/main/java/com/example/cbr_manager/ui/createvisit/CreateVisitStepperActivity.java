@@ -16,6 +16,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
+import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
@@ -105,7 +106,10 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     }
 
     private void onSubmitSuccess() {
-        finish(); // TODO: For now.
+        Intent intent = new Intent(this, VisitDetailsActivity.class);
+        intent.putExtra(VisitDetailsActivity.KEY_VISIT_ID, visitId);
+        startActivity(intent);
+        finish();
     }
 
     @Override

@@ -19,6 +19,8 @@ import com.stepstone.stepper.VerificationError;
 
 import org.w3c.dom.Text;
 
+import static android.view.View.GONE;
+
 public class CreateVisitSocialFragment extends Fragment implements Step {
 
     Chip adviceChip;
@@ -54,7 +56,43 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
         view = inflater.inflate(R.layout.fragment_create_visit_social, container, false);
         initializeInputLayouts(view);
         initializeChips(view);
+        initializeRadioGroups(view);
+        setupInputLayoutVisibility();
         return view;
+    }
+
+    private void initializeRadioGroups(View view) {
+        goalMetRadioGroup = view.findViewById(R.id.socialProvisionRadioGroup);
+        goalMetRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.socialProvisionConcludedRadioButton) {
+                    conclusionInputLayout.setVisibility(View.VISIBLE);
+                } else {
+                    conclusionInputLayout.setVisibility(GONE);
+                }
+            }
+        });
+    }
+
+    private void setupInputLayoutVisibility() {
+        setChipListener(adviceChip, adviceInputLayout);
+        setChipListener(advocacyChip, advocacyInputLayout);
+        setChipListener(referralChip, referralInputLayout);
+        setChipListener(encouragementChip, encouragementInputLayout);
+    }
+
+    private void setChipListener(Chip chip, TextInputLayout textInputLayout) {
+        chip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chip.isChecked()) {
+                    textInputLayout.setVisibility(View.VISIBLE);
+                } else {
+                    textInputLayout.setVisibility(GONE);
+                }
+            }
+        });
     }
 
     private void initializeChips(View view) {

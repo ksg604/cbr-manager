@@ -96,6 +96,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         setChipListener(referralChip, referralInput);
         setChipListener(adviceChip, adviceInput);
         setChipListener(advocacyChip, advocacyInput);
+        setChipListener(encouragementChip, encouragementInput);
     }
 
     private void setChipListener(Chip chip, TextInputLayout textInputLayout) {

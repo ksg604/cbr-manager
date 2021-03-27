@@ -71,7 +71,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         goalsMetRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.concludedHPRadioButton) {
+                if (checkedId == R.id.educationProvisionConcludedRadioButton) {
                     conclusionInput.setVisibility(View.VISIBLE);
                 } else {
                     conclusionInput.setVisibility(GONE);

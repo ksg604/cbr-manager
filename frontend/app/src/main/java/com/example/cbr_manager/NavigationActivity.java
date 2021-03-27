@@ -33,8 +33,8 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.sync.Status;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
-import com.example.cbr_manager.ui.viewmodel.ClientViewModel;
-import com.example.cbr_manager.ui.viewmodel.StatusViewModel;
+import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -85,15 +85,15 @@ public class NavigationActivity extends AppCompatActivity {
         });
 
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-        clientViewModel.getAllClients().subscribe(new Observer<List<Client>>() {
+        clientViewModel.getAllClients().subscribe(new Observer<Client>() {
             @Override
             public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
                 Log.d(TAG, "onSubscribe: ");
             }
 
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull List<Client> client) {
-                Log.d(TAG, "OnNext: number of client is " + client.size());
+            public void onNext(@io.reactivex.annotations.NonNull Client client) {
+                Log.d(TAG, "OnNext: client id is: " + client.getId());
             }
 
             @Override

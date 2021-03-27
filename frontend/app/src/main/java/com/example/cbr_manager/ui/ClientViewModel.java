@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.viewmodel;
+package com.example.cbr_manager.ui;
 
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
 
 @HiltViewModel
 public class ClientViewModel extends ViewModel {
@@ -28,16 +28,20 @@ public class ClientViewModel extends ViewModel {
         this.clientRepository = clientRepository;
     }
 
-    public Observable<List<Client>> getAllClients() {
+    public Observable<Client> getAllClients() {
         return this.clientRepository.getAllClient();
     }
 
-    public Disposable insert(Client client, File photo) {
-        return this.clientRepository.insert(client, photo);
+    public Single<Client> insert(Client client) {
+        return this.clientRepository.insert(client);
     }
 
-    public Disposable update(Client client, File photo) {
-        return this.clientRepository.update(client, photo);
+    public Single<ResponseBody> uploadphoto(File file, int clientId) {
+        return this.clientRepository.uploadPhoto(file, clientId);
+    }
+
+    public Single<Client> update(Client client) {
+        return this.clientRepository.update(client);
     }
 
     public Observable<List<Client>> sync() {

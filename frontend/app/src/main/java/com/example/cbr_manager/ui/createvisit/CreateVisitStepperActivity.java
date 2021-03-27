@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.View;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
@@ -26,9 +28,27 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_visit_stepper);
+        setContentView(R.layout.stepper);
         setTitle("Create Visit");
+        Intent intent = getIntent();
+        clientId = intent.getIntExtra("clientId", -1);
+        formVisitObj = new Visit();
+        createVisitStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setupStepperAdapterWithFragments();
+    }
+
+    private void setupStepperAdapterWithFragments() {
+        GenericStepperAdapter createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
+        createVisitStepperAdapter.addFragment(new CreateVisitPurposeFragment(), "Purpose");
+        createVisitStepperAdapter.addFragment(new CreateVisitLocationFragment(), "Location");
+        createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
+        createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
+        createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
+
+        createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+        createVisitStepperLayout.setListener(this);
     }
 
     @Override

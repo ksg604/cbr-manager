@@ -53,7 +53,7 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+//        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         super.onCreate(savedInstanceState);
     }
 
@@ -87,19 +87,19 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
                 }
             });
 
-            authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
-                @Override
-                public void onSuccess(@io.reactivex.annotations.NonNull User user) {
-                    userId = user.getId();
-                    cbrWorkerName.setText(user.getUsername());
-                    cbrWorkerName.setEnabled(false);
-                }
-
-                @Override
-                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                    Toast.makeText(getContext(), "User response error. " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+//            authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+//                @Override
+//                public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+//                    userId = user.getId();
+//                    cbrWorkerName.setText(user.getUsername());
+//                    cbrWorkerName.setEnabled(false);
+//                }
+//
+//                @Override
+//                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+//                    Toast.makeText(getContext(), "User response error. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
         }
 
         Date today = Calendar.getInstance().getTime();

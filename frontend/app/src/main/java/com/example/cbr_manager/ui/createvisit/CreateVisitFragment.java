@@ -42,9 +42,8 @@ import retrofit2.Response;
 
 import static android.view.View.GONE;
 
-public class CreateVisitFragment extends Fragment {
 @AndroidEntryPoint
-public class NewVisitFragment extends Fragment {
+public class CreateVisitFragment extends Fragment {
     private int clientId = -1;
     private Integer userId = -1;
     private int visitId = -1;
@@ -53,7 +52,7 @@ public class NewVisitFragment extends Fragment {
     private String username = "";
     private AuthViewModel authViewModel;
 
-    public CreateVisitFragment() {
+    public void CreateVisitFragment() {
     }
 
     @Override

@@ -19,6 +19,10 @@ import com.example.cbr_manager.R;
 
 import java.sql.Timestamp;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+@AndroidEntryPoint
 public class CreateVisitActivity extends AppCompatActivity {
 
     int clientId = -1;

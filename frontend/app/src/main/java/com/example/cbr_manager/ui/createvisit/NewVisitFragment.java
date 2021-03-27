@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +42,7 @@ import retrofit2.Response;
 
 import static android.view.View.GONE;
 
+@AndroidEntryPoint
 public class NewVisitFragment extends Fragment {
     private int clientId = -1;
     private Integer userId = -1;

@@ -9,6 +9,7 @@ import com.example.cbr_manager.utils.Helper;
 import org.threeten.bp.ZonedDateTime;
 
 import java.io.File;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,10 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -39,40 +42,59 @@ public class ClientRepository {
         this.localClient = new ArrayList<>();
     }
 
-    public Observable<List<Client>> getAllClient(){
-        return clientAPI.getAllClients(authHeader)
+    public Observable<Client> getAllClient(){
+        return clientAPI.getClientsObs(authHeader)
+                .flatMap(Observable::fromIterable)
+                .doOnNext(client -> clientDao.insert(client))
+                .onErrorResumeNext(this::getLocalClient)
                 .subscribeOn(Schedulers.io())
-                .doOnNext(this::insertList)
-                .doOnError((e) -> clientDao.getAllClients())
-                .doOnComplete(() -> {} );
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Disposable insert(Client client, File file) {
-        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
-        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-        return clientAPI.createClientRx(authHeader, client)
-                .doOnComplete(() -> clientAPI.uploadPhotoRx(authHeader, client.getId(), body))
-                .mergeWith(clientDao.insertRx(client))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
-    }
-
-    public Disposable update(Client client, File file) {
-        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
-        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-        return clientAPI.modifyClientRx(authHeader, client.getId(), client)
-                .doOnComplete(() -> clientAPI.uploadPhotoRx(authHeader, client.getId(), body))
-                .mergeWith(clientDao.updateRx(client))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
-    }
-
-    private void insertList(List<Client> clients) {
-        for(int i = 0; i < clients.size(); i++) {
-            clientDao.insert(clients.get(i));
+    private ObservableSource<? extends Client> getLocalClient(Throwable throwable) {
+        if(throwable instanceof SocketTimeoutException) {
+            return clientDao.getClientsObs().flatMap(Observable::fromIterable);
         }
+        return Observable.error(throwable);
     }
 
+    public Single<Client> getClient(int id) {
+        return clientAPI.getClientSingle(authHeader, id)
+                .onErrorResumeNext(throwable -> clientDao.getClientSingle(id))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Client> insert(Client client) {
+        return clientAPI.createClientSingle(authHeader, client)
+                .onErrorResumeNext(throwable -> handleOfflineCreateClient(client, throwable))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private SingleSource<? extends Client> handleOfflineCreateClient(Client client, Throwable throwable) {
+        if(throwable instanceof SocketTimeoutException) {
+            long id = clientDao.insert(client);
+            client.setId((int)id);
+            return Single.just(client);
+        }
+        return Single.error(throwable);
+    }
+
+    public Single<Client> update(Client client) {
+        return clientAPI.modifyClientSingle(authHeader, client.getId(), client)
+                .onErrorResumeNext(throwable -> handleOfflineModifyClient(client, throwable))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private SingleSource<? extends Client> handleOfflineModifyClient(Client client, Throwable throwable) {
+        if(throwable instanceof SocketTimeoutException) {
+            clientDao.update(client);
+            return Single.just(client);
+        }
+        return Single.error(throwable);
+    }
 
     // Below are functions for synchronizing data from local and remote server
 
@@ -140,16 +162,16 @@ public class ClientRepository {
 
     // Sync function concatenating multiple observable
     public Observable<List<Client>> sync() {
-        Observable<List<Client>> uploadNew = clientDao.getAllClients()
+        Observable<List<Client>> uploadNew = clientDao.getClientsObs()
                 .doOnNext(this::uploadNewClient);
 
-        Observable<List<Client>> updateLocal = clientAPI.getAllClients(authHeader)
+        Observable<List<Client>> updateLocal = clientAPI.getClientsObs(authHeader)
                 .doOnNext(this::updateLocal);
 
-        Observable<List<Client>> downloadLocal = clientAPI.getAllClients(authHeader)
+        Observable<List<Client>> downloadLocal = clientAPI.getClientsObs(authHeader)
                 .doOnNext(this::downloadLocal);
 
-        Observable<List<Client>> setNew = clientDao.getAllClients()
+        Observable<List<Client>> setNew = clientDao.getClientsObs()
                 .doOnNext(this::setNewClient);
 
         return Observable.concat(uploadNew, updateLocal, downloadLocal, setNew)

@@ -28,30 +28,29 @@ public interface ClientAPI {
     Call<List<Client>> getClients(@Header("Authorization") String authHeader);
 
     @GET("api/clients/")
-    Observable<List<Client>> getAllClients(@Header("Authorization") String authHeader);
+    Observable<List<Client>> getClientsObs(@Header("Authorization") String authHeader);
 
     @GET("api/clients/{id}/")
     Call<Client> getClient(@Header("Authorization") String authHeader, @Path("id") int id);
+
+    @GET("api/clients/{id}/")
+    Single<Client> getClientSingle(@Header("Authorization") String authHeader, @Path("id") int id);
 
     @PUT("api/clients/{id}/")
     Call<Client> modifyClient(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
 
     @PUT("api/clients/{id}/")
-    Completable modifyClientRx(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
+    Single<Client> modifyClientSingle(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
 
     @POST("api/clients/")
     Call<Client> createClient(@Header("Authorization") String authHeader, @Body Client client);
 
     @POST("api/clients/")
-    Completable createClientRx(@Header("Authorization") String authHeader, @Body Client client);
+    Single<Client> createClientSingle(@Header("Authorization") String authHeader, @Body Client client);
 
     @Multipart
     @POST("api/clients/{id}/upload/")
     Call<ResponseBody> uploadPhoto(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
-
-    @Multipart
-    @POST("api/clients/{id}/upload/")
-    Completable uploadPhotoRx(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
 
     @Multipart
     @POST("api/clients/")

@@ -1,4 +1,4 @@
-package com.example.cbr_manager.ui.viewmodel;
+package com.example.cbr_manager.ui;
 
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;

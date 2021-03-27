@@ -10,16 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.visit.Visit;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
 public class CreateVisitLocationFragment extends Fragment implements Step {
 
     private View view;
+    private Visit visit;
     Spinner locationSpinner;
+    EditText gpsLocationEditText;
+    EditText villageNumberEditText;
 
     public CreateVisitLocationFragment() {
         // Required empty public constructor
@@ -40,7 +45,10 @@ public class CreateVisitLocationFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_location, container, false);
+        visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         locationSpinner = view.findViewById(R.id.locationFragmentSpinner);
+        gpsLocationEditText = view.findViewById(R.id.editTextTextLocation);
+        villageNumberEditText = view.findViewById(R.id.villageNumberEditText);
         return view;
     }
 
@@ -54,7 +62,19 @@ public class CreateVisitLocationFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        updateCreateVisit();
         return null;
+    }
+
+    private void updateCreateVisit() {
+        visit.setLocationVisitGPS(gpsLocationEditText.getText().toString());
+        visit.setLocationDropDown(locationSpinner.getSelectedItem().toString());
+        if (!villageNumberEditText.getText().toString().equals("")) {
+            visit.setVillageNoVisit(Integer.parseInt(villageNumberEditText.getText().toString()));
+        } else {
+            visit.setVillageNoVisit(0);
+        }
+
     }
 
     @Override

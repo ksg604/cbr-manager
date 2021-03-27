@@ -46,10 +46,10 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         // Required empty public constructor
     }
 
-    public static CreateVisitPurposeFragment newInstance(String param1, String param2) {
-        CreateVisitPurposeFragment fragment = new CreateVisitPurposeFragment();
-        return fragment;
-    }
+//    public static CreateVisitPurposeFragment newInstance(String param1, String param2) {
+//        CreateVisitPurposeFragment fragment = new CreateVisitPurposeFragment();
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_purpose, container, false);
+
         clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
 
         clientNameEditText = view.findViewById(R.id.fragmentPreambleClientEditText);

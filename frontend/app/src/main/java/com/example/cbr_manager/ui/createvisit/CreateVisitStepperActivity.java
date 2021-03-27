@@ -30,7 +30,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     private StepperLayout createVisitStepperLayout;
     public int clientId = -1;
-    public int userCreatorId = 1;
+    public int userCreatorId = -1;
     public int visitId;
     public Visit formVisitObj;
     private APIService apiService = APIService.getInstance();

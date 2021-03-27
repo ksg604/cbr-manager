@@ -58,11 +58,6 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         // Required empty public constructor
     }
 
-//    public static CreateVisitPurposeFragment newInstance(String param1, String param2) {
-//        CreateVisitPurposeFragment fragment = new CreateVisitPurposeFragment();
-//        return fragment;
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);

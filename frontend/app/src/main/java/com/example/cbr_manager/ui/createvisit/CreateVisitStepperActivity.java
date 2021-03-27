@@ -67,9 +67,13 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
                 public void onResponse(Call<Client> call, Response<Client> response) {
                     if (response.isSuccessful()) {
                         client = response.body();
-                        Visit visit = new Visit("", clientId, userCreatorId, client);
-                        visit.setCbrWorkerName("petertran");
-                        Call<Visit> call1 = apiService.visitService.createVisit(visit);
+//                        Visit visit = new Visit("", clientId, userCreatorId, client);
+                        formVisitObj.setClientId(clientId);
+                        formVisitObj.setUserId(userCreatorId);
+                        formVisitObj.setClient(client);
+                        formVisitObj.setCbrWorkerName("petertran");
+
+                        Call<Visit> call1 = apiService.visitService.createVisit(formVisitObj);
                         call1.enqueue(new Callback<Visit>() {
                             @Override
                             public void onResponse(Call<Visit> call, Response<Visit> response) {

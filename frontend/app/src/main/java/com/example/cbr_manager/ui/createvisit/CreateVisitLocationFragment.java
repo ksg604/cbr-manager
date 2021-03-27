@@ -68,6 +68,7 @@ public class CreateVisitLocationFragment extends Fragment implements Step {
 
     private void updateCreateVisit() {
         visit.setLocationVisitGPS(gpsLocationEditText.getText().toString());
+//        visit.setLocationVisitGPS("a");
         visit.setLocationDropDown(locationSpinner.getSelectedItem().toString());
         if (!villageNumberEditText.getText().toString().equals("")) {
             visit.setVillageNoVisit(Integer.parseInt(villageNumberEditText.getText().toString()));

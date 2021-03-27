@@ -113,6 +113,8 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
                 @Override
                 public void onSuccess(@io.reactivex.annotations.NonNull User user) {
                     userId = user.getId();
+                    visit.setUserId(userId);
+                    visit.setCbrWorkerName(user.getUsername());
                     cbrWorkerName.setText(user.getUsername());
                     cbrWorkerName.setEnabled(false);
                 }

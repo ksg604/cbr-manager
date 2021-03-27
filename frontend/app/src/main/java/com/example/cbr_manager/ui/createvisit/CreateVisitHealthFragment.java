@@ -2,6 +2,8 @@ package com.example.cbr_manager.ui.createvisit;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,11 +17,14 @@ import com.example.cbr_manager.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
 
+import com.stepstone.stepper.Step;
+import com.stepstone.stepper.VerificationError;
+
 import org.w3c.dom.Text;
 
 import static android.view.View.GONE;
 
-public class CreateVisitHealthFragment extends Fragment {
+public class CreateVisitHealthFragment extends Fragment implements Step {
     
     private View view;
     TextInputLayout wheelchairInput;
@@ -129,4 +134,19 @@ public class CreateVisitHealthFragment extends Fragment {
         encouragementChip = view.findViewById(R.id.encouragementChip);
     }
 
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
+        return null;
+    }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+
+    }
 }

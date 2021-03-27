@@ -2,6 +2,8 @@ package com.example.cbr_manager.ui.createvisit;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,10 +14,12 @@ import android.widget.RadioGroup;
 import com.example.cbr_manager.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
+import com.stepstone.stepper.Step;
+import com.stepstone.stepper.VerificationError;
 
 import static android.view.View.GONE;
 
-public class CreateVisitEducationFragment extends Fragment {
+public class CreateVisitEducationFragment extends Fragment implements Step {
 
     TextInputLayout adviceInput;
     TextInputLayout advocacyInput;
@@ -102,5 +106,21 @@ public class CreateVisitEducationFragment extends Fragment {
         referralInput = view.findViewById(R.id.educationReferralInputLayout);
         encouragementInput = view.findViewById(R.id.educationEncouragementInputLayout);
         conclusionInput = view.findViewById(R.id.educationConclusionInputLayout);
+    }
+
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
+        return null;
+    }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+
     }
 }

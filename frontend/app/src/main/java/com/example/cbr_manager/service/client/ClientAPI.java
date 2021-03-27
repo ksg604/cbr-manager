@@ -53,6 +53,10 @@ public interface ClientAPI {
     Call<ResponseBody> uploadPhoto(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
 
     @Multipart
+    @POST("api/clients/{id}/upload/")
+    Single<ResponseBody> uploadPhotoSingle(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
+
+    @Multipart
     @POST("api/clients/")
     Call<Client> createClientManual(@Header("Authorization") String authHeader,
                                     @Part("first_name") RequestBody firstName,

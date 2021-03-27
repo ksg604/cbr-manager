@@ -25,6 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 public class ClientRepository {
 
@@ -79,6 +80,15 @@ public class ClientRepository {
             return Single.just(client);
         }
         return Single.error(throwable);
+    }
+
+    public Single<ResponseBody> uploadPhoto(File file, int clientId) {
+        //TODO: Handle image caching offline on error (picasso?)
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        return clientAPI.uploadPhotoSingle(authHeader, clientId, body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Client> update(Client client) {

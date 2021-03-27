@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.cbr_manager.repository.ClientRepository;
 import com.example.cbr_manager.service.client.Client;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import okhttp3.ResponseBody;
 
 @HiltViewModel
 public class ClientViewModel extends ViewModel {
@@ -32,6 +34,10 @@ public class ClientViewModel extends ViewModel {
 
     public Single<Client> insert(Client client) {
         return this.clientRepository.insert(client);
+    }
+
+    public Single<ResponseBody> uploadphoto(File file, int clientId) {
+        return this.clientRepository.uploadPhoto(file, clientId);
     }
 
     public Single<Client> update(Client client) {

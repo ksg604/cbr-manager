@@ -67,7 +67,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     }
 
     private void initializeRadioGroups(View view) {
-        goalsMetRadioGroup = view.findViewById(R.id.healthProvisionsRadioGroup);
+        goalsMetRadioGroup = view.findViewById(R.id.educationProvisionRadioGroup);
         goalsMetRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

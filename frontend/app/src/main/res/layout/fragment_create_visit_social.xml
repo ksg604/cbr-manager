@@ -77,6 +77,7 @@
             </com.google.android.material.chip.ChipGroup>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/socialAdviceInputLayout"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -84,12 +85,14 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/socialAdviceEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description of Advice" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/socialAdvocacyInputLayout"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -97,12 +100,14 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/socialAdvocacyEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description of Advocacy" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/socialReferralInputLayout"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -110,12 +115,14 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/socialReferralEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description of Referral" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/socialEncouragementInputLayout"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -123,6 +130,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/socialEncouragementEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description of Encouragement" />
@@ -166,6 +174,7 @@
             </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/socialConclusionInputLayout"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -173,6 +182,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/socialConclusionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Conclusion" />

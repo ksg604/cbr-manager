@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -27,6 +29,7 @@ import static android.view.View.GONE;
 public class CreateVisitHealthFragment extends Fragment implements Step {
     
     private View view;
+    private Visit visit;
     TextInputLayout wheelchairInput;
     TextInputLayout prostheticInput;
     TextInputLayout orthoticInput;
@@ -65,7 +68,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_health, container, false);
-        
+        visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
@@ -135,10 +138,45 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         encouragementChip = view.findViewById(R.id.encouragementChip);
     }
 
+    private String getInputLayoutString(TextInputLayout textInputLayout) {
+        EditText editText  = textInputLayout.getEditText();
+        return editText.getText().toString();
+    }
+
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        updateCreateVisit();
         return null;
+    }
+
+    private void updateCreateVisit() {
+        visit.setWheelchairHealthProvision(wheelchairChip.isChecked());
+        visit.setProstheticHealthProvision(prostheticChip.isChecked());
+        visit.setOrthoticHealthProvision(orthoticChip.isChecked());
+        visit.setRepairsHealthProvision(wheelchairRepairsChip.isChecked());
+        visit.setReferralHealthProvision(referralChip.isChecked());
+        visit.setAdviceHealthProvision(adviceChip.isChecked());
+        visit.setAdvocacyHealthProvision(advocacyChip.isChecked());
+        visit.setEncouragementHealthProvision(encouragementChip.isChecked());
+
+        visit.setWheelchairHealthProvisionText(getInputLayoutString(wheelchairInput));
+        visit.setProstheticHealthProvisionText(getInputLayoutString(prostheticInput));
+        visit.setOrthoticHealthProvisionText(getInputLayoutString(orthoticInput));
+        visit.setRepairsHealthProvisionText(getInputLayoutString(wheelchairRepairsInput));
+        visit.setReferralHealthProvisionText(getInputLayoutString(referralInput));
+        visit.setAdviceHealthProvisionText(getInputLayoutString(adviceInput));
+        visit.setAdvocacyHealthProvisionText(getInputLayoutString(advocacyInput));
+        visit.setEncouragementHealthProvisionText(getInputLayoutString(encouragementInput));
+
+        if (goalOutcomeRadioGroup.getCheckedRadioButtonId() == -1) {
+//            visit.getClient().setGoalMetHealthProvision("");
+        } else {
+            RadioButton radioButton = getView().findViewById(goalOutcomeRadioGroup.getCheckedRadioButtonId());
+//            visit.getClient().setGoalMetHealthProvision(radioButton.getText().toString());
+        }
+
+        visit.setConclusionHealthProvision(getInputLayoutString(conclusionInput));
     }
 
     @Override

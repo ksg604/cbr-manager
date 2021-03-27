@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
 import com.stepstone.stepper.Step;
@@ -32,6 +34,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     Chip encouragementChip;
     RadioGroup goalsMetRadioGroup;
     private View view;
+    private Visit visit;
 
     public CreateVisitEducationFragment() {
         // Required empty public constructor
@@ -52,6 +55,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_education, container, false);
+        visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
@@ -111,7 +115,29 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        updateCreateClient();
         return null;
+    }
+
+    private void updateCreateClient() {
+        visit.setAdviceEducationProvision(adviceChip.isChecked());
+        visit.setAdvocacyEducationProvision(advocacyChip.isChecked());
+        visit.setReferralEducationProvision(referralChip.isChecked());
+        visit.setEncouragementEducationProvision(encouragementChip.isChecked());
+
+        visit.setAdviceEducationProvisionText(getInputLayoutString(adviceInput));
+        visit.setAdvocacyEducationProvisionText(getInputLayoutString(advocacyInput));
+        visit.setReferralEducationProvisionText(getInputLayoutString(referralInput));
+        visit.setEncouragementEducationProvisionText(getInputLayoutString(encouragementInput));
+
+        visit.setConclusionEducationProvision(getInputLayoutString(conclusionInput));
+
+        // TODO: RadioGroup goals
+    }
+
+    private String getInputLayoutString(TextInputLayout textInputLayout) {
+        EditText editText  = textInputLayout.getEditText();
+        return editText.getText().toString();
     }
 
     @Override

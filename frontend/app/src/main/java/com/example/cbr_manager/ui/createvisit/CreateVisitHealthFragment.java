@@ -170,8 +170,10 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         visit.setEncouragementHealthProvisionText(getInputLayoutString(encouragementInput));
 
         if (goalOutcomeRadioGroup.getCheckedRadioButtonId() == -1) {
+            //TODO
 //            visit.getClient().setGoalMetHealthProvision("");
         } else {
+            //TODO
             RadioButton radioButton = getView().findViewById(goalOutcomeRadioGroup.getCheckedRadioButtonId());
 //            visit.getClient().setGoalMetHealthProvision(radioButton.getText().toString());
         }

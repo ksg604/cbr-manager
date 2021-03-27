@@ -17,7 +17,9 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.google.android.material.chip.Chip;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
@@ -37,10 +39,18 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
     private APIService apiService = APIService.getInstance();
     private int clientId = -1;
     private int userId = -1;
+    
+    private Visit visit;
 
     EditText clientNameEditText;
     EditText cbrWorkerName;
     EditText dateEditText;
+    Chip cbrChip;
+    Chip referralChip;
+    Chip followUpChip;
+    Chip healthChip;
+    Chip educationChip;
+    Chip socialChip;
 
     public CreateVisitPurposeFragment() {
         // Required empty public constructor
@@ -62,17 +72,26 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_purpose, container, false);
-
+        visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
-
-        clientNameEditText = view.findViewById(R.id.fragmentPreambleClientEditText);
-        cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
-        dateEditText = view.findViewById(R.id.fragmentPreambleEditTextDate);
+        initializeChips(view);
         setupAutoFilledTextViews(view);
         return view;
     }
 
+    private void initializeChips(View view) {
+        cbrChip = view.findViewById(R.id.cbrChip);
+        referralChip = view.findViewById(R.id.purposeReferralChip);
+        followUpChip = view.findViewById(R.id.purposeFollowUpChip);
+        healthChip = view.findViewById(R.id.healthProvisionChip);
+        educationChip = view.findViewById(R.id.educationProvisionChip);
+        socialChip = view.findViewById(R.id.socialProvisionChip);
+    }
+
     private void setupAutoFilledTextViews(View view) {
+        clientNameEditText = view.findViewById(R.id.fragmentPreambleClientEditText);
+        cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
+        dateEditText = view.findViewById(R.id.fragmentPreambleEditTextDate);
         if (apiService.isAuthenticated()) {
             apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
                 @Override
@@ -118,6 +137,12 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
     }
 
     private void updateCreateVisit() {
+        visit.setCBRPurpose(cbrChip.isChecked());
+        visit.setDisabilityReferralPurpose(referralChip.isChecked());
+        visit.setDisabilityFollowUpPurpose(followUpChip.isChecked());
+        visit.setHealthProvision(healthChip.isChecked());
+        visit.setEducationProvision(educationChip.isChecked());
+        visit.setSocialProvision(socialChip.isChecked());
     }
 
     @Override

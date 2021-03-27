@@ -2,6 +2,7 @@ package com.example.cbr_manager.service.client;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -16,6 +17,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 /*
@@ -26,20 +28,33 @@ public interface ClientAPI {
     Call<List<Client>> getClients(@Header("Authorization") String authHeader);
 
     @GET("api/clients/")
-    Observable<List<Client>> getAllClients(@Header("Authorization") String authHeader);
+    Observable<List<Client>> getClientsObs(@Header("Authorization") String authHeader);
 
     @GET("api/clients/{id}/")
     Call<Client> getClient(@Header("Authorization") String authHeader, @Path("id") int id);
 
+    @GET("api/clients/{id}/")
+    Single<Client> getClientSingle(@Header("Authorization") String authHeader, @Path("id") int id);
+
     @PUT("api/clients/{id}/")
     Call<Client> modifyClient(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
+
+    @PUT("api/clients/{id}/")
+    Single<Client> modifyClientSingle(@Header("Authorization") String authHeader, @Path("id") int id, @Body Client client);
 
     @POST("api/clients/")
     Call<Client> createClient(@Header("Authorization") String authHeader, @Body Client client);
 
+    @POST("api/clients/")
+    Single<Client> createClientSingle(@Header("Authorization") String authHeader, @Body Client client);
+
     @Multipart
     @POST("api/clients/{id}/upload/")
     Call<ResponseBody> uploadPhoto(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
+
+    @Multipart
+    @POST("api/clients/{id}/upload/")
+    Single<ResponseBody> uploadPhotoSingle(@Header("Authorization") String authHeader, @Path("id") int id, @Part MultipartBody.Part photo);
 
     @Multipart
     @POST("api/clients/")

@@ -52,8 +52,24 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_social, container, false);
-
+        initializeInputLayouts(view);
+        initializeChips(view);
         return view;
+    }
+
+    private void initializeChips(View view) {
+        adviceChip = view.findViewById(R.id.socialProvisionAdviceChip);
+        advocacyChip = view.findViewById(R.id.socialProvisionAdvocacyChip);
+        referralChip = view.findViewById(R.id.socialProvisionReferralChip);
+        encouragementChip = view.findViewById(R.id.socialProvisionEncouragementChip);
+    }
+
+    private void initializeInputLayouts(View view) {
+        adviceInputLayout = view.findViewById(R.id.socialAdviceInputLayout);
+        advocacyInputLayout = view.findViewById(R.id.socialAdvocacyInputLayout);
+        referralInputLayout = view.findViewById(R.id.socialReferralInputLayout);
+        encouragementInputLayout = view.findViewById(R.id.socialEncouragementInputLayout);
+        conclusionInputLayout = view.findViewById(R.id.socialConclusionInputLayout);
     }
 
     @Nullable

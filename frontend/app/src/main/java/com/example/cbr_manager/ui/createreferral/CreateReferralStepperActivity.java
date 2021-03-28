@@ -15,6 +15,8 @@ import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.ReferralViewModel;
+import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
@@ -28,6 +30,7 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
     private int clientId = -1;
     private int userCreatorId = 1;
     private AuthViewModel authViewModel;
+    private ReferralViewModel referralViewModel;
     public Client client;
 
     @Override
@@ -36,6 +39,18 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
         setContentView(R.layout.stepper);
         setTitle("Create Referral");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        clientId = getIntent().getIntExtra("CLIENT_ID", -1);
+        newReferralObj = new Referral();
+        createReferralStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
+
+        setupStepperAdapterWithFragments();
+    }
+
+    private void setupStepperAdapterWithFragments() {
+        GenericStepperAdapter CreateReferralStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
+        CreateReferralStepperAdapter.addFragment(new CreateReferralFragment(), "Referral");
+        createReferralStepperLayout.setAdapter(CreateReferralStepperAdapter);
+        createReferralStepperLayout.setListener(this);
     }
 
     @Override

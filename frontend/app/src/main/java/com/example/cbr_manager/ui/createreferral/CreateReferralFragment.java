@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,6 +41,12 @@ import android.widget.Toast;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.referral.Referral;
+import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ReferralViewModel;
@@ -73,6 +80,7 @@ public class CreateReferralFragment extends Fragment implements Step {
     private static final int REQUEST_GALLERY = 103;
     private AuthViewModel authViewModel;
     private ReferralViewModel referralViewModel;
+    private Referral referral;
     private APIService apiService = APIService.getInstance();
     private View view;
     private Client client;
@@ -101,6 +109,7 @@ public class CreateReferralFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_referral, container, false);
+        referral = ((CreateReferralStepperActivity) getActivity()).newReferralObj;
         TextInputEditText clientName = view.findViewById(R.id.referralClientName);
         if (apiService.isAuthenticated()) {
             apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
@@ -132,11 +141,171 @@ public class CreateReferralFragment extends Fragment implements Step {
     @Override
     public VerificationError verifyStep() {
 
-        updateCreateReferral();
-        return null;
+        if (updateCreateReferral(view)) {
+            return null;
+        }
+        return new VerificationError("Required fields missing.");
     }
 
-    private void updateCreateReferral() {
+    private boolean updateCreateReferral(View view) {
+        boolean requiredFieldsFilled = true;
+
+        RadioGroup selectedService = view.findViewById(R.id.createReferralServiceRadioGroup);
+        if (!validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView)) {
+            requiredFieldsFilled = false;
+        }
+
+        int service = selectedService.getCheckedRadioButtonId();
+//        Referral referral = new Referral();
+
+        if (service == R.id.referralPhysioRadioButton) {
+            PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
+            String clientCondition;
+
+            TextInputEditText physioOtherCondition = view.findViewById(R.id.referralOtherPhysio);
+
+            String otherConditionDescription = "";
+            Spinner referralPhysioDDL = view.findViewById(R.id.referralPhysioDDL);
+            clientCondition = referralPhysioDDL.getSelectedItem().toString();
+
+            if (clientCondition.equals("Other")) {
+                otherConditionDescription = physioOtherCondition.getText().toString();
+                if (!validateEditText(R.id.referralPhysioOtherTextInputLayout, physioOtherCondition.getText())) {
+                    requiredFieldsFilled = false;
+                }
+                validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
+                physiotherapyServiceDetail.setOther_description(otherConditionDescription);
+            }
+            physiotherapyServiceDetail.setCondition(clientCondition);
+
+            referral.setServiceDetail(physiotherapyServiceDetail);
+            referral.setServiceType("Physiotherapy");
+
+        } else if (service == R.id.referralProstheticRadioButton) {
+            ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
+            RadioGroup aboveOrBelowKnee = view.findViewById(R.id.referralAboveOrBelowKnee);
+            if (!validateRadiogroupSelection(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView)) {
+                requiredFieldsFilled = false;
+            }
+            radioGroupErrorListener(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView);
+            int getSelectedId = aboveOrBelowKnee.getCheckedRadioButtonId();
+            RadioButton aboveOrBelow = (RadioButton) view.findViewById(getSelectedId);
+            String getRadioText = "";
+            if (aboveOrBelow != null) {
+                getRadioText = aboveOrBelow.getText().toString();
+            }
+
+            prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
+
+            referral.setServiceDetail(prostheticServiceDetail);
+            referral.setServiceType("Prosthetic");
+
+        } else if (service == R.id.referralOrthoticRadioButton) {
+            OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
+            RadioGroup aboveOrBelowElbow = view.findViewById(R.id.referralAboveOrBelowElbow);
+            if (!validateRadiogroupSelection(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView)) {
+                requiredFieldsFilled = false;
+            }
+            radioGroupErrorListener(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView);
+            int getSelectedId = aboveOrBelowElbow.getCheckedRadioButtonId();
+            RadioButton aboveOrBelow = (RadioButton) view.findViewById(getSelectedId);
+            String getRadioText = "";
+
+            if (aboveOrBelow != null) {
+                getRadioText = aboveOrBelow.getText().toString();
+            }
+
+            orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
+
+            referral.setServiceDetail(orthoticServiceDetail);
+            referral.setServiceType("Orthotic");
+
+        } else if (service == R.id.referralWheelChairRadioButton) {
+            WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
+            String hipWidth;
+            boolean isExisting = false;
+            boolean isRepairable = false;
+
+            TextInputEditText hipWidthEditText = view.findViewById(R.id.referralHipWidth);
+            if (!validateEditText(R.id.referralHipWidthTextInputLayout, hipWidthEditText.getText())) {
+                requiredFieldsFilled = false;
+            }
+            validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
+            hipWidth = hipWidthEditText.getText().toString();
+            if (!hipWidth.isEmpty()) {
+                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+            }
+
+            RadioGroup usageExperience = view.findViewById(R.id.referralWheelChairUsageRadioGroup);
+            if (!validateRadiogroupSelection(R.id.referralWheelChairUsageRadioGroup, R.id.referralNoWheelchairUsageSelectedTextView)) {
+                requiredFieldsFilled = false;
+            }
+            if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
+                wheelchairServiceDetail.setUsageExperience("Intermediate");
+            } else {
+                wheelchairServiceDetail.setUsageExperience("Basic");
+            }
+
+            RadioGroup isExistingWheelchair = view.findViewById(R.id.referralExistingWheelchairRadioGroup);
+            if (!validateRadiogroupSelection(R.id.referralExistingWheelchairRadioGroup, R.id.referralNoExisitingWheelchairTextView)) {
+                requiredFieldsFilled = false;
+            }
+            if (isExistingWheelchair.getCheckedRadioButtonId() == R.id.referralExistingWheelchairYes) {
+                isExisting = true;
+            }
+
+            RadioGroup isRepairableWheelchair = view.findViewById(R.id.referralCanRepairRadioGroup);
+            if (isExisting) {
+                if (!validateRadiogroupSelection(R.id.referralCanRepairRadioGroup, R.id.referralNoWheelchairRepairSelectedTextView)) {
+                    requiredFieldsFilled = false;
+                }
+            }
+            if (isRepairableWheelchair.getCheckedRadioButtonId() == R.id.referralCanRepairYes) {
+                isRepairable = true;
+            }
+
+            if (!hipWidth.isEmpty()) {
+                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+            }
+            wheelchairServiceDetail.setClientHasExistingWheelchair(isExisting);
+            wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
+            wheelchairServiceDetail.setUsageExperience("Basic");
+            referral.setServiceDetail(wheelchairServiceDetail);
+            referral.setServiceType("Wheelchair");
+
+        } else if (service == R.id.referralOtherRadioButton) {
+            OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
+
+            TextInputEditText otherServiceEditText = view.findViewById(R.id.referralOtherServiceDescription);
+            if (!validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText())) {
+                requiredFieldsFilled = false;
+            }
+            validationErrorListener(R.id.referralOtherServiceDescription, R.id.referralDescribeOtherTextInputLayout);
+            String otherDescription = "";
+            otherDescription = otherServiceEditText.getText().toString();
+
+            otherServiceDetail.setDescription(otherDescription);
+            referral.setServiceDetail(otherServiceDetail);
+            referral.setServiceType("Other");
+        }
+
+        TextInputEditText referTo = view.findViewById(R.id.referralReferToEditText);
+        if (!validateEditText(R.id.createReferralReferToInputLayout, referTo.getText())) {
+            requiredFieldsFilled = false;
+        }
+        validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
+        String referToString = referTo.getText().toString();
+        referral.setRefer_to(referToString);
+
+        referral.setClient(new Integer(clientId));
+        referral.setUserCreator(userId);
+        if (requiredFieldsFilled) {
+            return true;
+//            makeServerCall(referral);
+        } else {
+            Toast.makeText(getContext(), "Required fields not filled out. Please check.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     @Override

@@ -109,6 +109,7 @@ public class CreateReferralFragment extends Fragment implements Step {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_referral, container, false);
+        clientId = ((CreateReferralStepperActivity) getActivity()).clientId;
         referral = ((CreateReferralStepperActivity) getActivity()).newReferralObj;
         TextInputEditText clientName = view.findViewById(R.id.referralClientName);
         if (apiService.isAuthenticated()) {

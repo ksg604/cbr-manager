@@ -3,6 +3,7 @@ package com.example.cbr_manager.ui.createreferral;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
     private StepperLayout createReferralStepperLayout;
     public Referral newReferralObj;
     private APIService apiService = APIService.getInstance();
-    private int clientId = -1;
+    public int clientId = -1;
     private int userCreatorId = 1;
     private int referralId;
     public String imageFilePath = "";
@@ -46,6 +47,8 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
         setContentView(R.layout.stepper);
         setTitle("Create Referral");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

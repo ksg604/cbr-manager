@@ -27,9 +27,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -304,5 +307,125 @@ public class CreateReferralFragment extends Fragment implements Step {
         imageFilePath = image.getAbsolutePath();
 
         return image;
+    }
+
+    private void setupWheelchairLayout(View view) {
+        RadioGroup existingChair = view.findViewById(R.id.referralExistingWheelchairRadioGroup);
+        RadioGroup canRepair = view.findViewById(R.id.referralCanRepairRadioGroup);
+        RadioGroup usageExperience = view.findViewById(R.id.referralWheelChairUsageRadioGroup);
+        canRepair.setVisibility(View.GONE);
+
+        TextView bringWheelChair = view.findViewById(R.id.referralBringWheelchairTextView);
+        TextView canRepairedTextView = view.findViewById(R.id.referralCanRepairTextView);
+        bringWheelChair.setVisibility(View.GONE);
+
+        usageExperience.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                validateRadiogroupSelection(R.id.referralWheelChairUsageRadioGroup, R.id.referralNoWheelchairUsageSelectedTextView);
+            }
+        });
+
+        existingChair.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                validateRadiogroupSelection(R.id.referralExistingWheelchairRadioGroup, R.id.referralNoExisitingWheelchairTextView);
+                if (checkedId == R.id.referralExistingWheelchairYes) {
+                    canRepair.setVisibility(View.VISIBLE);
+                    canRepairedTextView.setVisibility(View.VISIBLE);
+                } else {
+                    canRepair.setVisibility(View.GONE);
+                    canRepairedTextView.setVisibility(View.GONE);
+                    canRepair.clearCheck();
+                    bringWheelChair.setVisibility(View.GONE);
+                    TextView textView = view.findViewById(R.id.referralNoWheelchairRepairSelectedTextView);
+                    textView.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        canRepair.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                validateRadiogroupSelection(R.id.referralCanRepairRadioGroup, R.id.referralNoWheelchairRepairSelectedTextView);
+                if (checkedId == R.id.referralCanRepairYes) {
+                    bringWheelChair.setVisibility(View.VISIBLE);
+                } else {
+                    bringWheelChair.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void setupPhysioLayout(View view) {
+        TextInputLayout referralPhysioOther = view.findViewById(R.id.referralPhysioOtherTextInputLayout);
+        referralPhysioOther.setVisibility(View.GONE);
+        Spinner spinner = view.findViewById(R.id.referralPhysioDDL);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinner.getSelectedItem().toString().equals("Other")) {
+                    referralPhysioOther.setVisibility(View.VISIBLE);
+                } else {
+                    referralPhysioOther.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setupReferralServiceRadioGroup(View view) {
+        TextInputLayout referralServiceOther = view.findViewById(R.id.referralDescribeOtherTextInputLayout);
+        referralServiceOther.setVisibility(View.GONE);
+        RadioGroup serviceRequired = view.findViewById(R.id.createReferralServiceRadioGroup);
+        serviceRequired.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                LinearLayout physioLayout = view.findViewById(R.id.referralPhysioLayout);
+                LinearLayout prostheticLayout = view.findViewById(R.id.referralProstheticLayout);
+                LinearLayout orthoticLayout = view.findViewById(R.id.referralOrthoticLayout);
+                LinearLayout wheelchairLayout = view.findViewById(R.id.referralWheelchairLayout);
+
+                validateRadiogroupSelection(R.id.createReferralServiceRadioGroup, R.id.referralNoServiceSelectedTextView);
+
+                if (checkedId == R.id.referralPhysioRadioButton) {
+                    setAllGone(view);
+                    physioLayout.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.referralProstheticRadioButton) {
+                    setAllGone(view);
+                    prostheticLayout.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.referralOrthoticRadioButton) {
+                    setAllGone(view);
+                    orthoticLayout.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.referralWheelChairRadioButton) {
+                    setAllGone(view);
+                    wheelchairLayout.setVisibility(View.VISIBLE);
+                } else {
+                    setAllGone(view);
+                    referralServiceOther.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    private void setAllGone(View view) {
+        LinearLayout physioLayout = view.findViewById(R.id.referralPhysioLayout);
+        LinearLayout prostheticLayout = view.findViewById(R.id.referralProstheticLayout);
+        LinearLayout orthoticLayout = view.findViewById(R.id.referralOrthoticLayout);
+        LinearLayout wheelchairLayout = view.findViewById(R.id.referralWheelchairLayout);
+        LinearLayout otherLayout = view.findViewById(R.id.referralOrthoticLayout);
+
+        physioLayout.setVisibility(View.GONE);
+        prostheticLayout.setVisibility(View.GONE);
+        orthoticLayout.setVisibility(View.GONE);
+        wheelchairLayout.setVisibility(View.GONE);
+        otherLayout.setVisibility(View.GONE);
+
+        TextInputLayout referralServiceOther = view.findViewById(R.id.referralDescribeOtherTextInputLayout);
+        referralServiceOther.setVisibility(View.GONE);
     }
 }

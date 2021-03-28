@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ReferralViewModel;
+import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -92,7 +94,7 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
                     });
                 }
                 Toast.makeText(CreateReferralStepperActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
-//                onSubmitSuccess();
+                onSubmitSuccess();
             }
 
             @Override
@@ -100,6 +102,13 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
                 Toast.makeText(CreateReferralStepperActivity.this, "Error creating referral.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void onSubmitSuccess() {
+        Intent intent = new Intent(CreateReferralStepperActivity.this, ReferralDetailsActivity.class);
+        intent.putExtra("referralId", referralId);
+        startActivity(intent);
+        finish();
     }
 
     @Override

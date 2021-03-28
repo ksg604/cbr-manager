@@ -491,13 +491,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/refer_to" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/referralSubmitButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/submit"
-                android:layout_margin="16dp"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

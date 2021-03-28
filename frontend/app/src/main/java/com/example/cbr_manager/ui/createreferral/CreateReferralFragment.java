@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -55,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +64,7 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-
+@AndroidEntryPoint
 public class CreateReferralFragment extends Fragment implements Step {
 
     static final int REQUEST_IMAGE_CAPTURE = 102;
@@ -90,6 +92,8 @@ public class CreateReferralFragment extends Fragment implements Step {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
     }
 
     @Override
@@ -120,14 +124,14 @@ public class CreateReferralFragment extends Fragment implements Step {
         setupReferralServiceRadioGroup(view);
         setupPhysioLayout(view);
         setupWheelchairLayout(view);
-        setupCameraButtonListener();
+        setupCameraButtonListener(view);
         return view;
     }
 
     @Nullable
     @Override
     public VerificationError verifyStep() {
-        
+
         updateCreateReferral();
         return null;
     }
@@ -284,8 +288,8 @@ public class CreateReferralFragment extends Fragment implements Step {
         });
     }
 
-    private void setupCameraButtonListener() {
-        Button cameraButton = getView().findViewById(R.id.referralTakePhotoButton);
+    private void setupCameraButtonListener(View view) {
+        Button cameraButton = view.findViewById(R.id.referralTakePhotoButton);
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override

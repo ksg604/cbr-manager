@@ -15,6 +15,489 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+            <LinearLayout
+                android:id="@+id/referralPreambleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/createReferralTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@string/create_referral"
+                    android:textColor="@color/purple_700"
+                    android:textSize="22sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/referralClientName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/client_name" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/createReferralServiceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/service_required" />
+
+                <RadioGroup
+                    android:id="@+id/createReferralServiceRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp">
+
+                    <RadioButton
+                        android:id="@+id/referralPhysioRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Physiotherapy" />
+
+                    <RadioButton
+                        android:id="@+id/referralProstheticRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Prosthetic" />
+
+                    <RadioButton
+                        android:id="@+id/referralOrthoticRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Orthotic" />
+
+                    <RadioButton
+                        android:id="@+id/referralWheelChairRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Wheelchair" />
+
+                    <RadioButton
+                        android:id="@+id/referralOtherRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Other" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoServiceSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/referralDescribeOtherTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:hint="@string/describe_other">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/referralOtherServiceDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralWheelchairLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/referralWheelChairTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Wheelchair"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/referralWheelchairUsageTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/usage_experience" />
+
+                <RadioGroup
+                    android:id="@+id/referralWheelChairUsageRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/referralWheelchairBasic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Basic" />
+
+                    <RadioButton
+                        android:id="@+id/referralWheelchairIntermediate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Intermediate" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/referralNoWheelchairUsageSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:layout_marginBottom="4dp"
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/referralHipWidthTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/referralHipWidth"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hip_width"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/referralExisitingWheelchairTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/existing_wheelchair" />
+
+                <RadioGroup
+                    android:id="@+id/referralExistingWheelchairRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/referralExistingWheelchairYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/referralExistingWheelchairNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoExisitingWheelchairTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
+                <TextView
+                    android:id="@+id/referralCanRepairTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:visibility="gone"
+                    android:text="@string/can_the_existing_wheelchair_be_repaired" />
+
+                <RadioGroup
+                    android:id="@+id/referralCanRepairRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/referralCanRepairYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/referralCanRepairNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoWheelchairRepairSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+
+                <TextView
+                    android:id="@+id/referralBringWheelchairTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:text="Please bring the wheelchair to the centre."
+                    android:textColor="#fc0303" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralPhysioLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/referralPhysioTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Physiotherapy"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/referralClientConditionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/client_condition" />
+
+                <Spinner
+                    android:id="@+id/referralPhysioDDL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:entries="@array/physioNeedsArray" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/referralPhysioOtherTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/referralOtherPhysio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="@string/describe_other" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralProstheticLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/referralProstheticTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Prosthetic"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/referralProstheticWhereTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/is_injury_below_or_above_knee" />
+
+                <RadioGroup
+                    android:id="@+id/referralAboveOrBelowKnee"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/referralProstheticBelow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Below" />
+
+                    <RadioButton
+                        android:id="@+id/referralProstheticAbove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Above" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoProstheticSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralOrthoticLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/referralOrthoticTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Orthotic"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/referralOrthoticWhereTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/is_injury_below_or_above_elbow" />
+
+                <RadioGroup
+                    android:id="@+id/referralAboveOrBelowElbow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/referralOrthoticAboveRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Below" />
+
+                    <RadioButton
+                        android:id="@+id/referralOrthoticBelowRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Above" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/referralNoOrthoticSelectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_error_red"
+                    android:drawableLeft="@drawable/ic_error_red"
+                    android:text="Please select an option."
+                    android:visibility="gone"
+                    android:textColor="#fc0303" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralPhotoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/referralPhotoTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photo"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/referralImageView"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    app:srcCompat="@drawable/client_details_placeholder" />
+
+                <Button
+                    android:id="@+id/referralTakePhotoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Upload Photo"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/createReferralReferToInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:errorEnabled="true"
+                app:errorContentDescription="Required field"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/referralReferToEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/refer_to" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/referralSubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:layout_margin="16dp"/>
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

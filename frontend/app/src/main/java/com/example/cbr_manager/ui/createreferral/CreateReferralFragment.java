@@ -322,8 +322,9 @@ public class CreateReferralFragment extends Fragment implements Step {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ImageView referralImageView = getView().findViewById(R.id.referralImageView);
+
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            File imgFile = new File(imageFilePath);
+            File imgFile = new File(((CreateReferralStepperActivity) getActivity()).imageFilePath);
             if (imgFile.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 referralImageView.setImageBitmap(bitmap);
@@ -341,7 +342,7 @@ public class CreateReferralFragment extends Fragment implements Step {
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imageFilePath = cursor.getString(columnIndex);
+                ((CreateReferralStepperActivity) getActivity()).imageFilePath = cursor.getString(columnIndex);
                 cursor.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -515,7 +516,7 @@ public class CreateReferralFragment extends Fragment implements Step {
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
-        imageFilePath = image.getAbsolutePath();
+        ((CreateReferralStepperActivity) getActivity()).imageFilePath = image.getAbsolutePath();
 
         return image;
     }

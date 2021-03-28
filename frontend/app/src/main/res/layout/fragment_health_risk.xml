@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:layout_marginBottom="16dp"
-                android:text="Highest priority will be given to clients with critical ratings." />
+                android:text="Please fill this section out with the client. Highest priority will be given to clients with critical ratings." />
 
             <TextView
                 android:id="@+id/textView35"
@@ -49,12 +49,18 @@
                 android:orientation="vertical">
 
                 <RadioButton
-                    android:id="@+id/healthRiskLowRadioButton"
+                    android:id="@+id/healthRiskCriticalRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Low" />
+                    android:text="Critical" />
 
+                <RadioButton
+                    android:id="@+id/healthRiskHighRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="High" />
                 <RadioButton
                     android:id="@+id/healthRiskMediumRadioButton"
                     android:layout_width="wrap_content"
@@ -63,25 +69,19 @@
                     android:text="Medium" />
 
                 <RadioButton
-                    android:id="@+id/healthRiskHighRadioButton"
+                    android:id="@+id/healthRiskLowRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="High" />
+                    android:text="Low" />
 
-                <RadioButton
-                    android:id="@+id/healthRiskCriticalRadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Critical" />
             </RadioGroup>
 
             <TextView
                 android:id="@+id/textView42"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="What does the client need?" />
+                android:text="Please describe what they require:" />
 
             <EditText
                 android:id="@+id/healthNeedsEditTextTextMultiLine"

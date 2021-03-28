@@ -5,6 +5,9 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,12 +43,16 @@ import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import io.reactivex.observers.DisposableSingleObserver;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class CreateReferralFragment extends Fragment implements Step {
@@ -94,6 +102,38 @@ public class CreateReferralFragment extends Fragment implements Step {
     @Override
     public void onError(@NonNull VerificationError error) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ImageView referralImageView = getView().findViewById(R.id.referralImageView);
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            File imgFile = new File(imageFilePath);
+            if (imgFile.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                referralImageView.setImageBitmap(bitmap);
+            }
+        } else if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+            try {
+                Uri selectedImage = data.getData();
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(selectedImage);
+                referralImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imageFilePath = cursor.getString(columnIndex);
+                cursor.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private boolean validateEditText(int textInputLayoutId, Editable stringInput) {

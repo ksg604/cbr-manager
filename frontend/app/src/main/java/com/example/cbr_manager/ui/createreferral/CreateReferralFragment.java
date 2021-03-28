@@ -37,6 +37,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ReferralViewModel;
@@ -54,6 +56,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import io.reactivex.observers.DisposableSingleObserver;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -66,6 +71,9 @@ public class CreateReferralFragment extends Fragment implements Step {
     private static final int REQUEST_GALLERY = 103;
     private AuthViewModel authViewModel;
     private ReferralViewModel referralViewModel;
+    private APIService apiService = APIService.getInstance();
+    private View view;
+    private Client client;
     int clientId = -1;
     private Integer userId = -1;
     private String imageFilePath = "";
@@ -88,13 +96,43 @@ public class CreateReferralFragment extends Fragment implements Step {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_referral, container, false);
+        view = inflater.inflate(R.layout.fragment_create_referral, container, false);
+        TextInputEditText clientName = view.findViewById(R.id.referralClientName);
+        if (apiService.isAuthenticated()) {
+            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
+                @Override
+                public void onResponse(Call<Client> call, Response<Client> response) {
+                    if (response.isSuccessful()) {
+                        client = response.body();
+                        clientName.setText(client.getFullName());
+                        clientName.setFocusable(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Client> call, Throwable t) {
+
+                }
+            });
+
+        }
+        getUserId();
+        setupReferralServiceRadioGroup(view);
+        setupPhysioLayout(view);
+        setupWheelchairLayout(view);
+        setupCameraButtonListener();
+        return view;
     }
 
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        
+        updateCreateReferral();
         return null;
+    }
+
+    private void updateCreateReferral() {
     }
 
     @Override

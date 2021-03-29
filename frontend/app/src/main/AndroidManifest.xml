@@ -18,7 +18,9 @@
         android:theme="@style/Theme.Cbr_manager"
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="n">
-        <activity android:name=".ui.user.UserActivity"></activity>
+        <activity
+            android:name=".ui.user.UserActivity"
+            android:parentActivityName=".NavigationActivity" />
         <activity android:name=".ui.createreferral.CreateReferralStepperActivity"></activity>
         <activity android:name=".ui.baselinesurvey.BaselineSurveyStepperActivity"></activity>
         <activity android:name=".ui.create_client.CreateClientStepperActivity" />

@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
+
+import static com.example.cbr_manager.ui.create_client.ValidatorHelper.validateStepperTextViewNotNull;
 
 public class EducationRiskFragment extends Fragment implements Step {
 
@@ -28,6 +31,7 @@ public class EducationRiskFragment extends Fragment implements Step {
     final Integer HIGH_RISK = 3;
     final Integer MEDIUM_RISK = 2;
     final Integer LOW_RISK = 1;
+    private TextView errorTextView;
 
     public EducationRiskFragment() {
         // Required empty public constructor
@@ -49,13 +53,19 @@ public class EducationRiskFragment extends Fragment implements Step {
         view = inflater.inflate(R.layout.fragment_education_risk, container, false);
         client = ((CreateClientStepperActivity) getActivity()).formClientObj;
         riskRadioGroup = view.findViewById(R.id.educationRiskRatingRadioGroup);
-        educationRequireEditText = view.findViewById(R.id.healthNeedsEditTextTextMultiLine);
+        educationRequireEditText = view.findViewById(R.id.educationNeedsEditTextTextMultiLine);
         return view;
     }
 
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        try {
+            validateStepperTextViewNotNull(educationRequireEditText, "Required");
+        } catch (InvalidCreateClientFormException e) {
+            errorTextView = e.view;
+            return new VerificationError(e.getMessage());
+        }
         client.setEducationRisk(convertRiskRating(riskRadioGroup));
         client.setEducationRequire(educationRequireEditText.getText().toString());
         return null;
@@ -68,7 +78,9 @@ public class EducationRiskFragment extends Fragment implements Step {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-
+        if (errorTextView != null) {
+            errorTextView.setError(error.getErrorMessage());
+        }
     }
 
     private Integer convertRiskRating(RadioGroup riskRadioGroup) {

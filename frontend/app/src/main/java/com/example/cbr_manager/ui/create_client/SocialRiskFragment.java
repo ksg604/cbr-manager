@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
+import static com.example.cbr_manager.ui.create_client.ValidatorHelper.validateStepperTextViewNotNull;
 
 public class SocialRiskFragment extends Fragment implements Step {
 
@@ -28,6 +30,7 @@ public class SocialRiskFragment extends Fragment implements Step {
     final Integer HIGH_RISK = 3;
     final Integer MEDIUM_RISK = 2;
     final Integer LOW_RISK = 1;
+    private TextView errorTextView;
 
     public SocialRiskFragment() {
         // Required empty public constructor
@@ -56,6 +59,13 @@ public class SocialRiskFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        try {
+            validateStepperTextViewNotNull(socialRequireEditText, "Required");
+        } catch (InvalidCreateClientFormException e) {
+            errorTextView = e.view;
+            return new VerificationError(e.getMessage());
+        }
+
         client.setSocialRisk(convertRiskRating(riskRadioGroup));
         client.setSocialRequire(socialRequireEditText.getText().toString());
         return null;
@@ -68,7 +78,9 @@ public class SocialRiskFragment extends Fragment implements Step {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-
+        if (errorTextView != null) {
+            errorTextView.setError(error.getErrorMessage());
+        }
     }
 
     private Integer convertRiskRating(RadioGroup riskRadioGroup) {

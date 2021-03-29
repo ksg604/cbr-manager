@@ -164,14 +164,6 @@ public class NavigationActivity extends AppCompatActivity {
         TextView navFirstName = headerView.findViewById(R.id.nav_first_name);
         TextView navEmail = headerView.findViewById(R.id.nav_email);
 
-        headerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NavigationActivity.this, UserActivity.class);
-                startActivity(intent);
-            }
-        });
-
         authViewModel.getUser().subscribe(new SingleObserver<User>() {
             @Override
             public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
@@ -181,6 +173,15 @@ public class NavigationActivity extends AppCompatActivity {
             public void onSuccess(@io.reactivex.annotations.NonNull User user) {
                 navFirstName.setText(user.getFirstName());
                 navEmail.setText(user.getEmail());
+
+                headerView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(NavigationActivity.this, UserActivity.class);
+                        intent.putExtra(UserActivity.KEY_USER_ID, user.getId());
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.cbr_manager.R;
@@ -22,7 +23,7 @@ public class EducationRiskFragment extends Fragment implements Step {
     private View view;
     private Client client;
     RadioGroup riskRadioGroup;
-    EditText healthRequireEditText;
+    EditText educationRequireEditText;
     final Integer CRITICAL_RISK = 5;
     final Integer HIGH_RISK = 3;
     final Integer MEDIUM_RISK = 2;
@@ -45,12 +46,18 @@ public class EducationRiskFragment extends Fragment implements Step {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_education_risk, container, false);
+        view = inflater.inflate(R.layout.fragment_education_risk, container, false);
+        client = ((CreateClientStepperActivity) getActivity()).formClientObj;
+        riskRadioGroup = view.findViewById(R.id.educationRiskRatingRadioGroup);
+        educationRequireEditText = view.findViewById(R.id.healthNeedsEditTextTextMultiLine);
+        return view;
     }
 
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        client.setEducationRisk(convertRiskRating(riskRadioGroup));
+        client.setEducationRequire(educationRequireEditText.getText().toString());
         return null;
     }
 
@@ -62,5 +69,21 @@ public class EducationRiskFragment extends Fragment implements Step {
     @Override
     public void onError(@NonNull VerificationError error) {
 
+    }
+
+    private Integer convertRiskRating(RadioGroup riskRadioGroup) {
+        int radioButtonId = riskRadioGroup.getCheckedRadioButtonId();
+        RadioButton radioButton = getView().findViewById(radioButtonId);
+        String risk = radioButton.getText().toString().trim().toLowerCase();
+        switch (risk) {
+            case "critical":
+                return CRITICAL_RISK;
+            case "high":
+                return HIGH_RISK;
+            case "medium":
+                return MEDIUM_RISK;
+            default:
+                return LOW_RISK;
+        }
     }
 }

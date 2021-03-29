@@ -229,6 +229,10 @@
     <string name="is_injury_below_or_above_elbow">Is injury below or above elbow?<font color='#FF0000'>*</font></string>
     <string name="refer_to">Refer To<font color='#FF0000'>*</font></string>
     <string name="_4_what_is_your_location">4. What is your location?<font color='#FF0000'>*</font></string>
+    <string name="please_rate_how_you_consider_the_client_s_education_status_to_be">Please rate how you consider the client\'s education status to be:<font color='#FF0000'>*</font></string>
+    <string name="please_describe_what_they_require">Please describe what they require:<font color='#FF0000'>*</font></string>
+    <string name="please_rate_how_you_consider_the_client_s_social_status_to_be">Please rate how you consider the client\'s social status to be:<font color='#FF0000'>*</font></string>
+    <string name="please_rate_how_you_consider_the_client_s_health_to_be">Please rate how you consider the client\'s health to be:<font color='#FF0000'>*</font></string>
 
     <string-array name="general_health">
         <item>N/A</item>

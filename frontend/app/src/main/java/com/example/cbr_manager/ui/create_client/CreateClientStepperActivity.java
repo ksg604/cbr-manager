@@ -63,6 +63,9 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         createClientStepperAdapter.addFragment(new DisabilityFragment(), "Disability Info");
         createClientStepperAdapter.addFragment(new CaregiverInfoFragment(), "Caregiver Info");
         createClientStepperAdapter.addFragment(new PhotoFragment(), "Photo");
+        createClientStepperAdapter.addFragment(new HealthRiskFragment(), "Health Risk");
+        createClientStepperAdapter.addFragment(new EducationRiskFragment(), "Education Risk");
+        createClientStepperAdapter.addFragment(new SocialRiskFragment(), "Social Risk");
 
         return createClientStepperAdapter;
     }

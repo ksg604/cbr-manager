@@ -31,6 +31,11 @@ public class PersonalInfoFragment extends Fragment implements Step {
 
     private TextView errorTextView;
 
+    private static final String[] locationPaths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
+            "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
+    private Spinner locationSpinner;
+    private EditText editTextVillageNum;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +53,10 @@ public class PersonalInfoFragment extends Fragment implements Step {
 
         genderSpinner = setUpSpinner(view, R.id.gender_dropdown, paths);
 
+        setUpLocationSpinner(view);
+
+        editTextVillageNum = (EditText) view.findViewById(R.id.editTextVillageNum);
+
         return view;
     }
 
@@ -59,6 +68,7 @@ public class PersonalInfoFragment extends Fragment implements Step {
             validateStepperTextViewNotNull(editTextLastName, "Required");
             validateStepperTextViewNotNull(editTextAge, "Required");
             validateStepperTextViewNotNull(editTextContactNumber, "Required");
+            validateStepperTextViewNotNull(editTextVillageNum, "Required");
         } catch (InvalidCreateClientFormException e) {
             errorTextView = e.view;
             return new VerificationError(e.getMessage());
@@ -101,6 +111,17 @@ public class PersonalInfoFragment extends Fragment implements Step {
         client.setContactClient(editTextContactNumber.getText().toString().trim());
 
         client.setGender(genderSpinner.getSelectedItem().toString().trim());
+
+        client.setVillageNo(Integer.parseInt(editTextVillageNum.getText().toString()));
+        client.setLocation(locationSpinner.getSelectedItem().toString());
+    }
+
+    private void setUpLocationSpinner(View view) {
+        locationSpinner = (Spinner) view.findViewById(R.id.location_dropdown);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, locationPaths);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationSpinner.setAdapter(adapter);
     }
 
 }

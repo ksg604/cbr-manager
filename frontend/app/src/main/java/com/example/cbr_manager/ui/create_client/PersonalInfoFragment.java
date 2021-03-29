@@ -64,11 +64,11 @@ public class PersonalInfoFragment extends Fragment implements Step {
     @Override
     public VerificationError verifyStep() {
         try {
+            validateStepperTextViewNotNull(editTextVillageNum, "Required");
             validateStepperTextViewNotNull(editTextFirstName, "Required");
             validateStepperTextViewNotNull(editTextLastName, "Required");
             validateStepperTextViewNotNull(editTextAge, "Required");
             validateStepperTextViewNotNull(editTextContactNumber, "Required");
-            validateStepperTextViewNotNull(editTextVillageNum, "Required");
         } catch (InvalidCreateClientFormException e) {
             errorTextView = e.view;
             return new VerificationError(e.getMessage());

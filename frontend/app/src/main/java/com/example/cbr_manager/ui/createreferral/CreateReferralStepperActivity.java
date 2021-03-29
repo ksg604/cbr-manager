@@ -38,12 +38,12 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
     private StepperLayout createReferralStepperLayout;
     public Referral newReferralObj;
     private APIService apiService = APIService.getInstance();
-    public int clientId = -1;
-    private int userCreatorId = 1;
+    public int clientId;
     private int referralId;
     public String imageFilePath = "";
     private AuthViewModel authViewModel;
     private ReferralViewModel referralViewModel;
+    private static final String KEY_CLIENT_ID = "CLIENT_ID";
     public Client client;
 
     @Override
@@ -54,7 +54,7 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
         setContentView(R.layout.stepper);
         setTitle("Create Referral");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        clientId = getIntent().getIntExtra("CLIENT_ID", -1);
+        clientId = getIntent().getIntExtra(KEY_CLIENT_ID, -1);
         newReferralObj = new Referral();
         createReferralStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
 

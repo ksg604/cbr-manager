@@ -39,7 +39,7 @@
                 android:id="@+id/textView35"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please rate how you consider the client's health to be:" />
+                android:text="@string/please_rate_how_you_consider_the_client_s_health_to_be" />
 
             <RadioGroup
                 android:id="@+id/healthRiskRatingRadioGroup"
@@ -82,7 +82,7 @@
                 android:id="@+id/textView42"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please describe what they require:" />
+                android:text="@string/please_describe_what_they_require" />
 
             <EditText
                 android:id="@+id/healthNeedsEditTextTextMultiLine"

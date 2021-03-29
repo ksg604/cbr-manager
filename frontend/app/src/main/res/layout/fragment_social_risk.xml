@@ -36,7 +36,7 @@
                 android:id="@+id/textView35"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please rate how you consider the client's social status to be:" />
+                android:text="@string/please_rate_how_you_consider_the_client_s_social_status_to_be" />
 
             <RadioGroup
                 android:id="@+id/socialRiskRatingRadioGroup"
@@ -80,7 +80,7 @@
                 android:id="@+id/textView42"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please describe what they require:" />
+                android:text="@string/please_describe_what_they_require" />
 
             <EditText
                 android:id="@+id/socialNeedsEditTextTextMultiLine"

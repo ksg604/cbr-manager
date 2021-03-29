@@ -74,13 +74,13 @@ public class CaregiverInfoFragment extends Fragment implements Step {
     ) {
         client = ((CreateClientStepperActivity) getActivity()).formClientObj;
 
-        View view = inflater.inflate(R.layout.activity_create_client_caregiver_info, container, false);
+        view = inflater.inflate(R.layout.activity_create_client_caregiver_info, container, false);
 
         careGiverPresentRadioGroup = view.findViewById(R.id.radioGroup2);
 
         editTextCaregiverContactNumber = (EditText) view.findViewById(R.id.editTextCaregiverContactNumber);
 
-        cameraButton = view.findViewById(R.id.takePhotoButton);
+//        cameraButton = view.findViewById(R.id.takePhotoButton);
         setupCameraButtonListener();
 
         return view;
@@ -126,7 +126,7 @@ public class CaregiverInfoFragment extends Fragment implements Step {
     }
 
     private void setupCameraButtonListener() {
-        Button cameraButton = view.findViewById(R.id.takePhotoButton);
+        cameraButton = view.findViewById(R.id.takePhotoButtonCaregiver);
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override

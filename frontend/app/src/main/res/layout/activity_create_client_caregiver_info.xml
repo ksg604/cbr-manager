@@ -86,12 +86,13 @@
             android:contentDescription="@string/photo_of_client"
             app:srcCompat="@android:drawable/ic_menu_camera" />
         <Button
-            android:id="@+id/takePhotoButton"
+            android:id="@+id/takePhotoButtonCaregiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Upload Photo"
             android:textColor="#FFF"
+            android:layout_marginBottom="32dp"
             app:backgroundTint="@color/purple_700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

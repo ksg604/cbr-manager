@@ -19,6 +19,12 @@
         android:paddingTop="8dp"
         app:srcCompat="@drawable/hha_logo" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/user_info_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:constraint_referenced_ids="nav_first_name,nav_email" />
+
     <TextView
         android:id="@+id/nav_first_name"
         android:layout_width="match_parent"

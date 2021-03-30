@@ -72,7 +72,7 @@ public class User {
         return firstName;
     }
 
-    public void setfirstName(String first_name) {
+    public void setFirstName(String first_name) {
         this.firstName = firstName;
     }
 

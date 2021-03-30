@@ -1,11 +1,12 @@
 package com.example.cbr_manager.ui.user;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -36,17 +37,40 @@ public class UserActivity extends AppCompatActivity {
         setUpLoginButton();
     }
 
-    private void setUpLoginButton(){
+    private void setUpLoginButton() {
         Button logoutBtn = findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLogout();
+                confirmedLogout();
             }
         });
     }
 
-    private void onLogout(){
+    private void confirmedLogout() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Logging out");
+        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onLogout();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void onLogout() {
         authViewModel.logout();
         Intent intent = new Intent(this, LoginActivity.class);
         // clears activity stack to start anew

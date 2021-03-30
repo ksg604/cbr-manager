@@ -32,7 +32,7 @@ public class Goal{
 
     @SerializedName("user_creator")
     @Expose
-    private int userId;
+    private Integer userId;
 
     @SerializedName("client")
     @Expose
@@ -90,11 +90,11 @@ public class Goal{
         this.datetimeCompleted = datetimeCompleted;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

@@ -61,7 +61,6 @@ public class Goal{
     private String status;
 
     public Goal() {
-        this.id = 0;
         this.userId = 0;
         this.client = new Client();
         this.category = "";
@@ -81,10 +80,6 @@ public class Goal{
 
     public Timestamp getDatetimeCreated() {
         return datetimeCreated;
-    }
-
-    public void setDatetimeCreated(Timestamp datetimeCreated) {
-        this.datetimeCreated = datetimeCreated;
     }
 
     public Timestamp getDatetimeCompleted() {

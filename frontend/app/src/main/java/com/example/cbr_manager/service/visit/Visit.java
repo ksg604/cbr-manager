@@ -21,7 +21,7 @@ public class Visit {
     @Expose
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "visit_id")
-    private int id;
+    private Integer id;
 
     @SerializedName("client_id")
     @Expose

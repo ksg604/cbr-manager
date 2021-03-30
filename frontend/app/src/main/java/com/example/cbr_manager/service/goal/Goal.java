@@ -54,7 +54,7 @@ public class Goal{
 
     @SerializedName("is_initial_goal")
     @Expose
-    private boolean is_initial_goal;
+    private boolean isInitialGoal;
 
     @SerializedName("status")
     @Expose
@@ -67,7 +67,7 @@ public class Goal{
         this.category = "";
         this.title = "";
         this.description = "";
-        this.is_initial_goal = false;
+        this.isInitialGoal = false;
         this.status = "";
     }
 
@@ -135,12 +135,12 @@ public class Goal{
         this.description = description;
     }
 
-    public boolean isIs_initial_goal() {
-        return is_initial_goal;
+    public boolean isInitialGoal() {
+        return isInitialGoal;
     }
 
-    public void setIs_initial_goal(boolean is_initial_goal) {
-        this.is_initial_goal = is_initial_goal;
+    public void setIsInitialGoal(boolean isInitialGoal) {
+        this.isInitialGoal = isInitialGoal;
     }
 
     public String getStatus() {

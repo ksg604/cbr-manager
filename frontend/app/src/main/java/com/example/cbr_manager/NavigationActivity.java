@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,12 +31,12 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.service.sync.Status;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+import com.example.cbr_manager.ui.user.UserActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -64,25 +65,6 @@ public class NavigationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-
-        // TODO: Sample usage of a ViewModel
-        statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
-        statusViewModel.getStatus().subscribe(new SingleObserver<Status>() {
-            @Override
-            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-                Log.d(TAG, "onSubscribe: ");
-            }
-
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull Status status) {
-                Log.d(TAG, "onSuccess: " + status.toString());
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-            }
-        });
 
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
         clientViewModel.getAllClients().subscribe(new Observer<Client>() {
@@ -117,25 +99,8 @@ public class NavigationActivity extends AppCompatActivity {
         handleIncomingSnackBarMessage(navigationView);
 
         View headerView = navigationView.getHeaderView(0);
-        TextView navFirstName = headerView.findViewById(R.id.nav_first_name);
-        TextView navEmail = headerView.findViewById(R.id.nav_email);
 
-        authViewModel.getUser().subscribe(new SingleObserver<User>() {
-            @Override
-            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-            }
-
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
-                navFirstName.setText(user.getFirstName());
-                navEmail.setText(user.getEmail());
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-            }
-        });
+        setUpHeaderView(headerView);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -194,6 +159,38 @@ public class NavigationActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void setUpHeaderView(View headerView) {
+        TextView navFirstName = headerView.findViewById(R.id.nav_first_name);
+        TextView navEmail = headerView.findViewById(R.id.nav_email);
+        Group userInfoGroup = headerView.findViewById(R.id.user_info_group);
+
+        authViewModel.getUser().subscribe(new SingleObserver<User>() {
+            @Override
+            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+            }
+
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                navFirstName.setText(user.getFirstName());
+                navEmail.setText(user.getEmail());
+
+                userInfoGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(NavigationActivity.this, UserActivity.class);
+                        intent.putExtra(UserActivity.KEY_USER_ID, user.getId());
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+            }
+        });
     }
 
 

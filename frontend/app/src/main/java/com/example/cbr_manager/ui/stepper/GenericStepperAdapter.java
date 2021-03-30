@@ -62,4 +62,8 @@ public class GenericStepperAdapter extends AbstractFragmentStepAdapter {
     public void addFragment(Fragment fragment, String fragmentTitle) {
         fragmentSteps.add(new StepperAdapterItem(fragment, fragmentTitle));
     }
+
+    public void removeFragment(Fragment fragment, String fragmentTitle) {
+        fragmentSteps.remove(new StepperAdapterItem(fragment, fragmentTitle));
+    }
 }

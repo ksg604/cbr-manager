@@ -20,6 +20,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
+import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsEditFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
@@ -89,7 +90,7 @@ public class ClientDetailsFragment extends Fragment {
                                 .commit();
                         break;
                     case R.id.newVisitFragment:
-                        Intent createVisitIntent = new Intent(getActivity(), CreateVisitActivity.class);
+                        Intent createVisitIntent = new Intent(getActivity(), CreateVisitStepperActivity.class);
                         createVisitIntent.putExtra("clientId", clientId);
                         startActivity(createVisitIntent);
                         break;

@@ -58,11 +58,12 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         GenericStepperAdapter createClientStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
 
         createClientStepperAdapter.addFragment(new ConsentFragment(), "Consent");
-        createClientStepperAdapter.addFragment(new VillageInfoFragment(), "Village Info");
         createClientStepperAdapter.addFragment(new PersonalInfoFragment(), "Personal Info");
         createClientStepperAdapter.addFragment(new DisabilityFragment(), "Disability Info");
         createClientStepperAdapter.addFragment(new CaregiverInfoFragment(), "Caregiver Info");
-        createClientStepperAdapter.addFragment(new PhotoFragment(), "Photo");
+        createClientStepperAdapter.addFragment(new HealthRiskFragment(), "Health Risk");
+        createClientStepperAdapter.addFragment(new EducationRiskFragment(), "Education Risk");
+        createClientStepperAdapter.addFragment(new SocialRiskFragment(), "Social Risk");
 
         return createClientStepperAdapter;
     }

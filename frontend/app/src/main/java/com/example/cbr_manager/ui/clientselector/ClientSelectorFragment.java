@@ -18,6 +18,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.baselinesurvey.BaselineSurveyStepperActivity;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
+import com.example.cbr_manager.ui.createreferral.CreateReferralStepperActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 
@@ -104,7 +105,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
         int clientId = client.getId();
 
         if (code == NEW_REFERRAL_CODE) {
-            Intent referralIntent = new Intent(getContext(), CreateReferralActivity.class);
+            Intent referralIntent = new Intent(getContext(), CreateReferralStepperActivity.class);
             referralIntent.putExtra("CLIENT_ID", clientId);
             startActivity(referralIntent);
             getActivity().finish();

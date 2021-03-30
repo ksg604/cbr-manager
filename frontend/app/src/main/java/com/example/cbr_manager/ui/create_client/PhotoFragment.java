@@ -51,8 +51,8 @@ public class PhotoFragment extends Fragment implements Step {
     private static final int REQUEST_GALLERY = 103;
     private static final int PICK_FROM_GALLERY = 104;
     Button cameraButton;
-    View view;
     private String imageFilePath = "";
+    View view;
 
     @Override
     public View onCreateView(

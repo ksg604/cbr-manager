@@ -5,16 +5,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.login.LoginActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableSingleObserver;
 
 @AndroidEntryPoint
 public class UserActivity extends AppCompatActivity {
@@ -26,15 +31,36 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
         setContentView(R.layout.activity_user);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("User Profile");
 
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@NonNull User user) {
+                setUpUserDisplay(user);
+            }
 
-        int userID = getIntent().getIntExtra(KEY_USER_ID, -1);
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Toast.makeText(UserActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-        setUpLoginButton();
+    private void setUpUserDisplay(User user){
+        TextView userFullNameTextView = findViewById(R.id.userFullNameTextView);
+        String userFullName = user.getFirstName() + " " + user.getLastName();
+        userFullNameTextView.setText(userFullName);
+
+        TextView userIDTextView = findViewById(R.id.userIDTextView);
+        String strId = Integer.toString(user.getId());
+        userIDTextView.setText(strId);
+
+        TextView userEmailTextView = findViewById(R.id.userEmailTextView);
+        userEmailTextView.setText(user.getEmail());
     }
 
     private void setUpLoginButton() {

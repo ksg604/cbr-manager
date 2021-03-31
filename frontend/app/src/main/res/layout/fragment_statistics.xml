@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="153dp"
+            android:layout_height="459dp"
             android:orientation="vertical">
 
             <TextView
@@ -43,8 +43,10 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="200dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <TextView
@@ -52,22 +54,75 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Health Referals"
+                        android:text="Total Clients"
                         android:textColor="@color/purple_500"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/textView59"
+                        android:id="@+id/statistic1_sub1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view7"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView62"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Females"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic1_sub3"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view11"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView50"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="High Risk"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic1_sub5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="20"
+                        android:text="0"
                         android:textSize="24sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <TextView
@@ -75,17 +130,68 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Health Risk"
+                        android:text="Average Age"
                         android:textColor="@color/purple_500"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/textView60"
+                        android:id="@+id/statistic1_sub2"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view12"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView63"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Males"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic1_sub4"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view13"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView51"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Caregiver Not Present"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic1_sub6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="50"
+                        android:text="0"
                         android:textSize="24sp" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -101,11 +207,287 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="153"
+            android:layout_height="306dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/statisitc2"
+                android:id="@+id/statistic2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Patient Risks"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView42"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Average Health Risk"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic2_sub1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="32"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view14"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView58"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Average Social Risk"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic2_sub3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView44"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Average Education Risk"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic2_sub2"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="21"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view15"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView59"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Average Risk Score"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic2_sub4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="306dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/statistic3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Patient Health"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp" />
+
+            <View
+                android:id="@+id/view22"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView45"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Very Poor"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/statistic3_sub1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view23"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView68"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Fine"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic3_sub3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView65"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Poor"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic3_sub2"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view24"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/textView69"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Good"
+                        android:textColor="@color/purple_500"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/statistic3_sub4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="24sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view16"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/statistic4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -132,7 +514,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView63"
+                        android:id="@+id/textView72"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -141,7 +523,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/textView65"
+                        android:id="@+id/statistic4_sub1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -165,7 +547,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/textView66"
+                        android:id="@+id/statistic4_sub2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -177,90 +559,6 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view8"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/grey" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="153"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/statistic3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Statistic 3"
-                android:textColor="@color/purple_500"
-                android:textSize="18sp" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView42"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="TextView"
-                        android:textColor="@color/purple_500"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textView43"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="32"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView44"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="TextView"
-                        android:textColor="@color/purple_500"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textView45"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="21"
-                        android:textSize="24sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

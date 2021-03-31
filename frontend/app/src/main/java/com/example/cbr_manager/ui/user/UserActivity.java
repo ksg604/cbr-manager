@@ -48,6 +48,8 @@ public class UserActivity extends AppCompatActivity {
                 Toast.makeText(UserActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        setupLogoutButton();
     }
 
     private void setUpUserDisplay(User user){
@@ -63,7 +65,7 @@ public class UserActivity extends AppCompatActivity {
         userEmailTextView.setText(user.getEmail());
     }
 
-    private void setUpLoginButton() {
+    private void setupLogoutButton() {
         Button logoutBtn = findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_visits" />
     <fragment
         android:id="@+id/newVisitFragment"
-        android:name="com.example.cbr_manager.ui.createvisit.NewVisitFragment"
+        android:name="com.example.cbr_manager.ui.createvisit.CreateVisitFragment"
         android:label="fragment_new_visit"
         tools:layout="@layout/fragment_new_visit" />
     <activity

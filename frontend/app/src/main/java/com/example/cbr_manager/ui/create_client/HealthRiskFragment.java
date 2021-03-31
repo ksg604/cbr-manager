@@ -1,0 +1,102 @@
+package com.example.cbr_manager.ui.create_client;
+
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.Client;
+import com.stepstone.stepper.Step;
+import com.stepstone.stepper.VerificationError;
+
+import static com.example.cbr_manager.ui.create_client.ValidatorHelper.validateStepperTextViewNotNull;
+
+public class HealthRiskFragment extends Fragment implements Step {
+
+    private View view;
+    private Client client;
+    RadioGroup riskRadioGroup;
+    EditText healthRequireEditText;
+    final Integer CRITICAL_RISK = 5;
+    final Integer HIGH_RISK = 3;
+    final Integer MEDIUM_RISK = 2;
+    final Integer LOW_RISK = 1;
+    private TextView errorTextView;
+
+    public HealthRiskFragment() {
+        // Required empty public constructor
+    }
+
+    public static HealthRiskFragment newInstance(String param1, String param2) {
+        HealthRiskFragment fragment = new HealthRiskFragment();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_health_risk, container, false);
+        client = ((CreateClientStepperActivity) getActivity()).formClientObj;
+        riskRadioGroup = view.findViewById(R.id.healthRiskRatingRadioGroup);
+        healthRequireEditText = view.findViewById(R.id.healthNeedsEditTextTextMultiLine);
+        return view;
+    }
+
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
+        try {
+            validateStepperTextViewNotNull(healthRequireEditText, "Required");
+        } catch (InvalidCreateClientFormException e) {
+            errorTextView = e.view;
+            return new VerificationError(e.getMessage());
+        }
+        client.setHealthRisk(convertRiskRating(riskRadioGroup));
+        client.setHealthRequire(healthRequireEditText.getText().toString());
+        return null;
+    }
+
+    private Integer convertRiskRating(RadioGroup riskRadioGroup) {
+        int radioButtonId = riskRadioGroup.getCheckedRadioButtonId();
+        RadioButton radioButton = getView().findViewById(radioButtonId);
+        String risk = radioButton.getText().toString().trim().toLowerCase();
+        switch (risk) {
+            case "critical":
+                return CRITICAL_RISK;
+            case "high":
+                return HIGH_RISK;
+            case "medium":
+                return MEDIUM_RISK;
+            default:
+                return LOW_RISK;
+        }
+    }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+        if (errorTextView != null) {
+            errorTextView.setError(error.getErrorMessage());
+        }
+    }
+}

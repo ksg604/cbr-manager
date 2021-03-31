@@ -92,4 +92,7 @@ public class AuthRepository {
     }
 
 
+    public void logout() {
+        sharedPreferencesHelper.setAuthToken("");
+    }
 }

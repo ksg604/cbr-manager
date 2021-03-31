@@ -33,14 +33,11 @@ public class ClientRepository {
     private ClientAPI clientAPI;
     private String authHeader;
 
-    private List<Client> localClient;
-
     @Inject
     ClientRepository(ClientDao clientDao, ClientAPI clientAPI, String authHeader) {
         this.clientAPI = clientAPI;
         this.clientDao = clientDao;
         this.authHeader = authHeader;
-        this.localClient = new ArrayList<>();
     }
 
     public Observable<Client> getAllClient(){
@@ -108,18 +105,16 @@ public class ClientRepository {
 
     // Below are functions for synchronizing data from local and remote server
 
-    private void uploadNewClient(List<Client> localClient) {
-        for (int i = 0; i < localClient.size(); i++) {
-            if (localClient.get(i).isNewClient()) {
-                localClient.get(i).setNewClient(false);
-                clientAPI.createClient(authHeader, localClient.get(i));
-                File file = new File(localClient.get(i).getPhotoURL());
-                RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
-                MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-                clientAPI.uploadPhoto(authHeader, localClient.get(i).getId(), body);
-                clientDao.delete(localClient.get(i));
-            }
+    private void uploadNewClient(Client client) {
+        if (client.isNewClient()) {
+            clientAPI.createClient(authHeader, client);
+            File file = new File(client.getPhotoURL());
+            RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+            MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+            clientAPI.uploadPhoto(authHeader, client.getId(), body);
+            clientDao.delete(client);
         }
+
     }
 
     private boolean matchID(Client client1, Client client2) {
@@ -128,63 +123,62 @@ public class ClientRepository {
 
     private boolean compareZoneDateTime(String date1, String date2) {
         ZonedDateTime zdt1 = Helper.parseUTCDateTime(date1);
-        ZonedDateTime zdt2 = Helper.parseUTCDateTime(date1);
+        ZonedDateTime zdt2 = Helper.parseUTCDateTime(date2);
         int result = zdt1.compareTo(zdt2);
         return result > 0;
     }
 
-    private void updateLocal(List<Client> serverClient) {
-        localClient = clientDao.getClients();
-        int[] localUpdated = new int[localClient.size()];
-        for (int i = 0; i < localClient.size(); i++) {
-            for (int j = 0; j < serverClient.size(); j++) {
-                if (matchID(localClient.get(i), serverClient.get(j))
-                        && compareZoneDateTime(localClient.get(i).getUpdatedAt(), serverClient.get(j).getUpdatedAt())) {
-                    // Need to modify and update since we know clients in local is modified after server client of same id
-                    if (localUpdated[i] != 1) {
-                        localUpdated[i] = 1;
-                        clientAPI.modifyClient(authHeader, localClient.get(i).getId(), localClient.get(i));
-                        File file = new File(localClient.get(i).getPhotoURL());
-                        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
-                        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-                        clientAPI.uploadPhoto(authHeader, localClient.get(i).getId(), body);
-                    }
-                }
+    private void updateLocal(Client serverClient) {
+        if(clientDao.ifClientExist(serverClient.getId())) {
+            Client localClient = clientDao.getClient(serverClient.getId());
+            if(compareZoneDateTime(localClient.getUpdatedAt(), serverClient.getUpdatedAt())) {
+                clientAPI.modifyClient(authHeader, localClient.getId(), localClient);
+                File file = new File(localClient.getPhotoURL());
+                RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+                MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+                clientAPI.uploadPhoto(authHeader, localClient.getId(), body);
             }
-
         }
+        else {
+            return;
+        }
+
     }
 
-    private void downloadLocal(List<Client> serverClient) {
-        clientDao.clearAll();
-        for (int i = 0; i < serverClient.size(); i++) {
-            clientDao.insert(serverClient.get(i));
-        }
-    }
 
-    private void setNewClient(List<Client> localClient) {
-        for (int i = 0; i < localClient.size(); i++) {
-            localClient.get(i).setNewClient(false);
-            clientDao.update(localClient.get(i));
-        }
+    private void setNewClient(Client localClient) {
+        localClient.setNewClient(false);
+        clientDao.update(localClient);
+
     }
 
 
     // Sync function concatenating multiple observable
-    public Observable<List<Client>> sync() {
-        Observable<List<Client>> uploadNew = clientDao.getClientsObs()
-                .doOnNext(this::uploadNewClient);
+    public Completable sync() {
+        Observable<Client> uploadNew = clientDao.getClientsObs()
+                .flatMap(Observable::fromIterable)
+                .doOnNext(this::uploadNewClient)
+                .doOnComplete(() -> {});
 
-        Observable<List<Client>> updateLocal = clientAPI.getClientsObs(authHeader)
-                .doOnNext(this::updateLocal);
+        Observable<Client> updateLocal = clientAPI.getClientsObs(authHeader)
+                .flatMap(Observable::fromIterable)
+                .doOnNext(this::updateLocal)
+                .doOnComplete(() -> {clientDao.clearAll();});
 
-        Observable<List<Client>> downloadLocal = clientAPI.getClientsObs(authHeader)
-                .doOnNext(this::downloadLocal);
+        Observable<Client> downloadLocal = clientAPI.getClientsObs(authHeader)
+                .flatMap(Observable::fromIterable)
+                .doOnNext(client -> clientDao.insert(client))
+                .doOnComplete(() -> {});
 
-        Observable<List<Client>> setNew = clientDao.getClientsObs()
-                .doOnNext(this::setNewClient);
+        Observable<Client> setNew = clientDao.getClientsObs()
+                .flatMap(Observable::fromIterable)
+                .doOnNext(this::setNewClient)
+                .doOnComplete(() -> {});
 
-        return Observable.concat(uploadNew, updateLocal, downloadLocal, setNew)
+        return Completable.fromObservable(uploadNew)
+                .andThen(Completable.fromObservable(updateLocal))
+                .andThen(Completable.fromObservable(downloadLocal))
+                .andThen(Completable.fromObservable(setNew))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

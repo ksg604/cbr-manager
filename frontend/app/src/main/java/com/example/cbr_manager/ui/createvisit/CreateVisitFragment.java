@@ -43,7 +43,7 @@ import retrofit2.Response;
 import static android.view.View.GONE;
 
 @AndroidEntryPoint
-public class NewVisitFragment extends Fragment {
+public class CreateVisitFragment extends Fragment {
     private int clientId = -1;
     private Integer userId = -1;
     private int visitId = -1;
@@ -52,7 +52,7 @@ public class NewVisitFragment extends Fragment {
     private String username = "";
     private AuthViewModel authViewModel;
 
-    public NewVisitFragment() {
+    public void CreateVisitFragment() {
     }
 
     @Override
@@ -184,27 +184,27 @@ public class NewVisitFragment extends Fragment {
         ((CreateVisitActivity) getActivity()).finish();
     }
 
+    private boolean checkIfChipChecked(int chipId) {
+        Chip chip = getView().findViewById(chipId);
+        return chip.isChecked();
+    }
+
+    private String getEditTextString(int editTextId) {
+        EditText editText = getView().findViewById(editTextId);
+
+        return editText.getText().toString();
+    }
+
     private void fillVisitData(Visit visit, View view) {
         ChipGroup purposeChipGroup = view.findViewById(R.id.purposeChipGroup);
         purposeChipGroup.getCheckedChipIds();
 
-        Chip cbrChip = view.findViewById(R.id.cbrChip);
-        boolean isCBR = cbrChip.isChecked();
-
-        Chip disabilityReferralChip = view.findViewById(R.id.purposeReferralChip);
-        boolean isDisabilityReferral = disabilityReferralChip.isChecked();
-
-        Chip disabilityFollowupChip = view.findViewById(R.id.purposeFollowUpChip);
-        boolean isDisabilityFollowUp = disabilityFollowupChip.isChecked();
-
-        Chip healthProvisionChip = view.findViewById(R.id.healthProvisionChip);
-        boolean isHealthProvision = healthProvisionChip.isChecked();
-
-        Chip educationProvisionChip = view.findViewById(R.id.educationProvisionChip);
-        boolean isEducationProvision = educationProvisionChip.isChecked();
-
-        Chip socialProvisionChip = view.findViewById(R.id.socialProvisionChip);
-        boolean isSocialProvision = socialProvisionChip.isChecked();
+        boolean isCBR = checkIfChipChecked(R.id.cbrChip);
+        boolean isDisabilityReferral = checkIfChipChecked(R.id.purposeReferralChip);
+        boolean isDisabilityFollowUp = checkIfChipChecked(R.id.purposeFollowUpChip);
+        boolean isHealthProvision = checkIfChipChecked(R.id.healthProvisionChip);
+        boolean isEducationProvision = checkIfChipChecked(R.id.educationProvisionChip);
+        boolean isSocialProvision = checkIfChipChecked(R.id.socialProvisionChip);
 
         EditText cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
         cbrWorkerName.setText(username);
@@ -215,14 +215,12 @@ public class NewVisitFragment extends Fragment {
         String todayString = format.format(today);
 
         // Location
-        EditText locationOfVisit = view.findViewById(R.id.editTextTextLocation);
-        String locationVisit = locationOfVisit.getText().toString();
+        String locationVisit = getEditTextString(R.id.editTextTextLocation);
 
         Spinner locationSpinner = view.findViewById(R.id.locationFragmentSpinner);
         String locationDDL = locationSpinner.getSelectedItem().toString();
 
-        EditText villageNumber = view.findViewById(R.id.villageNumberEditText);
-        String villageNumberString = villageNumber.getText().toString();
+        String villageNumberString = getEditTextString(R.id.villageNumberEditText);
 
         // Health provision
         Chip wheelchairHealth = view.findViewById(R.id.wheelchairChip);

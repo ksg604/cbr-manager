@@ -21,15 +21,15 @@ public class Visit {
     @Expose
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "visit_id")
-    private int id;
+    private Integer id;
 
     @SerializedName("client_id")
     @Expose
-    private int clientId;
+    private Integer clientId;
 
     @SerializedName("user_creator")
     @Expose
-    private int userId;
+    private Integer userId;
 
     @SerializedName("additional_notes")
     @Expose
@@ -226,7 +226,7 @@ public class Visit {
     private String conclusionSocialProvision;
 
     @Ignore
-    public Visit(String additionalInfo, int clientId, int userId, Client client) {
+    public Visit(String additionalInfo, Integer clientId, Integer userId, Client client) {
         this.additionalInfo = additionalInfo;
         this.clientId = clientId;
         this.userId = userId;
@@ -285,11 +285,11 @@ public class Visit {
         this.wheelchairHealthProvisionText = "";
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -301,19 +301,19 @@ public class Visit {
         this.additionalInfo = additionalInfo;
     }
 
-    public int getClientId() {
+    public Integer getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(Integer clientId) {
         this.clientId = clientId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Observable;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import okhttp3.ResponseBody;
 
@@ -44,7 +45,7 @@ public class ClientViewModel extends ViewModel {
         return this.clientRepository.update(client);
     }
 
-    public Observable<List<Client>> sync() {
+    public Completable sync() {
         return clientRepository.sync();
     }
 

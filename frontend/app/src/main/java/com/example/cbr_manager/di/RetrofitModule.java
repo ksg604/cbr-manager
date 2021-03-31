@@ -6,6 +6,7 @@ import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.referral.ReferralAPI;
 import com.example.cbr_manager.service.sync.StatusAPI;
 import com.example.cbr_manager.service.user.UserAPI;
+import com.example.cbr_manager.service.visit.VisitAPI;
 import com.example.cbr_manager.utils.Helper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -80,6 +81,12 @@ public class RetrofitModule {
     @Provides
     ReferralAPI provideReferralAPI(Retrofit retrofit) {
         return retrofit.create(ReferralAPI.class);
+    }
+
+    @Singleton
+    @Provides
+    VisitAPI provideVisitAPI(Retrofit retrofit) {
+        return retrofit.create(VisitAPI.class);
     }
 
     @Singleton

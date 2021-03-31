@@ -37,10 +37,15 @@ public class UserActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("User Profile");
 
+        setupUserDisplay();
+        setupLogoutButton();
+    }
+
+    private void setupUserDisplay(){
         authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
             @Override
             public void onSuccess(@NonNull User user) {
-                setUpUserDisplay(user);
+                displayUserInfo(user);
             }
 
             @Override
@@ -48,11 +53,9 @@ public class UserActivity extends AppCompatActivity {
                 Toast.makeText(UserActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        setupLogoutButton();
     }
 
-    private void setUpUserDisplay(User user){
+    private void displayUserInfo(User user){
         TextView userFullNameTextView = findViewById(R.id.userFullNameTextView);
         String userFullName = user.getFirstName() + " " + user.getLastName();
         userFullNameTextView.setText(userFullName);

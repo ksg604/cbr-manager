@@ -11,6 +11,7 @@ import com.example.cbr_manager.service.auth.AuthDetail;
 import com.example.cbr_manager.service.auth.AuthDetailDao;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientDao;
+import com.example.cbr_manager.service.goal.GoalDao;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.referral.ReferralDao;
 import com.example.cbr_manager.service.sync.Status;
@@ -29,6 +30,7 @@ public abstract class RoomDB extends RoomDatabase {
 
     public abstract ClientDao clientDao();
     public abstract VisitDao visitDao();
+    public abstract GoalDao goalDao();
     public abstract StatusDao statusDao();
     public abstract UserDao userDao();
     public abstract AuthDetailDao authDetailDao();

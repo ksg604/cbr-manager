@@ -1,5 +1,7 @@
 package com.example.cbr_manager.service.goal;
 
+import androidx.room.Dao;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -10,6 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+@Dao
 public interface GoalAPI {
     @GET("api/goals/")
     Call<List<Goal>> getGoals(@Header("Authorization") String authHeader);

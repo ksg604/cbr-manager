@@ -15,7 +15,7 @@ import io.reactivex.Single;
 @Dao
 public interface VisitDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Visit visit);
+    long insert(Visit visit);
 
     @Delete
     void delete(Visit visit);

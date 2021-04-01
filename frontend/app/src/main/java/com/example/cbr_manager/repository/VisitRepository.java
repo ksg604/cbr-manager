@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -53,9 +54,21 @@ public class VisitRepository {
         return Observable.error(throwable);
     }
 
-    public Single<Visit> createVisit(Visit visit){
+    public Single<Visit> createVisit(Visit visit) {
         return visitAPI.createVisitObs(authHeader, visit)
+                .doOnSuccess(visitDao::insert)
+                .onErrorResumeNext(throwable -> {
+                    if (throwable instanceof SocketTimeoutException) {
+                        return offlineCreateVisit(visit);
+                    }
+                    return Single.error(throwable);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private Single<Visit> offlineCreateVisit(Visit visit) {
+        long id = visitDao.insert(visit);
+        return visitDao.getVisit((int) id);
     }
 }

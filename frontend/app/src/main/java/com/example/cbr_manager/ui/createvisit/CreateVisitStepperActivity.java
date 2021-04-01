@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -87,6 +88,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
                             @Override
                             public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
                                 visitId = visit.getId();
+                                Log.d(TAG, "onSuccess: " + visitId);
                                 Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
                                 onSubmitSuccess();
                             }

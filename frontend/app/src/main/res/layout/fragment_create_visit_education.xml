@@ -149,6 +149,14 @@
                 android:text="Goals met?"
                 android:textSize="16sp" />
 
+            <TextView
+                android:id="@+id/educationProvisionCurrentGoalTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textColor="#000"
+                android:text="Current goal: " />
+
             <RadioGroup
                 android:id="@+id/educationProvisionRadioGroup"
                 android:layout_width="match_parent"

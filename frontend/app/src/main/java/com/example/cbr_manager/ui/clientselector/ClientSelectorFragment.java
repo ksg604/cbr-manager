@@ -2,6 +2,11 @@ package com.example.cbr_manager.ui.clientselector;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -9,22 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SearchView;
-
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.ClientViewModel;
-import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.baselinesurvey.BaselineSurveyStepperActivity;
 import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
-import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createreferral.CreateReferralStepperActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 
 import java.util.ArrayList;
@@ -33,25 +28,19 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableObserver;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @AndroidEntryPoint
 public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
 
+    private static final String TAG = ClientSelectorFragment.class.getName();
+    private final int NEW_VISIT_CODE = 100;
+    private final int NEW_REFERRAL_CODE = 101;
+    private final int NEW_BASELINE_CODE = 102;
     List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
     private ClientListRecyclerItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager clientSelectorLayoutManager;
-
-    private final int NEW_VISIT_CODE = 100;
-    private final int NEW_REFERRAL_CODE = 101;
-    private final int NEW_BASELINE_CODE = 102;
-
     private ClientViewModel clientViewModel;
-
-    private static final String TAG = ClientSelectorFragment.class.getName();
 
     public ClientSelectorFragment() {
         // Required empty public constructor

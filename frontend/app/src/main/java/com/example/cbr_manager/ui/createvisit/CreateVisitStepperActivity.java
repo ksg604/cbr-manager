@@ -39,6 +39,8 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     private APIService apiService = APIService.getInstance();
     private Client client;
 
+    private static final String TAG = "CreateVisitStepperActivity";
+
     private VisitViewModel visitViewModel;
 
     @Override

@@ -34,7 +34,7 @@ public class VisitRepository {
         return visitAPI.getVisitsObs(authHeader)
                 .flatMap(Observable::fromIterable)
                 .doOnNext(visitDao::insert)
-                .onErrorResumeNext(this::observerGetLocalFallback)
+                .onErrorResumeNext(this::handleLocalVisitsFallback)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -46,7 +46,7 @@ public class VisitRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private ObservableSource<? extends Visit> observerGetLocalFallback(Throwable throwable) {
+    private ObservableSource<? extends Visit> handleLocalVisitsFallback(Throwable throwable) {
         if (throwable instanceof SocketTimeoutException) {
             return visitDao.getVisits().toObservable().flatMap(Observable::fromIterable);
         }

@@ -176,14 +176,16 @@ public class NavigationActivity extends AppCompatActivity {
                 navFirstName.setText(user.getFirstName());
                 navEmail.setText(user.getEmail());
 
-                userInfoGroup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(NavigationActivity.this, UserActivity.class);
-                        intent.putExtra(UserActivity.KEY_USER_ID, user.getId());
-                        startActivity(intent);
-                    }
-                });
+                for(int id: userInfoGroup.getReferencedIds()){
+                    headerView.findViewById(id).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(NavigationActivity.this, UserActivity.class);
+                            intent.putExtra(UserActivity.KEY_USER_ID, user.getId());
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
 
             @Override

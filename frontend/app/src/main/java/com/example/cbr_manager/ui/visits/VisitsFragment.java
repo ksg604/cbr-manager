@@ -43,7 +43,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
     private VisitsRecyclerItemAdapter adapter;
-    private int clientId = NO_SPECIFIC_CLIENT;
+    private int clientId;
     private VisitViewModel visitViewModel;
 
     @Override
@@ -61,9 +61,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        clientId = this.getArguments().getInt(KEY_CLIENT_ID, NO_SPECIFIC_CLIENT);
-
-        Log.d(TAG, "onViewCreated: " + clientId);
+        clientId = getClientIDFromArgs();
 
         RecyclerView visitsRecyclerView = view.findViewById(R.id.recyclerView);
         visitsRecyclerView.setHasFixedSize(true); // if we know it won't change size.
@@ -88,6 +86,14 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                 return true;
             }
         });
+    }
+
+    private int getClientIDFromArgs() {
+        if (getArguments() != null){
+            return this.getArguments().getInt(KEY_CLIENT_ID, NO_SPECIFIC_CLIENT);
+        } else {
+            return NO_SPECIFIC_CLIENT;
+        }
     }
 
     public void fetchVisitsToList(List<VisitsRecyclerItem> visitUIList) {

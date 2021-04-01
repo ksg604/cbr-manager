@@ -89,7 +89,6 @@ public class RetrofitModule {
         return retrofit.create(VisitAPI.class);
     }
 
-    @Singleton
     @Provides
     String provideAuthHeader(SharedPreferencesHelper helper) {
         return Helper.formatTokenHeader(helper.getAuthToken());

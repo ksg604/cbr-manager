@@ -20,6 +20,7 @@ import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
@@ -53,6 +54,7 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
     Chip healthChip;
     Chip educationChip;
     Chip socialChip;
+    ChipGroup provisionChipGroup;
 
     public CreateVisitPurposeFragment() {
         // Required empty public constructor
@@ -73,10 +75,35 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
         initializeChips(view);
         setupAutoFilledTextViews(view);
+        setupProvisionVisibility();
         return view;
     }
 
+    private void setupProvisionVisibility() {
+        healthChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        educationChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        socialChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
     private void initializeChips(View view) {
+        provisionChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
         cbrChip = view.findViewById(R.id.cbrChip);
         referralChip = view.findViewById(R.id.purposeReferralChip);
         followUpChip = view.findViewById(R.id.purposeFollowUpChip);

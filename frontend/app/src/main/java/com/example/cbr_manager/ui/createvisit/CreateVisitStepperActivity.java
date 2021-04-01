@@ -17,6 +17,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
@@ -43,6 +44,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     private static final String TAG = "CreateVisitStepperActivity";
 
     private VisitViewModel visitViewModel;
+    private ClientViewModel clientViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         setContentView(R.layout.stepper);
 
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         setTitle("Create Visit");
         Intent intent = getIntent();
@@ -75,41 +78,35 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     @Override
     public void onCompleted(View completeButton) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-                @Override
-                public void onResponse(Call<Client> call, Response<Client> response) {
-                    if (response.isSuccessful()) {
-                        client = response.body();
-                        formVisitObj.setClientId(clientId);
-                        formVisitObj.setClient(client);
 
-                        visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
-                            @Override
-                            public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
-                                visitId = visit.getId();
-                                Log.d(TAG, "onSuccess: " + visitId);
-                                Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
-                                onSubmitSuccess();
-                            }
-
-                            @Override
-                            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                                Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    } else {
-                        Toast.makeText(CreateVisitStepperActivity.this, "Response error finding client.", Toast.LENGTH_SHORT).show();
+        clientViewModel.getClient(clientId).subscribe(new DisposableSingleObserver<Client>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
+                formVisitObj.setClientId(clientId);
+                formVisitObj.setClient(client);
+                Log.d(TAG, "onSuccess: " + "client");
+                visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
+                        visitId = visit.getId();
+                        Log.d(TAG, "onSuccess: " + visitId);
+                        Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
+                        onSubmitSuccess();
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Client> call, Throwable t) {
-                    Toast.makeText(CreateVisitStepperActivity.this, "Error finding client.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Log.d(TAG, "onError: " + e.getMessage());
+                        Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
 
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Toast.makeText(CreateVisitStepperActivity.this, "Response error finding client.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void onSubmitSuccess() {

@@ -108,7 +108,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
+                Log.d(TAG, "onError: " + e.getMessage());
             }
 
             @Override

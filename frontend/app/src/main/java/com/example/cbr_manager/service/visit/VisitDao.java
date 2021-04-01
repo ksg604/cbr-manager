@@ -33,7 +33,7 @@ public interface VisitDao {
     void clearAll();
 
     @Query("SELECT * FROM visit")
-    Observable<List<Visit>> getVisits();
+    Single<List<Visit>> getVisits();
 
     @Query("SELECT * FROM visit WHERE visit_id = :id")
     Single<Visit> getVisit(int id);

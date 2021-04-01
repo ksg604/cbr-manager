@@ -36,6 +36,9 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     private APIService apiService = APIService.getInstance();
     private Client client;
     public GenericStepperAdapter createVisitStepperAdapter;
+    boolean healthVisible = false;
+    boolean educationVisible = false;
+    boolean socialVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,55 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
         createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
         createVisitStepperLayout.setListener(this);
+    }
+
+    public void testAddHere(String title) {
+        if (title.equals("Health") && !healthVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
+            healthVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Education") && !educationVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
+            educationVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Social") && !socialVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
+            socialVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        }
+//        createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+//        createVisitStepperAdapter.notifyDataSetChanged();
+//        createVisitStepperLayout.setListener(this);
+    }
+
+    public void testFromActivity(String title) {
+        if (title.equals("Health")) {
+            createVisitStepperAdapter.removeFragment1("Health");
+            healthVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Education")) {
+            createVisitStepperAdapter.removeFragment1("Education");
+            educationVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Social")) {
+            createVisitStepperAdapter.removeFragment1("Social");
+            socialVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        }
+//        createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+//        createVisitStepperAdapter.notifyDataSetChanged();
     }
 
     @Override

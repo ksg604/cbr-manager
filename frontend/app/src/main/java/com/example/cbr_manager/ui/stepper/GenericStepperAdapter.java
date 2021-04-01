@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.stepper;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -63,14 +64,20 @@ public class GenericStepperAdapter extends AbstractFragmentStepAdapter {
         fragmentSteps.add(new StepperAdapterItem(fragment, fragmentTitle));
     }
 
-    public void removeFragment(Fragment fragment, String fragmentTitle) {
+    public void removeFragment1(String fragmentTitle) {
         StepperAdapterItem toBeRemoved = null;
         for (StepperAdapterItem stepperAdapterItem : fragmentSteps) {
             if (stepperAdapterItem.getFragmentTitle().equals(fragmentTitle)) {
                 toBeRemoved = stepperAdapterItem;
+                fragmentSteps.remove(stepperAdapterItem);
+//                System.out.println(stepperAdapterItem.getFragmentTitle());
+                return;
             }
         }
-        fragmentSteps.remove(toBeRemoved);
+//        fragmentSteps.remove(1);
+        for (StepperAdapterItem stepperAdapterItem : fragmentSteps) {
+            System.out.println(stepperAdapterItem.getFragmentTitle());
+        }
 //        fragmentSteps.remove(new StepperAdapterItem(fragment, fragmentTitle));
     }
 }

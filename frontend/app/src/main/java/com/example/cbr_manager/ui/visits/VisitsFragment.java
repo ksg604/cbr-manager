@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
@@ -36,11 +35,9 @@ import io.reactivex.observers.DisposableObserver;
 @AndroidEntryPoint
 public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener {
     private static final String TAG = "VisitsFragment";
-    private static int NO_SPECIFIC_CLIENT = -1;
+    private static final int NO_SPECIFIC_CLIENT = -1;
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
-    private RecyclerView visitsRecyclerView;
     private VisitsRecyclerItemAdapter adapter;
-    private RecyclerView.LayoutManager visitsLayoutManager;
     private int clientId = NO_SPECIFIC_CLIENT;
 
     private VisitViewModel visitViewModel;
@@ -69,9 +66,10 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
         View root = inflater.inflate(R.layout.fragment_visits, container, false);
 
-        visitsRecyclerView = root.findViewById(R.id.recyclerView);
+        RecyclerView visitsRecyclerView = root.findViewById(R.id.recyclerView);
         visitsRecyclerView.setHasFixedSize(true); // if we know it won't change size.
-        visitsLayoutManager = new LinearLayoutManager(getContext());
+
+        RecyclerView.LayoutManager visitsLayoutManager = new LinearLayoutManager(getContext());
         adapter = new VisitsRecyclerItemAdapter(visitsRecyclerItems, this);
         visitsRecyclerView.setLayoutManager(visitsLayoutManager);
         visitsRecyclerView.setAdapter(adapter);

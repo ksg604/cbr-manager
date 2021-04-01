@@ -34,6 +34,10 @@ public class Goal{
     @Expose
     private Integer userId;
 
+    public void setDatetimeCreated(Timestamp datetimeCreated) {
+        this.datetimeCreated = datetimeCreated;
+    }
+
     @SerializedName("client")
     @Expose
     @Embedded

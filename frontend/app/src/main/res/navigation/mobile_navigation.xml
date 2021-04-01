@@ -74,11 +74,7 @@
         android:id="@+id/nav_visits"
         android:name="com.example.cbr_manager.ui.visits.VisitsFragment"
         android:label="Visits"
-        tools:layout="@layout/fragment_visits" >
-        <argument
-            android:name="KEY_CLIENT_ID"
-            app:argType="integer" />
-    </fragment>
+        tools:layout="@layout/fragment_visits" />
 
     <fragment
         android:id="@+id/nav_user_creation"

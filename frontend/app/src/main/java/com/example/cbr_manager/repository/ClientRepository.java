@@ -42,7 +42,7 @@ public class ClientRepository {
 
     public Observable<Client> getAllClient(){
         return clientAPI.getClientsObs(authHeader)
-                .flatMap(Observable::fromIterable)
+                .flatMapIterable(clients -> clients)
                 .doOnNext(client -> clientDao.insert(client))
                 .onErrorResumeNext(this::getLocalClient)
                 .subscribeOn(Schedulers.io())
@@ -51,7 +51,7 @@ public class ClientRepository {
 
     private ObservableSource<? extends Client> getLocalClient(Throwable throwable) {
         if(throwable instanceof SocketTimeoutException) {
-            return clientDao.getClientsObs().flatMap(Observable::fromIterable);
+            return clientDao.getClientsObs().toObservable().flatMap(Observable::fromIterable);
         }
         return Observable.error(throwable);
     }
@@ -156,7 +156,7 @@ public class ClientRepository {
     // Sync function concatenating multiple observable
     public Completable sync() {
         Observable<Client> uploadNew = clientDao.getClientsObs()
-                .flatMap(Observable::fromIterable)
+                .toObservable().flatMap(Observable::fromIterable)
                 .doOnNext(this::uploadNewClient)
                 .doOnComplete(() -> {});
 
@@ -171,7 +171,7 @@ public class ClientRepository {
                 .doOnComplete(() -> {});
 
         Observable<Client> setNew = clientDao.getClientsObs()
-                .flatMap(Observable::fromIterable)
+                .toObservable().flatMap(Observable::fromIterable)
                 .doOnNext(this::setNewClient)
                 .doOnComplete(() -> {});
 

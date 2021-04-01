@@ -1,6 +1,9 @@
 package com.example.cbr_manager.ui.login;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -45,6 +48,16 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
+    // Constants
+    // The authority for the sync adapter's content provider
+    public static final String AUTHORITY = "com.example.android.datasync.provider";
+    // An account type, in the form of a domain name
+    public static final String ACCOUNT_TYPE = "example.com";
+    // The account name
+    public static final String ACCOUNT = "placeholderaccount";
+    // Instance fields
+    Account mAccount;
+
     private static String TAG = "LoginActivity";
 
     @Inject
@@ -63,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+
+        mAccount = CreateSyncAccount(this);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -160,6 +175,34 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private static Account CreateSyncAccount(Context context) {
+        // Create the account type and default account
+        Account newAccount = new Account(
+                ACCOUNT, ACCOUNT_TYPE);
+        // Get an instance of the Android account manager
+        AccountManager accountManager =
+                (AccountManager) context.getSystemService(
+                        ACCOUNT_SERVICE);
+        /*
+         * Add the account and account type, no password or user data
+         * If successful, return the Account object, otherwise report an error.
+         */
+        if (accountManager.addAccountExplicitly(newAccount, null, null)) {
+            /*
+             * If you don't set android:syncable="true" in
+             * in your <provider> element in the manifest,
+             * then call context.setIsSyncable(account, AUTHORITY, 1)
+             * here.
+             */
+        } else {
+            /*
+             * The account exists or some other error occurred. Log this, report it,
+             * or handle it internally.
+             */
+        }
+        return newAccount;
     }
 
     private void handleCachedAuthToken() {

@@ -64,6 +64,13 @@ public class GenericStepperAdapter extends AbstractFragmentStepAdapter {
     }
 
     public void removeFragment(Fragment fragment, String fragmentTitle) {
-        fragmentSteps.remove(new StepperAdapterItem(fragment, fragmentTitle));
+        StepperAdapterItem toBeRemoved = null;
+        for (StepperAdapterItem stepperAdapterItem : fragmentSteps) {
+            if (stepperAdapterItem.getFragmentTitle().equals(fragmentTitle)) {
+                toBeRemoved = stepperAdapterItem;
+            }
+        }
+        fragmentSteps.remove(toBeRemoved);
+//        fragmentSteps.remove(new StepperAdapterItem(fragment, fragmentTitle));
     }
 }

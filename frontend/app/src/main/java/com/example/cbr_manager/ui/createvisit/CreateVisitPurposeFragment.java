@@ -75,6 +75,7 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         view = inflater.inflate(R.layout.fragment_create_visit_purpose, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
+        genericStepperAdapter = ((CreateVisitStepperActivity) getActivity()).createVisitStepperAdapter;
         initializeChips(view);
         setupAutoFilledTextViews(view);
         setupProvisionVisibility();
@@ -85,12 +86,13 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         healthChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                genericStepperAdapter = ((CreateVisitStepperActivity) getActivity()).createVisitStepperAdapter;
                 if (healthChip.isChecked()) {
                     genericStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
                     ((CreateVisitStepperActivity) getActivity()).createVisitStepperLayout.setAdapter(genericStepperAdapter);
                 } else if (!healthChip.isChecked()) {
                     genericStepperAdapter.removeFragment(new CreateVisitHealthFragment(), "Health");
+                    ((CreateVisitStepperActivity) getActivity()).createVisitStepperLayout.setAdapter(genericStepperAdapter);
+                    Toast.makeText(getContext(), "Unchecked", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -98,14 +100,20 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         educationChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (educationChip.isChecked()) {
+                    genericStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
+                    ((CreateVisitStepperActivity) getActivity()).createVisitStepperLayout.setAdapter(genericStepperAdapter);
+                }
             }
         });
 
         socialChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (socialChip.isChecked()) {
+                    genericStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
+                    ((CreateVisitStepperActivity) getActivity()).createVisitStepperLayout.setAdapter(genericStepperAdapter);
+                }
             }
         });
 

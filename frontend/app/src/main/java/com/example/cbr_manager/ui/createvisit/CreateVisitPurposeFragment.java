@@ -85,10 +85,12 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         healthChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                genericStepperAdapter = ((CreateVisitStepperActivity) getActivity()).createVisitStepperAdapter;
                 if (healthChip.isChecked()) {
-                    genericStepperAdapter = ((CreateVisitStepperActivity) getActivity()).createVisitStepperAdapter;
                     genericStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
                     ((CreateVisitStepperActivity) getActivity()).createVisitStepperLayout.setAdapter(genericStepperAdapter);
+                } else if (!healthChip.isChecked()) {
+                    genericStepperAdapter.removeFragment(new CreateVisitHealthFragment(), "Health");
                 }
             }
         });
@@ -106,6 +108,7 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
 
             }
         });
+
     }
 
     private void initializeChips(View view) {

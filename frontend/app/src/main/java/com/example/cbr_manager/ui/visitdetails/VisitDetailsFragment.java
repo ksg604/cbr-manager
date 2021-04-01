@@ -36,7 +36,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 public class VisitDetailsFragment extends Fragment {
 
     public static String KEY_VISIT_ID = "KEY_VISIT_ID";
-    private int visitId = -1;
+    private int visitId;
     private VisitViewModel visitViewModel;
 
     public static VisitDetailsFragment newInstance(String param1, String param2) {

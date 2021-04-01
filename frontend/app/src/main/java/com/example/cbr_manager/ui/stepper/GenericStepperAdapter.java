@@ -64,7 +64,7 @@ public class GenericStepperAdapter extends AbstractFragmentStepAdapter {
         fragmentSteps.add(new StepperAdapterItem(fragment, fragmentTitle));
     }
 
-    public void removeFragment1(String fragmentTitle) {
+    public void removeFragment(String fragmentTitle) {
         StepperAdapterItem toBeRemoved = null;
         for (StepperAdapterItem stepperAdapterItem : fragmentSteps) {
             if (stepperAdapterItem.getFragmentTitle().equals(fragmentTitle)) {
@@ -75,9 +75,6 @@ public class GenericStepperAdapter extends AbstractFragmentStepAdapter {
             }
         }
 //        fragmentSteps.remove(1);
-        for (StepperAdapterItem stepperAdapterItem : fragmentSteps) {
-            System.out.println(stepperAdapterItem.getFragmentTitle());
-        }
 //        fragmentSteps.remove(new StepperAdapterItem(fragment, fragmentTitle));
     }
 }

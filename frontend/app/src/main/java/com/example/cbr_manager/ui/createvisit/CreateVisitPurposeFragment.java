@@ -87,9 +87,9 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
             @Override
             public void onClick(View v) {
                 if (healthChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).testAddHere("Health");
+                    ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Health");
                 } else if (!healthChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).testFromActivity("Health");
+                    ((CreateVisitStepperActivity) getActivity()).makeProvisionInvisible("Health");
                 }
             }
         });
@@ -98,9 +98,9 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
             @Override
             public void onClick(View v) {
                 if (educationChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).testAddHere("Education");
+                    ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Education");
                 } else if (!educationChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).testFromActivity("Education");
+                    ((CreateVisitStepperActivity) getActivity()).makeProvisionInvisible("Education");
                 }
             }
         });
@@ -109,9 +109,9 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
             @Override
             public void onClick(View v) {
                 if (socialChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).testAddHere("Social");
+                    ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Social");
                 } else if (!socialChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).testFromActivity("Social");
+                    ((CreateVisitStepperActivity) getActivity()).makeProvisionInvisible("Social");
                 }
             }
         });

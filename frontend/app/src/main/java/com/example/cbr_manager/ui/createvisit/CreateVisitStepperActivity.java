@@ -66,7 +66,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         createVisitStepperLayout.setListener(this);
     }
 
-    public void testAddHere(String title) {
+    public void makePrivisionVisible(String title) {
         if (title.equals("Health") && !healthVisible) {
             createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
             healthVisible = true;
@@ -91,21 +91,21 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 //        createVisitStepperLayout.setListener(this);
     }
 
-    public void testFromActivity(String title) {
+    public void makeProvisionInvisible(String title) {
         if (title.equals("Health")) {
-            createVisitStepperAdapter.removeFragment1("Health");
+            createVisitStepperAdapter.removeFragment("Health");
             healthVisible = false;
             createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
             createVisitStepperAdapter.notifyDataSetChanged();
             return;
         } else if (title.equals("Education")) {
-            createVisitStepperAdapter.removeFragment1("Education");
+            createVisitStepperAdapter.removeFragment("Education");
             educationVisible = false;
             createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
             createVisitStepperAdapter.notifyDataSetChanged();
             return;
         } else if (title.equals("Social")) {
-            createVisitStepperAdapter.removeFragment1("Social");
+            createVisitStepperAdapter.removeFragment("Social");
             socialVisible = false;
             createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
             createVisitStepperAdapter.notifyDataSetChanged();

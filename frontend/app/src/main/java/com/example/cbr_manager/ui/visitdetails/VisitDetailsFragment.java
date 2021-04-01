@@ -13,13 +13,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -27,22 +31,19 @@ import java.sql.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class VisitDetailsFragment extends Fragment {
 
-
-
     private APIService apiService = APIService.getInstance();
-    private View parentLayout;
     public static String KEY_VISIT_ID = "KEY_VISIT_ID";
     private int visitId = -1;
+    private VisitViewModel visitViewModel;
 
-    public VisitDetailsFragment() {
-        // Required empty public constructor
-    }
 
     public static VisitDetailsFragment newInstance(String param1, String param2) {
         VisitDetailsFragment fragment = new VisitDetailsFragment();
@@ -59,26 +60,24 @@ public class VisitDetailsFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public VisitDetailsFragment() {
+        super(R.layout.fragment_visit_details);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+    }
 
-        View root = inflater.inflate(R.layout.fragment_visit_details, container, false);
-        parentLayout = root.findViewById(android.R.id.content);
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setUpToolBar();
 
         visitId = getArguments().getInt(KEY_VISIT_ID, -1);
 
         getVisitInfo(visitId);
-
-        return root;
     }
 
     public void setUpToolBar() {
@@ -160,7 +159,7 @@ public class VisitDetailsFragment extends Fragment {
                     setupSocialTextViews(visit);
 
                 } else {
-                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
+                    Snackbar.make(getView(), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }

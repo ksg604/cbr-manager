@@ -2,13 +2,17 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,12 +39,12 @@ import io.reactivex.observers.DisposableObserver;
 public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener {
     private static final String TAG = "VisitsFragment";
     private static final int NO_SPECIFIC_CLIENT = -1;
+    public static final String KEY_CLIENT_ID = "KEY_CLIENT_ID";
+
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
     private VisitsRecyclerItemAdapter adapter;
     private int clientId = NO_SPECIFIC_CLIENT;
-
     private VisitViewModel visitViewModel;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,25 +52,18 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_visits, container, false);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        clientId = this.getArguments().getInt(KEY_CLIENT_ID, NO_SPECIFIC_CLIENT);
 
-        int clientId = NO_SPECIFIC_CLIENT;
-
-        FragmentActivity activity = getActivity();
-        ClientDetailsActivity clientDetailsActivity;
-        ClientDetailsFragment fragment;
-
-        //If this fragment was called from ClientDetailsActivity, there will be an associated clientId
-        if (activity instanceof ClientDetailsActivity) {
-            clientDetailsActivity = (ClientDetailsActivity) activity;
-            if (clientDetailsActivity != null) {
-                fragment = (ClientDetailsFragment) clientDetailsActivity.getSupportFragmentManager().findFragmentById(R.id.fragment_client_details);
-                clientId = fragment.getClientId();
-            }
-        }
-        this.clientId = clientId;
+        Log.d(TAG, "onViewCreated: " + clientId);
 
         RecyclerView visitsRecyclerView = view.findViewById(R.id.recyclerView);
         visitsRecyclerView.setHasFixedSize(true); // if we know it won't change size.

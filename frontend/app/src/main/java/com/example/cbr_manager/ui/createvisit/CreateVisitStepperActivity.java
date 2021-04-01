@@ -3,6 +3,7 @@ package com.example.cbr_manager.ui.createvisit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,12 +16,14 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,10 +39,15 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     private APIService apiService = APIService.getInstance();
     private Client client;
 
+    private VisitViewModel visitViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stepper);
+
+        visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+
         setTitle("Create Visit");
         Intent intent = getIntent();
         clientId = intent.getIntExtra("clientId", -1);
@@ -73,22 +81,17 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
                         formVisitObj.setClientId(clientId);
                         formVisitObj.setClient(client);
 
-                        Call<Visit> call1 = apiService.visitService.createVisit(formVisitObj);
-                        call1.enqueue(new Callback<Visit>() {
+                        visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
                             @Override
-                            public void onResponse(Call<Visit> call, Response<Visit> response) {
-                                if (response.isSuccessful()) {
-                                    visitId = response.body().getId();
-                                    Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
-                                    onSubmitSuccess();
-                                } else {
-                                    Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit.", Toast.LENGTH_LONG).show();
-                                }
+                            public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
+                                visitId = visit.getId();
+                                Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
+                                onSubmitSuccess();
                             }
 
                             @Override
-                            public void onFailure(Call<Visit> call, Throwable t) {
-                                Toast.makeText(CreateVisitStepperActivity.this, "Error in creating new visit.", Toast.LENGTH_SHORT).show();
+                            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                                Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
                             }
                         });
                     } else {

@@ -53,4 +53,9 @@ public class VisitRepository {
         return Observable.error(throwable);
     }
 
+    public Single<Visit> createVisit(Visit visit){
+        return visitAPI.createVisitObs(authHeader, visit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

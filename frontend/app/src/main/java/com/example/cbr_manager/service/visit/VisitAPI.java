@@ -36,6 +36,9 @@ public interface VisitAPI {
 
     @GET("api/visits/{id}")
     Single<Visit> getVisitObs(@Header("Authorization") String authHeader, @Path("id") int id);
+
+    @POST("api/visits/")
+    Single<Visit> createVisitObs(@Header("Authorization") String authHeader, @Body Visit visit);
 }
 
 

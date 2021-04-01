@@ -69,7 +69,7 @@ public class VisitDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setUpToolBar();
 
-        visitId = getArguments().getInt(KEY_VISIT_ID, -1);
+        visitId = requireArguments().getInt(KEY_VISIT_ID, -1);
 
         getVisitInfo(visitId);
     }

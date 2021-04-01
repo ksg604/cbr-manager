@@ -88,7 +88,7 @@ public class Helper {
         return Instant.now();
     }
 
-    public String formatDateTimeToLocalString(String dateString, FormatStyle formatStyle){
+    public static String formatDateTimeToLocalString(String dateString, FormatStyle formatStyle){
         Instant instant = Instant.parse(dateString);
         ZoneId zoneId = ZoneId.systemDefault();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(formatStyle);

@@ -2,12 +2,11 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,11 +41,16 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
     private VisitViewModel visitViewModel;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         int clientId = NO_SPECIFIC_CLIENT;
 
@@ -64,9 +68,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         }
         this.clientId = clientId;
 
-        View root = inflater.inflate(R.layout.fragment_visits, container, false);
-
-        RecyclerView visitsRecyclerView = root.findViewById(R.id.recyclerView);
+        RecyclerView visitsRecyclerView = view.findViewById(R.id.recyclerView);
         visitsRecyclerView.setHasFixedSize(true); // if we know it won't change size.
 
         RecyclerView.LayoutManager visitsLayoutManager = new LinearLayoutManager(getContext());
@@ -76,7 +78,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
 
         fetchVisitsToList(visitsRecyclerItems);
 
-        SearchView visitSearch = root.findViewById(R.id.visitSearchView);
+        SearchView visitSearch = view.findViewById(R.id.visitSearchView);
         visitSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -89,8 +91,6 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
                 return true;
             }
         });
-
-        return root;
     }
 
     public void fetchVisitsToList(List<VisitsRecyclerItem> visitUIList) {

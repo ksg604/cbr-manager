@@ -19,6 +19,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.stepstone.stepper.Step;
@@ -55,6 +56,7 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
     Chip educationChip;
     Chip socialChip;
     ChipGroup provisionChipGroup;
+    GenericStepperAdapter genericStepperAdapter;
 
     public CreateVisitPurposeFragment() {
         // Required empty public constructor
@@ -83,7 +85,11 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         healthChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (healthChip.isChecked()) {
+                    genericStepperAdapter = ((CreateVisitStepperActivity) getActivity()).createVisitStepperAdapter;
+                    genericStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
+                    ((CreateVisitStepperActivity) getActivity()).createVisitStepperLayout.setAdapter(genericStepperAdapter);
+                }
             }
         });
 

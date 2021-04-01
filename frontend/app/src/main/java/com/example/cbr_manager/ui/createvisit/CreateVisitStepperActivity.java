@@ -28,13 +28,14 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class CreateVisitStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
-    private StepperLayout createVisitStepperLayout;
+    public StepperLayout createVisitStepperLayout;
     public int clientId = -1;
     public int userCreatorId = -1;
     public int visitId;
     public Visit formVisitObj;
     private APIService apiService = APIService.getInstance();
     private Client client;
+    public GenericStepperAdapter createVisitStepperAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +52,12 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     }
 
     private void setupStepperAdapterWithFragments() {
-        GenericStepperAdapter createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
+        createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
         createVisitStepperAdapter.addFragment(new CreateVisitPurposeFragment(), "Purpose");
         createVisitStepperAdapter.addFragment(new CreateVisitLocationFragment(), "Location");
-        createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
-        createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
-        createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
+//        createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
+//        createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
+//        createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
 
         createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
         createVisitStepperLayout.setListener(this);

@@ -84,19 +84,17 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
                 formVisitObj.setClientId(clientId);
                 formVisitObj.setClient(client);
-                Log.d(TAG, "onSuccess: " + "client");
                 visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
                         visitId = visit.getId();
-                        Log.d(TAG, "onSuccess: " + visitId);
+                        Log.d(TAG, "Visit creation success: " + visitId);
                         Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
                         onSubmitSuccess();
                     }
 
                     @Override
                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        Log.d(TAG, "onError: " + e.getMessage());
                         Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
                     }
                 });

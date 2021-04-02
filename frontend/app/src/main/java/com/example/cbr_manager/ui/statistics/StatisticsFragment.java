@@ -296,14 +296,14 @@ public class StatisticsFragment extends Fragment {
 
 
     private void setTextViewInteger(int id, int value) {
-        TextView numVisitsView = view.findViewById(id);
-        numVisitsView.setText(Integer.toString(value));
+        TextView integerView = view.findViewById(id);
+        integerView.setText(Integer.toString(value));
     }
 
 
     private void setTextViewDouble(int id, double value) {
-        TextView numVisitsView = view.findViewById(id);
-        numVisitsView.setText(Double.toString(value));
+        TextView doubleView = view.findViewById(id);
+        doubleView.setText(Double.toString(value));
     }
 
 

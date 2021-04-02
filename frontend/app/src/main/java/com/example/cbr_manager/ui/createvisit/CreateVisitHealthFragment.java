@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
@@ -48,6 +49,10 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     Chip advocacyChip;
     Chip encouragementChip;
     RadioGroup goalOutcomeRadioGroup;
+    private final String GOAL_CREATED_KEY = "created";
+    private final String GOAL_ONGOING_KEY = "ongoing";
+    private final String GOAL_CONCLUDED_KEY = "concluded";
+    private APIService apiService = APIService.getInstance();
 
     public CreateVisitHealthFragment() {
         // Required empty public constructor
@@ -73,7 +78,13 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         initializeChips(view);
         initializeRadioGroups(view);
         setupInputLayoutVisibility(view);
+        getHealthGoal(view);
         return view;
+    }
+
+    private void getHealthGoal(View view) {
+        if (apiService.isAuthenticated()) {
+        }
     }
 
     private void initializeRadioGroups(View view) {

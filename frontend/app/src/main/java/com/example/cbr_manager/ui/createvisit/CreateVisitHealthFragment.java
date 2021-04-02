@@ -58,6 +58,8 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     Chip advocacyChip;
     Chip encouragementChip;
     RadioGroup goalOutcomeRadioGroup;
+    TextView currentGoalTextView;
+    TextView currentGoalStatusTextView;
     private List<Goal> goalList = new ArrayList<>();
     private final String GOAL_CREATED_KEY = "created";
     private final String GOAL_ONGOING_KEY = "ongoing";
@@ -95,6 +97,8 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     }
 
     private void getHealthGoal(View view) {
+        currentGoalTextView = view.findViewById(R.id.healthProvisionCurrentGoalTextView);
+        currentGoalStatusTextView = view.findViewById(R.id.healthProvisionCurrentGoalStatusTextView);
         if (apiService.isAuthenticated()) {
             apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
                 @Override
@@ -113,6 +117,22 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
 
         Goal goal;
         Collections.reverse(goalList);
+        goal = findNonConcludedGoal();
+        if (goal != null) {
+            currentGoalTextView.setText("Current goal: " + goal.getTitle());
+            currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+        }
+
+        if (goal == null) {
+            goal = findConcludedGoal();
+            if (goal != null) {
+                currentGoalTextView.setText("Current goal: " + goal.getTitle());
+                currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+            } else {
+                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
+                currentGoalStatusTextView.setText("Current status: No status.");
+            }
+        }
     }
 
     private Goal findNonConcludedGoal() {

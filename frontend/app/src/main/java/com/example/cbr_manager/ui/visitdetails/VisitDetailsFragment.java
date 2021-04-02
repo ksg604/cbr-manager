@@ -119,6 +119,7 @@ public class VisitDetailsFragment extends Fragment {
 
                 setupLocationTextView(visit.getLocationDropDown());
                 setupVillageNumTextView(visit.getVillageNoVisit().toString());
+                setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
                 setupHealthTextViews(visit);
                 setupEducationTextViews(visit);
                 setupSocialTextViews(visit);

@@ -9,6 +9,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 @Dao
 public interface VisitDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,4 +32,9 @@ public interface VisitDao {
     @Query("DELETE FROM visit")
     void clearAll();
 
+    @Query("SELECT * FROM visit")
+    Single<List<Visit>> getVisits();
+
+    @Query("SELECT * FROM visit WHERE visit_id = :id")
+    Single<Visit> getVisit(int id);
 }

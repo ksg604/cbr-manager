@@ -38,7 +38,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     private View view;
     private Visit visit;
     Goal educationGoal;
-    private static final String HEALTH_KEY = "Education";
+    private static final String EDUCATION_KEY = "Education";
     private static final String STATUS_ONGOING_KEY = "Ongoing";
 
     public CreateVisitEducationFragment() {
@@ -146,7 +146,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
 
         if (goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionConcludedRadioButton || goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionCancelledRadioButton) {
             if (!newGoalInput.getEditText().getText().toString().isEmpty()) {
-                educationGoal.setCategory(HEALTH_KEY);
+                educationGoal.setCategory(EDUCATION_KEY);
                 educationGoal.setTitle(newGoalInput.getEditText().getText().toString());
                 educationGoal.setStatus(STATUS_ONGOING_KEY);
             }

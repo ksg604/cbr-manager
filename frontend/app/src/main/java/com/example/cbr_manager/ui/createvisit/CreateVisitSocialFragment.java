@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,9 +35,13 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     TextInputLayout referralInputLayout;
     TextInputLayout encouragementInputLayout;
     TextInputLayout conclusionInputLayout;
+    TextInputLayout newGoalInput;
     RadioGroup goalMetRadioGroup;
     private View view;
     private Visit visit;
+    Goal socialGoal;
+    private static final String SOCIAL_KEY = "Social";
+    private static final String STATUS_ONGOING_KEY = "Ongoing";
 
     public CreateVisitSocialFragment() {
         // Required empty public constructor
@@ -58,6 +63,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_social, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
+        socialGoal = ((CreateVisitStepperActivity) getActivity()).socialGoalObj;
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
@@ -72,8 +78,13 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.socialProvisionConcludedRadioButton) {
                     conclusionInputLayout.setVisibility(View.VISIBLE);
+                    newGoalInput.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.socialProvisionCancelledRadioButton) {
+                    newGoalInput.setVisibility(View.VISIBLE);
+                    conclusionInputLayout.setVisibility(GONE);
                 } else {
                     conclusionInputLayout.setVisibility(GONE);
+                    newGoalInput.setVisibility(GONE);
                 }
             }
         });
@@ -134,7 +145,13 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
 
         visit.setConclusionSocialProvision(getInputLayoutString(conclusionInputLayout));
 
-        // TODO: RadioGroup
+        if (goalMetRadioGroup.getCheckedRadioButtonId() == R.id.socialProvisionConcludedRadioButton || goalMetRadioGroup.getCheckedRadioButtonId() == R.id.socialProvisionCancelledRadioButton) {
+            if (!newGoalInput.getEditText().getText().toString().isEmpty()) {
+                socialGoal.setCategory(SOCIAL_KEY);
+                socialGoal.setTitle(newGoalInput.getEditText().getText().toString());
+                socialGoal.setStatus(STATUS_ONGOING_KEY);
+            }
+        }
     }
 
     private String getInputLayoutString(TextInputLayout textInputLayout) {

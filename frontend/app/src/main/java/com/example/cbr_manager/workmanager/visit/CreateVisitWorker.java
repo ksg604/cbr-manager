@@ -26,7 +26,7 @@ import io.reactivex.Single;
 public class CreateVisitWorker extends RxWorker {
 
     public static final String KEY_AUTH_HEADER = "KEY_AUTH_HEADER";
-    public static final String KEY_VISIT_OBJ_ID = "KEY_AUTH_HEADER";
+    public static final String KEY_VISIT_OBJ_ID = "KEY_VISIT_OBJ_ID";
     private static final String TAG = CreateVisitWorker.class.getSimpleName();
     private final VisitAPI visitAPI;
     private final VisitDao visitDao;

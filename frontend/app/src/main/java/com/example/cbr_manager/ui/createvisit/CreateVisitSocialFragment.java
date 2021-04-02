@@ -82,6 +82,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
+        getSocialGoal(view);
         setupInputLayoutVisibility();
         return view;
     }

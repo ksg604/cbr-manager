@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
@@ -106,6 +107,28 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                 public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
                     if (response.isSuccessful()) {
                         goalList = response.body();
+//                        Toast.makeText(getContext(), "Got goal list.", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), Integer.toString(goalList.size()), Toast.LENGTH_SHORT).show();
+                        Goal goal;
+                        Collections.reverse(goalList);
+                        goal = findNonConcludedGoal();
+                        if (goal != null) {
+                            currentGoalTextView.setText("Current goal: " + goal.getTitle());
+                            currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                        }
+
+                        if (goal == null) {
+                            goal = findConcludedGoal();
+                            if (goal != null) {
+                                currentGoalTextView.setText("Current goal: " + goal.getTitle());
+                                currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                            } else {
+                                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
+                                currentGoalStatusTextView.setText("Current status: No status.");
+                            }
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Response error.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -116,24 +139,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
             });
         }
 
-        Goal goal;
-        Collections.reverse(goalList);
-        goal = findNonConcludedGoal();
-        if (goal != null) {
-            currentGoalTextView.setText("Current goal: " + goal.getTitle());
-            currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
-        }
 
-        if (goal == null) {
-            goal = findConcludedGoal();
-            if (goal != null) {
-                currentGoalTextView.setText("Current goal: " + goal.getTitle());
-                currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
-            } else {
-                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
-                currentGoalStatusTextView.setText("Current status: No status.");
-            }
-        }
     }
 
     private Goal findNonConcludedGoal() {

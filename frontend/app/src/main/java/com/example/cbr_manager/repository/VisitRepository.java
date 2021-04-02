@@ -1,7 +1,6 @@
 package com.example.cbr_manager.repository;
 
 import androidx.work.Constraints;
-import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -10,8 +9,6 @@ import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.service.visit.VisitAPI;
 import com.example.cbr_manager.service.visit.VisitDao;
 import com.example.cbr_manager.workmanager.visit.CreateVisitWorker;
-
-import java.net.SocketTimeoutException;
 
 import javax.inject.Inject;
 
@@ -57,7 +54,7 @@ public class VisitRepository {
     }
 
     public Single<Visit> createVisit(Visit visit) {
-        return visitDao.insertSingle(visit)
+        return visitDao.SingleInsert(visit)
                 .map(aLong -> {
                     visit.setId(aLong.intValue());
                     return visit;

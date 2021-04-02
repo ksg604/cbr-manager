@@ -27,6 +27,7 @@ import com.stepstone.stepper.VerificationError;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -61,7 +62,9 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     private final String GOAL_CREATED_KEY = "created";
     private final String GOAL_ONGOING_KEY = "ongoing";
     private final String GOAL_CONCLUDED_KEY = "concluded";
+    private final String GOAL_CATEGORY_HEALTH = "health";
     private APIService apiService = APIService.getInstance();
+    private Integer clientId = -1;
 
     public CreateVisitHealthFragment() {
         // Required empty public constructor
@@ -107,6 +110,37 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                 }
             });
         }
+
+        Goal goal;
+        Collections.reverse(goalList);
+    }
+
+    private Goal findNonConcludedGoal() {
+        Goal goal;
+        for (int i = 0; i < goalList.size(); i++) {
+            goal = goalList.get(i);
+            Integer id = goal.getClient().getId();
+            String type = goal.getCategory().trim().toLowerCase();
+            String status = goal.getStatus().trim().toLowerCase();
+            if (id.equals(clientId) && type.equals(GOAL_CATEGORY_HEALTH) && (status.equals(GOAL_CREATED_KEY) || status.equals(GOAL_ONGOING_KEY))) {
+                return goal;
+            }
+        }
+        return null;
+    }
+
+    private Goal findConcludedGoal() {
+        Goal goal;
+        for (int i = 0; i < goalList.size(); i++) {
+            goal = goalList.get(i);
+            Integer id = goal.getClient().getId();
+            String type = goal.getCategory().trim().toLowerCase();
+            String status = goal.getStatus().trim().toLowerCase();
+            if (id.equals(clientId) && type.equals(GOAL_CATEGORY_HEALTH) && status.equals(GOAL_CONCLUDED_KEY)) {
+                return goal;
+            }
+        }
+        return null;
     }
 
     private void initializeRadioGroups(View view) {

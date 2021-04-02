@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -113,8 +115,23 @@ public class NavigationActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        MenuItem itemNavAlertCreation = findViewById(R.id.nav_alert_creation);
-        itemNavAlertCreation.setVisible(false);
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                MenuItem itemNavUserCreation = navigationView.getMenu().findItem(R.id.nav_user_creation);
+                itemNavUserCreation.setEnabled(user.isStaff());
+                MenuItem itemNavAlertCreation = navigationView.getMenu().findItem(R.id.nav_alert_creation);
+                itemNavAlertCreation.setEnabled(user.isStaff());
+                MenuItem itemNavStats = navigationView.getMenu().findItem(R.id.nav_statistics);
+                itemNavStats.setEnabled(user.isStaff());
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Toast.makeText(getBaseContext(), "User response error. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

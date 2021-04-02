@@ -27,8 +27,6 @@ public class User {
     @SerializedName("last_name")
     @Expose
     private String lastName;
-
-
     @SerializedName("is_staff")
     @Expose
     private boolean isStaff;

@@ -85,35 +85,16 @@ public class StatisticsFragment extends Fragment {
                     double averageSocialRisk = getAverageSocialRisk(clients);
                     double averageRiskScore = getAverageRiskScore(clients);
 
-                    TextView totalClientsView = view.findViewById(R.id.statistic1_sub1);
-                    totalClientsView.setText(Integer.toString(totalClients));
-
-                    TextView averageAgeView = view.findViewById(R.id.statistic1_sub2);
-                    averageAgeView.setText(Double.toString(averageAge));
-
-                    TextView totalFemalesView = view.findViewById(R.id.statistic1_sub3);
-                    totalFemalesView.setText(Integer.toString(totalFemales));
-
-                    TextView totalMalesView = view.findViewById(R.id.statistic1_sub4);
-                    totalMalesView.setText(Integer.toString(totalMales));
-
-                    TextView totalHighRiskView = view.findViewById(R.id.statistic1_sub5);
-                    totalHighRiskView.setText(Integer.toString(totalHighRisk));
-
-                    TextView totalNoCareGiverView = view.findViewById(R.id.statistic1_sub6);
-                    totalNoCareGiverView.setText(Integer.toString(totalNoCareGiver));
-
-                    TextView averageHealthRiskView = view.findViewById(R.id.statistic2_sub1);
-                    averageHealthRiskView.setText(Double.toString(averageHealthRisk));
-
-                    TextView averageEducationRiskView = view.findViewById(R.id.statistic2_sub2);
-                    averageEducationRiskView.setText(Double.toString(averageEducationRisk));
-
-                    TextView averageSocialRiskView = view.findViewById(R.id.statistic2_sub3);
-                    averageSocialRiskView.setText(Double.toString(averageSocialRisk));
-
-                    TextView averageRiskScoreView = view.findViewById(R.id.statistic2_sub4);
-                    averageRiskScoreView.setText(Double.toString(averageRiskScore));
+                    setTextViewInteger(R.id.statistic1_sub1, totalClients);
+                    setTextViewDouble(R.id.statistic1_sub2, averageAge);
+                    setTextViewInteger(R.id.statistic1_sub3, totalFemales);
+                    setTextViewInteger(R.id.statistic1_sub4, totalMales);
+                    setTextViewInteger(R.id.statistic1_sub5, totalHighRisk);
+                    setTextViewInteger(R.id.statistic1_sub6, totalNoCareGiver);
+                    setTextViewDouble(R.id.statistic2_sub1, averageHealthRisk);
+                    setTextViewDouble(R.id.statistic2_sub2, averageEducationRisk);
+                    setTextViewDouble(R.id.statistic2_sub3, averageSocialRisk);
+                    setTextViewDouble(R.id.statistic2_sub4, averageRiskScore);
                 }
 
             }
@@ -234,17 +215,10 @@ public class StatisticsFragment extends Fragment {
                     int totalFine = getTotalFine(surveys);
                     int totalGood = getTotalGood(surveys);
 
-                    TextView totalVeryPoorView = view.findViewById(R.id.statistic3_sub1);
-                    totalVeryPoorView.setText(Integer.toString(totalVeryPoor));
-
-                    TextView totalPoorView = view.findViewById(R.id.statistic3_sub2);
-                    totalPoorView.setText(Integer.toString(totalPoor));
-
-                    TextView totalFineView = view.findViewById(R.id.statistic3_sub3);
-                    totalFineView.setText(Integer.toString(totalFine));
-
-                    TextView totalGoodView = view.findViewById(R.id.statistic3_sub4);
-                    totalGoodView.setText(Integer.toString(totalGood));
+                    setTextViewInteger(R.id.statistic3_sub1, totalVeryPoor);
+                    setTextViewInteger(R.id.statistic3_sub2, totalPoor);
+                    setTextViewInteger(R.id.statistic3_sub3, totalFine);
+                    setTextViewInteger(R.id.statistic3_sub4, totalGood);
                 }
 
             }
@@ -309,8 +283,7 @@ public class StatisticsFragment extends Fragment {
                     List<Visit> visits = response.body();
                     int numVisits = visits.size();
 
-                    TextView numVisitsView = view.findViewById(R.id.statistic4_sub1);
-                    numVisitsView.setText(Integer.toString(numVisits));
+                    setTextViewInteger(R.id.statistic4_sub1, numVisits);
                 }
             }
 
@@ -319,6 +292,18 @@ public class StatisticsFragment extends Fragment {
 
             }
         });
+    }
+
+
+    private void setTextViewInteger(int id, int value) {
+        TextView numVisitsView = view.findViewById(id);
+        numVisitsView.setText(Integer.toString(value));
+    }
+
+
+    private void setTextViewDouble(int id, double value) {
+        TextView numVisitsView = view.findViewById(id);
+        numVisitsView.setText(Double.toString(value));
     }
 
 

@@ -34,31 +34,6 @@ public class CreateVisitWorker extends RxWorker {
         this.visitDao = visitDao;
     }
 
-//    @Override
-//    public Result doWork() {
-//        String authHeader  = getInputData().getString(KEY_AUTH_HEADER);
-//        int visitObjId  = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
-//
-//        Visit visit = visitDao.getVisitSync(visitObjId);
-//
-//
-//        visitAPI.createVisitObs(authHeader, visit).subscribe(new DisposableSingleObserver<Visit>() {
-//            @Override
-//            public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
-//
-//            }
-//
-//            @Override
-//            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-//
-//            }
-//        });
-//        Log.d(TAG, "doWork: ");
-//
-//        // Indicate whether the work finished successfully with the Result
-//        return Result.success();
-//    }
-
     @NonNull
     @Override
     public Single<Result> createWork() {
@@ -72,7 +47,6 @@ public class CreateVisitWorker extends RxWorker {
                             visitDao.update(visit);
                         }))
                 .map(visitSingle -> Result.success())
-                .onErrorReturn(throwable -> Result.failure())
                 .onErrorReturnItem(Result.retry());
     }
 }

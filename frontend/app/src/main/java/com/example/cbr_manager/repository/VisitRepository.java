@@ -62,28 +62,21 @@ public class VisitRepository {
                     visit.setId(aLong.intValue());
                     return visit;
                 })
-                .doOnSuccess(visit1 -> {
-                    Constraints constraints = new Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .build();
-                    Data.Builder builder = new Data.Builder();
-                    builder.putString(CreateVisitWorker.KEY_AUTH_HEADER, authHeader);
-                    builder.putInt(CreateVisitWorker.KEY_VISIT_OBJ_ID, visit1.getId());
-                    Data data = builder.build();
-
-                    OneTimeWorkRequest createVisitRequest =
-                            new OneTimeWorkRequest.Builder(CreateVisitWorker.class)
-                                    .setConstraints(constraints)
-                                    .setInputData(data)
-                                    .build();
-                    workManager.enqueue(createVisitRequest);
-                })
+                .doOnSuccess(this::enqueueCreateVisit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private Single<Visit> offlineCreateVisit(Visit visit) {
-        long id = visitDao.insert(visit);
-        return visitDao.getVisit((int) id);
+    private void enqueueCreateVisit(Visit visit) {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        OneTimeWorkRequest createVisitRequest =
+                new OneTimeWorkRequest.Builder(CreateVisitWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(CreateVisitWorker.buildInputData(authHeader, visit.getId()))
+                        .build();
+        workManager.enqueue(createVisitRequest);
     }
 }

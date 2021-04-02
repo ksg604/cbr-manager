@@ -5,6 +5,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.hilt.work.HiltWorker;
+import androidx.work.Data;
 import androidx.work.RxWorker;
 import androidx.work.WorkerParameters;
 
@@ -38,6 +39,13 @@ public class CreateVisitWorker extends RxWorker {
 
         this.visitAPI = visitAPI;
         this.visitDao = visitDao;
+    }
+
+    public static Data buildInputData(String authHeader, int visitId){
+        Data.Builder builder = new Data.Builder();
+        builder.putString(CreateVisitWorker.KEY_AUTH_HEADER, authHeader);
+        builder.putInt(CreateVisitWorker.KEY_VISIT_OBJ_ID, visitId);
+        return builder.build();
     }
 
     @NonNull

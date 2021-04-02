@@ -79,6 +79,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
+        getEducationGoal(view);
         setupInputLayoutVisibility();
         return view;
     }
@@ -90,7 +91,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         setChipListener(encouragementChip, encouragementInput);
     }
 
-    private void getHealthGoal(View view) {
+    private void getEducationGoal(View view) {
         currentGoalTextView = view.findViewById(R.id.educationProvisionCurrentGoalTextView);
         currentGoalStatusTextView = view.findViewById(R.id.educationProvisionCurrentGoalStatusTextView);
         if (apiService.isAuthenticated()) {

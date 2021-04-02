@@ -88,6 +88,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_health, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
+        clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);

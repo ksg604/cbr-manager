@@ -8,16 +8,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
-import com.example.cbr_manager.ui.dashboard.ViewPagerAdapter;
 
 import java.util.List;
 
@@ -88,35 +85,35 @@ public class StatisticsFragment extends Fragment {
                     double averageSocialRisk = getAverageSocialRisk(clients);
                     double averageRiskScore = getAverageRiskScore(clients);
 
-                    TextView textView = view.findViewById(R.id.statistic1_sub1);
-                    textView.setText(Integer.toString(totalClients));
+                    TextView totalClientsView = view.findViewById(R.id.statistic1_sub1);
+                    totalClientsView.setText(Integer.toString(totalClients));
 
-                    textView = view.findViewById(R.id.statistic1_sub2);
-                    textView.setText(Double.toString(averageAge));
+                    TextView averageAgeView = view.findViewById(R.id.statistic1_sub2);
+                    averageAgeView.setText(Double.toString(averageAge));
 
-                    textView = view.findViewById(R.id.statistic1_sub3);
-                    textView.setText(Integer.toString(totalFemales));
+                    TextView totalFemalesView = view.findViewById(R.id.statistic1_sub3);
+                    totalFemalesView.setText(Integer.toString(totalFemales));
 
-                    textView = view.findViewById(R.id.statistic1_sub4);
-                    textView.setText(Integer.toString(totalMales));
+                    TextView totalMalesView = view.findViewById(R.id.statistic1_sub4);
+                    totalMalesView.setText(Integer.toString(totalMales));
 
-                    textView = view.findViewById(R.id.statistic1_sub5);
-                    textView.setText(Integer.toString(totalHighRisk));
+                    TextView totalHighRiskView = view.findViewById(R.id.statistic1_sub5);
+                    totalHighRiskView.setText(Integer.toString(totalHighRisk));
 
-                    textView = view.findViewById(R.id.statistic1_sub6);
-                    textView.setText(Integer.toString(totalNoCareGiver));
+                    TextView totalNoCareGiverView = view.findViewById(R.id.statistic1_sub6);
+                    totalNoCareGiverView.setText(Integer.toString(totalNoCareGiver));
 
-                    textView = view.findViewById(R.id.statistic2_sub1);
-                    textView.setText(Double.toString(averageHealthRisk));
+                    TextView averageHealthRiskView = view.findViewById(R.id.statistic2_sub1);
+                    averageHealthRiskView.setText(Double.toString(averageHealthRisk));
 
-                    textView = view.findViewById(R.id.statistic2_sub2);
-                    textView.setText(Double.toString(averageEducationRisk));
+                    TextView averageEducationRiskView = view.findViewById(R.id.statistic2_sub2);
+                    averageEducationRiskView.setText(Double.toString(averageEducationRisk));
 
-                    textView = view.findViewById(R.id.statistic2_sub3);
-                    textView.setText(Double.toString(averageSocialRisk));
+                    TextView averageSocialRiskView = view.findViewById(R.id.statistic2_sub3);
+                    averageSocialRiskView.setText(Double.toString(averageSocialRisk));
 
-                    textView = view.findViewById(R.id.statistic2_sub4);
-                    textView.setText(Double.toString(averageRiskScore));
+                    TextView averageRiskScoreView = view.findViewById(R.id.statistic2_sub4);
+                    averageRiskScoreView.setText(Double.toString(averageRiskScore));
                 }
 
             }
@@ -237,17 +234,17 @@ public class StatisticsFragment extends Fragment {
                     int totalFine = getTotalFine(surveys);
                     int totalGood = getTotalGood(surveys);
 
-                    TextView textView = view.findViewById(R.id.statistic3_sub1);
-                    textView.setText(Integer.toString(totalVeryPoor));
+                    TextView totalVeryPoorView = view.findViewById(R.id.statistic3_sub1);
+                    totalVeryPoorView.setText(Integer.toString(totalVeryPoor));
 
-                    textView = view.findViewById(R.id.statistic3_sub2);
-                    textView.setText(Integer.toString(totalPoor));
+                    TextView totalPoorView = view.findViewById(R.id.statistic3_sub2);
+                    totalPoorView.setText(Integer.toString(totalPoor));
 
-                    textView = view.findViewById(R.id.statistic3_sub3);
-                    textView.setText(Integer.toString(totalFine));
+                    TextView totalFineView = view.findViewById(R.id.statistic3_sub3);
+                    totalFineView.setText(Integer.toString(totalFine));
 
-                    textView = view.findViewById(R.id.statistic3_sub4);
-                    textView.setText(Integer.toString(totalGood));
+                    TextView totalGoodView = view.findViewById(R.id.statistic3_sub4);
+                    totalGoodView.setText(Integer.toString(totalGood));
                 }
 
             }
@@ -312,8 +309,8 @@ public class StatisticsFragment extends Fragment {
                     List<Visit> visits = response.body();
                     int numVisits = visits.size();
 
-                    TextView textView1 = view.findViewById(R.id.statistic4_sub1);
-                    textView1.setText(Integer.toString(numVisits));
+                    TextView numVisitsView = view.findViewById(R.id.statistic4_sub1);
+                    numVisitsView.setText(Integer.toString(numVisits));
                 }
             }
 

@@ -94,6 +94,7 @@ public class NavigationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         navigationView = findViewById(R.id.nav_view);
 
         handleIncomingSnackBarMessage(navigationView);
@@ -111,6 +112,9 @@ public class NavigationActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        MenuItem itemNavAlertCreation = findViewById(R.id.nav_alert_creation);
+        itemNavAlertCreation.setVisible(false);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

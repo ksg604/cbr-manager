@@ -17,6 +17,9 @@ public interface VisitDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Visit visit);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Single<Long> insertSingle(Visit visit);
+
     @Delete
     void delete(Visit visit);
 

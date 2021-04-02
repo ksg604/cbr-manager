@@ -8,8 +8,14 @@ import androidx.hilt.work.HiltWorker;
 import androidx.work.RxWorker;
 import androidx.work.WorkerParameters;
 
+import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.service.visit.VisitAPI;
 import com.example.cbr_manager.service.visit.VisitDao;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedInject;
@@ -21,8 +27,8 @@ public class CreateVisitWorker extends RxWorker {
     public static final String KEY_AUTH_HEADER = "KEY_AUTH_HEADER";
     public static final String KEY_VISIT_OBJ_ID = "KEY_AUTH_HEADER";
     private static final String TAG = CreateVisitWorker.class.getSimpleName();
-    private VisitAPI visitAPI;
-    private VisitDao visitDao;
+    private final VisitAPI visitAPI;
+    private final VisitDao visitDao;
 
     @AssistedInject
     public CreateVisitWorker(
@@ -42,11 +48,21 @@ public class CreateVisitWorker extends RxWorker {
 
         return visitDao.getVisit(visitObjId)
                 .flatMap(visit -> visitAPI.createVisitObs(authHeader, visit)
-                        .doOnSuccess(visitResult -> {
-                            visit.setId(visitResult.getId());
-                            visitDao.update(visit);
-                        }))
+                        .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
                 .map(visitSingle -> Result.success())
-                .onErrorReturnItem(Result.retry());
+                .onErrorReturn(this::handleReturnResult);
+    }
+
+    private void onSuccessfulCreateVisit(Visit visit, Visit visitResult) {
+        visit.setId(visitResult.getId());
+        visitDao.update(visit);
+    }
+
+    @NotNull
+    private Result handleReturnResult(Throwable throwable) {
+        if (throwable instanceof ConnectException || throwable instanceof SocketTimeoutException) {
+            return Result.retry();
+        }
+        return Result.failure();
     }
 }

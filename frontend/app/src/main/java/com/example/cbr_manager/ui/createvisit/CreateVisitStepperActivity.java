@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
@@ -33,6 +34,9 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     public int userCreatorId = -1;
     public int visitId;
     public Visit formVisitObj;
+    public Goal healthGoalObj;
+    public Goal educationGoalObj;
+    public Goal socialGoalObj;
     private APIService apiService = APIService.getInstance();
     private Client client;
 
@@ -44,6 +48,9 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         Intent intent = getIntent();
         clientId = intent.getIntExtra("clientId", -1);
         formVisitObj = new Visit();
+        healthGoalObj = new Goal();
+        educationGoalObj = new Goal();
+        socialGoalObj = new Goal();
         createVisitStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

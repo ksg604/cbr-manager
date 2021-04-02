@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,6 +29,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     TextInputLayout referralInput;
     TextInputLayout encouragementInput;
     TextInputLayout conclusionInput;
+    TextInputLayout newGoalInput;
     Chip adviceChip;
     Chip advocacyChip;
     Chip referralChip;
@@ -35,6 +37,9 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     RadioGroup goalsMetRadioGroup;
     private View view;
     private Visit visit;
+    Goal educationGoal;
+    private static final String HEALTH_KEY = "Education";
+    private static final String STATUS_ONGOING_KEY = "Ongoing";
 
     public CreateVisitEducationFragment() {
         // Required empty public constructor
@@ -56,6 +61,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_education, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
+        educationGoal = ((CreateVisitStepperActivity) getActivity()).educationGoalObj;
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
@@ -77,8 +83,13 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.educationProvisionConcludedRadioButton) {
                     conclusionInput.setVisibility(View.VISIBLE);
+                    newGoalInput.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.educationProvisionCancelledRadioButton) {
+                    newGoalInput.setVisibility(View.VISIBLE);
+                    conclusionInput.setVisibility(GONE);
                 } else {
                     conclusionInput.setVisibility(GONE);
+                    newGoalInput.setVisibility(GONE);
                 }
             }
         });
@@ -110,6 +121,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         referralInput = view.findViewById(R.id.educationReferralInputLayout);
         encouragementInput = view.findViewById(R.id.educationEncouragementInputLayout);
         conclusionInput = view.findViewById(R.id.educationConclusionInputLayout);
+        newGoalInput = view.findViewById(R.id.educationNewGoalInputLayout);
     }
 
     @Nullable
@@ -132,7 +144,13 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
 
         visit.setConclusionEducationProvision(getInputLayoutString(conclusionInput));
 
-        // TODO: RadioGroup goals
+        if (goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionConcludedRadioButton || goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionCancelledRadioButton) {
+            if (!newGoalInput.getEditText().getText().toString().isEmpty()) {
+                educationGoal.setCategory(HEALTH_KEY);
+                educationGoal.setTitle(newGoalInput.getEditText().getText().toString());
+                educationGoal.setStatus(STATUS_ONGOING_KEY);
+            }
+        }
     }
 
     private String getInputLayoutString(TextInputLayout textInputLayout) {

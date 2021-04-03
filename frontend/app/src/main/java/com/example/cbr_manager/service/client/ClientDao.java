@@ -33,7 +33,10 @@ public interface ClientDao {
     Single<List<Client>> getClients();
 
     @Query("SELECT * FROM client WHERE client_id = :clientId")
-    Single<Client> getClient(int clientId);
+    Single<Client> getClientObs(int clientId);
+
+    @Query("SELECT * FROM client WHERE client_id = :clientId")
+    Client getClient(int clientId);
 
     @Query("SELECT EXISTS (SELECT * FROM client WHERE client_id = :clientId)")
     boolean ClientExist(int clientId);

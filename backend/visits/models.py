@@ -8,7 +8,7 @@ from tools.models import TimestampedModel
 
 
 class Visit(TimestampedModel):
-    user_creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
 
     client_state_previous = models.JSONField(blank=True, null=True, editable=False)

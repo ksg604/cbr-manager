@@ -11,7 +11,7 @@ from baseline_survey.text_choices import AssistiveDevice, GeneralHealth, HealthS
 # Create your models here.
 
 class BaselineSurvey(models.Model):
-    user_creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     datetime_created = models.DateTimeField(auto_now_add=True)
 

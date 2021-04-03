@@ -1,7 +1,10 @@
 import random
 
 import factory
+
 from clients.models import Client
+
+factory.Faker._DEFAULT_LOCALE = 'en_US'
 
 
 class ClientFactory(factory.django.DjangoModelFactory):
@@ -17,8 +20,8 @@ class ClientFactory(factory.django.DjangoModelFactory):
     gender = factory.LazyAttribute(lambda o: o.profile['sex'])
     age = factory.Faker('pyint', min_value=20, max_value=50)
     photo = factory.django.ImageField(color='green')
-    contact_care = factory.Faker('phone_number')
-    contact_client = factory.Faker('phone_number')
+    contact_care = factory.Faker('msisdn')
+    contact_client = factory.Faker('msisdn')
     health_risk = factory.Faker('pyint', min_value=1, max_value=10)
     education_risk = factory.Faker('pyint', min_value=1, max_value=10)
     social_risk = factory.Faker('pyint', min_value=1, max_value=10)

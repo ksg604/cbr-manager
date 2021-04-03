@@ -158,10 +158,6 @@ public class Client extends CBRTimestamp {
         this.id = id;
     }
 
-    public Integer getRiskScore() {
-        return riskScore;
-    }
-
     public void setRiskScore(Integer riskScore) {
         this.riskScore = riskScore;
     }
@@ -392,5 +388,12 @@ public class Client extends CBRTimestamp {
 
     public void setNewClient(boolean newClient) {
         isNewClient = newClient;
+    }
+
+    public Integer getRiskScore() {
+        double healthRiskLogScale = Math.pow(10, healthRisk)*1.2;
+        double socialRiskLogScale = Math.pow(10, socialRisk)*1.1;
+        double educationRiskLogScale = Math.pow(10, educationRisk);
+        return (int) (healthRiskLogScale + socialRiskLogScale + educationRiskLogScale);
     }
 }

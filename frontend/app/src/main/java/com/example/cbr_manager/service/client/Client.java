@@ -383,9 +383,9 @@ public class Client extends CBRTimestamp {
     }
 
     public Integer calculateRiskScore() {
-        double healthRiskLogScale = Math.pow(10, healthRisk)*1.2;
-        double socialRiskLogScale = Math.pow(10, socialRisk)*1.1;
-        double educationRiskLogScale = Math.pow(10, educationRisk);
+        double healthRiskLogScale = Math.pow(10, healthRisk)*1.3;
+        double socialRiskLogScale = Math.pow(10, socialRisk)*1.2;
+        double educationRiskLogScale = Math.pow(10, educationRisk)*1.1;
         return (int) (healthRiskLogScale + socialRiskLogScale + educationRiskLogScale);
     }
 }

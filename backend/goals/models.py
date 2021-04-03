@@ -6,9 +6,9 @@ from clients.models import Client
 
 class Goal(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True)
-    datetime_completed = models.DateTimeField(blank=True, null=True)
+    datetime_completed = models.IntegerField(blank=True, default=0)
     user_creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client_id = models.IntegerField(blank=True, default=0)
 
     client_state_previous = models.JSONField(blank=True, null=True, editable=False)
     client_state_updated = models.JSONField(blank=True, null=True, editable=False)
@@ -23,5 +23,5 @@ class Goal(models.Model):
     client_info_changed = models.JSONField(blank=True, null=True, editable=False)
 
     def __str__(self):
-        return "Goal {} {} - {} {} - status: {}".format(self.id, self.title, 
-        self.client.first_name, self.client.last_name, self.status)
+        return "Goal {} {} for clientId {} - status: {}".format(self.id, self.title, 
+        self.client_id, self.status)

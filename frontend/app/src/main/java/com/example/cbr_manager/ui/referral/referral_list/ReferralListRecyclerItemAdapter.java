@@ -135,7 +135,7 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
     public void onBindViewHolder(@NonNull ReferralItemViewHolder holder, int position) {
         ReferralListRecyclerItem currentItem = filteredReferrals.get(position);
         holder.textListStatus.setText(currentItem.getStatus());
-        holder.textListReferTo.setText(currentItem.getReferTo());
+        holder.textListReferTo.setText("Refer to: "+currentItem.getReferTo());
         holder.textListType.setText(currentItem.getType());
         holder.textListDate.setText(currentItem.getDate());
         holder.textListName.setText(currentItem.getClientName());

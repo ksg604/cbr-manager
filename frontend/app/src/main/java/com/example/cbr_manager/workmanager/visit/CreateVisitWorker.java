@@ -53,7 +53,7 @@ public class CreateVisitWorker extends RxWorker {
         String authHeader = getInputData().getString(KEY_AUTH_HEADER);
         int visitObjId = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
 
-        return visitDao.getVisit(visitObjId)
+        return visitDao.getVisitAsSingle(visitObjId)
                 .flatMap(visit -> visitAPI.createVisitSingle(authHeader, visit)
                         .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
                 .map(visitSingle -> {

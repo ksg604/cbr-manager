@@ -10,7 +10,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 
 @Dao
@@ -31,13 +30,10 @@ public interface VisitDao {
     void clearAll();
 
     @Query("SELECT * FROM visit")
-    Single<List<Visit>> getVisits();
-
-    @Query("SELECT * FROM visit")
     LiveData<List<Visit>> getVisitsAsLiveData();
 
     @Query("SELECT * FROM visit WHERE visit_id = :id")
-    Single<Visit> getVisit(int id);
+    Single<Visit> getVisitAsSingle(int id);
 
     @Query("SELECT * FROM visit WHERE visit_id = :id")
     LiveData<Visit> getVisitAsLiveData(int id);

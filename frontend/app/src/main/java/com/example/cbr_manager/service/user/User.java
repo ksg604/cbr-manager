@@ -29,23 +29,23 @@ public class User {
     private String lastName;
     @SerializedName("is_staff")
     @Expose
-    private boolean isStaff;
+    private boolean isAdmin;
 
-    public User(String username, String password, String email, String firstName, String lastName,boolean isStaff ) {
+    public User(String username, String password, String email, String firstName, String lastName, boolean isAdmin ) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isStaff = isStaff;
+        this.isAdmin = isAdmin;
     }
 
-    public boolean isStaff() {
-        return isStaff;
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
-    public void setStaff(boolean staff) {
-        isStaff = staff;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public Integer getId() {

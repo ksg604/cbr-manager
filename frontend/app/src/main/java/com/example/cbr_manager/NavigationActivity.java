@@ -119,16 +119,16 @@ public class NavigationActivity extends AppCompatActivity {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull User user) {
                 MenuItem itemNavUserCreation = navigationView.getMenu().findItem(R.id.nav_user_creation);
-                itemNavUserCreation.setEnabled(user.isStaff());
+                itemNavUserCreation.setEnabled(user.isAdmin());
                 MenuItem itemNavAlertCreation = navigationView.getMenu().findItem(R.id.nav_alert_creation);
-                itemNavAlertCreation.setEnabled(user.isStaff());
+                itemNavAlertCreation.setEnabled(user.isAdmin());
                 MenuItem itemNavStats = navigationView.getMenu().findItem(R.id.nav_statistics);
-                itemNavStats.setEnabled(user.isStaff());
+                itemNavStats.setEnabled(user.isAdmin());
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Toast.makeText(getBaseContext(), "User response error. " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
 

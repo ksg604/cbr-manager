@@ -25,35 +25,30 @@
             android:id="@+id/purposeVisitTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
             android:text="Goal Category"
             android:textSize="16sp" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/goalCategoryChipGroup"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/cbrChip"
+                android:id="@+id/healthGoalChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="@string/health" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/purposeReferralChip"
+                android:id="@+id/educationGoalChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="@string/education" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/purposeFollowUpChip"
+                android:id="@+id/socialGoalChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
@@ -64,7 +59,7 @@
             android:id="@+id/healthGoalCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_marginVertical="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,10 +129,10 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/EducationGoalCard"
+            android:id="@+id/educationGoalCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_marginVertical="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -210,7 +205,7 @@
             android:id="@+id/socialGoalCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_marginVertical="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"

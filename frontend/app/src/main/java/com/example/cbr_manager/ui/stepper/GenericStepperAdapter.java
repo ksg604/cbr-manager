@@ -48,14 +48,15 @@ public class GenericStepperAdapter extends AbstractFragmentStepAdapter {
     @NonNull
     @Override
     public StepViewModel getViewModel(@IntRange(from = 0) int position) {
+        StepViewModel.Builder builder = new StepViewModel.Builder(context);
         if (position < fragmentSteps.size()) {
             StepperAdapterItem adapterItem = fragmentSteps.get(position);
-            new StepViewModel.Builder(context)
+            return builder
                     .setTitle(adapterItem.fragmentTitle) //can be a CharSequence instead
                     .create();
         }
 
-        return new StepViewModel.Builder(context)
+        return builder
                 .setTitle("Default Title") //can be a CharSequence instead
                 .create();
     }

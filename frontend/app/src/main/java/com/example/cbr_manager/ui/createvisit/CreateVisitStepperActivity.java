@@ -45,6 +45,9 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     public Goal healthGoalObj;
     public Goal educationGoalObj;
     public Goal socialGoalObj;
+    public Goal prevHealthGoalObj;
+    public Goal prevEducationGoalObj;
+    public Goal prevSocialGoalObj;
     private APIService apiService = APIService.getInstance();
     private Client client;
     public GenericStepperAdapter createVisitStepperAdapter;
@@ -54,6 +57,9 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     public boolean healthGoalCreated = false;
     public boolean educationGoalCreated = false;
     public boolean socialGoalCreated = false;
+    public boolean healthPreviousGoalModified = false;
+    public boolean educationPreviousGoalModified = false;
+    public boolean socialPreviousGoalModified = false;
 
     private AuthViewModel authViewModel;
 
@@ -147,10 +153,32 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         }
     }
 
+    private void modifyPreviousGoal(Goal goal) {
+        if (apiService.isAuthenticated()) {
+            apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
+                @Override
+                public void onResponse(Call<Goal> call, Response<Goal> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(CreateVisitStepperActivity.this, "Previous goal modified.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Goal> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
     @Override
     public void onCompleted(View completeButton) {
         if (healthGoalCreated) {
             createNewGoals(healthGoalObj);
+        }
+
+        if (prevHealthGoalObj != null) {
+            modifyPreviousGoal(prevHealthGoalObj);
         }
 
         if (educationGoalCreated) {

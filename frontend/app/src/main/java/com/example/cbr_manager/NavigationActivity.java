@@ -115,23 +115,7 @@ public class NavigationActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
-                MenuItem itemNavUserCreation = navigationView.getMenu().findItem(R.id.nav_user_creation);
-                itemNavUserCreation.setEnabled(user.isAdmin());
-                MenuItem itemNavAlertCreation = navigationView.getMenu().findItem(R.id.nav_alert_creation);
-                itemNavAlertCreation.setEnabled(user.isAdmin());
-                MenuItem itemNavStats = navigationView.getMenu().findItem(R.id.nav_statistics);
-                itemNavStats.setEnabled(user.isAdmin());
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
-            }
-        });
-
+        hideAdminOnlyMenuItems();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -154,6 +138,26 @@ public class NavigationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setupAlertsBadge(navigationView);
+    }
+
+    private void hideAdminOnlyMenuItems(){
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                if(!user.isAdmin()){
+                    MenuItem itemNavUserCreation = navigationView.getMenu().findItem(R.id.nav_user_creation);
+                    itemNavUserCreation.setEnabled(user.isAdmin());
+                    MenuItem itemNavAlertCreation = navigationView.getMenu().findItem(R.id.nav_alert_creation);
+                    itemNavAlertCreation.setEnabled(user.isAdmin());
+                    MenuItem itemNavStats = navigationView.getMenu().findItem(R.id.nav_statistics);
+                    itemNavStats.setEnabled(user.isAdmin());
+                }
+            }
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
     }
 
     private void setupAlertsBadge(NavigationView navigationView) {

@@ -11,6 +11,7 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -91,22 +92,16 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     }
 
     public void fetchVisitsToList(List<VisitsRecyclerItem> visitUIList) {
-        visitViewModel.getVisits().subscribe(new DisposableObserver<Visit>() {
+        visitViewModel.getVisitsAsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Visit>>() {
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull Visit visit) {
-                if (clientId == NO_SPECIFIC_CLIENT || visit.getClientId() == clientId) {
-                    VisitsRecyclerItem visitsRecyclerItem = createVisitRecycleItem(visit);
-                    visitUIList.add(visitsRecyclerItem);
+            public void onChanged(List<Visit> visits) {
+                for (Visit visit :
+                        visits) {
+                    if (clientId == NO_SPECIFIC_CLIENT || visit.getClientId() == clientId) {
+                        VisitsRecyclerItem visitsRecyclerItem = createVisitRecycleItem(visit);
+                        visitUIList.add(visitsRecyclerItem);
+                    }
                 }
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
                 adapter.notifyDataSetChanged();
             }
         });

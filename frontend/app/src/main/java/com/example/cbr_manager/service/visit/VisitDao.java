@@ -1,5 +1,6 @@
 package com.example.cbr_manager.service.visit;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -31,6 +32,9 @@ public interface VisitDao {
 
     @Query("SELECT * FROM visit")
     Single<List<Visit>> getVisits();
+
+    @Query("SELECT * FROM visit")
+    LiveData<List<Visit>> getVisitsAsLiveData();
 
     @Query("SELECT * FROM visit WHERE visit_id = :id")
     Single<Visit> getVisit(int id);

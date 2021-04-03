@@ -1,10 +1,13 @@
 package com.example.cbr_manager.ui;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.example.cbr_manager.repository.VisitRepository;
 import com.example.cbr_manager.service.visit.Visit;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -33,5 +36,10 @@ public class VisitViewModel extends ViewModel {
 
     public Single<Visit> createVisit(Visit visit){
         return visitRepository.createVisit(visit);
+    }
+
+
+    public LiveData<List<Visit>> getVisitsAsLiveData(){
+        return visitRepository.getVisitsAsLiveData();
     }
 }

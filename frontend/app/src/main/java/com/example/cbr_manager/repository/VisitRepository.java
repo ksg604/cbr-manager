@@ -17,7 +17,6 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
@@ -64,11 +63,13 @@ public class VisitRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public LiveData<Visit> getVisitAsLiveData(int id) {
+        return visitDao.getVisitAsLiveData(id);
+    }
+
     private ObservableSource<? extends Visit> handleLocalVisitsFallback(Throwable throwable) {
         return visitDao.getVisits().toObservable().flatMap(Observable::fromIterable);
     }
-
-
 
     public Single<Visit> createVisit(Visit visit) {
         return visitDao.SingleInsert(visit)

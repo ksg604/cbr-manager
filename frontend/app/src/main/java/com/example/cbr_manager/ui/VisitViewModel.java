@@ -12,7 +12,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @HiltViewModel
@@ -26,20 +25,15 @@ public class VisitViewModel extends ViewModel {
         this.visitRepository = visitRepository;
     }
 
-    public Single<Visit> getVisit(int id) {
-        return visitRepository.getVisit(id);
+    public LiveData<Visit> getVisitAsLiveData(int id){
+        return visitRepository.getVisitAsLiveData(id);
     }
 
-    public Observable<Visit> getVisits() {
-        return visitRepository.getVisits();
-    }
-
-    public Single<Visit> createVisit(Visit visit){
-        return visitRepository.createVisit(visit);
-    }
-
-
-    public LiveData<List<Visit>> getVisitsAsLiveData(){
+    public LiveData<List<Visit>> getVisitsAsLiveData() {
         return visitRepository.getVisitsAsLiveData();
+    }
+
+    public Single<Visit> createVisit(Visit visit) {
+        return visitRepository.createVisit(visit);
     }
 }

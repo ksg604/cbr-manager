@@ -38,4 +38,7 @@ public interface VisitDao {
 
     @Query("SELECT * FROM visit WHERE visit_id = :id")
     Single<Visit> getVisit(int id);
+
+    @Query("SELECT * FROM visit WHERE visit_id = :id")
+    LiveData<Visit> getVisitAsLiveData(int id);
 }

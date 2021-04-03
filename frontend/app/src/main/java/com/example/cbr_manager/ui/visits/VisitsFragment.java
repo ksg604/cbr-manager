@@ -11,8 +11,6 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,15 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.VisitViewModel;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsFragment;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
+import com.example.cbr_manager.utils.Helper;
 
 import org.jetbrains.annotations.NotNull;
+import org.threeten.bp.format.FormatStyle;
 
-import java.sql.Timestamp;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +32,9 @@ import io.reactivex.observers.DisposableObserver;
 
 @AndroidEntryPoint
 public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener {
+    public static final String KEY_CLIENT_ID = "KEY_CLIENT_ID";
     private static final String TAG = "VisitsFragment";
     private static final int NO_SPECIFIC_CLIENT = -1;
-    public static final String KEY_CLIENT_ID = "KEY_CLIENT_ID";
-
     ArrayList<VisitsRecyclerItem> visitsRecyclerItems = new ArrayList<>();
     private VisitsRecyclerItemAdapter adapter;
     private int clientId;
@@ -89,7 +83,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     }
 
     private int getClientIDFromArgs() {
-        if (getArguments() != null){
+        if (getArguments() != null) {
             return this.getArguments().getInt(KEY_CLIENT_ID, NO_SPECIFIC_CLIENT);
         } else {
             return NO_SPECIFIC_CLIENT;
@@ -119,9 +113,9 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
     }
 
     private VisitsRecyclerItem createVisitRecycleItem(Visit visit) {
-        Timestamp datetimeCreated = visit.getDatetimeCreated();
-        Format formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = formatter.format(datetimeCreated);
+        String datetimeCreated = visit.getCreatedAt();
+        String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
+
         String purpose = formatPurposeString(visit);
         return new VisitsRecyclerItem(formattedDate,
                 visit.getClient().getFullName(), visit, purpose, visit.getLocationDropDown());

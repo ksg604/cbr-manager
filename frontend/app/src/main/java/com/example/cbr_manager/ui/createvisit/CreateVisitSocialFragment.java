@@ -50,6 +50,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     RadioGroup goalMetRadioGroup;
     TextView currentGoalTextView;
     TextView currentGoalStatusTextView;
+    TextView goalMetTextView;
     private View view;
     private Visit visit;
     private List<Goal> goalList = new ArrayList<>();
@@ -60,8 +61,10 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     private APIService apiService = APIService.getInstance();
     private Integer clientId = -1;
     Goal socialGoal;
+    Goal previousSocialGoal;
     private static final String SOCIAL_KEY = "Social";
     private static final String STATUS_ONGOING_KEY = "Ongoing";
+    private boolean concludedOrNotFound = false;
 
     public CreateVisitSocialFragment() {
         // Required empty public constructor
@@ -104,21 +107,25 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
                         goalList = response.body();
                         Goal goal;
                         Collections.reverse(goalList);
-                        goal = findNonConcludedGoal();
-                        if (goal != null) {
-                            currentGoalTextView.setText("Current goal: " + goal.getTitle());
-                            currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                        previousSocialGoal = findNonConcludedGoal();
+                        if (previousSocialGoal != null) {
+                            currentGoalTextView.setText("Current goal: " + previousSocialGoal.getTitle());
+                            currentGoalStatusTextView.setText("Current status: " + previousSocialGoal.getStatus());
                         }
 
-                        if (goal == null) {
-                            goal = findConcludedGoal();
-                            if (goal != null) {
-                                currentGoalTextView.setText("Current goal: " + goal.getTitle());
-                                currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                        if (previousSocialGoal == null) {
+                            previousSocialGoal = findConcludedGoal();
+                            if (previousSocialGoal != null) {
+                                currentGoalTextView.setText("Current goal: " + previousSocialGoal.getTitle());
+                                currentGoalStatusTextView.setText("Current status: " + previousSocialGoal.getStatus());
                             } else {
                                 currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
                                 currentGoalStatusTextView.setText("Current status: No status.");
                             }
+                            goalMetRadioGroup.setVisibility(GONE);
+                            goalMetTextView.setVisibility(GONE);
+                            newGoalInput.setVisibility(View.VISIBLE);
+                            concludedOrNotFound = true;
                         }
                     }
                 }
@@ -208,6 +215,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     }
 
     private void initializeInputLayouts(View view) {
+        goalMetTextView = view.findViewById(R.id.socialProvisionGoalMetTextView);
         adviceInputLayout = view.findViewById(R.id.socialAdviceInputLayout);
         advocacyInputLayout = view.findViewById(R.id.socialAdvocacyInputLayout);
         referralInputLayout = view.findViewById(R.id.socialReferralInputLayout);
@@ -236,7 +244,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
 
         visit.setConclusionSocialProvision(getInputLayoutString(conclusionInputLayout));
 
-        if (goalMetRadioGroup.getCheckedRadioButtonId() == R.id.socialProvisionConcludedRadioButton || goalMetRadioGroup.getCheckedRadioButtonId() == R.id.socialProvisionCancelledRadioButton) {
+        if (goalMetRadioGroup.getCheckedRadioButtonId() == R.id.socialProvisionConcludedRadioButton || goalMetRadioGroup.getCheckedRadioButtonId() == R.id.socialProvisionCancelledRadioButton || concludedOrNotFound) {
             if (!newGoalInput.getEditText().getText().toString().isEmpty()) {
                 socialGoal.setCategory(SOCIAL_KEY);
                 socialGoal.setTitle(newGoalInput.getEditText().getText().toString());
@@ -245,6 +253,21 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
             } else {
                 ((CreateVisitStepperActivity) getActivity()).socialGoalCreated = false;
             }
+        }
+
+        if (!concludedOrNotFound && previousSocialGoal != null) {
+            switch (goalMetRadioGroup.getCheckedRadioButtonId()) {
+                case R.id.socialProvisionConcludedRadioButton:
+                    previousSocialGoal.setStatus(GOAL_CONCLUDED_KEY);
+                    break;
+                case R.id.socialProvisionOngoingRadioButton:
+                    previousSocialGoal.setStatus(STATUS_ONGOING_KEY);
+                    break;
+                case R.id.socialProvisionCancelledRadioButton:
+                    previousSocialGoal.setStatus("Cancelled");
+                    break;
+            }
+            ((CreateVisitStepperActivity) getActivity()).prevSocialGoalObj = previousSocialGoal;
         }
     }
 

@@ -57,9 +57,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     public boolean healthGoalCreated = false;
     public boolean educationGoalCreated = false;
     public boolean socialGoalCreated = false;
-    public boolean healthPreviousGoalModified = false;
-    public boolean educationPreviousGoalModified = false;
-    public boolean socialPreviousGoalModified = false;
 
     private AuthViewModel authViewModel;
 
@@ -185,8 +182,16 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             createNewGoals(educationGoalObj);
         }
 
+        if (prevEducationGoalObj != null) {
+            modifyPreviousGoal(prevEducationGoalObj);
+        }
+
         if (socialGoalCreated) {
             createNewGoals(socialGoalObj);
+        }
+
+        if (prevSocialGoalObj != null) {
+            modifyPreviousGoal(prevSocialGoalObj);
         }
         clientViewModel.getClient(clientId).subscribe(new DisposableSingleObserver<Client>() {
             @Override

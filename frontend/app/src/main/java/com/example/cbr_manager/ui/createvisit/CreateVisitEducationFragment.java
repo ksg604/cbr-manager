@@ -50,6 +50,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     RadioGroup goalsMetRadioGroup;
     TextView currentGoalTextView;
     TextView currentGoalStatusTextView;
+    TextView goalsMetTextView;
     private View view;
     private Visit visit;
     private List<Goal> goalList = new ArrayList<>();
@@ -60,8 +61,10 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     private APIService apiService = APIService.getInstance();
     private Integer clientId = -1;
     Goal educationGoal;
+    Goal previousEducationGoal;
     private static final String EDUCATION_KEY = "Education";
     private static final String STATUS_ONGOING_KEY = "Ongoing";
+    private boolean concludedOrNotFound = false;
 
     public CreateVisitEducationFragment() {
         // Required empty public constructor
@@ -111,19 +114,23 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
                         goalList = response.body();
                         Goal goal;
                         Collections.reverse(goalList);
-                        goal = findNonConcludedGoal();
-                        if (goal != null) {
-                            currentGoalTextView.setText("Current goal: " + goal.getTitle());
-                            currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                        previousEducationGoal = findNonConcludedGoal();
+                        if (previousEducationGoal != null) {
+                            currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
+                            currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
                         } else {
-                            goal = findConcludedGoal();
-                            if (goal != null) {
-                                currentGoalTextView.setText("Current goal: " + goal.getTitle());
-                                currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                            previousEducationGoal = findConcludedGoal();
+                            if (previousEducationGoal != null) {
+                                currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
+                                currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
                             } else {
                                 currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
                                 currentGoalStatusTextView.setText("Current status: No status.");
                             }
+                            goalsMetRadioGroup.setVisibility(GONE);
+                            goalsMetTextView.setVisibility(GONE);
+                            newGoalInput.setVisibility(View.VISIBLE);
+                            concludedOrNotFound = true;
                         }
                     }
                 }
@@ -160,7 +167,6 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
             String type = goal.getCategory().trim().toLowerCase();
             String status = goal.getStatus().trim().toLowerCase();
             if (id.equals(clientId) && type.equals(GOAL_CATEGORY_EDUCATION) && status.equals(GOAL_CONCLUDED_KEY)) {
-                Toast.makeText(getContext(), "Came in here", Toast.LENGTH_SHORT).show();
                 return goal;
             }
         }
@@ -207,6 +213,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     }
 
     private void initializeInputLayouts(View view) {
+        goalsMetTextView = view.findViewById(R.id.educationProvisionRadioGroupTextView);
         adviceInput = view.findViewById(R.id.educationAdviceInputLayout);
         advocacyInput = view.findViewById(R.id.educationAdvocacyInputLayout);
         referralInput = view.findViewById(R.id.educationReferralInputLayout);
@@ -235,7 +242,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
 
         visit.setConclusionEducationProvision(getInputLayoutString(conclusionInput));
 
-        if (goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionConcludedRadioButton || goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionCancelledRadioButton) {
+        if (goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionConcludedRadioButton || goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionCancelledRadioButton || concludedOrNotFound) {
             if (!newGoalInput.getEditText().getText().toString().isEmpty()) {
                 educationGoal.setCategory(EDUCATION_KEY);
                 educationGoal.setTitle(newGoalInput.getEditText().getText().toString());
@@ -244,6 +251,21 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
             } else {
                 ((CreateVisitStepperActivity) getActivity()).educationGoalCreated = false;
             }
+        }
+
+        if (!concludedOrNotFound && previousEducationGoal != null) {
+            switch (goalsMetRadioGroup.getCheckedRadioButtonId()) {
+                case R.id.educationProvisionConcludedRadioButton:
+                    previousEducationGoal.setStatus(GOAL_CONCLUDED_KEY);
+                    break;
+                case R.id.educationProvisionOngoingRadioButton:
+                    previousEducationGoal.setStatus(STATUS_ONGOING_KEY);
+                    break;
+                case R.id.educationProvisionCancelledRadioButton:
+                    previousEducationGoal.setStatus("Cancelled");
+                    break;
+            }
+            ((CreateVisitStepperActivity) getActivity()).prevEducationGoalObj = previousEducationGoal;
         }
     }
 

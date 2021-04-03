@@ -2,6 +2,7 @@ package com.example.cbr_manager.workmanager.visit;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.hilt.work.HiltWorker;
@@ -55,7 +56,10 @@ public class CreateVisitWorker extends RxWorker {
         return visitDao.getVisit(visitObjId)
                 .flatMap(visit -> visitAPI.createVisitObs(authHeader, visit)
                         .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
-                .map(visitSingle -> Result.success())
+                .map(visitSingle -> {
+                    Log.d(TAG, "created Visit: " + visitSingle.getId());
+                    return Result.success();
+                })
                 .onErrorReturn(this::handleReturnResult);
     }
 

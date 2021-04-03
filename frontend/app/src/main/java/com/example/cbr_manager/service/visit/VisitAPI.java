@@ -34,8 +34,11 @@ public interface VisitAPI {
     @GET("api/visits/")
     Observable<List<Visit>> getVisitsObs(@Header("Authorization") String authHeader);
 
+    @GET("api/visits/")
+    Single<List<Visit>> getVisitsAsSingle(@Header("Authorization") String authHeader);
+
     @GET("api/visits/{id}")
-    Single<Visit> getVisitObs(@Header("Authorization") String authHeader, @Path("id") int id);
+    Single<Visit> getVisitAsSingle(@Header("Authorization") String authHeader, @Path("id") int id);
 
     @POST("api/visits/")
     Single<Visit> createVisitObs(@Header("Authorization") String authHeader, @Body Visit visit);

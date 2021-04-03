@@ -80,38 +80,8 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
 
     @Override
     public Filter getFilter() {
-        return filter;
+        return null;
     }
-
-    public Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            String searchString = constraint.toString().toLowerCase().trim();
-
-            if (searchString.isEmpty()) {
-                filteredReferrals = referralListRecyclerItems;
-            } else {
-                ArrayList<ReferralListRecyclerItem> tempFilteredList = new ArrayList<>();
-
-                for (ReferralListRecyclerItem referralListRecyclerItem : referralListRecyclerItems) {
-                    if (referralListRecyclerItem.getReferTo().toLowerCase().trim().contains(searchString)) {
-                        tempFilteredList.add(referralListRecyclerItem);
-                    }
-                }
-                filteredReferrals = tempFilteredList;
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredReferrals;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredReferrals = (ArrayList<ReferralListRecyclerItem>) results.values;
-            notifyDataSetChanged();
-        }
-    };
 
     public static class ReferralItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textListStatus;

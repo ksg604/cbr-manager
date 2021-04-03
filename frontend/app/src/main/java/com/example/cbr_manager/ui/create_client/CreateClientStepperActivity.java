@@ -99,11 +99,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
                 if (response.isSuccessful()) {
                     Goal goal = response.body();
                 } else {
-                    try {
-                        Log.d("Testing", response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -132,13 +133,24 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     @Override
     public void onCompleted(View completeButton) {
+        if (healthGoalCreated) {
+            createNewGoals(healthGoalObj);
+        }
 
+        if (educationGoalCreated) {
+            createNewGoals(educationGoalObj);
+        }
+
+        if (socialGoalCreated) {
+            createNewGoals(socialGoalObj);
+        }
         clientViewModel.getClient(clientId).subscribe(new DisposableSingleObserver<Client>() {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
                 formVisitObj.setClientId(clientId);
                 formVisitObj.setClient(client);
                 visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
+                    @SuppressLint("LongLogTag")
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
                         visitId = visit.getId();
@@ -157,6 +169,20 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                 Toast.makeText(CreateVisitStepperActivity.this, "Response error finding client.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void createNewGoals(Goal goal) {
+        goal.setClientId(clientId);
+        apiService.goalService.createGoal(goal).enqueue(new Callback<Goal>() {
+            @Override
+            public void onResponse(Call<Goal> call, Response<Goal> response) {
+            }
+            @Override
+            public void onFailure(Call<Goal> call, Throwable t) {
             }
         });
     }

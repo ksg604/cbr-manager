@@ -34,7 +34,7 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class CreateVisitStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
-    private StepperLayout createVisitStepperLayout;
+    public StepperLayout createVisitStepperLayout;
     public int clientId = -1;
     public int userCreatorId = -1;
     public int visitId;
@@ -44,6 +44,10 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     public Goal socialGoalObj;
     private APIService apiService = APIService.getInstance();
     private Client client;
+    public GenericStepperAdapter createVisitStepperAdapter;
+    boolean healthVisible = false;
+    boolean educationVisible = false;
+    boolean socialVisible = false;
 
     private static final String TAG = "CreateVisitStepperActivity";
 
@@ -72,15 +76,55 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     }
 
     private void setupStepperAdapterWithFragments() {
-        GenericStepperAdapter createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
+        createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
         createVisitStepperAdapter.addFragment(new CreateVisitPurposeFragment(), "Purpose");
         createVisitStepperAdapter.addFragment(new CreateVisitLocationFragment(), "Location");
-        createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
-        createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
-        createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
-
         createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
         createVisitStepperLayout.setListener(this);
+    }
+
+    public void makePrivisionVisible(String title) {
+        if (title.equals("Health") && !healthVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
+            healthVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Education") && !educationVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
+            educationVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Social") && !socialVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
+            socialVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        }
+    }
+
+    public void makeProvisionInvisible(String title) {
+        if (title.equals("Health")) {
+            createVisitStepperAdapter.removeFragment("Health");
+            healthVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Education")) {
+            createVisitStepperAdapter.removeFragment("Education");
+            educationVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Social")) {
+            createVisitStepperAdapter.removeFragment("Social");
+            socialVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        }
     }
 
     @Override

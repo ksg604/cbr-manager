@@ -17,8 +17,10 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
@@ -47,6 +49,8 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
     private int clientId = -1;
     private int userId = -1;
     private Visit visit;
+    ChipGroup provisionChipGroup;
+    GenericStepperAdapter genericStepperAdapter;
 
     public CreateVisitPurposeFragment() {
         // Required empty public constructor
@@ -66,12 +70,44 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         view = inflater.inflate(R.layout.fragment_create_visit_purpose, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
+        genericStepperAdapter = ((CreateVisitStepperActivity) getActivity()).createVisitStepperAdapter;
         initializeChips(view);
         setupAutoFilledTextViews(view);
+        setupProvisionVisibility();
         return view;
     }
 
+    private void setupProvisionVisibility() {
+        healthChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (healthChip.isChecked()) {
+                    ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Health");
+                }
+            }
+        });
+
+        educationChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (educationChip.isChecked()) {
+                    ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Education");
+                }
+            }
+        });
+
+        socialChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (socialChip.isChecked()) {
+                    ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Social");
+                }
+            }
+        });
+    }
+
     private void initializeChips(View view) {
+        provisionChipGroup = view.findViewById(R.id.cbrTypeChipGroup);
         cbrChip = view.findViewById(R.id.cbrChip);
         referralChip = view.findViewById(R.id.purposeReferralChip);
         followUpChip = view.findViewById(R.id.purposeFollowUpChip);

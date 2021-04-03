@@ -18,7 +18,9 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
@@ -53,6 +55,8 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     public boolean educationGoalCreated = false;
     public boolean socialGoalCreated = false;
 
+    private AuthViewModel authViewModel;
+
     private static final String TAG = "CreateVisitStepperActivity";
 
     private VisitViewModel visitViewModel;
@@ -75,6 +79,18 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         socialGoalObj = new Goal();
         createVisitStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                userCreatorId = user.getId();
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            }
+        });
 
         setupStepperAdapterWithFragments();
     }
@@ -177,12 +193,15 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     private void createNewGoals(Goal goal) {
         goal.setClientId(clientId);
+        goal.setUserId(userCreatorId);
+        goal.setDescription("j");
         apiService.goalService.createGoal(goal).enqueue(new Callback<Goal>() {
             @Override
             public void onResponse(Call<Goal> call, Response<Goal> response) {
             }
             @Override
             public void onFailure(Call<Goal> call, Throwable t) {
+                Toast.makeText(CreateVisitStepperActivity.this, "Failed goal creation.", Toast.LENGTH_SHORT).show();
             }
         });
     }

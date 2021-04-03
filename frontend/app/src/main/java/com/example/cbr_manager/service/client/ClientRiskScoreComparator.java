@@ -13,9 +13,9 @@ public class ClientRiskScoreComparator implements Comparator<Client> {
     @Override
     public int compare(Client o1, Client o2) {
         if (this.sortOrder == SortOrder.ASCENDING) {
-            return o1.getRiskScore() - o2.getRiskScore();
+            return o1.calculateRiskScore() - o2.calculateRiskScore();
         }
-        return o2.getRiskScore() - o1.getRiskScore();
+        return o2.calculateRiskScore() - o1.calculateRiskScore();
 
     }
 

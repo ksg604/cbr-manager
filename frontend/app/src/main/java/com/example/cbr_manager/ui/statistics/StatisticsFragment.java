@@ -121,7 +121,7 @@ public class StatisticsFragment extends Fragment {
     private int getHighRiskClients(List<Client> clients) {
         int numHighRisk = 0;
         for (Client client : clients) {
-            if (client.getRiskScore() >= HIGH_RISK_THRESHOLD) {
+            if (client.calculateRiskScore() >= HIGH_RISK_THRESHOLD) {
                 numHighRisk++;
             }
         }
@@ -190,7 +190,7 @@ public class StatisticsFragment extends Fragment {
     private double getAverageRiskScore(List<Client> clients) {
         double averageRiskScore = 0.0;
         for (Client client : clients) {
-            averageRiskScore += client.getRiskScore();
+            averageRiskScore += client.calculateRiskScore();
         }
         return roundPrecision(averageRiskScore / clients.size(), 1);
     }

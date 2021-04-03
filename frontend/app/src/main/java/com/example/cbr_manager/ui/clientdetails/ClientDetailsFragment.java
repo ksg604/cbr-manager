@@ -157,7 +157,7 @@ public class ClientDetailsFragment extends Fragment {
                     setupSocialRiskTextView(client.getSocialRisk().toString());
                     setupHealthRiskTextView(client.getHealthRisk().toString());
                     setupDisabilityTextView(client.getDisability());
-                    setupRiskLevelTextView(client.getRiskScore().toString());
+                    setupRiskLevelTextView(client.calculateRiskScore().toString());
                     setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
                 } else {
                     Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)

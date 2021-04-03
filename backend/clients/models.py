@@ -37,8 +37,6 @@ class Client(TimestampedModel):
     social_require = models.TextField(blank=True)
     social_goal = models.TextField(blank=True)
 
-    risk_score = models.IntegerField(editable=False, default=0)
-
     # Fields updated by visits
     goal_met_health_provision = models.TextField(blank=True, max_length=30)
     goal_met_education_provision = models.TextField(blank=True, max_length=30)
@@ -51,8 +49,6 @@ class Client(TimestampedModel):
         return "{} {}".format(self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
-        self.risk_score = int(self.health_risk) + int(self.social_risk) + int(self.education_risk)
-
         if not self.cbr_client_id:
             self.cbr_client_id = self._generate_cbr_client_id()
 

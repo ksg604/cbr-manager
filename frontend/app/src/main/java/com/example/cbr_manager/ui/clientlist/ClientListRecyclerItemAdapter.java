@@ -1,7 +1,6 @@
 package com.example.cbr_manager.ui.clientlist;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +51,9 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
         holder.textViewFullName.setText(currentClient.getFullName());
         holder.textViewLocation.setText(currentClient.getLocation());
-        holder.riskTextView.setText(Integer.toString(currentClient.getRiskScore()));
+        holder.riskTextView.setText(Integer.toString(currentClient.calculateRiskScore()));
 
-        String riskColourCode = Helper.riskToColourCode(currentClient.getRiskScore());
+        String riskColourCode = Helper.riskToColourCode(currentClient.calculateRiskScore());
         holder.riskTextView.setTextColor(Color.parseColor(riskColourCode));
     }
 

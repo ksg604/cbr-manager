@@ -10,4 +10,8 @@ public class StepperAdapterItem {
         this.fragment = fragment;
         this.fragmentTitle = fragmentTitle;
     }
+
+    public String getFragmentTitle() {
+        return fragmentTitle;
+    }
 }

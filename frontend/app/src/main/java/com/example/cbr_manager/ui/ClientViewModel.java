@@ -7,7 +7,6 @@ import com.example.cbr_manager.repository.ClientRepository;
 import com.example.cbr_manager.service.client.Client;
 
 import java.io.File;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -33,24 +32,17 @@ public class ClientViewModel extends ViewModel {
         return this.clientRepository.getAllClient();
     }
 
+    public Single<Client> getClient(int id) {
+        return clientRepository.getClient(id);
+    }
+
     public Single<Client> insert(Client client) {
-        return this.clientRepository.insert(client);
+        return this.clientRepository.createClient(client);
     }
 
     public Single<ResponseBody> uploadphoto(File file, int clientId) {
         return this.clientRepository.uploadPhoto(file, clientId);
     }
 
-    public Single<Client> update(Client client) {
-        return this.clientRepository.update(client);
-    }
 
-    public Completable sync() {
-        return clientRepository.sync();
-    }
-
-
-    public Single<Client> getClient(int id) {
-        return clientRepository.getClient(id);
-    }
 }

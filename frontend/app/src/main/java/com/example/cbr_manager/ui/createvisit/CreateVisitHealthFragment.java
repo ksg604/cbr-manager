@@ -113,8 +113,6 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                 public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
                     if (response.isSuccessful()) {
                         goalList = response.body();
-//                        Toast.makeText(getContext(), "Got goal list.", Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(getContext(), Integer.toString(goalList.size()), Toast.LENGTH_SHORT).show();
                         Goal goal;
                         Collections.reverse(goalList);
                         goal = findNonConcludedGoal();

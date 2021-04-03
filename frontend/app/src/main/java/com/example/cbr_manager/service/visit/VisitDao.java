@@ -10,6 +10,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 @Dao
@@ -19,9 +20,6 @@ public interface VisitDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Visit> visits);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Single<Long> insertSingle(Visit visit);
 
     @Delete
     void delete(Visit visit);

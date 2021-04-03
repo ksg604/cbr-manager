@@ -12,6 +12,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 @HiltViewModel
@@ -35,5 +36,9 @@ public class VisitViewModel extends ViewModel {
 
     public Single<Visit> createVisit(Visit visit) {
         return visitRepository.createVisit(visit);
+    }
+
+    public Completable updateVisit(Visit visit) {
+        return visitRepository.updateVisit(visit);
     }
 }

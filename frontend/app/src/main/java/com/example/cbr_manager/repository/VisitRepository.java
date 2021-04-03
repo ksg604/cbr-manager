@@ -10,12 +10,14 @@ import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.service.visit.VisitAPI;
 import com.example.cbr_manager.service.visit.VisitDao;
 import com.example.cbr_manager.workmanager.visit.CreateVisitWorker;
+import com.example.cbr_manager.workmanager.visit.ModifyVisitWorker;
 
 import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -70,7 +72,7 @@ public class VisitRepository {
     }
 
     public Single<Visit> createVisit(Visit visit) {
-        return visitDao.insertSingle(visit)
+        return Single.fromCallable(() -> visitDao.insert(visit))
                 .map(aLong -> {
                     visit.setId(aLong.intValue());
                     return visit;
@@ -78,6 +80,13 @@ public class VisitRepository {
                 .doOnSuccess(this::enqueueCreateVisit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable updateVisit(Visit visit) {
+        return Completable.fromAction(() -> visitDao.update(visit))
+            .subscribeOn(Schedulers.io())
+            .doOnComplete(() -> enqueueModifyVisit(visit))
+            .observeOn(AndroidSchedulers.mainThread());
     }
 
     private UUID enqueueCreateVisit(Visit visit) {
@@ -92,5 +101,18 @@ public class VisitRepository {
                         .build();
         workManager.enqueue(createVisitRequest);
         return createVisitRequest.getId();
+    }
+
+    private void enqueueModifyVisit(Visit visit){
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        OneTimeWorkRequest createVisitRequest =
+                new OneTimeWorkRequest.Builder(ModifyVisitWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(CreateVisitWorker.buildInputData(authHeader, visit.getId()))
+                        .build();
+        workManager.enqueue(createVisitRequest);
     }
 }

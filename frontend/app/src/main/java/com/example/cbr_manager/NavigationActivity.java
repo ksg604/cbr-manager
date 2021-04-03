@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,6 +96,7 @@ public class NavigationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         navigationView = findViewById(R.id.nav_view);
 
         handleIncomingSnackBarMessage(navigationView);
@@ -111,6 +114,24 @@ public class NavigationActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                MenuItem itemNavUserCreation = navigationView.getMenu().findItem(R.id.nav_user_creation);
+                itemNavUserCreation.setEnabled(user.isAdmin());
+                MenuItem itemNavAlertCreation = navigationView.getMenu().findItem(R.id.nav_alert_creation);
+                itemNavAlertCreation.setEnabled(user.isAdmin());
+                MenuItem itemNavStats = navigationView.getMenu().findItem(R.id.nav_statistics);
+                itemNavStats.setEnabled(user.isAdmin());
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -27,13 +27,25 @@ public class User {
     @SerializedName("last_name")
     @Expose
     private String lastName;
+    @SerializedName("is_staff")
+    @Expose
+    private boolean isAdmin;
 
-    public User(String username, String password, String email, String firstName, String lastName ) {
+    public User(String username, String password, String email, String firstName, String lastName, boolean isAdmin ) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public Integer getId() {

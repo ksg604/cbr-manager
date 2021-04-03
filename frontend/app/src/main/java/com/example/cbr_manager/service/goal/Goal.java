@@ -34,15 +34,9 @@ public class Goal{
     @Expose
     private Integer userId;
 
-    public void setDatetimeCreated(Timestamp datetimeCreated) {
-        this.datetimeCreated = datetimeCreated;
-    }
-
-    @SerializedName("client")
+    @SerializedName("client_id")
     @Expose
-    @Embedded
-    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
-    private Client client;
+    private Integer clientId;
 
     @SerializedName("category")
     @Expose
@@ -66,7 +60,7 @@ public class Goal{
 
     public Goal() {
         this.userId = 0;
-        this.client = new Client();
+        this.clientId = -1;
         this.category = "";
         this.title = "";
         this.description = "";
@@ -86,6 +80,10 @@ public class Goal{
         return datetimeCreated;
     }
 
+    public void setDatetimeCreated(Timestamp datetimeCreated) {
+        this.datetimeCreated = datetimeCreated;
+    }
+
     public Timestamp getDatetimeCompleted() {
         return datetimeCompleted;
     }
@@ -102,12 +100,12 @@ public class Goal{
         this.userId = userId;
     }
 
-    public Client getClient() {
-        return client;
+    public Integer getClientId() {
+        return clientId;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
     }
 
     public String getCategory() {

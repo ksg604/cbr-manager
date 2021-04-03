@@ -96,6 +96,24 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
                 public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
                     if (response.isSuccessful()) {
                         goalList = response.body();
+                        Goal goal;
+                        Collections.reverse(goalList);
+                        goal = findNonConcludedGoal();
+                        if (goal != null) {
+                            currentGoalTextView.setText("Current goal: " + goal.getTitle());
+                            currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                        }
+
+                        if (goal == null) {
+                            goal = findConcludedGoal();
+                            if (goal != null) {
+                                currentGoalTextView.setText("Current goal: " + goal.getTitle());
+                                currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
+                            } else {
+                                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
+                                currentGoalStatusTextView.setText("Current status: No status.");
+                            }
+                        }
                     }
                 }
 
@@ -106,24 +124,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
             });
         }
 
-        Goal goal;
-        Collections.reverse(goalList);
-        goal = findNonConcludedGoal();
-        if (goal != null) {
-            currentGoalTextView.setText("Current goal: " + goal.getTitle());
-            currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
-        }
 
-        if (goal == null) {
-            goal = findConcludedGoal();
-            if (goal != null) {
-                currentGoalTextView.setText("Current goal: " + goal.getTitle());
-                currentGoalStatusTextView.setText("Current status: " + goal.getStatus());
-            } else {
-                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
-                currentGoalStatusTextView.setText("Current status: No status.");
-            }
-        }
     }
 
     private Goal findNonConcludedGoal() {

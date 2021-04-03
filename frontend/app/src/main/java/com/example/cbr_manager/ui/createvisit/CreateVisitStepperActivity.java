@@ -72,10 +72,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
         createVisitStepperAdapter.addFragment(new CreateVisitPurposeFragment(), "Purpose");
         createVisitStepperAdapter.addFragment(new CreateVisitLocationFragment(), "Location");
-//        createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
-//        createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
-//        createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
-
         createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
         createVisitStepperLayout.setListener(this);
     }
@@ -100,9 +96,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             createVisitStepperAdapter.notifyDataSetChanged();
             return;
         }
-//        createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-//        createVisitStepperAdapter.notifyDataSetChanged();
-//        createVisitStepperLayout.setListener(this);
     }
 
     public void makeProvisionInvisible(String title) {
@@ -125,8 +118,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             createVisitStepperAdapter.notifyDataSetChanged();
             return;
         }
-//        createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-//        createVisitStepperAdapter.notifyDataSetChanged();
     }
 
     @Override

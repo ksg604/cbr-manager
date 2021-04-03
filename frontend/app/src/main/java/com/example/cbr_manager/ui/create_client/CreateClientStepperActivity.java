@@ -5,24 +5,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
-import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,12 +26,8 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.observers.DisposableSingleObserver;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

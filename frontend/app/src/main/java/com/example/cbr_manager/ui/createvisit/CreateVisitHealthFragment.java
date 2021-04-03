@@ -280,6 +280,9 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                 healthGoal.setCategory(HEALTH_KEY);
                 healthGoal.setTitle(newGoalInput.getEditText().getText().toString());
                 healthGoal.setStatus(STATUS_ONGOING_KEY);
+                ((CreateVisitStepperActivity) getActivity()).healthGoalCreated = true;
+            } else {
+                ((CreateVisitStepperActivity) getActivity()).healthGoalCreated = false;
             }
         }
 

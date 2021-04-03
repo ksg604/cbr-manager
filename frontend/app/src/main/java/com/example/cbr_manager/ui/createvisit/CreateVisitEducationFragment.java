@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -239,6 +240,9 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
                 educationGoal.setCategory(EDUCATION_KEY);
                 educationGoal.setTitle(newGoalInput.getEditText().getText().toString());
                 educationGoal.setStatus(STATUS_ONGOING_KEY);
+                ((CreateVisitStepperActivity) getActivity()).educationGoalCreated = true;
+            } else {
+                ((CreateVisitStepperActivity) getActivity()).educationGoalCreated = false;
             }
         }
     }

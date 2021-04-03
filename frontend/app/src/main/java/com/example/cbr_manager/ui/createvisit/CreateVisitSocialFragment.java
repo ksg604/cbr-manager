@@ -213,6 +213,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
         referralInputLayout = view.findViewById(R.id.socialReferralInputLayout);
         encouragementInputLayout = view.findViewById(R.id.socialEncouragementInputLayout);
         conclusionInputLayout = view.findViewById(R.id.socialConclusionInputLayout);
+        newGoalInput = view.findViewById(R.id.socialNewGoalInputLayout);
     }
 
     @Nullable
@@ -240,6 +241,9 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
                 socialGoal.setCategory(SOCIAL_KEY);
                 socialGoal.setTitle(newGoalInput.getEditText().getText().toString());
                 socialGoal.setStatus(STATUS_ONGOING_KEY);
+                ((CreateVisitStepperActivity) getActivity()).socialGoalCreated = true;
+            } else {
+                ((CreateVisitStepperActivity) getActivity()).socialGoalCreated = false;
             }
         }
     }

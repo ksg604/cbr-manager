@@ -48,6 +48,9 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     boolean healthVisible = false;
     boolean educationVisible = false;
     boolean socialVisible = false;
+    public boolean healthGoalCreated = false;
+    public boolean educationGoalCreated = false;
+    public boolean socialGoalCreated = false;
 
     private static final String TAG = "CreateVisitStepperActivity";
 

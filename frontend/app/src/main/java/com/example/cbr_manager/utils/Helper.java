@@ -50,9 +50,9 @@ public class Helper {
     }
 
     public static String riskToColourCode(int riskScore) {
-        if (riskScore >= 10) {
+        if (riskScore >= 10000) {
             return "#b02323";
-        } else if (riskScore < 10 && riskScore >= 5) {
+        } else if (riskScore >= 3300) {
             return "#c45404";
         } else {
             return "#c49704";

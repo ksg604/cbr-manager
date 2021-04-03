@@ -18,18 +18,4 @@ public class VisitService extends BaseService {
     public Call<Visit> modifyVisit(Visit visit) {
         return this.visitAPI.modifyVisit(authHeader, visit.getId(), visit);
     }
-
-    public Call<List<Visit>> getVisits() {
-        return this.visitAPI.getVisits(authHeader);
-    }
-
-    public Call<Visit> getVisit(int visitID) {
-        return this.visitAPI.getVisit(authHeader, visitID);
-    }
-
-    public Call<Visit> createVisit(Visit visit) {
-        return this.visitAPI.createVisit(authHeader, visit);
-    }
-
-
 }

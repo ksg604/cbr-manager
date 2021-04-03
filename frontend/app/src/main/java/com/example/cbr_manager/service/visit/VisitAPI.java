@@ -18,21 +18,8 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface VisitAPI {
-
-    @GET("api/visits/")
-    Call<List<Visit>> getVisits(@Header("Authorization") String authHeader);
-
-    @GET("api/visits/{id}")
-    Call<Visit> getVisit(@Header("Authorization") String authHeader, @Path("id") int id);
-
     @PUT("api/visits/{id}/")
     Call<Visit> modifyVisit(@Header("Authorization") String authHeader, @Path("id") int id, @Body Visit visit);
-
-    @POST("api/visits/")
-    Call<Visit> createVisit(@Header("Authorization") String authHeader, @Body Visit visit);
-
-    @GET("api/visits/")
-    Observable<List<Visit>> getVisitsObs(@Header("Authorization") String authHeader);
 
     @GET("api/visits/")
     Single<List<Visit>> getVisitsAsSingle(@Header("Authorization") String authHeader);

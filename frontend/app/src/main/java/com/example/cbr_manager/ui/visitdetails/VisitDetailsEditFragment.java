@@ -16,22 +16,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class VisitDetailsEditFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
@@ -39,9 +44,16 @@ public class VisitDetailsEditFragment extends Fragment {
     private String location="";
     private int visitId = -1;
     private Client currentClient;
+    private VisitViewModel visitViewModel;
 
     public VisitDetailsEditFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
     }
 
     @Override
@@ -64,18 +76,10 @@ public class VisitDetailsEditFragment extends Fragment {
 
 
     private void getVisitInfo(int visitId, View root) {
-        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
-            @Override
-            public void onResponse(Call<Visit> call, Response<Visit> response) {
-                Visit visit = response.body();
-                setupLocationSpinner(root, visit.getLocationDropDown());
-                setupEditTexts(visit, root);
-                getClientInfo(visit.getClientId());
-            }
-
-            @Override
-            public void onFailure(Call<Visit> call, Throwable t) {
-            }
+        visitViewModel.getVisitAsLiveData(visitId).observe(getViewLifecycleOwner(),visit -> {
+            setupLocationSpinner(root, visit.getLocationDropDown());
+            setupEditTexts(visit, root);
+            getClientInfo(visit.getClientId());
         });
     }
 
@@ -219,44 +223,36 @@ public class VisitDetailsEditFragment extends Fragment {
 
         EditText editAdditionalInfo = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
 
-        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
-            @Override
-            public void onResponse(Call<Visit> call, Response<Visit> response) {
-                Visit visit = response.body();
-                visit.setClient(currentClient);
-                visit.setLocationDropDown(location);
+        visitViewModel.getVisitAsLiveData(visitId).observe(getViewLifecycleOwner(), visit -> {
+            visit.setClient(currentClient);
+            visit.setLocationDropDown(location);
 
-                visit.setVillageNoVisit(Integer.parseInt(editVillageNumber.getText().toString()));
-                visit.setWheelchairHealthProvisionText(editHealthWheelChairProvision.getText().toString());
-                visit.setProstheticHealthProvisionText(editHealthProstheticProvision.getText().toString());
-                visit.setOrthoticHealthProvisionText(editHealthOrthoticProvision.getText().toString());
-                visit.setRepairsHealthProvisionText(editHealthRepairsProvision.getText().toString());
-                visit.setReferralHealthProvisionText(editHealthReferralProvision.getText().toString());
-                visit.setAdviceHealthProvisionText(editHealthAdviceProvision.getText().toString());
-                visit.setAdvocacyHealthProvisionText(editHealthAdvocacyProvision.getText().toString());
-                visit.setEncouragementHealthProvisionText(editHealthEncouragementProvision.getText().toString());
-                visit.setConclusionHealthProvision(editHealthConclusionProvision.getText().toString());
+            visit.setVillageNoVisit(Integer.parseInt(editVillageNumber.getText().toString()));
+            visit.setWheelchairHealthProvisionText(editHealthWheelChairProvision.getText().toString());
+            visit.setProstheticHealthProvisionText(editHealthProstheticProvision.getText().toString());
+            visit.setOrthoticHealthProvisionText(editHealthOrthoticProvision.getText().toString());
+            visit.setRepairsHealthProvisionText(editHealthRepairsProvision.getText().toString());
+            visit.setReferralHealthProvisionText(editHealthReferralProvision.getText().toString());
+            visit.setAdviceHealthProvisionText(editHealthAdviceProvision.getText().toString());
+            visit.setAdvocacyHealthProvisionText(editHealthAdvocacyProvision.getText().toString());
+            visit.setEncouragementHealthProvisionText(editHealthEncouragementProvision.getText().toString());
+            visit.setConclusionHealthProvision(editHealthConclusionProvision.getText().toString());
 
-                visit.setReferralEducationProvisionText(editEducationReferralProvision.getText().toString());
-                visit.setAdviceEducationProvisionText(editEducationAdviceProvision.getText().toString());
-                visit.setAdvocacyEducationProvisionText(editEducationAdvocacyProvision.getText().toString());
-                visit.setEncouragementEducationProvisionText(editEducationEncouragementProvision.getText().toString());
-                visit.setConclusionEducationProvision(editEducationConclusionProvision.getText().toString());
+            visit.setReferralEducationProvisionText(editEducationReferralProvision.getText().toString());
+            visit.setAdviceEducationProvisionText(editEducationAdviceProvision.getText().toString());
+            visit.setAdvocacyEducationProvisionText(editEducationAdvocacyProvision.getText().toString());
+            visit.setEncouragementEducationProvisionText(editEducationEncouragementProvision.getText().toString());
+            visit.setConclusionEducationProvision(editEducationConclusionProvision.getText().toString());
 
-                visit.setReferralSocialProvisionText(editSocialReferralProvision.getText().toString());
-                visit.setAdviceSocialProvisionText(editSocialAdviceProvision.getText().toString());
-                visit.setAdvocacySocialProvisionText(editSocialAdvocacyProvision.getText().toString());
-                visit.setEncouragementSocialProvisionText(editSocialEncouragementProvision.getText().toString());
-                visit.setConclusionSocialProvision(editSocialConclusionProvision.getText().toString());
+            visit.setReferralSocialProvisionText(editSocialReferralProvision.getText().toString());
+            visit.setAdviceSocialProvisionText(editSocialAdviceProvision.getText().toString());
+            visit.setAdvocacySocialProvisionText(editSocialAdvocacyProvision.getText().toString());
+            visit.setEncouragementSocialProvisionText(editSocialEncouragementProvision.getText().toString());
+            visit.setConclusionSocialProvision(editSocialConclusionProvision.getText().toString());
 
 
-                visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
-                modifyVisitInfo(visit);
-            }
-            @Override
-            public void onFailure(Call<Visit> call, Throwable t) {
-
-            }
+            visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
+            modifyVisitInfo(visit);
         });
     }
 

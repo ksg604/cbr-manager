@@ -40,7 +40,7 @@ public class CreateVisitWorker extends RxWorker {
         this.visitDao = visitDao;
     }
 
-    public static Data buildInputData(String authHeader, int visitId){
+    public static Data buildInputData(String authHeader, int visitId) {
         Data.Builder builder = new Data.Builder();
         builder.putString(CreateVisitWorker.KEY_AUTH_HEADER, authHeader);
         builder.putInt(CreateVisitWorker.KEY_VISIT_OBJ_ID, visitId);

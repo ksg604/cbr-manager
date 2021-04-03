@@ -22,6 +22,7 @@ class ClientFactory(factory.django.DjangoModelFactory):
     photo = factory.django.ImageField(color='green')
     contact_care = factory.Faker('msisdn')
     contact_client = factory.Faker('msisdn')
+    location = factory.Faker('city')
     health_risk = factory.Faker('pyint', min_value=1, max_value=10)
     education_risk = factory.Faker('pyint', min_value=1, max_value=10)
     social_risk = factory.Faker('pyint', min_value=1, max_value=10)

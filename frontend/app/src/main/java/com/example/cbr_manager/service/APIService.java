@@ -27,6 +27,7 @@ public class APIService {
     public AlertService alertService;
     public ReferralService referralService;
     public BaselineSurveyService baselineSurveyService;
+    private String token;
     public GoalService goalService;
 
     private APIService() {
@@ -40,6 +41,7 @@ public class APIService {
     }
 
     public void initializeServices(String token) {
+        this.token = token;
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
         this.visitService = new VisitService(token);
@@ -49,9 +51,9 @@ public class APIService {
         this.goalService = new GoalService(token);
     }
 
+    @Deprecated // use AuthViewModel!
     public boolean isAuthenticated() {
-        // Todo needs a better check, maybe a specific endpoint to check validity of auth token
-        return true;
+        return token != null && !token.equals("");
     }
 
     private ReferralService initializeReferralService(String authResponse) {

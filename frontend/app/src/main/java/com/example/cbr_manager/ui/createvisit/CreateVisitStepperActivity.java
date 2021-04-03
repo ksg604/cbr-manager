@@ -3,10 +3,12 @@ package com.example.cbr_manager.ui.createvisit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -15,12 +17,15 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,18 +33,31 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class CreateVisitStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
-    private StepperLayout createVisitStepperLayout;
+    public StepperLayout createVisitStepperLayout;
     public int clientId = -1;
     public int userCreatorId = -1;
     public int visitId;
     public Visit formVisitObj;
     private APIService apiService = APIService.getInstance();
     private Client client;
+    public GenericStepperAdapter createVisitStepperAdapter;
+    boolean healthVisible = false;
+    boolean educationVisible = false;
+    boolean socialVisible = false;
+
+    private static final String TAG = "CreateVisitStepperActivity";
+
+    private VisitViewModel visitViewModel;
+    private ClientViewModel clientViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stepper);
+
+        visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+
         setTitle("Create Visit");
         Intent intent = getIntent();
         clientId = intent.getIntExtra("clientId", -1);
@@ -51,58 +69,86 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     }
 
     private void setupStepperAdapterWithFragments() {
-        GenericStepperAdapter createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
+        createVisitStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
         createVisitStepperAdapter.addFragment(new CreateVisitPurposeFragment(), "Purpose");
         createVisitStepperAdapter.addFragment(new CreateVisitLocationFragment(), "Location");
-        createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
-        createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
-        createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
-
         createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
         createVisitStepperLayout.setListener(this);
     }
 
+    public void makePrivisionVisible(String title) {
+        if (title.equals("Health") && !healthVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitHealthFragment(), "Health");
+            healthVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Education") && !educationVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitEducationFragment(), "Education");
+            educationVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Social") && !socialVisible) {
+            createVisitStepperAdapter.addFragment(new CreateVisitSocialFragment(), "Social");
+            socialVisible = true;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        }
+    }
+
+    public void makeProvisionInvisible(String title) {
+        if (title.equals("Health")) {
+            createVisitStepperAdapter.removeFragment("Health");
+            healthVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Education")) {
+            createVisitStepperAdapter.removeFragment("Education");
+            educationVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        } else if (title.equals("Social")) {
+            createVisitStepperAdapter.removeFragment("Social");
+            socialVisible = false;
+            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
+            createVisitStepperAdapter.notifyDataSetChanged();
+            return;
+        }
+    }
+
     @Override
     public void onCompleted(View completeButton) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-                @Override
-                public void onResponse(Call<Client> call, Response<Client> response) {
-                    if (response.isSuccessful()) {
-                        client = response.body();
-                        formVisitObj.setClientId(clientId);
-                        formVisitObj.setClient(client);
 
-                        Call<Visit> call1 = apiService.visitService.createVisit(formVisitObj);
-                        call1.enqueue(new Callback<Visit>() {
-                            @Override
-                            public void onResponse(Call<Visit> call, Response<Visit> response) {
-                                if (response.isSuccessful()) {
-                                    visitId = response.body().getId();
-                                    Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
-                                    onSubmitSuccess();
-                                } else {
-                                    Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit.", Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Visit> call, Throwable t) {
-                                Toast.makeText(CreateVisitStepperActivity.this, "Error in creating new visit.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        Toast.makeText(CreateVisitStepperActivity.this, "Response error finding client.", Toast.LENGTH_SHORT).show();
+        clientViewModel.getClient(clientId).subscribe(new DisposableSingleObserver<Client>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
+                formVisitObj.setClientId(clientId);
+                formVisitObj.setClient(client);
+                visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
+                        visitId = visit.getId();
+                        Log.d(TAG, "Visit creation success: " + visitId);
+                        Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
+                        onSubmitSuccess();
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Client> call, Throwable t) {
-                    Toast.makeText(CreateVisitStepperActivity.this, "Error finding client.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
 
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Toast.makeText(CreateVisitStepperActivity.this, "Response error finding client.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void onSubmitSuccess() {

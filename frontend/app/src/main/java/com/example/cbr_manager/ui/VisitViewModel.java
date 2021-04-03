@@ -31,4 +31,7 @@ public class VisitViewModel extends ViewModel {
         return visitRepository.getVisits();
     }
 
+    public Single<Visit> createVisit(Visit visit){
+        return visitRepository.createVisit(visit);
+    }
 }

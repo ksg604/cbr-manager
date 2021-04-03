@@ -25,6 +25,8 @@ import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.threeten.bp.format.FormatStyle;
+
 import java.sql.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -108,9 +110,9 @@ public class VisitDetailsFragment extends Fragment {
         visitViewModel.getVisit(visitId).subscribe(new DisposableSingleObserver<Visit>() {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
-                Timestamp datetimeCreated = visit.getDatetimeCreated();
-                Format formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-                String formattedDate = formatter.format(datetimeCreated);
+                String datetimeCreated = visit.getCreatedAt();
+                String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
+
                 setupDateTextView(formattedDate);
 
                 Client client = visit.getClient();
@@ -119,6 +121,7 @@ public class VisitDetailsFragment extends Fragment {
 
                 setupLocationTextView(visit.getLocationDropDown());
                 setupVillageNumTextView(visit.getVillageNoVisit().toString());
+                setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
                 setupHealthTextViews(visit);
                 setupEducationTextViews(visit);
                 setupSocialTextViews(visit);

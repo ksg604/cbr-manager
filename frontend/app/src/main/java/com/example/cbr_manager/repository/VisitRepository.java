@@ -1,10 +1,14 @@
 package com.example.cbr_manager.repository;
 
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.service.visit.VisitAPI;
 import com.example.cbr_manager.service.visit.VisitDao;
-
-import java.net.SocketTimeoutException;
+import com.example.cbr_manager.workmanager.visit.CreateVisitWorker;
 
 import javax.inject.Inject;
 
@@ -17,17 +21,16 @@ import io.reactivex.schedulers.Schedulers;
 public class VisitRepository {
 
     private final VisitAPI visitAPI;
-
     private final VisitDao visitDao;
-
     private final String authHeader;
-
+    private WorkManager workManager;
 
     @Inject
-    VisitRepository(VisitAPI visitAPI, VisitDao visitDao, String authHeader) {
+    VisitRepository(VisitAPI visitAPI, VisitDao visitDao, String authHeader, WorkManager workManager) {
         this.visitAPI = visitAPI;
         this.visitDao = visitDao;
         this.authHeader = authHeader;
+        this.workManager = workManager;
     }
 
     public Observable<Visit> getVisits() {
@@ -47,10 +50,30 @@ public class VisitRepository {
     }
 
     private ObservableSource<? extends Visit> handleLocalVisitsFallback(Throwable throwable) {
-        if (throwable instanceof SocketTimeoutException) {
-            return visitDao.getVisits().toObservable().flatMap(Observable::fromIterable);
-        }
-        return Observable.error(throwable);
+        return visitDao.getVisits().toObservable().flatMap(Observable::fromIterable);
     }
 
+    public Single<Visit> createVisit(Visit visit) {
+        return visitDao.SingleInsert(visit)
+                .map(aLong -> {
+                    visit.setId(aLong.intValue());
+                    return visit;
+                })
+                .doOnSuccess(this::enqueueCreateVisit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void enqueueCreateVisit(Visit visit) {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        OneTimeWorkRequest createVisitRequest =
+                new OneTimeWorkRequest.Builder(CreateVisitWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(CreateVisitWorker.buildInputData(authHeader, visit.getId()))
+                        .build();
+        workManager.enqueue(createVisitRequest);
+    }
 }

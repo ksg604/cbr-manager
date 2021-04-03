@@ -10,3 +10,5 @@ Pillow
 gunicorn
 psycopg2
 python-dotenv
+factory_boy
+Faker

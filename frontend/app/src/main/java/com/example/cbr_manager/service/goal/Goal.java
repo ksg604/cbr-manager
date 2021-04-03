@@ -34,14 +34,8 @@ public class Goal{
     @Expose
     private Integer userId;
 
-    public void setDatetimeCreated(Timestamp datetimeCreated) {
-        this.datetimeCreated = datetimeCreated;
-    }
-
     @SerializedName("client_id")
     @Expose
-    @Embedded
-    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
     private Integer clientId;
 
     @SerializedName("category")
@@ -84,6 +78,10 @@ public class Goal{
 
     public Timestamp getDatetimeCreated() {
         return datetimeCreated;
+    }
+
+    public void setDatetimeCreated(Timestamp datetimeCreated) {
+        this.datetimeCreated = datetimeCreated;
     }
 
     public Timestamp getDatetimeCompleted() {

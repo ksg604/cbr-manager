@@ -20,6 +20,9 @@ public interface ClientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Client client);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Single<Long> SingleInsert(Client client);
+
     @Delete
     void delete(Client client);
 
@@ -27,19 +30,13 @@ public interface ClientDao {
     void update(Client client);
 
     @Query("SELECT * FROM client")
-    List<Client> getClients();
-
-    @Query("SELECT * FROM client")
-    Single<List<Client>> getClientsObs();
+    Single<List<Client>> getClients();
 
     @Query("SELECT * FROM client WHERE client_id = :clientId")
-    Client getClient(int clientId);
+    Single<Client> getClient(int clientId);
 
     @Query("SELECT EXISTS (SELECT * FROM client WHERE client_id = :clientId)")
-    Boolean ifClientExist(int clientId);
-
-    @Query("SELECT * FROM client WHERE client_id = :clientId")
-    Single<Client> getClientSingle(int clientId);
+    boolean ClientExist(int clientId);
 
     @Query("DELETE FROM client")
     void clearAll();

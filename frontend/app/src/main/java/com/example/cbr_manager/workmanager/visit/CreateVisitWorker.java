@@ -12,11 +12,9 @@ import androidx.work.WorkerParameters;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.service.visit.VisitAPI;
 import com.example.cbr_manager.service.visit.VisitDao;
+import com.example.cbr_manager.utils.Helper;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedInject;
@@ -69,7 +67,7 @@ public class CreateVisitWorker extends RxWorker {
 
     @NotNull
     private Result handleReturnResult(Throwable throwable) {
-        if (throwable instanceof ConnectException || throwable instanceof SocketTimeoutException) {
+        if (Helper.isConnectionError(throwable)) {
             return Result.retry();
         }
         return Result.failure();

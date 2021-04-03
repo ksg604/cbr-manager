@@ -57,7 +57,7 @@ public class CreateClientWorker extends RxWorker {
         return clientDao.getClient(clientObjId)
                 .flatMap(client -> clientAPI.createClientSingle(authHeader, client)
                         .doOnSuccess(clientResult -> onSuccessfulCreateClient(client, clientResult)))
-                .map(visitSingle -> Result.success())
+                .map(clientSingle -> Result.success())
                 .onErrorReturn(this::handleReturnResult);
     }
 

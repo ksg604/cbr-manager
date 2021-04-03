@@ -21,7 +21,7 @@ public interface VisitAPI {
     Single<Visit> getVisitAsSingle(@Header("Authorization") String authHeader, @Path("id") int id);
 
     @POST("api/visits/")
-    Single<Visit> createVisitObs(@Header("Authorization") String authHeader, @Body Visit visit);
+    Single<Visit> createVisitSingle(@Header("Authorization") String authHeader, @Body Visit visit);
 }
 
 

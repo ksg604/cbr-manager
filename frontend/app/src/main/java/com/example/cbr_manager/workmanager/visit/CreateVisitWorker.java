@@ -54,7 +54,7 @@ public class CreateVisitWorker extends RxWorker {
         int visitObjId = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
 
         return visitDao.getVisit(visitObjId)
-                .flatMap(visit -> visitAPI.createVisitObs(authHeader, visit)
+                .flatMap(visit -> visitAPI.createVisitSingle(authHeader, visit)
                         .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
                 .map(visitSingle -> {
                     Log.d(TAG, "created Visit: " + visitSingle.getId());

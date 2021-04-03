@@ -83,8 +83,6 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
             public void onClick(View v) {
                 if (healthChip.isChecked()) {
                     ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Health");
-                } else if (!healthChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).makeProvisionInvisible("Health");
                 }
             }
         });
@@ -94,8 +92,6 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
             public void onClick(View v) {
                 if (educationChip.isChecked()) {
                     ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Education");
-                } else if (!educationChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).makeProvisionInvisible("Education");
                 }
             }
         });
@@ -105,8 +101,6 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
             public void onClick(View v) {
                 if (socialChip.isChecked()) {
                     ((CreateVisitStepperActivity) getActivity()).makePrivisionVisible("Social");
-                } else if (!socialChip.isChecked()) {
-                    ((CreateVisitStepperActivity) getActivity()).makeProvisionInvisible("Social");
                 }
             }
         });

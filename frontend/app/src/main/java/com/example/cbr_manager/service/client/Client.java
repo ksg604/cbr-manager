@@ -21,10 +21,6 @@ public class Client extends CBRTimestamp {
     @SerializedName("cbr_client_id")
     @Expose
     private String cbrClientId;
-
-    @SerializedName("risk_score")
-    @Expose
-    private Integer riskScore;
     @SerializedName("first_name")
     @Expose
     private String firstName;
@@ -156,10 +152,6 @@ public class Client extends CBRTimestamp {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setRiskScore(Integer riskScore) {
-        this.riskScore = riskScore;
     }
 
     public String getFirstName() {
@@ -390,7 +382,7 @@ public class Client extends CBRTimestamp {
         isNewClient = newClient;
     }
 
-    public Integer getRiskScore() {
+    public Integer calculateRiskScore() {
         double healthRiskLogScale = Math.pow(10, healthRisk)*1.2;
         double socialRiskLogScale = Math.pow(10, socialRisk)*1.1;
         double educationRiskLogScale = Math.pow(10, educationRisk);

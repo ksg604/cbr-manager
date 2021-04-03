@@ -62,9 +62,9 @@ public class ViewPagerAdapter extends PagerAdapter {
         location.setText(client.getLocation());
 
         TextView riskScore = view.findViewById(R.id.textScore);
-        String riskColourCode = Helper.riskToColourCode(client.getRiskScore());
+        String riskColourCode = Helper.riskToColourCode(client.calculateRiskScore());
         riskScore.setTextColor(Color.parseColor(riskColourCode));
-        riskScore.setText(Integer.toString(client.getRiskScore()));
+        riskScore.setText(Integer.toString(client.calculateRiskScore()));
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

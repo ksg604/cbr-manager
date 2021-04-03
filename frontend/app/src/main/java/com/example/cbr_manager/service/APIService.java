@@ -23,6 +23,7 @@ public class APIService {
     public AuthService authService;
     public ClientService clientService;
     public UserService userService;
+    @Deprecated
     public VisitService visitService;
     public AlertService alertService;
     public ReferralService referralService;

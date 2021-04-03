@@ -146,7 +146,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         Goal goal;
         for (int i = 0; i < goalList.size(); i++) {
             goal = goalList.get(i);
-            Integer id = goal.getClient().getId();
+            Integer id = goal.getClientId();
             String type = goal.getCategory().trim().toLowerCase();
             String status = goal.getStatus().trim().toLowerCase();
             if (id.equals(clientId) && type.equals(GOAL_CATEGORY_HEALTH) && (status.equals(GOAL_CREATED_KEY) || status.equals(GOAL_ONGOING_KEY))) {
@@ -160,7 +160,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         Goal goal;
         for (int i = 0; i < goalList.size(); i++) {
             goal = goalList.get(i);
-            Integer id = goal.getClient().getId();
+            Integer id = goal.getClientId();
             String type = goal.getCategory().trim().toLowerCase();
             String status = goal.getStatus().trim().toLowerCase();
             if (id.equals(clientId) && type.equals(GOAL_CATEGORY_HEALTH) && status.equals(GOAL_CONCLUDED_KEY)) {

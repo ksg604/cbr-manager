@@ -13,10 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItem;
 import com.example.cbr_manager.utils.Helper;
 import com.example.cbr_manager.service.client.Client;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> implements Filterable {
@@ -24,6 +27,10 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
     private List<Client> clients;
     private List<Client> filteredClientList;
     private OnItemListener onItemListener;
+
+    private String genderTag = "";
+    private String locationTag = "";
+    private String disabilityTag = "";
 
     public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
         this.clients = clientList;
@@ -62,6 +69,32 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         return filteredClientList.size();
     }
 
+    public Filter getFilterWithTags(String genderTag, String disabilityTag, String locationTag){
+        this.genderTag = genderTag;
+        this.locationTag = locationTag;
+        this.disabilityTag = disabilityTag;
+        return filter;
+    }
+
+    private boolean passTagFilterTest(Client client) {
+        boolean genderResult, locationResult, disabilityResult;
+        if(genderTag.equals("any")){
+            genderResult = true;
+        } else{
+            genderResult = client.getGender().toLowerCase().trim().contains(genderTag);
+        }
+        if(locationTag.equals("any")){
+            locationResult = true;
+        } else {
+            locationResult = client.getLocation().toLowerCase().trim().contains(locationTag);
+        }
+        if(disabilityTag.equals("any")){
+            disabilityResult = true;
+        } else{
+            disabilityResult = client.getDisability().toLowerCase().trim().contains(disabilityTag);
+        }
+        return genderResult&locationResult&disabilityResult;
+    }
 
 
     @Override
@@ -73,20 +106,22 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         void onItemClick(int position);
     }
 
-
-
     public Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String searchString = constraint.toString().toLowerCase().trim();
 
+            ArrayList<Client> tempFilteredList = new ArrayList<>();
             if (searchString.isEmpty()) {
-                filteredClientList = clients;
-            } else {
-                ArrayList<Client> tempFilteredList = new ArrayList<>();
-
                 for (Client client : clients) {
-                    if (client.getFullName().toLowerCase().contains(searchString)) {
+                    if (passTagFilterTest(client)) {
+                        tempFilteredList.add(client);
+                    }
+                }
+                filteredClientList = tempFilteredList;
+            } else {
+                for (Client client : clients) {
+                    if ((client.getFullName().toLowerCase().contains(searchString)|client.getCbrClientId().toLowerCase().contains(searchString)|client.getId().toString().contains(searchString))&passTagFilterTest(client)) {
 //                        Log.d("tag", client.getFullName());
                         tempFilteredList.add(client);
                     }

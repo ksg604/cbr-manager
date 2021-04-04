@@ -94,7 +94,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
                 } else {
                     clientList.add(client);
                 }
-                
+
             }
 
             @Override

@@ -135,7 +135,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
                         finish();
                     } else {
                         Toast.makeText(BaselineSurveyStepperActivity.this, "Response error.", Toast.LENGTH_SHORT).show();
-                        Log.d("Response", response.errorBody().toString());
                     }
                 }
 
@@ -153,7 +152,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
             @Override
             public void onResponse(Call<Client> call, Response<Client> response) {
                 Client client = response.body();
-                Log.d("callbacktag: ", String.valueOf(client.isBaselineSurveyTaken()));
             }
 
             @Override

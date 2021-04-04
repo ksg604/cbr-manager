@@ -87,7 +87,12 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
         clientViewModel.getAllClients().subscribe(new DisposableObserver<Client>() {
             @Override
             public void onNext(@NonNull Client client) {
-                clientList.add(client);
+
+                int code = ((ClientSelectorActivity) getActivity()).getCode();
+                if ( code == NEW_BASELINE_CODE && !client.isBaselineSurveyTaken() ) {
+                    clientList.add(client);
+                }
+                Log.d("hey", String.valueOf(client.isBaselineSurveyTaken()));
                 Log.d(TAG, "onNext: ");
             }
 

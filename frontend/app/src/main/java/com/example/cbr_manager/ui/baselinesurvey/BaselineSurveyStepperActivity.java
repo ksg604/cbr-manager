@@ -25,7 +25,7 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
 
-import io.reactivex.observers.DisposableSingleObserver;
+//import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,8 +53,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
         baseLineSurveyStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         getClientAge(baseLineSurveyStepperLayout);
     }
@@ -81,6 +79,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         }
     }
 
+    /*
     private void getUserCreator() {
         authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
             @Override
@@ -92,7 +91,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
             }
         });
-    }
+    }*/
 
     private StepAdapter setupStepperAdapterWithFragments(int clientAge) {
         GenericStepperAdapter baselineStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);
@@ -113,6 +112,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         return baselineStepperAdapter;
     }
 
+
     @Override
     public void onCompleted(View completeButton) {
         submitSurvey();
@@ -120,12 +120,17 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
 
     private void submitSurvey() {
         if (apiService.isAuthenticated()) {
+
             formBaselineSurveyObj.setUserCreator(userCreatorId);
             formBaselineSurveyObj.setClient(clientId);
             apiService.baselineSurveyService.createBaselineSurvey(formBaselineSurveyObj).enqueue(new Callback<BaselineSurvey>() {
                 @Override
                 public void onResponse(Call<BaselineSurvey> call, Response<BaselineSurvey> response) {
                     if (response.isSuccessful()) {
+
+                        client.setBaselineSurveyTaken(true);
+                        modifyClientInfo(client);
+
                         Toast.makeText(BaselineSurveyStepperActivity.this, "Survey successfully submitted!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
@@ -140,6 +145,22 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
                 }
             });
         }
+    }
+
+    private void modifyClientInfo(Client client) {
+
+        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+                Log.d("callbacktag: ", String.valueOf(client.isBaselineSurveyTaken()));
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

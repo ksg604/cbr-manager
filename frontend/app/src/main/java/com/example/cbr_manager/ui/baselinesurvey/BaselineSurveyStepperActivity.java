@@ -78,7 +78,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
             });
         }
     }
-    
+
     private void getUserCreator() {
         authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
             @Override
@@ -120,6 +120,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     private void submitSurvey() {
         if (apiService.isAuthenticated()) {
 
+            getUserCreator();
             formBaselineSurveyObj.setUserCreator(userCreatorId);
             formBaselineSurveyObj.setClient(clientId);
             apiService.baselineSurveyService.createBaselineSurvey(formBaselineSurveyObj).enqueue(new Callback<BaselineSurvey>() {

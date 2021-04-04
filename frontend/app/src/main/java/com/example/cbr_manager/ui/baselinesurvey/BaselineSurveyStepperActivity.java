@@ -25,7 +25,7 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
 
-//import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,8 +78,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
             });
         }
     }
-
-    /*
+    
     private void getUserCreator() {
         authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
             @Override
@@ -91,7 +90,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
             }
         });
-    }*/
+    }
 
     private StepAdapter setupStepperAdapterWithFragments(int clientAge) {
         GenericStepperAdapter baselineStepperAdapter = new GenericStepperAdapter(getSupportFragmentManager(), this);

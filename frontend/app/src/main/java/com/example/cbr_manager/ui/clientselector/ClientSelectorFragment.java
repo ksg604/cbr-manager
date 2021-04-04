@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -87,13 +88,13 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
         clientViewModel.getAllClients().subscribe(new DisposableObserver<Client>() {
             @Override
             public void onNext(@NonNull Client client) {
-
                 int code = ((ClientSelectorActivity) getActivity()).getCode();
-                if ( code == NEW_BASELINE_CODE && !client.isBaselineSurveyTaken() ) {
+                if ( code == NEW_BASELINE_CODE && client.isBaselineSurveyTaken() ) {
+                    return;
+                } else {
                     clientList.add(client);
                 }
-                Log.d("hey", String.valueOf(client.isBaselineSurveyTaken()));
-                Log.d(TAG, "onNext: ");
+                
             }
 
             @Override
@@ -130,6 +131,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
             baselineIntent.putExtra("CLIENT_ID", clientId);
             startActivity(baselineIntent);
             getActivity().finish();
+
         }
     }
 }

@@ -111,7 +111,7 @@ public class VisitRepository {
         OneTimeWorkRequest createVisitRequest =
                 new OneTimeWorkRequest.Builder(ModifyVisitWorker.class)
                         .setConstraints(constraints)
-                        .setInputData(CreateVisitWorker.buildInputData(authHeader, visit.getId()))
+                        .setInputData(ModifyVisitWorker.buildInputData(authHeader, visit.getId()))
                         .build();
         workManager.enqueue(createVisitRequest);
     }

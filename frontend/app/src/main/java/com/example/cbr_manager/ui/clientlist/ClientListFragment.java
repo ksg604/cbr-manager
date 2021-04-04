@@ -116,24 +116,20 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     private void setUpSpinnerListener(Spinner spinner){
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String tag = adapterView.getItemAtPosition(i).toString().toLowerCase().trim();
-                if(adapterView == genderSpinner){
+            public void onItemSelected(AdapterView<?> spinner, View view, int pos, long unused) {
+                String tag = spinner.getItemAtPosition(pos).toString().toLowerCase().trim();
+                if(spinner == genderSpinner){
                     genderTag = tag;
-                    Log.d("genderSpinner",tag);
-                } else if(adapterView == disabilitySpinner){
+                } else if(spinner == disabilitySpinner){
                     disabilityTag = tag;
-                    Log.d("disabilitySpinner",tag);
-                } else if(adapterView == locationSpinner){
+                } else if(spinner == locationSpinner){
                     locationTag = tag;
-                    Log.d("locationSpinner",tag);
                 }
-
                 CharSequence newText = clientSearch.getQuery();
                 clientListAdapter.getFilterWithTags(genderTag,disabilityTag,locationTag).filter(newText);
             }
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView<?> spinner) {
             }
         });
     }

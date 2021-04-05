@@ -28,15 +28,14 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageButton
                         android:id="@+id/newClientButton"
@@ -60,11 +59,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/dashboardCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView2"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <LinearLayout
@@ -77,8 +77,6 @@
                         android:id="@+id/dashboardButton"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
                         android:background="#FFF"
                         android:scaleType="fitCenter"
                         app:layout_constraintStart_toStartOf="parent"
@@ -101,9 +99,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/cardView2"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dashboardCardView"
+                app:cardElevation="10dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -147,6 +145,7 @@
 <!--            </androidx.cardview.widget.CardView>-->
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/newVisitCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
@@ -185,11 +184,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/newReferralCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/cardView3"
+                app:layout_constraintTop_toBottomOf="@+id/newVisitCardView"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <LinearLayout
@@ -227,8 +227,8 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/newReferralCardView"
+                app:layout_constraintRight_toRightOf="parent">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -263,11 +263,9 @@
                 android:id="@+id/baselineSurveyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="56dp"
-                android:layout_marginLeft="56dp"
                 android:text="Baseline Placeholder"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

@@ -6,40 +6,21 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
-import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
 import com.example.cbr_manager.ui.ReferralViewModel;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
-import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitActivity;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
-import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.List;
-
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.

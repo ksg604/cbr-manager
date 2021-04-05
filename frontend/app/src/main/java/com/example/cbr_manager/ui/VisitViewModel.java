@@ -1,15 +1,18 @@
 package com.example.cbr_manager.ui;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.example.cbr_manager.repository.VisitRepository;
 import com.example.cbr_manager.service.visit.Visit;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.Observable;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 @HiltViewModel
@@ -23,15 +26,19 @@ public class VisitViewModel extends ViewModel {
         this.visitRepository = visitRepository;
     }
 
-    public Single<Visit> getVisit(int id) {
-        return visitRepository.getVisit(id);
+    public LiveData<Visit> getVisitAsLiveData(int id){
+        return visitRepository.getVisitAsLiveData(id);
     }
 
-    public Observable<Visit> getVisits() {
-        return visitRepository.getVisits();
+    public LiveData<List<Visit>> getVisitsAsLiveData() {
+        return visitRepository.getVisitsAsLiveData();
     }
 
-    public Single<Visit> createVisit(Visit visit){
+    public Single<Visit> createVisit(Visit visit) {
         return visitRepository.createVisit(visit);
+    }
+
+    public Completable updateVisit(Visit visit) {
+        return visitRepository.updateVisit(visit);
     }
 }

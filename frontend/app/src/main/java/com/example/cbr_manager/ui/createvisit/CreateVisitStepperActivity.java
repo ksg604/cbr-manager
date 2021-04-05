@@ -14,6 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
@@ -27,12 +32,12 @@ import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
-
-import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.observers.DisposableSingleObserver;
 
 @AndroidEntryPoint
 public class CreateVisitStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
@@ -203,7 +208,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
                         visitId = visit.getId();
-                        Log.d(TAG, "Visit creation success: " + visitId);
+                        Log.d(TAG, "onSuccess Visit created: " + visitId);
                         Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
                         onSubmitSuccess();
                     }

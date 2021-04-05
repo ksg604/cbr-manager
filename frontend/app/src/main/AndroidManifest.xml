@@ -32,10 +32,6 @@
             android:label=".VisitDetailsActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.createvisit.CreateVisitActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.visits.VisitsActivity" />
-        <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/Theme.Cbr_manager.NoActionBar" />

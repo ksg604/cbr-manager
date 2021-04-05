@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,15 +27,18 @@ import com.stepstone.stepper.VerificationError;
 
 import java.io.File;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class CreateClientStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
     public Client formClientObj;
     public File photoFile;
+    public Goal healthGoal, educationGoal, socialGoal;
     private StepperLayout CreateClientStepperLayout;
     private APIService apiService = APIService.getInstance();
 
@@ -45,6 +49,9 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         formClientObj = new Client();
+        healthGoal = new Goal();
+        educationGoal = new Goal();
+        socialGoal = new Goal();
 
         setTitle("Create a Client");
 
@@ -64,6 +71,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         createClientStepperAdapter.addFragment(new HealthRiskFragment(), "Health Risk");
         createClientStepperAdapter.addFragment(new EducationRiskFragment(), "Education Risk");
         createClientStepperAdapter.addFragment(new SocialRiskFragment(), "Social Risk");
+        createClientStepperAdapter.addFragment(new GoalFragment(), "Goals");
 
         return createClientStepperAdapter;
     }
@@ -73,6 +81,27 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
         startActivity(intent);
         this.finish();
+    }
+
+    private void submitGoalSurvey(Goal goal) {
+        Call<Goal> call = apiService.goalService.createGoal(goal);
+        call.enqueue(new Callback<Goal>() {
+            @Override
+            public void onResponse(Call<Goal> call, Response<Goal> response) {
+                if (response.isSuccessful()) {
+                    Goal goal = response.body();
+                } else {
+                    Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Goal> call, Throwable t) {
+                Snackbar.make( CreateClientStepperLayout, "Failed to create the goal. Please try again", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     private void submitSurvey() {
@@ -97,6 +126,19 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
                             }
                         });
+                    }
+
+                    if(healthGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                        healthGoal.setClientId(client.getId());
+                        submitGoalSurvey(healthGoal);
+                    }
+                    if(educationGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                        educationGoal.setClientId(client.getId());
+                        submitGoalSurvey(educationGoal);
+                    }
+                    if(socialGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                        socialGoal.setClientId(client.getId());
+                        submitGoalSurvey(socialGoal);
                     }
 
                     onSubmitSuccess(client);

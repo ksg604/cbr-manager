@@ -27,7 +27,7 @@ public class HealthRiskFragment extends Fragment implements Step {
     private Client client;
     RadioGroup riskRadioGroup;
     EditText healthRequireEditText;
-    final Integer CRITICAL_RISK = 5;
+    final Integer CRITICAL_RISK = 4;
     final Integer HIGH_RISK = 3;
     final Integer MEDIUM_RISK = 2;
     final Integer LOW_RISK = 1;

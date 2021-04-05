@@ -19,6 +19,8 @@ import org.threeten.bp.format.FormatStyle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.security.Timestamp;
 import java.text.DateFormat;
@@ -50,9 +52,9 @@ public class Helper {
     }
 
     public static String riskToColourCode(int riskScore) {
-        if (riskScore >= 10) {
+        if (riskScore >= 10000) {
             return "#b02323";
-        } else if (riskScore < 10 && riskScore >= 5) {
+        } else if (riskScore >= 330) {
             return "#c45404";
         } else {
             return "#c49704";
@@ -93,5 +95,9 @@ public class Helper {
         ZoneId zoneId = ZoneId.systemDefault();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(formatStyle);
         return instant.atZone(zoneId).format(dateTimeFormatter);
+    }
+
+    public static boolean isConnectionError(Throwable throwable){
+        return throwable instanceof SocketTimeoutException || throwable instanceof ConnectException;
     }
 }

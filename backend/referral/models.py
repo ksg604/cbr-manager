@@ -8,7 +8,7 @@ from referral.text_choices import InjuryLocation, UsageExperience, Condition, Re
 
 
 class Referral(models.Model):
-    user_creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     limit = models.Q(app_label="referral")

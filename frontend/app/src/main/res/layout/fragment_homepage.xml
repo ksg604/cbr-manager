@@ -22,15 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo" />
-
             <ImageButton
                 android:id="@+id/syncButton"
                 android:layout_width="150dp"
@@ -39,9 +30,10 @@
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:scaleType="fitCenter"
+                android:background="#FFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13"
-                app:srcCompat="@drawable/ic_sync" />
+                app:srcCompat="@drawable/ic_sync_new" />
 
             <ImageButton
                 android:id="@+id/newReferralButton"
@@ -52,32 +44,35 @@
                 android:layout_marginRight="30dp"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:background="#FFF"
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
-                app:srcCompat="@drawable/ic_new_referral" />
+                app:srcCompat="@drawable/ic_referral1" />
 
             <ImageButton
                 android:id="@+id/newVisitButton"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginRight="28dp"
+                android:background="#FFF"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logo"
-                app:srcCompat="@drawable/ic_visit" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_calendar_blue" />
 
             <ImageButton
                 android:id="@+id/newClientButton"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="32dp"
+                android:background="#FFF"
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logo"
-                app:srcCompat="@drawable/ic_client_add" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_add_user" />
 
             <ImageButton
                 android:id="@+id/dashboardButton"
@@ -87,9 +82,10 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="25dp"
                 android:scaleType="fitCenter"
+                android:background="#FFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView8"
-                app:srcCompat="@drawable/ic_dashboard" />
+                app:srcCompat="@drawable/ic_dashboard1" />
 
             <ImageButton
                 android:id="@+id/clientListButton"
@@ -101,7 +97,8 @@
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"
-                app:srcCompat="@drawable/ic_client_list"
+                android:background="#FFF"
+                app:srcCompat="@drawable/ic_contact_list_blue"
                 android:contentDescription="TODO" />
 
             <TextView

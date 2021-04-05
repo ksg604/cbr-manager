@@ -58,7 +58,7 @@ if __name__ == '__main__':
     create_default_super_user("user1", "user1@email.com", "password123", "John", "Doe")
     create_default_super_user("user2", "user2@email.com", "password123", "Jane", "Doe")
 
-    clients = create_random_clients(4)
+    clients = create_random_clients(2)
     for c in clients:
         for _ in range(2):
             visit = VisitFactory.create(client=c)

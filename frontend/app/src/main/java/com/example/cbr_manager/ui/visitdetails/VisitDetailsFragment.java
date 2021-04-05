@@ -107,31 +107,22 @@ public class VisitDetailsFragment extends Fragment {
     }
 
     private void getVisitInfo(int visitId) {
-        visitViewModel.getVisit(visitId).subscribe(new DisposableSingleObserver<Visit>() {
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
-                String datetimeCreated = visit.getCreatedAt();
-                String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
+        visitViewModel.getVisitAsLiveData(visitId).observe(getViewLifecycleOwner(), visit -> {
+            String datetimeCreated = visit.getCreatedAt();
+            String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
 
-                setupDateTextView(formattedDate);
+            setupDateTextView(formattedDate);
 
-                Client client = visit.getClient();
-                setupNameTextView(client.getFullName());
-                setupImageViews(client.getPhotoURL());
+            Client client = visit.getClient();
+            setupNameTextView(client.getFullName());
+            setupImageViews(client.getPhotoURL());
 
-                setupLocationTextView(visit.getLocationDropDown());
-                setupVillageNumTextView(visit.getVillageNoVisit().toString());
-                setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
-                setupHealthTextViews(visit);
-                setupEducationTextViews(visit);
-                setupSocialTextViews(visit);
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Snackbar.make(getView(), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+            setupLocationTextView(visit.getLocationDropDown());
+            setupVillageNumTextView(visit.getVillageNoVisit().toString());
+            setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
+            setupHealthTextViews(visit);
+            setupEducationTextViews(visit);
+            setupSocialTextViews(visit);
         });
     }
 

@@ -22,16 +22,16 @@ import dagger.assisted.AssistedInject;
 import io.reactivex.Single;
 
 @HiltWorker
-public class CreateVisitWorker extends RxWorker {
+public class ModifyVisitWorker extends RxWorker {
 
     public static final String KEY_AUTH_HEADER = "KEY_AUTH_HEADER";
     public static final String KEY_VISIT_OBJ_ID = "KEY_VISIT_OBJ_ID";
-    private static final String TAG = CreateVisitWorker.class.getSimpleName();
+    private static final String TAG = ModifyVisitWorker.class.getSimpleName();
     private final VisitAPI visitAPI;
     private final VisitDao visitDao;
 
     @AssistedInject
-    public CreateVisitWorker(
+    public ModifyVisitWorker(
             @Assisted @NonNull Context context,
             @Assisted @NonNull WorkerParameters params, VisitAPI visitAPI, VisitDao visitDao) {
         super(context, params);
@@ -42,8 +42,8 @@ public class CreateVisitWorker extends RxWorker {
 
     public static Data buildInputData(String authHeader, int visitId) {
         Data.Builder builder = new Data.Builder();
-        builder.putString(CreateVisitWorker.KEY_AUTH_HEADER, authHeader);
-        builder.putInt(CreateVisitWorker.KEY_VISIT_OBJ_ID, visitId);
+        builder.putString(ModifyVisitWorker.KEY_AUTH_HEADER, authHeader);
+        builder.putInt(ModifyVisitWorker.KEY_VISIT_OBJ_ID, visitId);
         return builder.build();
     }
 
@@ -54,19 +54,17 @@ public class CreateVisitWorker extends RxWorker {
         int visitObjId = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
 
         return visitDao.getVisitAsSingle(visitObjId)
-                .flatMap(visit -> visitAPI.createVisitSingle(authHeader, visit)
+                .flatMap(visit -> visitAPI.modifyVisitAsSingle(authHeader, visitObjId, visit)
                         .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
                 .map(visitSingle -> {
-                    Log.d(TAG, "created Visit: " + visitSingle.getId());
+                    Log.d(TAG, "modified Visit: " + visitSingle.getId());
                     return Result.success();
                 })
                 .onErrorReturn(this::handleReturnResult);
     }
 
     private void onSuccessfulCreateVisit(Visit visit, Visit visitResult) {
-        visitDao.delete(visit);
-        visit.setId(visitResult.getId());
-        visitDao.insert(visit);
+        visitDao.update(visit);
     }
 
     @NotNull

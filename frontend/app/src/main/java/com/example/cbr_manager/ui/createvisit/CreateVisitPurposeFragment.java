@@ -121,17 +121,9 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         cbrWorkerName = view.findViewById(R.id.fragmentPreambleCBRNameEditText);
         dateEditText = view.findViewById(R.id.fragmentPreambleEditTextDate);
 
-        clientViewModel.getClient(clientId).subscribe(new DisposableSingleObserver<Client>() {
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
-                clientNameEditText.setText(client.getFullName());
-                clientNameEditText.setEnabled(false);
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
-            }
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
+            clientNameEditText.setText(client.getFullName());
+            clientNameEditText.setEnabled(false);
         });
 
         authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {

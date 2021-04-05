@@ -9,7 +9,6 @@ import androidx.work.WorkManager;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
-import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.workmanager.client.CreateClientWorker;
 import com.example.cbr_manager.workmanager.client.ModifyClientWorker;
 import com.example.cbr_manager.workmanager.client.UploadPhotoWorker;
@@ -21,8 +20,6 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;

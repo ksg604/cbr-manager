@@ -84,23 +84,9 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     }
 
     private void fetchClientsToList(List<Client> clientList) {
-        clientViewModel.getAllClients().subscribe(new DisposableObserver<Client>() {
-            @Override
-            public void onNext(@NonNull Client client) {
-                clientList.add(client);
-                Log.d(TAG, "onNext: ");
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "onError: ");
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: ");
-                clientListAdapter.notifyDataSetChanged();
-            }
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
+            clientList.addAll(clientList1);
+            clientListAdapter.notifyDataSetChanged();
         });
     }
 

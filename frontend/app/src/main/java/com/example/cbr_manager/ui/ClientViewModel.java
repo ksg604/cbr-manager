@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @HiltViewModel

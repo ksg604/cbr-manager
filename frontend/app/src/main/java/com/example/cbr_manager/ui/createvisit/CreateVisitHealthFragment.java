@@ -66,8 +66,6 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     TextView currentGoalTextView;
     TextView currentGoalStatusTextView;
     private List<Goal> goalList = new ArrayList<>();
-    private final String GOAL_CREATED_KEY = "created";
-    private final String GOAL_ONGOING_KEY = "ongoing";
     private final String GOAL_CONCLUDED_KEY = "concluded";
     private final String GOAL_CATEGORY_HEALTH = "health";
     private APIService apiService = APIService.getInstance();
@@ -162,6 +160,8 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
             Integer id = goal.getClientId();
             String type = goal.getCategory().trim().toLowerCase();
             String status = goal.getStatus().trim().toLowerCase();
+            String GOAL_CREATED_KEY = "created";
+            String GOAL_ONGOING_KEY = "ongoing";
             if (id.equals(clientId) && type.equals(GOAL_CATEGORY_HEALTH) && (status.equals(GOAL_CREATED_KEY) || status.equals(GOAL_ONGOING_KEY))) {
                 return goal;
             }

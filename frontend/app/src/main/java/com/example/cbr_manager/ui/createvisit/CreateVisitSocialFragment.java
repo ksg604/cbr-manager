@@ -55,8 +55,6 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     private View view;
     private Visit visit;
     private List<Goal> goalList = new ArrayList<>();
-    private final String GOAL_CREATED_KEY = "created";
-    private final String GOAL_ONGOING_KEY = "ongoing";
     private final String GOAL_CONCLUDED_KEY = "concluded";
     private final String GOAL_CATEGORY_SOCIAL = "social";
     private APIService apiService = APIService.getInstance();
@@ -149,6 +147,8 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
             Integer id = goal.getClientId();
             String type = goal.getCategory().trim().toLowerCase();
             String status = goal.getStatus().trim().toLowerCase();
+            String GOAL_CREATED_KEY = "created";
+            String GOAL_ONGOING_KEY = "ongoing";
             if (id.equals(clientId) && type.equals(GOAL_CATEGORY_SOCIAL) && (status.equals(GOAL_CREATED_KEY) || status.equals(GOAL_ONGOING_KEY))) {
                 return goal;
             }

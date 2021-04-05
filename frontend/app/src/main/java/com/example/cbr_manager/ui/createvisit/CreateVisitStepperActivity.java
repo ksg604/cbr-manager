@@ -121,9 +121,32 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     @Override
     public void onCompleted(View completeButton) {
-        clientViewModel.getClient(clientId).observe( this, client1 -> {
+        if (healthGoalCreated) {
+            createNewGoals(healthGoalObj);
+        }
+
+        if (prevHealthGoalObj != null) {
+            modifyPreviousGoal(prevHealthGoalObj);
+        }
+
+        if (educationGoalCreated) {
+            createNewGoals(educationGoalObj);
+        }
+
+        if (prevEducationGoalObj != null) {
+            modifyPreviousGoal(prevEducationGoalObj);
+        }
+
+        if (socialGoalCreated) {
+            createNewGoals(socialGoalObj);
+        }
+
+        if (prevSocialGoalObj != null) {
+            modifyPreviousGoal(prevSocialGoalObj);
+        }
+        clientViewModel.getClient(clientId).observe( this, liveClient -> {
             formVisitObj.setClientId(clientId);
-            formVisitObj.setClient(client);
+            formVisitObj.setClient(liveClient);
             visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
                 @SuppressLint("LongLogTag")
                 @Override

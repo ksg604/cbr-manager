@@ -47,6 +47,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     TextInputLayout encouragementInputLayout;
     TextInputLayout conclusionInputLayout;
     TextInputLayout newGoalInput;
+    TextInputLayout newGoalDescriptionInput;
     RadioGroup goalMetRadioGroup;
     TextView currentGoalTextView;
     TextView currentGoalStatusTextView;
@@ -125,6 +126,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
                             goalMetRadioGroup.setVisibility(GONE);
                             goalMetTextView.setVisibility(GONE);
                             newGoalInput.setVisibility(View.VISIBLE);
+                            newGoalDescriptionInput.setVisibility(View.VISIBLE);
                             concludedOrNotFound = true;
                         }
                     }
@@ -176,12 +178,15 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
                 if (checkedId == R.id.socialProvisionConcludedRadioButton) {
                     conclusionInputLayout.setVisibility(View.VISIBLE);
                     newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.socialProvisionCancelledRadioButton) {
                     newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
                     conclusionInputLayout.setVisibility(GONE);
                 } else {
                     conclusionInputLayout.setVisibility(GONE);
                     newGoalInput.setVisibility(GONE);
+                    newGoalDescriptionInput.setVisibility(GONE);
                 }
             }
         });
@@ -222,6 +227,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
         encouragementInputLayout = view.findViewById(R.id.socialEncouragementInputLayout);
         conclusionInputLayout = view.findViewById(R.id.socialConclusionInputLayout);
         newGoalInput = view.findViewById(R.id.socialNewGoalInputLayout);
+        newGoalDescriptionInput = view.findViewById(R.id.socialNewGoalDescriptionInputLayout);
     }
 
     @Nullable
@@ -249,6 +255,13 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
                 socialGoal.setCategory(SOCIAL_KEY);
                 socialGoal.setTitle(newGoalInput.getEditText().getText().toString());
                 socialGoal.setStatus(STATUS_ONGOING_KEY);
+                String description = newGoalDescriptionInput.getEditText().getText().toString();
+
+                if (description.isEmpty()) {
+                    socialGoal.setDescription("No description listed.");
+                } else {
+                    socialGoal.setDescription(description);
+                }
                 ((CreateVisitStepperActivity) getActivity()).socialGoalCreated = true;
             } else {
                 ((CreateVisitStepperActivity) getActivity()).socialGoalCreated = false;

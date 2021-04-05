@@ -133,28 +133,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         }
     }
 
-    public void makeProvisionInvisible(String title) {
-        if (title.equals("Health")) {
-            createVisitStepperAdapter.removeFragment("Health");
-            healthVisible = false;
-            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-            createVisitStepperAdapter.notifyDataSetChanged();
-            return;
-        } else if (title.equals("Education")) {
-            createVisitStepperAdapter.removeFragment("Education");
-            educationVisible = false;
-            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-            createVisitStepperAdapter.notifyDataSetChanged();
-            return;
-        } else if (title.equals("Social")) {
-            createVisitStepperAdapter.removeFragment("Social");
-            socialVisible = false;
-            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-            createVisitStepperAdapter.notifyDataSetChanged();
-            return;
-        }
-    }
-
     private void modifyPreviousGoal(Goal goal) {
         if (apiService.isAuthenticated()) {
             apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
@@ -232,7 +210,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     private void createNewGoals(Goal goal) {
         goal.setClientId(clientId);
         goal.setUserId(userCreatorId);
-        goal.setDescription("j");
         apiService.goalService.createGoal(goal).enqueue(new Callback<Goal>() {
             @Override
             public void onResponse(Call<Goal> call, Response<Goal> response) {

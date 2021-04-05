@@ -43,6 +43,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     TextInputLayout encouragementInput;
     TextInputLayout conclusionInput;
     TextInputLayout newGoalInput;
+    TextInputLayout newGoalDescriptionInput;
     Chip adviceChip;
     Chip advocacyChip;
     Chip referralChip;
@@ -130,6 +131,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
                             goalsMetRadioGroup.setVisibility(GONE);
                             goalsMetTextView.setVisibility(GONE);
                             newGoalInput.setVisibility(View.VISIBLE);
+                            newGoalDescriptionInput.setVisibility(View.VISIBLE);
                             concludedOrNotFound = true;
                         }
                     }
@@ -181,11 +183,14 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
                 if (checkedId == R.id.educationProvisionConcludedRadioButton) {
                     conclusionInput.setVisibility(View.VISIBLE);
                     newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.educationProvisionCancelledRadioButton) {
                     newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
                     conclusionInput.setVisibility(GONE);
                 } else {
                     conclusionInput.setVisibility(GONE);
+                    newGoalDescriptionInput.setVisibility(GONE);
                     newGoalInput.setVisibility(GONE);
                 }
             }
@@ -220,6 +225,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         encouragementInput = view.findViewById(R.id.educationEncouragementInputLayout);
         conclusionInput = view.findViewById(R.id.educationConclusionInputLayout);
         newGoalInput = view.findViewById(R.id.educationNewGoalInputLayout);
+        newGoalDescriptionInput = view.findViewById(R.id.educationNewGoalDescriptionInputLayout);
     }
 
     @Nullable
@@ -247,6 +253,13 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
                 educationGoal.setCategory(EDUCATION_KEY);
                 educationGoal.setTitle(newGoalInput.getEditText().getText().toString());
                 educationGoal.setStatus(STATUS_ONGOING_KEY);
+                String description = newGoalDescriptionInput.getEditText().getText().toString();
+
+                if (description.isEmpty()) {
+                    educationGoal.setDescription("No description listed.");
+                } else {
+                    educationGoal.setDescription(description);
+                }
                 ((CreateVisitStepperActivity) getActivity()).educationGoalCreated = true;
             } else {
                 ((CreateVisitStepperActivity) getActivity()).educationGoalCreated = false;

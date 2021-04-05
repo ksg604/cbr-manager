@@ -52,6 +52,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     TextInputLayout encouragementInput;
     TextInputLayout conclusionInput;
     TextInputLayout newGoalInput;
+    TextInputLayout newGoalDescriptionInput;
     TextView goalMetTextView;
     Chip wheelchairChip;
     Chip prostheticChip;
@@ -136,6 +137,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                             goalOutcomeRadioGroup.setVisibility(GONE);
                             goalMetTextView.setVisibility(GONE);
                             newGoalInput.setVisibility(View.VISIBLE);
+                            newGoalDescriptionInput.setVisibility(View.VISIBLE);
                             concludedOrNotFound = true;
                         }
                     } else {
@@ -189,11 +191,14 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                 if (checkedId == R.id.concludedHPRadioButton) {
                     conclusionInput.setVisibility(View.VISIBLE);
                     newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.cancelledHPRadioButton) {
                     newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
                     conclusionInput.setVisibility(GONE);
                 } else {
                     conclusionInput.setVisibility(GONE);
+                    newGoalDescriptionInput.setVisibility(GONE);
                     newGoalInput.setVisibility(GONE);
                 }
             }
@@ -237,6 +242,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         encouragementInput = view.findViewById(R.id.healthEncouragementInputLayout);
         conclusionInput = view.findViewById(R.id.healthGoalConclusionInputLayout);
         newGoalInput = view.findViewById(R.id.healthNewGoalInputLayout);
+        newGoalDescriptionInput = view.findViewById(R.id.healthNewGoalDescriptionInputLayout);
     }
 
     private void initializeChips(View view) {
@@ -286,6 +292,14 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
                 healthGoal.setCategory(HEALTH_KEY);
                 healthGoal.setTitle(newGoalInput.getEditText().getText().toString());
                 healthGoal.setStatus(STATUS_ONGOING_KEY);
+                String description = newGoalDescriptionInput.getEditText().getText().toString();
+
+                if (description.isEmpty()) {
+                    healthGoal.setDescription("No description listed.");
+                } else {
+                    healthGoal.setDescription(description);
+                }
+
                 ((CreateVisitStepperActivity) getActivity()).healthGoalCreated = true;
             } else {
                 ((CreateVisitStepperActivity) getActivity()).healthGoalCreated = false;

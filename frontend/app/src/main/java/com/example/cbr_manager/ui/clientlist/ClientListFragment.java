@@ -20,22 +20,27 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
 
     List<Client> clientList = new ArrayList<>();
@@ -43,6 +48,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     private ClientListRecyclerItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager clientListLayoutManager;
     private APIService apiService = APIService.getInstance();
+    private ClientViewModel clientViewModel;
 
     private Spinner genderSpinner;
     private Spinner locationSpinner;
@@ -64,6 +70,8 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         setUpToolBar();
 
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
+
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
@@ -157,23 +165,10 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     }
 
     public void fetchClientsToList(List<Client> clientList) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
-                @Override
-                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
-                    if (response.isSuccessful()) {
-                        List<Client> clients = response.body();
-                        clientList.addAll(clients);
-                    }
-                    clientListAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<List<Client>> call, Throwable t) {
-
-                }
-            });
-        }
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
+            clientList.addAll(clientList1);
+            clientListAdapter.notifyDataSetChanged();
+        });
     }
 
     @Override

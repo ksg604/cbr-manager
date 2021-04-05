@@ -126,7 +126,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             formVisitObj.setClientId(clientId);
             formVisitObj.setClient(client);
             visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
-                @SuppressLint("LongLogTag")
                 @Override
                 public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
                     visitId = visit.getId();

@@ -1,5 +1,6 @@
 package com.example.cbr_manager.service.client;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -21,7 +22,7 @@ public interface ClientDao {
     long insert(Client client);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Single<Long> SingleInsert(Client client);
+    void insertAll(List<Client> clients);
 
     @Delete
     void delete(Client client);
@@ -30,16 +31,13 @@ public interface ClientDao {
     void update(Client client);
 
     @Query("SELECT * FROM client")
-    Single<List<Client>> getClients();
+    LiveData<List<Client>> getClientsLiveData();
 
     @Query("SELECT * FROM client WHERE client_id = :clientId")
-    Single<Client> getClientObs(int clientId);
+    Single<Client> getClientSingle(int clientId);
 
     @Query("SELECT * FROM client WHERE client_id = :clientId")
-    Client getClient(int clientId);
-
-    @Query("SELECT EXISTS (SELECT * FROM client WHERE client_id = :clientId)")
-    boolean ClientExist(int clientId);
+    LiveData<Client> getClientLiveData(int clientId);
 
     @Query("DELETE FROM client")
     void clearAll();

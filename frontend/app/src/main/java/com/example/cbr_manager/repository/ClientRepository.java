@@ -1,5 +1,6 @@
 package com.example.cbr_manager.repository;
 
+import androidx.lifecycle.LiveData;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
@@ -8,22 +9,25 @@ import androidx.work.WorkManager;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
+import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.workmanager.client.CreateClientWorker;
+import com.example.cbr_manager.workmanager.client.ModifyClientWorker;
 import com.example.cbr_manager.workmanager.client.UploadPhotoWorker;
 
 import java.io.File;
+import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 
 public class ClientRepository {
 
@@ -40,29 +44,40 @@ public class ClientRepository {
         this.workManager = workManager;
     }
 
-    public Observable<Client> getAllClient(){
-        return clientAPI.getClientsObs(authHeader)
-                .flatMapIterable(clients -> clients)
-                .doOnNext(clientDao::insert)
-                .onErrorResumeNext(this::getLocalClient)
+    public LiveData<List<Client>> getClientsAsLiveData(){
+        clientAPI.getClientsAsSingle(authHeader)
+                .doOnSuccess(clientDao::insertAll)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribe(new DisposableSingleObserver<List<Client>>() {
+                    @Override
+                    public void onSuccess(@NonNull List<Client> clients) {
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                });
+        return clientDao.getClientsLiveData();
     }
 
-    public Single<Client> getClient(int id) {
-        return clientAPI.getClientSingle(authHeader, id)
-                .onErrorResumeNext(throwable -> clientDao.getClientObs(id))
+    public LiveData<Client> getClient(int id) {
+        clientAPI.getClientSingle(authHeader, id)
+                .doOnSuccess(clientDao::insert)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
+                .subscribe(new DisposableSingleObserver<Client>() {
+                    @Override
+                    public void onSuccess(@NonNull Client client) {
+                    }
 
-    private ObservableSource<? extends Client> getLocalClient(Throwable throwable) {
-        return clientDao.getClients().toObservable().flatMap(Observable::fromIterable);
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                });
+        return clientDao.getClientLiveData(id);
     }
-
 
     public Single<Client> createClient(Client client) {
-        return clientDao.SingleInsert(client)
+        return Single.fromCallable(() -> clientDao.insert(client))
                 .map(aLong -> {
                     client.setId(aLong.intValue());
                     return client;
@@ -72,7 +87,22 @@ public class ClientRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private void enqueueCreateClient(Client client) {
+    public Completable uploadPhoto(File file, Client client) {
+        client.setPhotoURL(file.getAbsolutePath());
+        return Completable.fromAction(() -> clientDao.update(client))
+                .doOnComplete(() -> enqueueUploadPhoto(client))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable modifyClient(Client client) {
+        return Completable.fromAction(() -> clientDao.update(client))
+                .doOnComplete(() -> enqueueModifyClient(client))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private UUID enqueueCreateClient(Client client) {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -83,18 +113,7 @@ public class ClientRepository {
                         .setInputData(CreateClientWorker.buildInputData(authHeader, client.getId()))
                         .build();
         workManager.enqueue(createClientRequest);
-    }
-
-    public Single<Client> uploadPhoto(File file, Client client) {
-        client.setPhotoURL(file.getAbsolutePath());
-        return clientDao.SingleInsert(client)
-                .map(aLong -> {
-                    client.setId(aLong.intValue());
-                    return client;
-                })
-                .doOnSuccess(this::enqueueUploadPhoto)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return createClientRequest.getId();
     }
 
     private void enqueueUploadPhoto( Client client) {
@@ -110,5 +129,17 @@ public class ClientRepository {
         workManager.enqueue(uploadPhotoRequest);
     }
 
+    private void enqueueModifyClient(Client client) {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        OneTimeWorkRequest modifyClientRequest =
+                new OneTimeWorkRequest.Builder(ModifyClientWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(CreateClientWorker.buildInputData(authHeader, client.getId()))
+                        .build();
+        workManager.enqueue(modifyClientRequest);
+    }
 
 }

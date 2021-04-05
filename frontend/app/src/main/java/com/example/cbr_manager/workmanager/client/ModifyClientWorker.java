@@ -1,7 +1,7 @@
 package com.example.cbr_manager.workmanager.client;
 
-
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.hilt.work.HiltWorker;
@@ -9,34 +9,28 @@ import androidx.work.Data;
 import androidx.work.RxWorker;
 import androidx.work.WorkerParameters;
 
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
 import com.example.cbr_manager.utils.Helper;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedInject;
 import io.reactivex.Single;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 
 @HiltWorker
-public class UploadPhotoWorker extends RxWorker{
+public class ModifyClientWorker extends RxWorker {
 
     public static final String KEY_AUTH_HEADER = "KEY_AUTH_HEADER";
     public static final String KEY_CLIENT_OBJ_ID = "KEY_CLIENT_OBJ_ID";
-    public static final String KEY_CLIENT_PHOTO_PATH = "KEY_CLIENT_PHOTO_PATH";
-    private static final String TAG = UploadPhotoWorker.class.getSimpleName();
+    private static final String TAG = ModifyClientWorker.class.getSimpleName();
     private final ClientAPI clientAPI;
     private final ClientDao clientDao;
 
     @AssistedInject
-    public UploadPhotoWorker(
+    public ModifyClientWorker(
             @Assisted @NonNull Context context,
             @Assisted @NonNull WorkerParameters params, ClientAPI clientAPI, ClientDao clientDao) {
         super(context, params);
@@ -45,11 +39,10 @@ public class UploadPhotoWorker extends RxWorker{
         this.clientDao = clientDao;
     }
 
-    public static Data buildInputData(String authHeader, int clientId, String photoPath){
+    public static Data buildInputData(String authHeader, int clientId) {
         Data.Builder builder = new Data.Builder();
-        builder.putString(UploadPhotoWorker.KEY_AUTH_HEADER, authHeader);
-        builder.putInt(UploadPhotoWorker.KEY_CLIENT_OBJ_ID, clientId);
-        builder.putString(UploadPhotoWorker.KEY_CLIENT_PHOTO_PATH, photoPath);
+        builder.putString(CreateClientWorker.KEY_AUTH_HEADER, authHeader);
+        builder.putInt(CreateClientWorker.KEY_CLIENT_OBJ_ID, clientId);
         return builder.build();
     }
 
@@ -58,15 +51,19 @@ public class UploadPhotoWorker extends RxWorker{
     public Single<Result> createWork() {
         String authHeader = getInputData().getString(KEY_AUTH_HEADER);
         int clientObjId = getInputData().getInt(KEY_CLIENT_OBJ_ID, -1);
-        String photoPath = getInputData().getString(KEY_CLIENT_PHOTO_PATH);
-        File photo = new File(photoPath);
-        RequestBody requestFile = RequestBody.create(photo, MediaType.parse("multipart/form-data"));
-        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", photo.getName(), requestFile);
 
         return clientDao.getClientSingle(clientObjId)
-                .flatMap(client -> clientAPI.uploadPhotoSingle(authHeader, clientObjId, body))
-                .map(photoSingle -> Result.success())
+                .flatMap(client -> clientAPI.modifyClientSingle(authHeader, clientObjId, client)
+                        .doOnSuccess(clientResult -> onSuccessfulCreateClient(client, clientResult)))
+                .map(clientSingle -> {
+                    Log.d(TAG, "modified Client: " + clientSingle.getId());
+                    return Result.success();
+                })
                 .onErrorReturn(this::handleReturnResult);
+    }
+
+    private void onSuccessfulCreateClient(Client client, Client clientResult) {
+        clientDao.update(client);
     }
 
     @NotNull

@@ -2,6 +2,7 @@ package com.example.cbr_manager.workmanager.client;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.hilt.work.HiltWorker;
@@ -12,11 +13,9 @@ import androidx.work.WorkerParameters;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.utils.Helper;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedInject;
@@ -54,10 +53,13 @@ public class CreateClientWorker extends RxWorker {
         String authHeader = getInputData().getString(KEY_AUTH_HEADER);
         int clientObjId = getInputData().getInt(KEY_CLIENT_OBJ_ID, -1);
 
-        return clientDao.getClientObs(clientObjId)
+        return clientDao.getClientSingle(clientObjId)
                 .flatMap(client -> clientAPI.createClientSingle(authHeader, client)
                         .doOnSuccess(clientResult -> onSuccessfulCreateClient(client, clientResult)))
-                .map(clientSingle -> Result.success())
+                .map(clientSingle -> {
+                    Log.d(TAG, "created Client: " + clientSingle.getId());
+                    return Result.success();
+                })
                 .onErrorReturn(this::handleReturnResult);
     }
 
@@ -69,7 +71,7 @@ public class CreateClientWorker extends RxWorker {
 
     @NotNull
     private Result handleReturnResult(Throwable throwable) {
-        if (throwable instanceof ConnectException || throwable instanceof SocketTimeoutException) {
+        if (Helper.isConnectionError(throwable)) {
             return Result.retry();
         }
         return Result.failure();

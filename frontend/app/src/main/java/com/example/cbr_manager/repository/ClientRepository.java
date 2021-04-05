@@ -134,7 +134,7 @@ public class ClientRepository {
         OneTimeWorkRequest modifyClientRequest =
                 new OneTimeWorkRequest.Builder(ModifyClientWorker.class)
                         .setConstraints(constraints)
-                        .setInputData(CreateClientWorker.buildInputData(authHeader, client.getId()))
+                        .setInputData(ModifyClientWorker.buildInputData(authHeader, client.getId()))
                         .build();
         workManager.enqueue(modifyClientRequest);
     }

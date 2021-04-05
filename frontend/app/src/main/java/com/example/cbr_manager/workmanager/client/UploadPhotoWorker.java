@@ -2,6 +2,7 @@ package com.example.cbr_manager.workmanager.client;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.hilt.work.HiltWorker;
@@ -9,13 +10,17 @@ import androidx.work.Data;
 import androidx.work.RxWorker;
 import androidx.work.WorkerParameters;
 
+import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.client.ClientDao;
 import com.example.cbr_manager.utils.Helper;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedInject;
@@ -64,9 +69,21 @@ public class UploadPhotoWorker extends RxWorker{
         MultipartBody.Part body = MultipartBody.Part.createFormData("photo", photo.getName(), requestFile);
 
         return clientDao.getClientSingle(clientObjId)
-                .flatMap(client -> clientAPI.uploadPhotoSingle(authHeader, clientObjId, body))
-                .map(photoSingle -> Result.success())
+                .flatMap(client -> clientAPI.uploadPhotoSingle(authHeader, clientObjId, body)
+                        .doOnSuccess(responseBody -> onSuccessfulUpload(responseBody, client)))
+                .map(photoSingle -> {
+                    Log.d(TAG, "uploaded client: " + photoSingle.string());
+                    return Result.success();
+                })
                 .onErrorReturn(this::handleReturnResult);
+    }
+
+    private void onSuccessfulUpload(ResponseBody responseBody, Client client) throws IOException, JSONException {
+        JSONObject json = new JSONObject(responseBody.string());
+        String url = json.getString("url");
+        client.setPhotoURL(url);
+        clientDao.update(client);
+
     }
 
     @NotNull

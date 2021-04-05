@@ -55,6 +55,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/new_client"
+                        android:textColor="@color/purple_700"
                         android:textAllCaps="false"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -92,6 +93,7 @@
                         android:layout_width="130dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
+                        android:textColor="@color/purple_700"
                         android:text="@string/dashboard"
                         android:textAllCaps="false"
                         android:textSize="18sp" />
@@ -130,6 +132,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/client_list"
+                        android:textColor="@color/purple_700"
                         android:textAllCaps="false"
                         android:textSize="18sp" />
 
@@ -183,6 +186,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/new_visit"
+                        android:textColor="@color/purple_700"
                         android:textAllCaps="false"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -226,6 +230,7 @@
                         android:text="@string/new_referral"
                         android:textAllCaps="false"
                         android:textSize="18sp"
+                        android:textColor="@color/purple_700"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/newReferralButton" />
                 </LinearLayout>
@@ -265,6 +270,7 @@
                         android:gravity="center_horizontal"
                         android:text="@string/sync"
                         android:textAllCaps="false"
+                        android:textColor="@color/purple_700"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/syncButton" />

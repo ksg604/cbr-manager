@@ -26,6 +26,8 @@
                 android:id="@+id/cardView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="32dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,12 +37,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="8dp">
 
                     <ImageButton
                         android:id="@+id/newClientButton"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
                         android:background="#FFF"
                         android:scaleType="fitCenter"
                         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +51,7 @@
 
                     <TextView
                         android:id="@+id/textView8"
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/new_client"
@@ -62,6 +64,8 @@
                 android:id="@+id/dashboardCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="32dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
                 app:layout_constraintTop_toBottomOf="@id/cardView2"
@@ -70,13 +74,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/dashboardButton"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
                         android:background="#FFF"
                         android:scaleType="fitCenter"
                         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +89,7 @@
 
                     <TextView
                         android:id="@+id/textView12"
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/dashboard"
@@ -99,6 +103,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="32dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dashboardCardView"
                 app:cardElevation="10dp">
@@ -106,13 +112,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/clientListButton"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
                         android:background="#FFF"
                         android:contentDescription="TODO"
                         android:scaleType="fitCenter"
@@ -120,7 +126,7 @@
 
                     <TextView
                         android:id="@+id/textView14"
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/client_list"
@@ -148,6 +154,8 @@
                 android:id="@+id/newVisitCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="32dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -156,13 +164,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/newVisitButton"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
                         android:background="#FFF"
                         android:scaleType="fitCenter"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +179,7 @@
 
                     <TextView
                         android:id="@+id/textView10"
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/new_visit"
@@ -187,6 +195,8 @@
                 android:id="@+id/newReferralCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="32dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/newVisitCardView"
@@ -195,13 +205,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/newReferralButton"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
                         android:background="#FFF"
                         android:scaleType="fitCenter"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -210,7 +220,7 @@
 
                     <TextView
                         android:id="@+id/textView13"
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/new_referral"
@@ -225,6 +235,8 @@
                 android:id="@+id/cardView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="32dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="10dp"
                 app:layout_constraintTop_toBottomOf="@id/newReferralCardView"
@@ -233,13 +245,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/syncButton"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
                         android:background="#FFF"
                         android:scaleType="fitCenter"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -248,7 +260,7 @@
 
                     <TextView
                         android:id="@+id/textView15"
-                        android:layout_width="150dp"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/sync"

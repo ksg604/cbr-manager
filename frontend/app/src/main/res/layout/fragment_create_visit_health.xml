@@ -109,7 +109,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthWheelChairInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -123,7 +125,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthProstheticInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
                 <com.google.android.material.textfield.TextInputEditText
@@ -136,7 +140,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthOrthoticInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -150,7 +156,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthWheelchairRepairsInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -164,7 +172,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthReferralInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -178,7 +188,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthAdviceInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -192,7 +204,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthAdvocacyInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -206,7 +220,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthEncouragementInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -238,15 +254,15 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:text="Current Status: " />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/healthGoalMetTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:textSize="16sp"
                 android:text="Goal met?" />
@@ -281,7 +297,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/healthGoalConclusionInputLayout"
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 android:layout_height="match_parent">
 
@@ -290,6 +308,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Conclusion" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/healthNewGoalInputLayout"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/healthNewGoalEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="New Goal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/healthNewGoalDescriptionInputLayout"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/healthNewGoalDescriptionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Goal description" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

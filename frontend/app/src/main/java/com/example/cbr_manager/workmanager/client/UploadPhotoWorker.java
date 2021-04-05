@@ -26,12 +26,14 @@ import io.reactivex.Single;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 @HiltWorker
 public class UploadPhotoWorker extends RxWorker{
 
     public static final String KEY_AUTH_HEADER = "KEY_AUTH_HEADER";
     public static final String KEY_CLIENT_OBJ_ID = "KEY_CLIENT_OBJ_ID";
+    public static final String KEY_CLIENT_PHOTO_PATH = "KEY_CLIENT_PHOTO_PATH";
     private static final String TAG = UploadPhotoWorker.class.getSimpleName();
     private final ClientAPI clientAPI;
     private final ClientDao clientDao;
@@ -46,10 +48,11 @@ public class UploadPhotoWorker extends RxWorker{
         this.clientDao = clientDao;
     }
 
-    public static Data buildInputData(String authHeader, int clientId){
+    public static Data buildInputData(String authHeader, int clientId, String photoPath){
         Data.Builder builder = new Data.Builder();
         builder.putString(UploadPhotoWorker.KEY_AUTH_HEADER, authHeader);
         builder.putInt(UploadPhotoWorker.KEY_CLIENT_OBJ_ID, clientId);
+        builder.putString(UploadPhotoWorker.KEY_CLIENT_PHOTO_PATH, photoPath);
         return builder.build();
     }
 
@@ -58,7 +61,8 @@ public class UploadPhotoWorker extends RxWorker{
     public Single<ListenableWorker.Result> createWork() {
         String authHeader = getInputData().getString(KEY_AUTH_HEADER);
         int clientObjId = getInputData().getInt(KEY_CLIENT_OBJ_ID, -1);
-        File photo = new File(clientDao.getClient(clientObjId).getPhotoURL());
+        String photoPath = getInputData().getString(KEY_CLIENT_PHOTO_PATH);
+        File photo = new File(photoPath);
         RequestBody requestFile = RequestBody.create(photo, MediaType.parse("multipart/form-data"));
         MultipartBody.Part body = MultipartBody.Part.createFormData("photo", photo.getName(), requestFile);
 

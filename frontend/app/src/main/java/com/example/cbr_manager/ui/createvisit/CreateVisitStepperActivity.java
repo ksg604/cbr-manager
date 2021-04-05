@@ -138,9 +138,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
                 @Override
                 public void onResponse(Call<Goal> call, Response<Goal> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(CreateVisitStepperActivity.this, "Previous goal modified.", Toast.LENGTH_SHORT).show();
-                    }
                 }
 
                 @Override

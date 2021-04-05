@@ -105,7 +105,7 @@ public class ClientRepository {
         OneTimeWorkRequest uploadPhotoRequest =
                 new OneTimeWorkRequest.Builder(UploadPhotoWorker.class)
                         .setConstraints(constraints)
-                        .setInputData(UploadPhotoWorker.buildInputData(authHeader, client.getId()))
+                        .setInputData(UploadPhotoWorker.buildInputData(authHeader, client.getId(), client.getPhotoURL()))
                         .build();
         workManager.enqueue(uploadPhotoRequest);
     }

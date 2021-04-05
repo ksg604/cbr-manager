@@ -1,5 +1,7 @@
 package com.example.cbr_manager.ui.referral.referral_details;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +60,14 @@ public class ReferralDetailsFragment extends Fragment {
         getReferralInfo(referralId);
 
         this.referralId = referralId;
+
+        Button resolveButton = root.findViewById(R.id.referralDetailsResolveButton);
+        resolveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupResolveConfirmation();
+            }
+        });
 
         setupButtons(root);
 
@@ -131,6 +143,30 @@ public class ReferralDetailsFragment extends Fragment {
         return referralId;
     }
 
+    private void setupResolveConfirmation() {
+        EditText editText = new EditText(this.getContext());
+        editText.setHint("Outcome");
+        editText.setPadding(16,16,16,16);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setTitle("Confirm Resolve");
+        alertDialogBuilder.setMessage("Please confirm that this referral is ready to be resolved.");
+        alertDialogBuilder.setView(editText);
+        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
 
 }

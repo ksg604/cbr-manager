@@ -40,8 +40,8 @@ public class ClientViewModel extends ViewModel {
         return this.clientRepository.createClient(client);
     }
 
-    public Single<ResponseBody> uploadphoto(File file, int clientId) {
-        return this.clientRepository.uploadPhoto(file, clientId);
+    public Single<Client> uploadphoto(File file, Client client) {
+        return this.clientRepository.uploadPhoto(file, client);
     }
 
 

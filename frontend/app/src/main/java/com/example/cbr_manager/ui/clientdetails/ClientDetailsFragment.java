@@ -13,10 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
@@ -26,15 +28,18 @@ import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class ClientDetailsFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
     private int clientId;
     private View parentLayout;
+    private ClientViewModel clientViewModel;
 
     public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
 
@@ -57,6 +62,8 @@ public class ClientDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View root = inflater.inflate(R.layout.fragment_client_details, container, false);
+
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         parentLayout = getActivity().findViewById(android.R.id.content);
 
@@ -136,40 +143,22 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void getClientInfo(int clientId) {
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
+            setupNameTextView(client.getFullName());
+            setupImageViews(client.getPhotoURL());
 
-                if (response.isSuccessful()) {
-                    Client client = response.body();
-
-                    // Todo: dynamically set the client info here
-                    setupNameTextView(client.getFullName());
-                    setupImageViews(client.getPhotoURL());
-
-                    setupLocationTextView(client.getLocation());
-                    setupAgeTextView(client.getAge().toString());
-                    setupGenderTextView(client.getGender());
-                    setupHealthTextView(client.getGoalMetHealthProvision());
-                    setupSocialTextView(client.getGoalMetSocialProvision());
-                    setupEducationTextView(client.getGoalMetEducationProvision());
-                    setupEducationRiskTextView(client.getEducationRisk().toString());
-                    setupSocialRiskTextView(client.getSocialRisk().toString());
-                    setupHealthRiskTextView(client.getHealthRisk().toString());
-                    setupDisabilityTextView(client.getDisability());
-                    setupRiskLevelTextView(client.calculateRiskScore().toString());
-                    setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
-                } else {
-                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+            setupLocationTextView(client.getLocation());
+            setupAgeTextView(client.getAge().toString());
+            setupGenderTextView(client.getGender());
+            setupHealthTextView(client.getGoalMetHealthProvision());
+            setupSocialTextView(client.getGoalMetSocialProvision());
+            setupEducationTextView(client.getGoalMetEducationProvision());
+            setupEducationRiskTextView(client.getEducationRisk().toString());
+            setupSocialRiskTextView(client.getSocialRisk().toString());
+            setupHealthRiskTextView(client.getHealthRisk().toString());
+            setupDisabilityTextView(client.getDisability());
+            setupRiskLevelTextView(client.calculateRiskScore().toString());
+            setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
         });
     }
 

@@ -85,28 +85,16 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     }
 
     private void fetchClientsToList(List<Client> clientList) {
-        clientViewModel.getAllClients().subscribe(new DisposableObserver<Client>() {
-            @Override
-            public void onNext(@NonNull Client client) {
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
+            for(int i = 0; i<clientList1.size(); i++) {
                 int code = ((ClientSelectorActivity) getActivity()).getCode();
-                if ( code == NEW_BASELINE_CODE && client.isBaselineSurveyTaken() ) {
-                    return;
+                if ( code == NEW_BASELINE_CODE && clientList1.get(i).isBaselineSurveyTaken() ) {
                 } else {
-                    clientList.add(client);
+                    clientList.add(clientList1.get(i));
+
                 }
-
             }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "onError: ");
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: ");
-                clientListAdapter.notifyDataSetChanged();
-            }
+            clientListAdapter.notifyDataSetChanged();
         });
     }
 

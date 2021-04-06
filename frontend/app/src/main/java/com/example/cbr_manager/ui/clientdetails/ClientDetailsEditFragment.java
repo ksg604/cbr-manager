@@ -17,17 +17,22 @@ import androidx.fragment.app.Fragment;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.ClientViewModel;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableCompletableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class ClientDetailsEditFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
@@ -37,6 +42,7 @@ public class ClientDetailsEditFragment extends Fragment {
     Client client;
     private int clientId;
     private static final String[] paths = {"Male", "Female"};
+    private ClientViewModel clientViewModel;
 
 
     public ClientDetailsEditFragment() {
@@ -50,6 +56,7 @@ public class ClientDetailsEditFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         Bundle bundle = this.getArguments();
         this.clientId = bundle.getInt("clientId", -1);
@@ -64,16 +71,14 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private void modifyClientInfo(Client client) {
 
-
-        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+        clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
+            public void onComplete() {
                 getActivity().onBackPressed();
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
+            public void onError(@NonNull Throwable e) {
 
             }
         });

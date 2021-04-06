@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,7 +64,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     private AuthViewModel authViewModel;
 
-    private static final String TAG = "CreateVisitStepperActivity";
+    private static final String TAG = "CreateVisitStepActivity";
 
     private VisitViewModel visitViewModel;
     private ClientViewModel clientViewModel;
@@ -173,32 +172,24 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         if (prevSocialGoalObj != null) {
             modifyPreviousGoal(prevSocialGoalObj);
         }
-        clientViewModel.getClient(clientId).subscribe(new DisposableSingleObserver<Client>() {
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
-                formVisitObj.setClientId(clientId);
-                formVisitObj.setClient(client);
-                visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
-                    @SuppressLint("LongLogTag")
-                    @Override
-                    public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
-                        visitId = visit.getId();
-                        Log.d(TAG, "onSuccess Visit created: " + visitId);
-                        Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
-                        onSubmitSuccess();
-                    }
+        clientViewModel.getClient(clientId).observe( this, liveClient -> {
+            formVisitObj.setClientId(clientId);
+            formVisitObj.setClient(liveClient);
+            visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
+                @Override
+                public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
+                    visitId = visit.getId();
+                    Log.d(TAG, "onSuccess Visit created: " + visitId);
+                    Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
+                    onSubmitSuccess();
+                }
 
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+                @Override
+                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                    Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
+                }
+            });
 
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Toast.makeText(CreateVisitStepperActivity.this, "Response error finding client.", Toast.LENGTH_SHORT).show();
-            }
         });
 
 

@@ -68,29 +68,6 @@ public class NavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
-        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-        clientViewModel.getAllClients().subscribe(new Observer<Client>() {
-            @Override
-            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-                Log.d(TAG, "onSubscribe: ");
-            }
-
-            @Override
-            public void onNext(@io.reactivex.annotations.NonNull Client client) {
-                Log.d(TAG, "OnNext: client id is: " + client.getId());
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: ");
-            }
-        });
-
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

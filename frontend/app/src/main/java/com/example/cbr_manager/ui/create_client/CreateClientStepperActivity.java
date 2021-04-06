@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,11 +15,13 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,7 +31,8 @@ import com.stepstone.stepper.VerificationError;
 import java.io.File;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import okhttp3.ResponseBody;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +45,10 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     public Goal healthGoal, educationGoal, socialGoal;
     private StepperLayout CreateClientStepperLayout;
     private APIService apiService = APIService.getInstance();
+    private static final String TAG = "CreateClientActivity";
+
+    private ClientViewModel clientViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         healthGoal = new Goal();
         educationGoal = new Goal();
         socialGoal = new Goal();
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         setTitle("Create a Client");
 
@@ -105,52 +114,42 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void submitSurvey() {
-        Call<Client> call = apiService.clientService.createClientManual(formClientObj);
-        call.enqueue(new Callback<Client>() {
+        clientViewModel.createClient(formClientObj).subscribe(new DisposableSingleObserver<Client>() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                if (response.isSuccessful()) {
+            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
+                Log.d(TAG, "onSuccess Client created: " + client.getId());
+                if(photoFile.exists()) {
+                    clientViewModel.uploadphoto(photoFile, client).subscribe(new DisposableCompletableObserver() {
+                        @Override
+                        public void onComplete() {
+                            Log.d(TAG, "onSuccess Client photo uploaded: " + client.getId());
+                        }
 
-                    Client client = response.body();
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
 
-                    if (photoFile.exists()) {
-                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, client.getId());
-                        photoCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                            }
-                        });
-                    }
-
-                    if(healthGoal.getStatus().equalsIgnoreCase("Ongoing")) {
-                        healthGoal.setClientId(client.getId());
-                        submitGoalSurvey(healthGoal);
-                    }
-                    if(educationGoal.getStatus().equalsIgnoreCase("Ongoing")) {
-                        educationGoal.setClientId(client.getId());
-                        submitGoalSurvey(educationGoal);
-                    }
-                    if(socialGoal.getStatus().equalsIgnoreCase("Ongoing")) {
-                        socialGoal.setClientId(client.getId());
-                        submitGoalSurvey(socialGoal);
-                    }
-
-                    onSubmitSuccess(client);
-                } else {
-                    Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                        }
+                    });
                 }
+                if(healthGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                    healthGoal.setClientId(client.getId());
+                    submitGoalSurvey(healthGoal);
+                }
+                if(educationGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                    educationGoal.setClientId(client.getId());
+                    submitGoalSurvey(educationGoal);
+                }
+                if(socialGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                    socialGoal.setClientId(client.getId());
+                    submitGoalSurvey(socialGoal);
+                }
+
+                onSubmitSuccess(client);
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make( CreateClientStepperLayout, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

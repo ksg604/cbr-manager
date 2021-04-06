@@ -3,17 +3,21 @@ package com.example.cbr_manager.ui.referral.referral_details;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.cbr_manager.R;
@@ -146,11 +150,16 @@ public class ReferralDetailsFragment extends Fragment {
     private void setupResolveConfirmation() {
         EditText editText = new EditText(this.getContext());
         editText.setHint("Outcome");
-        editText.setPadding(16,16,16,16);
+        LinearLayout container = new LinearLayout(this.getContext());
+        container.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.setMargins(getPixelValue(16),getPixelValue(16),getPixelValue(16),getPixelValue(16));
+        editText.setLayoutParams(lp);
+        container.addView(editText);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Confirm Resolve");
+        alertDialogBuilder.setView(container);
         alertDialogBuilder.setMessage("Please confirm that this referral is ready to be resolved.");
-        alertDialogBuilder.setView(editText);
         alertDialogBuilder.setCancelable(true);
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -166,6 +175,12 @@ public class ReferralDetailsFragment extends Fragment {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private int getPixelValue(int dp) {
+        Resources resources = getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dp, resources.getDisplayMetrics());
     }
 
 

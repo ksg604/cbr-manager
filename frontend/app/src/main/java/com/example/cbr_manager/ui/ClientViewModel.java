@@ -36,7 +36,7 @@ public class ClientViewModel extends ViewModel {
         return clientRepository.getClient(id);
     }
 
-    public Single<Client> insert(Client client) {
+    public Single<Client> createClient(Client client) {
         return this.clientRepository.createClient(client);
     }
 

@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.create_client;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,7 +24,6 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
-import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.stepstone.stepper.StepperLayout;
@@ -35,7 +34,6 @@ import java.io.File;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -117,7 +115,8 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void submitSurvey() {
-        clientViewModel.insert(formClientObj).subscribe(new DisposableSingleObserver<Client>() {
+        clientViewModel.createClient(formClientObj).subscribe(new DisposableSingleObserver<Client>() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
                 Log.d(TAG, "onSuccess Client created: " + client.getId());

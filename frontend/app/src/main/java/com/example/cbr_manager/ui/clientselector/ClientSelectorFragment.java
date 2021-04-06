@@ -85,7 +85,14 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
 
     private void fetchClientsToList(List<Client> clientList) {
         clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
-            clientList.addAll(clientList1);
+            for(int i = 0; i<clientList1.size(); i++) {
+                int code = ((ClientSelectorActivity) getActivity()).getCode();
+                if ( code == NEW_BASELINE_CODE && clientList1.get(i).isBaselineSurveyTaken() ) {
+                } else {
+                    clientList.add(clientList1.get(i));
+
+                }
+            }
             clientListAdapter.notifyDataSetChanged();
         });
     }

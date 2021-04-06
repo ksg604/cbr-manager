@@ -1,6 +1,5 @@
 package com.example.cbr_manager.ui.create_client;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,7 +45,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     public Goal healthGoal, educationGoal, socialGoal;
     private StepperLayout CreateClientStepperLayout;
     private APIService apiService = APIService.getInstance();
-    private static final String TAG = "CreateClientStepperActivity";
+    private static final String TAG = "CreateClientActivity";
 
     private ClientViewModel clientViewModel;
 
@@ -116,7 +115,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
     private void submitSurvey() {
         clientViewModel.createClient(formClientObj).subscribe(new DisposableSingleObserver<Client>() {
-            @SuppressLint("LongLogTag")
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
                 Log.d(TAG, "onSuccess Client created: " + client.getId());

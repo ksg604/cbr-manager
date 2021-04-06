@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,7 +64,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     private AuthViewModel authViewModel;
 
-    private static final String TAG = "CreateVisitStepperActivity";
+    private static final String TAG = "CreateVisitStepActivity";
 
     private VisitViewModel visitViewModel;
     private ClientViewModel clientViewModel;
@@ -177,7 +176,6 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             formVisitObj.setClientId(clientId);
             formVisitObj.setClient(liveClient);
             visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
-                @SuppressLint("LongLogTag")
                 @Override
                 public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
                     visitId = visit.getId();

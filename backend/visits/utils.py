@@ -1,4 +1,6 @@
 def differentiate_key_value(dict_a, dict_b):
+    if not dict_b:
+        return dict_a
     diff = {}
     for (k1, v1), (k2, v2) in zip(dict_a.items(), dict_b.items()):
         if k1 == k2 and v1 != v2:

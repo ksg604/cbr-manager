@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
@@ -15,18 +17,28 @@ import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.VisitViewModel;
 
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class StatisticsFragment extends Fragment {
 
     private static final int HIGH_RISK_THRESHOLD = 20;
     private final APIService apiService = APIService.getInstance();
     View view;
+    private VisitViewModel visitViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -276,34 +288,22 @@ public class StatisticsFragment extends Fragment {
     
 
     private void setupNumberOfVisits(View view) {
-        apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
-            @Override
-            public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
-                if (response.isSuccessful()) {
-                    List<Visit> visits = response.body();
-                    int numVisits = visits.size();
-
-                    setTextViewInteger(R.id.statistic4_sub1, numVisits);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Visit>> call, Throwable t) {
-
-            }
+        visitViewModel.getVisitsAsLiveData().observe(getViewLifecycleOwner(), visits -> {
+            int numVisits = visits.size();
+            setTextViewInteger(R.id.statistic4_sub1, numVisits);
         });
     }
 
 
     private void setTextViewInteger(int id, int value) {
-        TextView numVisitsView = view.findViewById(id);
-        numVisitsView.setText(Integer.toString(value));
+        TextView integerView = view.findViewById(id);
+        integerView.setText(Integer.toString(value));
     }
 
 
     private void setTextViewDouble(int id, double value) {
-        TextView numVisitsView = view.findViewById(id);
-        numVisitsView.setText(Double.toString(value));
+        TextView doubleView = view.findViewById(id);
+        doubleView.setText(Double.toString(value));
     }
 
 

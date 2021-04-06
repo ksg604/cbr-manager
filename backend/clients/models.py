@@ -42,6 +42,11 @@ class Client(TimestampedModel):
     goal_met_education_provision = models.TextField(blank=True, max_length=30)
     goal_met_social_provision = models.TextField(blank=True, max_length=30)
 
+   
+    # Field updated by taking baseline survey
+    taken_baseline_survey = models.BooleanField(default=False)
+
+
     class Meta:
         ordering = ['id']
 

@@ -102,6 +102,10 @@ public class Client extends CBRTimestamp {
 
     private boolean isNewClient;
 
+    @SerializedName("taken_baseline_survey")
+    @Expose
+    private boolean baselineSurveyTaken;
+
     //Initializing fields that are needed for POST request in itr1
     public Client() {
         super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
@@ -124,6 +128,7 @@ public class Client extends CBRTimestamp {
         this.socialRisk = 0;
         this.educationRisk = 0;
         this.isNewClient = true;
+        this.baselineSurveyTaken = false;
     }
 
     @Ignore
@@ -388,4 +393,7 @@ public class Client extends CBRTimestamp {
         double educationRiskLogScale = Math.pow(10, educationRisk);
         return (int) (healthRiskLogScale + socialRiskLogScale + educationRiskLogScale);
     }
+
+    public boolean isBaselineSurveyTaken() { return baselineSurveyTaken; }
+    public void setBaselineSurveyTaken(boolean newBaselineSurveyStatus) { baselineSurveyTaken = newBaselineSurveyStatus; }
 }

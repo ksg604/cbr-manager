@@ -1,5 +1,10 @@
 package com.example.cbr_manager.ui.createvisit;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,13 +22,19 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -36,12 +47,23 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     public int userCreatorId = -1;
     public int visitId;
     public Visit formVisitObj;
+    public Goal healthGoalObj;
+    public Goal educationGoalObj;
+    public Goal socialGoalObj;
+    public Goal prevHealthGoalObj;
+    public Goal prevEducationGoalObj;
+    public Goal prevSocialGoalObj;
     private APIService apiService = APIService.getInstance();
     private Client client;
     public GenericStepperAdapter createVisitStepperAdapter;
     boolean healthVisible = false;
     boolean educationVisible = false;
     boolean socialVisible = false;
+    public boolean healthGoalCreated = false;
+    public boolean educationGoalCreated = false;
+    public boolean socialGoalCreated = false;
+
+    private AuthViewModel authViewModel;
 
     private static final String TAG = "CreateVisitStepperActivity";
 
@@ -60,8 +82,23 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         Intent intent = getIntent();
         clientId = intent.getIntExtra("clientId", -1);
         formVisitObj = new Visit();
+        healthGoalObj = new Goal();
+        educationGoalObj = new Goal();
+        socialGoalObj = new Goal();
         createVisitStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                userCreatorId = user.getId();
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            }
+        });
 
         setupStepperAdapterWithFragments();
     }
@@ -96,25 +133,18 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         }
     }
 
-    public void makeProvisionInvisible(String title) {
-        if (title.equals("Health")) {
-            createVisitStepperAdapter.removeFragment("Health");
-            healthVisible = false;
-            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-            createVisitStepperAdapter.notifyDataSetChanged();
-            return;
-        } else if (title.equals("Education")) {
-            createVisitStepperAdapter.removeFragment("Education");
-            educationVisible = false;
-            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-            createVisitStepperAdapter.notifyDataSetChanged();
-            return;
-        } else if (title.equals("Social")) {
-            createVisitStepperAdapter.removeFragment("Social");
-            socialVisible = false;
-            createVisitStepperLayout.setAdapter(createVisitStepperAdapter);
-            createVisitStepperAdapter.notifyDataSetChanged();
-            return;
+    private void modifyPreviousGoal(Goal goal) {
+        if (apiService.isAuthenticated()) {
+            apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
+                @Override
+                public void onResponse(Call<Goal> call, Response<Goal> response) {
+                }
+
+                @Override
+                public void onFailure(Call<Goal> call, Throwable t) {
+
+                }
+            });
         }
     }
 
@@ -162,6 +192,22 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
                 }
             });
 
+        });
+
+
+    }
+
+    private void createNewGoals(Goal goal) {
+        goal.setClientId(clientId);
+        goal.setUserId(userCreatorId);
+        apiService.goalService.createGoal(goal).enqueue(new Callback<Goal>() {
+            @Override
+            public void onResponse(Call<Goal> call, Response<Goal> response) {
+            }
+            @Override
+            public void onFailure(Call<Goal> call, Throwable t) {
+                Toast.makeText(CreateVisitStepperActivity.this, "Failed goal creation.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

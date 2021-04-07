@@ -1,7 +1,5 @@
 package com.example.cbr_manager.repository;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
@@ -48,7 +46,7 @@ public class VisitRepository {
                 .doOnSuccess(visits -> {
                             for (Visit v :
                                     visits) {
-                                insertVisit(v);
+                                insertVisitToLocalDB(v);
                             }
                         }
                 )
@@ -68,7 +66,7 @@ public class VisitRepository {
     public LiveData<Visit> getVisitAsLiveData(int id) {
         visitDao.getVisitAsSingle(id).map(Visit::getServerId)
                 .flatMap(serverId -> visitAPI.getVisitAsSingle(authHeader, serverId))
-                .doOnSuccess(this::insertVisit)
+                .doOnSuccess(this::insertVisitToLocalDB)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<Visit>() {
                     @Override
@@ -127,7 +125,7 @@ public class VisitRepository {
         workManager.enqueue(createVisitRequest);
     }
 
-    private void insertVisit(Visit visit){
+    private void insertVisitToLocalDB(Visit visit){
         Visit localVisit = visitDao.getVisitByServerId(visit.getServerId());
         if (localVisit != null) {
             visit.setId(localVisit.getId());

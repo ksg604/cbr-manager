@@ -26,7 +26,7 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
+public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemClickListener {
 
     private static final String TAG = ClientSelectorFragment.class.getName();
     private static final int NEW_VISIT_CODE = 100;

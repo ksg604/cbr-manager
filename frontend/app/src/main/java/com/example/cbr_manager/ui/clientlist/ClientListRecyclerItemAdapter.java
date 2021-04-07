@@ -23,7 +23,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     private List<Client> clients;
     private List<Client> filteredClientList;
-    private OnItemListener onItemClickListener;
+    private OnItemClickListener onItemClickListener;
     private String genderTag = "";
     private String locationTag = "";
     private String disabilityTag = "";
@@ -62,13 +62,13 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     };
 
-    public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemListener onItemListener) {
+    public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemClickListener onItemListener) {
         this.clients = clientList;
         this.onItemClickListener = onItemListener;
         this.filteredClientList = new ArrayList<>(clientList);
     }
 
-    public ClientListRecyclerItemAdapter(OnItemListener onItemClickListener) {
+    public ClientListRecyclerItemAdapter(OnItemClickListener onItemClickListener) {
         clients = new ArrayList<>();
         filteredClientList = new ArrayList<>();
         this.onItemClickListener = onItemClickListener;
@@ -144,7 +144,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         return filter;
     }
 
-    public interface OnItemListener {
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
@@ -153,9 +153,9 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         public TextView textViewFullName;
         public TextView textViewLocation;
         public TextView riskTextView;
-        OnItemListener onItemListener;
+        OnItemClickListener onItemListener;
 
-        public ClientItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
+        public ClientItemViewHolder(@NonNull View itemView, OnItemClickListener onItemListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageViewPhoto);
             textViewFullName = itemView.findViewById(R.id.textViewFullName);

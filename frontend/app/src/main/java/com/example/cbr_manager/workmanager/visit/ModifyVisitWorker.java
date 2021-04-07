@@ -54,8 +54,8 @@ public class ModifyVisitWorker extends RxWorker {
         int visitObjId = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
 
         return visitDao.getVisitAsSingle(visitObjId)
-                .flatMap(visit -> visitAPI.modifyVisitAsSingle(authHeader, visit.getServerId(), visit)
-                        .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
+                .flatMap(localVisit -> visitAPI.modifyVisitAsSingle(authHeader, localVisit.getServerId(), localVisit)
+                        .doOnSuccess(serverVisit -> updateDBEntry(localVisit, serverVisit)))
                 .map(visitSingle -> {
                     Log.d(TAG, "modified Visit: " + visitSingle.getId());
                     return Result.success();
@@ -63,8 +63,8 @@ public class ModifyVisitWorker extends RxWorker {
                 .onErrorReturn(this::handleReturnResult);
     }
 
-    private void onSuccessfulCreateVisit(Visit visit, Visit serverVisit) {
-        Integer localId = visit.getId();
+    private void updateDBEntry(Visit localVisit, Visit serverVisit) {
+        Integer localId = localVisit.getId();
         serverVisit.setId(localId);
         visitDao.update(serverVisit);
     }

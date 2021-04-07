@@ -1,6 +1,5 @@
 package com.example.cbr_manager.ui.visits;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,56 +8,58 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.utils.Helper;
 
 import org.threeten.bp.Instant;
+import org.threeten.bp.format.FormatStyle;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecyclerItemAdapter.VisitItemViewHolder> implements Filterable {
+public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdapter.VisitItemViewHolder> implements Filterable {
 
-    private ArrayList<VisitsRecyclerItem> visitsRecyclerItems;
-    private ArrayList<VisitsRecyclerItem> visitsFilteredList;
+    private final onVisitClickListener onItemListener;
+    private List<Visit> visitList;
+    private List<Visit> visitFilteredList;
     public Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String searchString = constraint.toString().toLowerCase().trim();
 
-            if (searchString.isEmpty()) {
-                visitsFilteredList = visitsRecyclerItems;
-            } else {
-                ArrayList<VisitsRecyclerItem> tempFilteredList = new ArrayList<>();
+            List<Visit> tempFilteredList = new ArrayList<>();
 
-                for (VisitsRecyclerItem visitsRecyclerItem : visitsRecyclerItems) {
-                    if (visitsRecyclerItem.getBodyText().toLowerCase().trim().contains(searchString)) {
-                        tempFilteredList.add(visitsRecyclerItem);
+            if (searchString.isEmpty()) {
+                tempFilteredList.addAll(visitList);
+            } else {
+                for (Visit visit : visitList) {
+                    Client client = visit.getClient();
+                    if (client.getFullName().toLowerCase().trim().contains(searchString)) {
+                        tempFilteredList.add(visit);
                     }
                 }
-                visitsFilteredList = tempFilteredList;
             }
             FilterResults results = new FilterResults();
-            results.values = visitsFilteredList;
-
+            results.values = tempFilteredList;
             return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            visitsFilteredList = (ArrayList<VisitsRecyclerItem>) results.values;
+            visitFilteredList = (List<Visit>) results.values;
             notifyDataSetChanged();
         }
     };
-    private onVisitClickListener onItemListener;
 
-    public VisitsRecyclerItemAdapter(ArrayList<VisitsRecyclerItem> visitsRecyclerItems, onVisitClickListener onItemListener) {
-        this.visitsRecyclerItems = visitsRecyclerItems;
+    public VisitRecyclerAdapter(onVisitClickListener onItemListener) {
+        this.visitFilteredList = new ArrayList<>();
+        this.visitList = new ArrayList<>();
         this.onItemListener = onItemListener;
-        this.visitsFilteredList = visitsRecyclerItems;
     }
 
     @Override
@@ -66,42 +67,63 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
         return filter;
     }
 
-    public VisitsRecyclerItem getVisitItem(int position) {
-        return visitsFilteredList.get(position);
+    public Visit getVisitItem(int position) {
+        return visitFilteredList.get(position);
     }
 
     @NonNull
     @Override
     public VisitItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.visit_item, parent, false);
-        VisitItemViewHolder evh = new VisitItemViewHolder(v, onItemListener);
-        return evh;
+        return new VisitItemViewHolder(v, onItemListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
-        VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
-        holder.dateTextView.setText(currentItem.getDateString());
-        holder.textListBody.setText(currentItem.getBodyText());
-        holder.purposeTextView.setText(currentItem.getPurposeText());
-        holder.locationTextView.setText(currentItem.getLocationText());
+        Visit visit = visitFilteredList.get(position);
+        holder.dateTextView.setText(Helper.formatDateTimeToLocalString(visit.getCreatedAt(), FormatStyle.SHORT));
+        holder.textListBody.setText(visit.getClient().getFullName());
+        holder.purposeTextView.setText(formatPurposeString(visit));
+        holder.locationTextView.setText(visit.getLocationDropDown());
+    }
+
+    private String formatPurposeString(Visit visit) {
+        String purpose = "";
+        if (visit.isCBRPurpose()) {
+            purpose += "CBR ";
+        }
+        if (visit.isDisabilityReferralPurpose()) {
+            purpose += "Disability Referral ";
+        }
+        if (visit.isDisabilityFollowUpPurpose()) {
+            purpose += "Disability Follow up";
+        }
+        if (purpose.equals("")) {
+            purpose = "No purpose indicated.";
+        }
+        return purpose;
     }
 
     @Override
     public int getItemCount() {
-        return visitsFilteredList.size();
+        return visitFilteredList.size();
+    }
+
+    public void setVisits(List<Visit> visitList) {
+        this.visitList = visitList;
+        this.visitFilteredList = new ArrayList<>(visitList);
+
     }
 
     public interface onVisitClickListener {
         void onItemClick(int position);
     }
 
-    private static class VisitRecyclerItemComparator implements Comparator<VisitsRecyclerItem> {
-
+    private static class VisitByDateComparator implements Comparator<Visit> {
         @Override
-        public int compare(VisitsRecyclerItem o1, VisitsRecyclerItem o2) {
-            Instant o1Date = Instant.parse(o1.getDateString());
-            Instant o2Date = Instant.parse(o2.getDateString());
+        public int compare(Visit o1, Visit o2) {
+            Instant o1Date = Instant.parse(o1.getCreatedAt());
+            Instant o2Date = Instant.parse(o2.getCreatedAt());
             return o2Date.compareTo(o1Date);
         }
     }

@@ -18,17 +18,6 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
     private ArrayList<VisitsRecyclerItem> visitsRecyclerItems;
     private ArrayList<VisitsRecyclerItem> visitsFilteredList;
-    private onVisitClickListener onItemListener;
-
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
-
-    public VisitsRecyclerItem getVisitItem(int position) {
-        return visitsFilteredList.get(position);
-    }
-
     public Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -58,6 +47,48 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
             notifyDataSetChanged();
         }
     };
+    private onVisitClickListener onItemListener;
+
+    public VisitsRecyclerItemAdapter(ArrayList<VisitsRecyclerItem> visitsRecyclerItems, onVisitClickListener onItemListener) {
+        this.visitsRecyclerItems = visitsRecyclerItems;
+        this.onItemListener = onItemListener;
+        this.visitsFilteredList = visitsRecyclerItems;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public VisitsRecyclerItem getVisitItem(int position) {
+        return visitsFilteredList.get(position);
+    }
+
+    @NonNull
+    @Override
+    public VisitItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.visit_item, parent, false);
+        VisitItemViewHolder evh = new VisitItemViewHolder(v, onItemListener);
+        return evh;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
+        VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
+        holder.textListTitle.setText(currentItem.getTitleText());
+        holder.textListBody.setText(currentItem.getBodyText());
+        holder.purposeTextView.setText(currentItem.getPurposeText());
+        holder.locationTextView.setText(currentItem.getLocationText());
+    }
+
+    @Override
+    public int getItemCount() {
+        return visitsFilteredList.size();
+    }
+
+    public interface onVisitClickListener {
+        void onItemClick(int position);
+    }
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textListTitle;
@@ -82,37 +113,5 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
         public void onClick(View v) {
             onItemListener.onItemClick(getAdapterPosition());
         }
-    }
-
-    public interface onVisitClickListener {
-        void onItemClick(int position);
-    }
-
-    public VisitsRecyclerItemAdapter(ArrayList<VisitsRecyclerItem> visitsRecyclerItems, onVisitClickListener onItemListener) {
-        this.visitsRecyclerItems = visitsRecyclerItems;
-        this.onItemListener = onItemListener;
-        this.visitsFilteredList = visitsRecyclerItems;
-    }
-
-    @NonNull
-    @Override
-    public VisitItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.visit_item, parent, false);
-        VisitItemViewHolder evh = new VisitItemViewHolder(v, onItemListener);
-        return evh;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
-        VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
-        holder.textListTitle.setText(currentItem.getTitleText());
-        holder.textListBody.setText(currentItem.getBodyText());
-        holder.purposeTextView.setText(currentItem.getPurposeText());
-        holder.locationTextView.setText(currentItem.getLocationText());
-    }
-
-    @Override
-    public int getItemCount() {
-        return visitsFilteredList.size();
     }
 }

@@ -75,7 +75,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     @Override
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
         VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
-        holder.textListTitle.setText(currentItem.getTitleText());
+        holder.dateTextView.setText(currentItem.getTitleText());
         holder.textListBody.setText(currentItem.getBodyText());
         holder.purposeTextView.setText(currentItem.getPurposeText());
         holder.locationTextView.setText(currentItem.getLocationText());
@@ -91,7 +91,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     }
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textListTitle;
+        public TextView dateTextView;
         public TextView textListBody;
         public TextView purposeTextView;
         public TextView locationTextView;
@@ -99,7 +99,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
         public VisitItemViewHolder(@NonNull View itemView, onVisitClickListener onItemListener) {
             super(itemView);
-            textListTitle = itemView.findViewById(R.id.textListTitle);
+            dateTextView = itemView.findViewById(R.id.textViewDate);
             textListBody = itemView.findViewById(R.id.textListBody);
             purposeTextView = itemView.findViewById(R.id.visitItemPurposeList);
             locationTextView = itemView.findViewById(R.id.textLocationVisitItem);

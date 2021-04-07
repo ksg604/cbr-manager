@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecyclerItemAdapter.VisitItemViewHolder> implements Filterable {
 
@@ -75,7 +76,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
     @Override
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
         VisitsRecyclerItem currentItem = visitsFilteredList.get(position);
-        holder.dateTextView.setText(currentItem.getTitleText());
+        holder.dateTextView.setText(currentItem.getDateString());
         holder.textListBody.setText(currentItem.getBodyText());
         holder.purposeTextView.setText(currentItem.getPurposeText());
         holder.locationTextView.setText(currentItem.getLocationText());
@@ -88,6 +89,14 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
     public interface onVisitClickListener {
         void onItemClick(int position);
+    }
+
+    private static class VisitRecyclerItemComparator implements Comparator<VisitsRecyclerItem>{
+
+        @Override
+        public int compare(VisitsRecyclerItem o1, VisitsRecyclerItem o2) {
+            return 0;
+        }
     }
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

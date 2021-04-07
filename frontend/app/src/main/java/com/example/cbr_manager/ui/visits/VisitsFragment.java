@@ -2,7 +2,6 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.observers.DisposableObserver;
 
 @AndroidEntryPoint
-public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.OnItemListener {
+public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapter.onVisitClickListener {
     public static final String KEY_CLIENT_ID = "KEY_CLIENT_ID";
     private static final String TAG = "VisitsFragment";
     private static final int NO_SPECIFIC_CLIENT = -1;

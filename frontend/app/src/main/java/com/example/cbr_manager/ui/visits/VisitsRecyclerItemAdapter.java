@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,7 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
 
     private ArrayList<VisitsRecyclerItem> visitsRecyclerItems;
     private ArrayList<VisitsRecyclerItem> visitsFilteredList;
-    private OnItemListener onItemListener;
+    private onVisitClickListener onItemListener;
 
     @Override
     public Filter getFilter() {
@@ -65,9 +64,9 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
         public TextView textListBody;
         public TextView purposeTextView;
         public TextView locationTextView;
-        OnItemListener onItemListener;
+        onVisitClickListener onItemListener;
 
-        public VisitItemViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
+        public VisitItemViewHolder(@NonNull View itemView, onVisitClickListener onItemListener) {
             super(itemView);
             textListTitle = itemView.findViewById(R.id.textListTitle);
             textListBody = itemView.findViewById(R.id.textListBody);
@@ -85,11 +84,11 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
         }
     }
 
-    public interface OnItemListener {
+    public interface onVisitClickListener {
         void onItemClick(int position);
     }
 
-    public VisitsRecyclerItemAdapter(ArrayList<VisitsRecyclerItem> visitsRecyclerItems, OnItemListener onItemListener) {
+    public VisitsRecyclerItemAdapter(ArrayList<VisitsRecyclerItem> visitsRecyclerItems, onVisitClickListener onItemListener) {
         this.visitsRecyclerItems = visitsRecyclerItems;
         this.onItemListener = onItemListener;
         this.visitsFilteredList = visitsRecyclerItems;

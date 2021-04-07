@@ -373,7 +373,7 @@
                             android:id="@+id/clientDetailsHealthStatusTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="STATUS"
+                            android:text="NO STATUS"
                             android:textColor="#000"
                             android:gravity="right"/>
                     </LinearLayout>
@@ -443,7 +443,7 @@
                             android:id="@+id/clientDetailsEducationStatusTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="STATUS"
+                            android:text="NO STATUS"
                             android:textColor="#000"
                             android:gravity="right"/>
                     </LinearLayout>
@@ -518,7 +518,7 @@
                             android:id="@+id/clientDetailsSocialStatusTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="STATUS"
+                            android:text="NO STATUS"
                             android:textColor="#000"
                             android:gravity="right"/>
                     </LinearLayout>

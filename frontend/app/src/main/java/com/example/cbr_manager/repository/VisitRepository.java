@@ -26,12 +26,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VisitRepository {
 
+    private final static String TAG = VisitRepository.class.getSimpleName();
     private final VisitAPI visitAPI;
     private final VisitDao visitDao;
     private final String authHeader;
     private WorkManager workManager;
-
-    private final static String TAG= VisitRepository.class.getSimpleName();
 
     @Inject
     VisitRepository(VisitAPI visitAPI, VisitDao visitDao, String authHeader, WorkManager workManager) {
@@ -125,7 +124,7 @@ public class VisitRepository {
         workManager.enqueue(createVisitRequest);
     }
 
-    private void insertVisitToLocalDB(Visit visit){
+    private void insertVisitToLocalDB(Visit visit) {
         Visit localVisit = visitDao.getVisitByServerId(visit.getServerId());
         if (localVisit != null) {
             visit.setId(localVisit.getId());

@@ -33,6 +33,8 @@ public class VisitRepository {
     private final String authHeader;
     private WorkManager workManager;
 
+    private final static String TAG= VisitRepository.class.getSimpleName();
+
     @Inject
     VisitRepository(VisitAPI visitAPI, VisitDao visitDao, String authHeader, WorkManager workManager) {
         this.visitAPI = visitAPI;
@@ -64,7 +66,8 @@ public class VisitRepository {
     }
 
     public LiveData<Visit> getVisitAsLiveData(int id) {
-        visitAPI.getVisitAsSingle(authHeader, id)
+        visitDao.getVisitAsSingle(id).map(Visit::getServerId)
+                .flatMap(serverId -> visitAPI.getVisitAsSingle(authHeader, serverId))
                 .doOnSuccess(this::insertVisit)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<Visit>() {

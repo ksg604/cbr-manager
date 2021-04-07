@@ -83,7 +83,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
     public void onBindViewHolder(@NonNull VisitItemViewHolder holder, int position) {
         Visit visit = visitFilteredList.get(position);
         holder.dateTextView.setText(Helper.formatDateTimeToLocalString(visit.getCreatedAt(), FormatStyle.SHORT));
-        holder.textListBody.setText(visit.getClient().getFullName());
+        holder.fullnameTextView.setText(visit.getClient().getFullName());
         holder.purposeTextView.setText(formatPurposeString(visit));
         holder.locationTextView.setText(visit.getLocationDropDown());
     }
@@ -131,7 +131,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
 
     public static class VisitItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView dateTextView;
-        public TextView textListBody;
+        public TextView fullnameTextView;
         public TextView purposeTextView;
         public TextView locationTextView;
         onVisitClickListener onItemListener;
@@ -139,7 +139,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
         public VisitItemViewHolder(@NonNull View itemView, onVisitClickListener onItemListener) {
             super(itemView);
             dateTextView = itemView.findViewById(R.id.textViewDate);
-            textListBody = itemView.findViewById(R.id.textListBody);
+            fullnameTextView = itemView.findViewById(R.id.textViewFullName);
             purposeTextView = itemView.findViewById(R.id.visitItemPurposeList);
             locationTextView = itemView.findViewById(R.id.textLocationVisitItem);
             this.onItemListener = onItemListener;

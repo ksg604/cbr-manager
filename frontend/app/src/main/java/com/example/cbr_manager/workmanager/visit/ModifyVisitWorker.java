@@ -54,7 +54,7 @@ public class ModifyVisitWorker extends RxWorker {
         int visitObjId = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
 
         return visitDao.getVisitAsSingle(visitObjId)
-                .flatMap(visit -> visitAPI.modifyVisitAsSingle(authHeader, visitObjId, visit)
+                .flatMap(visit -> visitAPI.modifyVisitAsSingle(authHeader, visit.getServerId(), visit)
                         .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
                 .map(visitSingle -> {
                     Log.d(TAG, "modified Visit: " + visitSingle.getId());

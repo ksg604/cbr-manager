@@ -95,6 +95,7 @@ public class VisitsFragment extends Fragment implements VisitsRecyclerItemAdapte
         visitViewModel.getVisitsAsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Visit>>() {
             @Override
             public void onChanged(List<Visit> visits) {
+                visitUIList.clear();
                 for (Visit visit :
                         visits) {
                     if (clientId == NO_SPECIFIC_CLIENT || visit.getClientId() == clientId) {

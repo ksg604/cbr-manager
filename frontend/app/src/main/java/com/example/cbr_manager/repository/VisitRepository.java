@@ -26,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VisitRepository {
 
+    private final static String TAG = VisitRepository.class.getSimpleName();
     private final VisitAPI visitAPI;
     private final VisitDao visitDao;
     private final String authHeader;
@@ -40,8 +41,19 @@ public class VisitRepository {
     }
 
     public LiveData<List<Visit>> getVisitsAsLiveData() {
+        fetchVisitsAsync();
+        return visitDao.getVisitsAsLiveData();
+    }
+
+    private void fetchVisitsAsync() {
         visitAPI.getVisitsAsSingle(authHeader)
-                .doOnSuccess(visitDao::insertAll)
+                .doOnSuccess(visits -> {
+                            for (Visit v :
+                                    visits) {
+                                insertVisitToLocalDB(v);
+                            }
+                        }
+                )
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<List<Visit>>() {
                     @Override
@@ -52,12 +64,28 @@ public class VisitRepository {
                     public void onError(@NonNull Throwable e) {
                     }
                 });
-        return visitDao.getVisitsAsLiveData();
+    }
+
+    private void insertVisitToLocalDB(Visit visit) {
+        Visit localVisit = visitDao.getVisitByServerId(visit.getServerId());
+        if (localVisit != null) {
+            visit.setId(localVisit.getId());
+            visitDao.update(visit);
+        } else {
+            visitDao.insert(visit);
+        }
     }
 
     public LiveData<Visit> getVisitAsLiveData(int id) {
-        visitAPI.getVisitAsSingle(authHeader, id)
-                .doOnSuccess(visitDao::insert)
+        fetchVisitAsync(id);
+        return visitDao.getVisitAsLiveData(id);
+    }
+
+    private void fetchVisitAsync(int id) {
+        visitDao.getVisitAsSingle(id)
+                .map(Visit::getServerId)
+                .flatMap(serverId -> visitAPI.getVisitAsSingle(authHeader, serverId))
+                .doOnSuccess(this::insertVisitToLocalDB)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<Visit>() {
                     @Override
@@ -68,7 +96,6 @@ public class VisitRepository {
                     public void onError(@NonNull Throwable e) {
                     }
                 });
-        return visitDao.getVisitAsLiveData(id);
     }
 
     public Single<Visit> createVisit(Visit visit) {
@@ -77,19 +104,19 @@ public class VisitRepository {
                     visit.setId(aLong.intValue());
                     return visit;
                 })
-                .doOnSuccess(this::enqueueCreateVisit)
+                .doOnSuccess(this::enqueueCreateVisitWorker)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Completable updateVisit(Visit visit) {
         return Completable.fromAction(() -> visitDao.update(visit))
-            .subscribeOn(Schedulers.io())
-            .doOnComplete(() -> enqueueModifyVisit(visit))
-            .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io())
+                .doOnComplete(() -> enqueueModifyVisitWorker(visit))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private UUID enqueueCreateVisit(Visit visit) {
+    private UUID enqueueCreateVisitWorker(Visit visit) {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -103,7 +130,7 @@ public class VisitRepository {
         return createVisitRequest.getId();
     }
 
-    private void enqueueModifyVisit(Visit visit){
+    private void enqueueModifyVisitWorker(Visit visit) {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();

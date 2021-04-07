@@ -1,10 +1,5 @@
 package com.example.cbr_manager.ui.createvisit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,12 +26,12 @@ import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableSingleObserver;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @AndroidEntryPoint
 public class CreateVisitStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
@@ -172,27 +167,26 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
         if (prevSocialGoalObj != null) {
             modifyPreviousGoal(prevSocialGoalObj);
         }
-        clientViewModel.getClient(clientId).observe( this, liveClient -> {
-            formVisitObj.setClientId(clientId);
-            formVisitObj.setClient(liveClient);
-            visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
-                @Override
-                public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
-                    visitId = visit.getId();
-                    Log.d(TAG, "onSuccess Visit created: " + visitId);
-                    Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
-                    onSubmitSuccess();
-                }
 
-                @Override
-                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                    Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
-                }
-            });
-
-        });
-
-
+        clientViewModel.getClientAsSingle(clientId)
+                .flatMap(clientResponse -> {
+                    formVisitObj.setClient(clientResponse);
+                    formVisitObj.setClientId(clientId);
+                    return visitViewModel.createVisit(formVisitObj);
+                })
+                .subscribe(new DisposableSingleObserver<Visit>() {
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
+                        visitId = visit.getId();
+                        Log.d(TAG, "onSuccess Visit created: " + visitId);
+                        Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
+                        onSubmitSuccess();
+                    }
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void createNewGoals(Goal goal) {

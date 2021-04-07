@@ -168,10 +168,13 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
             modifyPreviousGoal(prevSocialGoalObj);
         }
 
-        clientViewModel.getClientAsSingle(clientId).subscribe(new DisposableSingleObserver<Client>() {
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
-                visitViewModel.createVisit(formVisitObj).subscribe(new DisposableSingleObserver<Visit>() {
+        clientViewModel.getClientAsSingle(clientId)
+                .flatMap(clientResponse -> {
+                    formVisitObj.setClient(clientResponse);
+                    formVisitObj.setClientId(clientId);
+                    return visitViewModel.createVisit(formVisitObj);
+                })
+                .subscribe(new DisposableSingleObserver<Visit>() {
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull Visit visit) {
                         visitId = visit.getId();
@@ -179,19 +182,11 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
                         Toast.makeText(CreateVisitStepperActivity.this, "Successfully created visit!", Toast.LENGTH_SHORT).show();
                         onSubmitSuccess();
                     }
-
                     @Override
                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                         Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
                     }
                 });
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Toast.makeText(CreateVisitStepperActivity.this, "Response error creating visit. " + e.getMessage() , Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void createNewGoals(Goal goal) {

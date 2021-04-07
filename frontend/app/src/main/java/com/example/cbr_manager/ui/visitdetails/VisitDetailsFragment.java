@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.visitdetails;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -108,21 +109,24 @@ public class VisitDetailsFragment extends Fragment {
 
     private void getVisitInfo(int visitId) {
         visitViewModel.getVisitAsLiveData(visitId).observe(getViewLifecycleOwner(), visit -> {
-            String datetimeCreated = visit.getCreatedAt();
-            String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
+           if (visit != null) {
+               String datetimeCreated = visit.getCreatedAt();
+               String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
 
-            setupDateTextView(formattedDate);
+               setupDateTextView(formattedDate);
 
-            Client client = visit.getClient();
-            setupNameTextView(client.getFullName());
-            setupImageViews(client.getPhotoURL());
+               Client client = visit.getClient();
+               setupNameTextView(client.getFullName());
+               setupImageViews(client.getPhotoURL());
 
-            setupLocationTextView(visit.getLocationDropDown());
-            setupVillageNumTextView(visit.getVillageNoVisit().toString());
-            setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
-            setupHealthTextViews(visit);
-            setupEducationTextViews(visit);
-            setupSocialTextViews(visit);
+               setupLocationTextView(visit.getLocationDropDown());
+               setupVillageNumTextView(visit.getVillageNoVisit().toString());
+               setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
+               setupHealthTextViews(visit);
+               setupEducationTextViews(visit);
+               setupSocialTextViews(visit);
+               Log.d("VISIT NOT EMPTY", "getVisitInfo: ");
+           }
         });
     }
 

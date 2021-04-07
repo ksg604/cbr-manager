@@ -17,6 +17,8 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.utils.Helper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> implements Filterable {
@@ -57,6 +59,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredClientList.clear();
             filteredClientList.addAll((List) results.values);
+            Collections.sort(filteredClientList, new ClientAlphabeticalComparator());
             notifyDataSetChanged();
         }
 
@@ -77,6 +80,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
     public void setClients(List<Client> clients) {
         this.clients = clients;
         filteredClientList = new ArrayList<>(clients);
+        Collections.sort(filteredClientList, new ClientAlphabeticalComparator());
         notifyDataSetChanged();
     }
 
@@ -146,6 +150,14 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
+
+    public static class ClientAlphabeticalComparator implements Comparator<Client> {
+
+        @Override
+        public int compare(Client o1, Client o2) {
+            return o1.getFullName().compareTo(o2.getFullName());
+        }
     }
 
     public static class ClientItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

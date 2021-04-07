@@ -52,6 +52,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             visitFilteredList = (List<Visit>) results.values;
+            visitFilteredList.sort(new VisitByDateComparator().reversed());
             notifyDataSetChanged();
         }
     };
@@ -110,9 +111,9 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
     }
 
     public void setVisits(List<Visit> visitList) {
+        visitList.sort(new VisitByDateComparator().reversed());
         this.visitList = visitList;
         this.visitFilteredList = new ArrayList<>(visitList);
-
     }
 
     public interface onVisitClickListener {
@@ -124,7 +125,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
         public int compare(Visit o1, Visit o2) {
             Instant o1Date = Instant.parse(o1.getCreatedAt());
             Instant o2Date = Instant.parse(o2.getCreatedAt());
-            return o2Date.compareTo(o1Date);
+            return o1Date.compareTo(o2Date);
         }
     }
 

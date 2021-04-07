@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableObserver;
 
 @AndroidEntryPoint
@@ -44,7 +44,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     private ClientViewModel clientViewModel;
 
     public ClientSelectorFragment() {
-        // Required empty public constructor
+        super(R.layout.fragment_client_selector);
     }
 
     @Override
@@ -54,12 +54,10 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_client_selector, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        clientListRecyclerView = root.findViewById(R.id.clientSelectorRecyclerView);
+        clientListRecyclerView = view.findViewById(R.id.clientSelectorRecyclerView);
         clientSelectorLayoutManager = new LinearLayoutManager(getContext());
         clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
         clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
@@ -67,7 +65,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
 
         fetchClientsToList(clientList);
 
-        SearchView search = root.findViewById(R.id.clientSelectorSearchView);
+        SearchView search = view.findViewById(R.id.clientSelectorSearchView);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -80,8 +78,6 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
                 return true;
             }
         });
-
-        return root;
     }
 
     private void fetchClientsToList(List<Client> clientList) {

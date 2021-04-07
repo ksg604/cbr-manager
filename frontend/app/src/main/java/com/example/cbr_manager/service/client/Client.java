@@ -116,7 +116,6 @@ public class Client extends CBRTimestamp {
         this.contactClient = "";
         this.age = 0;
         this.gender = "";
-        this.id = 0;
         this.location = "";
         this.villageNo = 0;
         this.disability = "";

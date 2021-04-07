@@ -160,6 +160,14 @@ public class Client extends CBRTimestamp {
         this.id = id;
     }
 
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -398,11 +406,5 @@ public class Client extends CBRTimestamp {
     public boolean isBaselineSurveyTaken() { return baselineSurveyTaken; }
     public void setBaselineSurveyTaken(boolean newBaselineSurveyStatus) { baselineSurveyTaken = newBaselineSurveyStatus; }
 
-    public Integer getServerId() {
-        return serverId;
-    }
 
-    public void setServerId(Integer serverId) {
-        this.serverId = serverId;
-    }
 }

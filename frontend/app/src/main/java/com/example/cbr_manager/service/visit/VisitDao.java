@@ -32,10 +32,10 @@ public interface VisitDao {
     @Query("SELECT * FROM visit")
     LiveData<List<Visit>> getVisitsAsLiveData();
 
-    @Query("SELECT * FROM visit WHERE visit_id = :id")
+    @Query("SELECT * FROM visit WHERE id = :id")
     Single<Visit> getVisitAsSingle(int id);
 
-    @Query("SELECT * FROM visit WHERE visit_id = :id")
+    @Query("SELECT * FROM visit WHERE id = :id")
     LiveData<Visit> getVisitAsLiveData(int id);
 
     @Query("SELECT * FROM visit WHERE serverId = :id")

@@ -17,7 +17,7 @@ public class Visit extends CBRTimestamp {
 
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "visit_id")
+    @ColumnInfo(name = "id")
     private Integer id;
 
     @SerializedName("id")

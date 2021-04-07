@@ -378,7 +378,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="No education goal listed! Add a goal by clicking the edit icon at the top."
+                        android:textColor="#000"
                         android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/clientDetailsEducationDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -431,8 +439,16 @@
                         android:id="@+id/clientDetailsSocialGoalTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="#000"
                         android:text="No social goal listed! Add a goal by clicking the edit icon at the top."
                         android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/clientDetailsSocialDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -483,8 +499,16 @@
                         android:id="@+id/clientDetailsHealthGoalTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="#000"
                         android:text="No health goal listed! Add a goal by clicking the edit icon at the top."
                         android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/clientDetailsHealthDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
 
                     <View
                         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.visits;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,15 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
 
+import org.threeten.bp.Instant;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecyclerItemAdapter.VisitItemViewHolder> implements Filterable {
@@ -91,11 +96,13 @@ public class VisitsRecyclerItemAdapter extends RecyclerView.Adapter<VisitsRecycl
         void onItemClick(int position);
     }
 
-    private static class VisitRecyclerItemComparator implements Comparator<VisitsRecyclerItem>{
+    private static class VisitRecyclerItemComparator implements Comparator<VisitsRecyclerItem> {
 
         @Override
         public int compare(VisitsRecyclerItem o1, VisitsRecyclerItem o2) {
-            return 0;
+            Instant o1Date = Instant.parse(o1.getDateString());
+            Instant o2Date = Instant.parse(o2.getDateString());
+            return o2Date.compareTo(o1Date);
         }
     }
 

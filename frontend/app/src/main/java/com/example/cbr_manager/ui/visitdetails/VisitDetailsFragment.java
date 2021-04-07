@@ -125,7 +125,6 @@ public class VisitDetailsFragment extends Fragment {
                setupHealthTextViews(visit);
                setupEducationTextViews(visit);
                setupSocialTextViews(visit);
-               Log.d("VISIT NOT EMPTY", "getVisitInfo: ");
            }
         });
     }

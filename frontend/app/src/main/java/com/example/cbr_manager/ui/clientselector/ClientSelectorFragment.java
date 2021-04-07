@@ -57,11 +57,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        clientListRecyclerView = view.findViewById(R.id.clientSelectorRecyclerView);
-        clientSelectorLayoutManager = new LinearLayoutManager(getContext());
-        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
-        clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
-        clientListRecyclerView.setAdapter(clientListAdapter);
+        setupListClientRecycler(view);
 
         fetchClientsToList(clientList);
 
@@ -78,6 +74,14 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
                 return true;
             }
         });
+    }
+
+    private void setupListClientRecycler(@NonNull View view) {
+        clientListRecyclerView = view.findViewById(R.id.clientSelectorRecyclerView);
+        clientSelectorLayoutManager = new LinearLayoutManager(getContext());
+        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
+        clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
+        clientListRecyclerView.setAdapter(clientListAdapter);
     }
 
     private void fetchClientsToList(List<Client> clientList) {

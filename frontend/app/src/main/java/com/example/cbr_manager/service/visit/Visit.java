@@ -221,6 +221,7 @@ public class Visit extends CBRTimestamp {
 
     @Ignore
     public Visit(String additionalInfo, Integer clientId, Integer userId, Client client) {
+        super();
         this.additionalInfo = additionalInfo;
         this.clientId = clientId;
         this.userId = userId;
@@ -228,6 +229,7 @@ public class Visit extends CBRTimestamp {
     }
 
     public Visit() {
+        super();
         this.additionalInfo = "";
         this.clientId = 0;
         this.userId = 0;

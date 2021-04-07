@@ -63,7 +63,8 @@ public class ModifyVisitWorker extends RxWorker {
                 .onErrorReturn(this::handleReturnResult);
     }
 
-    private void onSuccessfulCreateVisit(Visit visit, Visit visitResult) {
+    private void onSuccessfulCreateVisit(Visit visit, Visit serverVisit) {
+        visit.setServerId(serverVisit.getServerId());
         visitDao.update(visit);
     }
 

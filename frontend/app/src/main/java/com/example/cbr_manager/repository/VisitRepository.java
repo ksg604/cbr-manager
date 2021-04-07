@@ -1,5 +1,7 @@
 package com.example.cbr_manager.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
@@ -41,7 +43,13 @@ public class VisitRepository {
 
     public LiveData<List<Visit>> getVisitsAsLiveData() {
         visitAPI.getVisitsAsSingle(authHeader)
-                .doOnSuccess(visitDao::insertAll)
+                .doOnSuccess(visits -> {
+                            for (Visit v :
+                                    visits) {
+                                insertVisit(v);
+                            }
+                        }
+                )
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<List<Visit>>() {
                     @Override
@@ -57,7 +65,7 @@ public class VisitRepository {
 
     public LiveData<Visit> getVisitAsLiveData(int id) {
         visitAPI.getVisitAsSingle(authHeader, id)
-                .doOnSuccess(visitDao::insert)
+                .doOnSuccess(this::insertVisit)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<Visit>() {
                     @Override
@@ -84,9 +92,9 @@ public class VisitRepository {
 
     public Completable updateVisit(Visit visit) {
         return Completable.fromAction(() -> visitDao.update(visit))
-            .subscribeOn(Schedulers.io())
-            .doOnComplete(() -> enqueueModifyVisit(visit))
-            .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io())
+                .doOnComplete(() -> enqueueModifyVisit(visit))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     private UUID enqueueCreateVisit(Visit visit) {
@@ -103,7 +111,7 @@ public class VisitRepository {
         return createVisitRequest.getId();
     }
 
-    private void enqueueModifyVisit(Visit visit){
+    private void enqueueModifyVisit(Visit visit) {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -114,5 +122,15 @@ public class VisitRepository {
                         .setInputData(ModifyVisitWorker.buildInputData(authHeader, visit.getId()))
                         .build();
         workManager.enqueue(createVisitRequest);
+    }
+
+    private void insertVisit(Visit visit){
+        Visit localVisit = visitDao.getVisitByServerId(visit.getServerId());
+        if (localVisit != null) {
+            visit.setId(localVisit.getId());
+            visitDao.update(visit);
+        } else {
+            visitDao.insert(visit);
+        }
     }
 }

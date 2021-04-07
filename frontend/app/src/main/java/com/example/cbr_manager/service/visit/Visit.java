@@ -15,11 +15,14 @@ import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "visit")
 public class Visit extends CBRTimestamp {
 
-    @SerializedName("id")
-    @Expose
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "visit_id")
     private Integer id;
+
+    @SerializedName("id")
+    @Expose
+    private Integer serverId;
 
     @SerializedName("client_id")
     @Expose
@@ -680,6 +683,14 @@ public class Visit extends CBRTimestamp {
 
     public void setConclusionSocialProvision(String conclusionSocialProvision) {
         this.conclusionSocialProvision = conclusionSocialProvision;
+    }
+
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
     }
 
 }

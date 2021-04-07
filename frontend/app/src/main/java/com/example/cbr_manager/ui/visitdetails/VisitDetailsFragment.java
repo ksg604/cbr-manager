@@ -109,23 +109,21 @@ public class VisitDetailsFragment extends Fragment {
 
     private void getVisitInfo(int visitId) {
         visitViewModel.getVisitAsLiveData(visitId).observe(getViewLifecycleOwner(), visit -> {
-           if (visit != null) {
-               String datetimeCreated = visit.getCreatedAt();
-               String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
+            String datetimeCreated = visit.getCreatedAt();
+            String formattedDate = Helper.formatDateTimeToLocalString(datetimeCreated, FormatStyle.SHORT);
 
-               setupDateTextView(formattedDate);
+            setupDateTextView(formattedDate);
 
-               Client client = visit.getClient();
-               setupNameTextView(client.getFullName());
-               setupImageViews(client.getPhotoURL());
+            Client client = visit.getClient();
+            setupNameTextView(client.getFullName());
+            setupImageViews(client.getPhotoURL());
 
-               setupLocationTextView(visit.getLocationDropDown());
-               setupVillageNumTextView(visit.getVillageNoVisit().toString());
-               setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
-               setupHealthTextViews(visit);
-               setupEducationTextViews(visit);
-               setupSocialTextViews(visit);
-           }
+            setupLocationTextView(visit.getLocationDropDown());
+            setupVillageNumTextView(visit.getVillageNoVisit().toString());
+            setUpTextView(R.id.visitDetailsCBRWorkerTextView, visit.getCbrWorkerName() + " (" + visit.getUserId() + ")");
+            setupHealthTextViews(visit);
+            setupEducationTextViews(visit);
+            setupSocialTextViews(visit);
         });
     }
 

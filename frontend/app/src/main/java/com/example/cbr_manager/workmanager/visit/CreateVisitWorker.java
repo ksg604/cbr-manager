@@ -64,9 +64,9 @@ public class CreateVisitWorker extends RxWorker {
     }
 
     private void onSuccessfulCreateVisit(Visit visit, Visit visitResult) {
-        visitDao.delete(visit);
-        visit.setId(visitResult.getId());
-        visitDao.insert(visit);
+        Integer localId = visit.getId();
+        visitResult.setId(localId);
+        visitDao.update(visit);
     }
 
     @NotNull

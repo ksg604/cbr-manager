@@ -139,4 +139,10 @@ public class ClientRepository {
         workManager.enqueue(modifyClientRequest);
     }
 
+    public Single<Client> getClientAsSingle(int id) {
+        return clientAPI.getClientSingle(authHeader, id)
+                .doOnSuccess(clientDao::insert)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

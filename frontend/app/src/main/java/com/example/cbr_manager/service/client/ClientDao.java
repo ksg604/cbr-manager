@@ -30,16 +30,18 @@ public interface ClientDao {
     @Update
     void update(Client client);
 
-    @Query("SELECT * FROM client")
-    LiveData<List<Client>> getClientsLiveData();
-
-    @Query("SELECT * FROM client WHERE client_id = :clientId")
-    Single<Client> getClientSingle(int clientId);
-
-    @Query("SELECT * FROM client WHERE client_id = :clientId")
-    LiveData<Client> getClientLiveData(int clientId);
-
     @Query("DELETE FROM client")
     void clearAll();
 
+    @Query("SELECT * FROM client")
+    LiveData<List<Client>> getClientsLiveData();
+
+    @Query("SELECT * FROM client WHERE id = :clientId")
+    Single<Client> getClientSingle(int clientId);
+
+    @Query("SELECT * FROM client WHERE id = :clientId")
+    LiveData<Client> getClientLiveData(int clientId);
+
+    @Query("SELECT * FROM client WHERE serverId = :clientId")
+    Client getClientByServerId(int clientId);
 }

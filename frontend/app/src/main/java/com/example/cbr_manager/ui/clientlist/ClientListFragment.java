@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -159,9 +160,13 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
     }
 
     public void fetchClientsToList(List<Client> clientList) {
-        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
-            clientList.addAll(clientList1);
-            clientListAdapter.notifyDataSetChanged();
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), new Observer<List<Client>>() {
+            @Override
+            public void onChanged(List<Client> clients) {
+                clientList.clear();
+                clientList.addAll(clients);
+                clientListAdapter.notifyDataSetChanged();
+            }
         });
     }
 

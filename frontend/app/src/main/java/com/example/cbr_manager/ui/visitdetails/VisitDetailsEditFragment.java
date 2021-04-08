@@ -237,6 +237,7 @@ public class VisitDetailsEditFragment extends Fragment {
             public void onComplete() {
                 Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                getActivity().onBackPressed();
             }
 
             @Override

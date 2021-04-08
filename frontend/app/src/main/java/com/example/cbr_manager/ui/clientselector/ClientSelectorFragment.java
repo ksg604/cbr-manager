@@ -80,11 +80,16 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     private void populateClientListAdapter(ClientListRecyclerItemAdapter clientListAdapter) {
         clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
             List<Client> clientList = new ArrayList<>();
-            for (int i = 0; i < clientList1.size(); i++) {
+            for (Client client :
+                    clientList1) {
                 int code = ((ClientSelectorActivity) getActivity()).getCode();
-                if (code == NEW_BASELINE_CODE && clientList1.get(i).isBaselineSurveyTaken()) {
+
+                if (code == NEW_BASELINE_CODE) {
+                    if (!client.isBaselineSurveyTaken()) {
+                        clientList.add(client);
+                    }
                 } else {
-                    clientList.add(clientList1.get(i));
+                    clientList.add(client);
                 }
             }
             clientListAdapter.setClients(clientList);

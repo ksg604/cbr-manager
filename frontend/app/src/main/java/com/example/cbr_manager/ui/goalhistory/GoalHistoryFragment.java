@@ -1,4 +1,4 @@
-package com.example.cbr_manager.goalhistory;
+package com.example.cbr_manager.ui.goalhistory;
 
 import android.os.Bundle;
 

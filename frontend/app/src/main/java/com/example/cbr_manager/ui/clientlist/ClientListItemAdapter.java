@@ -65,12 +65,6 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
 
     };
 
-    public ClientListItemAdapter(List<Client> clientList, OnItemClickListener onItemListener) {
-        this.clients = clientList;
-        this.onItemClickListener = onItemListener;
-        this.filteredClientList = new ArrayList<>(clientList);
-    }
-
     public ClientListItemAdapter(OnItemClickListener onItemClickListener) {
         clients = new ArrayList<>();
         filteredClientList = new ArrayList<>();

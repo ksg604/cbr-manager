@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +39,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ClientListFragment extends Fragment implements ClientListItemAdapter.OnItemClickListener {
 
-    List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
     private ClientListItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager clientListLayoutManager;
@@ -71,7 +71,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         clientListLayoutManager = new LinearLayoutManager(getContext());
-        clientListAdapter = new ClientListItemAdapter(clientList, this);
+        clientListAdapter = new ClientListItemAdapter(this);
         clientListRecyclerView.setLayoutManager(clientListLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
@@ -83,7 +83,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
         setUpSpinnerListener(locationSpinner);
         setUpSpinnerListener(disabilitySpinner);
 
-        fetchClientsToList(clientList);
+        fetchClientsToList();
 
         clientSearch = root.findViewById(R.id.clientSearchView);
 
@@ -159,14 +159,9 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
         startActivity(createClientIntent);
     }
 
-    public void fetchClientsToList(List<Client> clientList) {
-        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), new Observer<List<Client>>() {
-            @Override
-            public void onChanged(List<Client> clients) {
-                clientList.clear();
-                clientList.addAll(clients);
-                clientListAdapter.notifyDataSetChanged();
-            }
+    public void fetchClientsToList() {
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clients -> {
+            clientListAdapter.setClients(clients);
         });
     }
 

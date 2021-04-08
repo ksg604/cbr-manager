@@ -78,25 +78,7 @@ public class ClientRepository {
     }
 
     public LiveData<Client> getClient(int id) {
-        fetchClientAsync(id);
         return clientDao.getClientLiveData(id);
-    }
-
-    private void fetchClientAsync(int id) {
-        clientDao.getClientSingle(id)
-                .map(Client::getServerId)
-                .flatMap(serverId -> clientAPI.getClientSingle(authHeader, serverId))
-                .doOnSuccess(this::insertClientToLocalDB)
-                .subscribeOn(Schedulers.io())
-                .subscribe(new DisposableSingleObserver<Client>() {
-                    @Override
-                    public void onSuccess(@NonNull Client client) {
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                    }
-                });
     }
 
     public Single<Client> createClient(Client client) {

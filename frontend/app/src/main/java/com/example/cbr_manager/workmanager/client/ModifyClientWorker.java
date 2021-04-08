@@ -53,8 +53,8 @@ public class ModifyClientWorker extends RxWorker {
         int clientObjId = getInputData().getInt(KEY_CLIENT_OBJ_ID, -1);
 
         return clientDao.getClientSingle(clientObjId)
-                .flatMap(client -> clientAPI.modifyClientSingle(authHeader, clientObjId, client)
-                        .doOnSuccess(clientResult -> onSuccessfulCreateClient(client, clientResult)))
+                .flatMap(localClient -> clientAPI.modifyClientSingle(authHeader, clientObjId, localClient)
+                        .doOnSuccess(serverClient -> updateDBEntry(localClient, serverClient)))
                 .map(clientSingle -> {
                     Log.d(TAG, "modified Client: " + clientSingle.getId());
                     return Result.success();
@@ -62,8 +62,10 @@ public class ModifyClientWorker extends RxWorker {
                 .onErrorReturn(this::handleReturnResult);
     }
 
-    private void onSuccessfulCreateClient(Client client, Client clientResult) {
-        clientDao.update(client);
+    private void updateDBEntry(Client localClient, Client serverClient) {
+        Integer localId = localClient.getId();
+        serverClient.setId(localId);
+        clientDao.update(serverClient);
     }
 
     @NotNull

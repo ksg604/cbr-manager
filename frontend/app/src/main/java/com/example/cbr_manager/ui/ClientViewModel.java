@@ -36,6 +36,10 @@ public class ClientViewModel extends ViewModel {
         return clientRepository.getClient(id);
     }
 
+    public Single<Client> getClientAsSingle(int id) {
+        return clientRepository.getClientAsSingle(id);
+    }
+
     public Single<Client> createClient(Client client) {
         return this.clientRepository.createClient(client);
     }

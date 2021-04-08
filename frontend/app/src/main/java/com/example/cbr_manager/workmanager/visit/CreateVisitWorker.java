@@ -54,8 +54,8 @@ public class CreateVisitWorker extends RxWorker {
         int visitObjId = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
 
         return visitDao.getVisitAsSingle(visitObjId)
-                .flatMap(visit -> visitAPI.createVisitSingle(authHeader, visit)
-                        .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
+                .flatMap(localVisit -> visitAPI.createVisitSingle(authHeader, localVisit)
+                        .doOnSuccess(serverVisit -> updateDBEntry(localVisit, serverVisit)))
                 .map(visitSingle -> {
                     Log.d(TAG, "created Visit: " + visitSingle.getId());
                     return Result.success();
@@ -63,10 +63,10 @@ public class CreateVisitWorker extends RxWorker {
                 .onErrorReturn(this::handleReturnResult);
     }
 
-    private void onSuccessfulCreateVisit(Visit visit, Visit visitResult) {
-        visitDao.delete(visit);
-        visit.setId(visitResult.getId());
-        visitDao.insert(visit);
+    private void updateDBEntry(Visit localVisit, Visit visitResult) {
+        Integer localId = localVisit.getId();
+        visitResult.setId(localId);
+        visitDao.update(visitResult);
     }
 
     @NotNull

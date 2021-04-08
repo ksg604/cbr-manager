@@ -42,8 +42,18 @@ public class ClientRepository {
     }
 
     public LiveData<List<Client>> getClientsAsLiveData(){
+        fetchClientAsync();
+        return clientDao.getClientsLiveData();
+    }
+
+    private void fetchClientAsync() {
         clientAPI.getClientsAsSingle(authHeader)
-                .doOnSuccess(clientDao::insertAll)
+                .doOnSuccess(clients -> {
+                        for(Client client : clients) {
+                            insertClientToLocalDB(client);
+                        }
+                    }
+                )
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<List<Client>>() {
                     @Override
@@ -54,12 +64,29 @@ public class ClientRepository {
                     public void onError(@NonNull Throwable e) {
                     }
                 });
-        return clientDao.getClientsLiveData();
+    }
+
+    private void insertClientToLocalDB(Client client) {
+        Client localClient = clientDao.getClientByServerId(client.getServerId());
+        if(localClient != null) {
+            client.setId(localClient.getId());
+            clientDao.update(client);
+        }
+        else {
+            clientDao.insert(client);
+        }
     }
 
     public LiveData<Client> getClient(int id) {
-        clientAPI.getClientSingle(authHeader, id)
-                .doOnSuccess(clientDao::insert)
+        fetchClientAsync(id);
+        return clientDao.getClientLiveData(id);
+    }
+
+    private void fetchClientAsync(int id) {
+        clientDao.getClientSingle(id)
+                .map(Client::getServerId)
+                .flatMap(serverId -> clientAPI.getClientSingle(authHeader, serverId))
+                .doOnSuccess(this::insertClientToLocalDB)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<Client>() {
                     @Override
@@ -70,7 +97,6 @@ public class ClientRepository {
                     public void onError(@NonNull Throwable e) {
                     }
                 });
-        return clientDao.getClientLiveData(id);
     }
 
     public Single<Client> createClient(Client client) {
@@ -139,4 +165,9 @@ public class ClientRepository {
         workManager.enqueue(modifyClientRequest);
     }
 
+    public Single<Client> getClientAsSingle(int id) {
+        return clientDao.getClientSingle(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

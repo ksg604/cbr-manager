@@ -12,11 +12,13 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "client")
 public class Client extends CBRTimestamp {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private Integer id;
+
     @SerializedName("id")
     @Expose
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "client_id")
-    private Integer id;
+    private Integer serverId;
 
     @SerializedName("cbr_client_id")
     @Expose
@@ -116,7 +118,6 @@ public class Client extends CBRTimestamp {
         this.contactClient = "";
         this.age = 0;
         this.gender = "";
-        this.id = 0;
         this.location = "";
         this.villageNo = 0;
         this.disability = "";
@@ -157,6 +158,14 @@ public class Client extends CBRTimestamp {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
     }
 
     public String getFirstName() {
@@ -396,4 +405,6 @@ public class Client extends CBRTimestamp {
 
     public boolean isBaselineSurveyTaken() { return baselineSurveyTaken; }
     public void setBaselineSurveyTaken(boolean newBaselineSurveyStatus) { baselineSurveyTaken = newBaselineSurveyStatus; }
+
+
 }

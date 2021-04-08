@@ -15,7 +15,7 @@ android {
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.example.cbr_manager"
-        minSdkVersion 16
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 4
         versionName "0.2.2"

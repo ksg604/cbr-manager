@@ -36,11 +36,11 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemClickListener {
+public class ClientListFragment extends Fragment implements ClientListItemAdapter.OnItemClickListener {
 
     List<Client> clientList = new ArrayList<>();
     private RecyclerView clientListRecyclerView;
-    private ClientListRecyclerItemAdapter clientListAdapter;
+    private ClientListItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager clientListLayoutManager;
     private APIService apiService = APIService.getInstance();
     private ClientViewModel clientViewModel;
@@ -71,7 +71,7 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         clientListLayoutManager = new LinearLayoutManager(getContext());
-        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
+        clientListAdapter = new ClientListItemAdapter(clientList, this);
         clientListRecyclerView.setLayoutManager(clientListLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 

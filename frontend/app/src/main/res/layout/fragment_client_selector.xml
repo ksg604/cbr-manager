@@ -25,5 +25,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/clientSelectorRecyclerView"
         android:layout_width="match_parent"
+        tools:listitem="@layout/client_item"
         android:layout_height="match_parent" />
 </LinearLayout>

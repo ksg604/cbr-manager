@@ -86,7 +86,7 @@ public class GoalHistoryFragment extends Fragment {
                             goalsToAdd.add(goal);
                         }
                     }
-                    goalHistoryItemAdapter = new GoalHistoryItemAdapter(goalsToAdd);
+                    goalHistoryItemAdapter = new GoalHistoryItemAdapter(getContext(),goalsToAdd);
                     RecyclerView.LayoutManager goalHistoryLayoutManager = new LinearLayoutManager(getContext());
                     goalRecyclerView.setLayoutManager(goalHistoryLayoutManager);
                     goalRecyclerView.setAdapter(goalHistoryItemAdapter);

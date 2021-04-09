@@ -1,31 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:layout_marginStart="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/goalHistoryDate"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date" />
+        android:orientation="horizontal">
+        <com.github.vipulasri.timelineview.TimelineView
+            android:id="@+id/timelineView"
+            android:layout_width="wrap_content"
+            app:marker="@drawable/ic_baseline_radio_button_unchecked_24"
+            app:markerSize="25dp"
+            app:lineWidth="2dp"
+            app:linePadding="5dp"
+            app:lineStyle="dash"
+            android:layout_weight="0"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/goalHistoryTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Goal Title" />
+        </com.github.vipulasri.timelineview.TimelineView>
 
-    <TextView
-        android:id="@+id/goalHistoryDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Goal Description" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="10dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="4dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/goalHistoryDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@color/purple_700"
+                    android:text="Date" />
 
-    <TextView
-        android:id="@+id/goalHistoryStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Status" />
+                <TextView
+                    android:id="@+id/goalHistoryTitle"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="#000"
+                    android:layout_height="wrap_content"
+                    android:text="Goal Title" />
+
+                <TextView
+                    android:id="@+id/goalHistoryDescription"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="wrap_content"
+                    android:text="Goal Description" />
+
+                <TextView
+                    android:id="@+id/goalHistoryStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
 </LinearLayout>

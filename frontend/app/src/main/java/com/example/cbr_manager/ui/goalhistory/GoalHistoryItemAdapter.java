@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.goalhistory;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
+import com.github.vipulasri.timelineview.TimelineView;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItemAdapter.GoalHistoryItemViewHolder> {
 
     private ArrayList<Goal> goals;
+    private Context context;
 
-    public GoalHistoryItemAdapter(ArrayList<Goal> goals) {
+    public GoalHistoryItemAdapter(Context context, ArrayList<Goal> goals) {
+        this.context = context;
         this.goals = goals;
     }
 
@@ -26,21 +31,28 @@ public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItem
     @Override
     public GoalHistoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.goal_history_item, parent, false);
-        GoalHistoryItemAdapter.GoalHistoryItemViewHolder evh = new GoalHistoryItemAdapter.GoalHistoryItemViewHolder(v);
+        GoalHistoryItemAdapter.GoalHistoryItemViewHolder evh = new GoalHistoryItemAdapter.GoalHistoryItemViewHolder(v, viewType);
         return evh;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return TimelineView.getTimeLineViewType(position, getItemCount());
     }
 
     @Override
     public void onBindViewHolder(@NonNull GoalHistoryItemViewHolder holder, int position) {
         Goal goal = goals.get(position);
         holder.statusTextView.setText(goal.getStatus());
-        if (goal.getStatus().toLowerCase().equals("completed")) {
-            holder.dateTextView.setText(goal.getDatetimeCompleted().toString());
-        } else {
-            holder.dateTextView.setText(goal.getDatetimeCreated().toString());
+        if (goal.getStatus().toLowerCase().equals("concluded")) {
+            holder.timelineView.setMarker(context.getDrawable(R.drawable.ic_check_circle_green));
+        } else if (goal.getStatus().toLowerCase().equals("cancelled")) {
+            holder.timelineView.setMarker(context.getDrawable(R.drawable.ic_baseline_remove_circle_outline_24));
         }
+        holder.dateTextView.setText(goal.getDatetimeCreated().toString());
         holder.goalTitleTextView.setText(goal.getTitle());
         holder.goalDescriptionTextView.setText(goal.getDescription());
+        holder.timelineView.setMarkerColor(R.color.purple_700);
     }
 
     @Override
@@ -53,13 +65,16 @@ public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItem
         public TextView goalTitleTextView;
         public TextView goalDescriptionTextView;
         public TextView statusTextView;
+        public TimelineView timelineView;
 
-        public GoalHistoryItemViewHolder(@NonNull View itemView) {
+        public GoalHistoryItemViewHolder(@NonNull View itemView, int viewType) {
             super(itemView);
             dateTextView = itemView.findViewById(R.id.goalHistoryDate);
             goalTitleTextView = itemView.findViewById(R.id.goalHistoryTitle);
             goalDescriptionTextView = itemView.findViewById(R.id.goalHistoryDescription);
             statusTextView = itemView.findViewById(R.id.goalHistoryStatus);
+            timelineView = itemView.findViewById(R.id.timelineView);
+            timelineView.initLine(viewType);
         }
     }
 }

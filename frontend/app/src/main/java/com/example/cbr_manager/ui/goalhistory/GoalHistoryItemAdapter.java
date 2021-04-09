@@ -18,6 +18,10 @@ public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItem
 
     private ArrayList<Goal> goals;
 
+    public GoalHistoryItemAdapter(ArrayList<Goal> goals) {
+        this.goals = goals;
+    }
+
     @NonNull
     @Override
     public GoalHistoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

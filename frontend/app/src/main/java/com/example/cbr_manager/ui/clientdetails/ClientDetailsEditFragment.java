@@ -17,26 +17,33 @@ import androidx.fragment.app.Fragment;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.ClientViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableCompletableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class ClientDetailsEditFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
     private Spinner genderSpinner;
     String gender="";
-    Client client;
+    Client localClient;
     private int clientId;
     private static final String[] paths = {"Male", "Female"};
+    private ClientViewModel clientViewModel;
 
 
     public ClientDetailsEditFragment() {
@@ -50,9 +57,11 @@ public class ClientDetailsEditFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         Bundle bundle = this.getArguments();
         this.clientId = bundle.getInt("clientId", -1);
+        this.localClient = new Client();
 
         setupGenderSpinner(root);
         setupEditTexts(clientId, root);
@@ -64,17 +73,18 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private void modifyClientInfo(Client client) {
 
-
-        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+        clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
+            public void onComplete() {
+                Snackbar.make(getView(), "Successfully updated client", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
                 getActivity().onBackPressed();
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
+            public void onError(@NonNull Throwable e) {
+                Snackbar.make(getView(), "Failed to update client", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
@@ -94,32 +104,20 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
         EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
 
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
-                client.setGender(gender);
-
-                String [] clientName = editClientName.getText().toString().split(" ");
-                client.setFirstName(clientName[0]);
-                client.setLastName(clientName[1]);
-                client.setAge(Integer.parseInt(editClientAge.getText().toString()));
-                client.setLocation(editClientLocation.getText().toString());
-                client.setEducationGoal(editClientEducation.getText().toString());
-                client.setDisability(editClientDisability.getText().toString());
-                client.setSocialGoal(editClientSocial.getText().toString());
-                client.setHealthGoal(editClientHealth.getText().toString());
-                client.setEducationRisk(Integer.parseInt((editClientEducationRisk.getText().toString())));
-                client.setSocialRisk(Integer.parseInt(editClientSocialRisk.getText().toString()));
-                client.setHealthRisk(Integer.parseInt(editClientHealthRisk.getText().toString()));
-                modifyClientInfo(client);
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
-            }
-        });
+        localClient.setGender(gender);
+        String [] clientName = editClientName.getText().toString().split(" ");
+        localClient.setFirstName(clientName[0]);
+        localClient.setLastName(clientName[1]);
+        localClient.setAge(Integer.parseInt(editClientAge.getText().toString()));
+        localClient.setLocation(editClientLocation.getText().toString());
+        localClient.setEducationGoal(editClientEducation.getText().toString());
+        localClient.setDisability(editClientDisability.getText().toString());
+        localClient.setSocialGoal(editClientSocial.getText().toString());
+        localClient.setHealthGoal(editClientHealth.getText().toString());
+        localClient.setEducationRisk(Integer.parseInt((editClientEducationRisk.getText().toString())));
+        localClient.setSocialRisk(Integer.parseInt(editClientSocialRisk.getText().toString()));
+        localClient.setHealthRisk(Integer.parseInt(editClientHealthRisk.getText().toString()));
+        modifyClientInfo(localClient);
     }
 
     private void setupGenderSpinner(View root) {
@@ -156,29 +154,20 @@ public class ClientDetailsEditFragment extends Fragment {
         EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
         EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
 
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
-                String clientFirstName = client.getFirstName();
-                String clientLastName = client.getLastName();
-                editClientName.setText(clientFirstName + " " + clientLastName);
-                editClientAge.setText(client.getAge().toString());
-                editClientLocation.setText(client.getLocation());
-                editClientEducation.setText(client.getEducationGoal());
-                editClientDisability.setText(client.getDisability());
-                editClientSocial.setText(client.getSocialGoal());
-                editClientHealth.setText(client.getHealthGoal());
-                editClientEducationRisk.setText(client.getEducationRisk().toString());
-                editClientSocialRisk.setText(client.getSocialRisk().toString());
-                editClientHealthRisk.setText(client.getHealthRisk().toString());
-
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
-            }
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), observeClient -> {
+            this.localClient = observeClient;
+            String clientFirstName = observeClient.getFirstName();
+            String clientLastName = observeClient.getLastName();
+            editClientName.setText(clientFirstName + " " + clientLastName);
+            editClientAge.setText(observeClient.getAge().toString());
+            editClientLocation.setText(observeClient.getLocation());
+            editClientEducation.setText(observeClient.getEducationGoal());
+            editClientDisability.setText(observeClient.getDisability());
+            editClientSocial.setText(observeClient.getSocialGoal());
+            editClientHealth.setText(observeClient.getHealthGoal());
+            editClientEducationRisk.setText(observeClient.getEducationRisk().toString());
+            editClientSocialRisk.setText(observeClient.getSocialRisk().toString());
+            editClientHealthRisk.setText(observeClient.getHealthRisk().toString());
         });
     }
 

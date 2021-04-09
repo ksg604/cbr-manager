@@ -19,6 +19,8 @@ import org.threeten.bp.format.FormatStyle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.security.Timestamp;
 import java.text.DateFormat;
@@ -93,5 +95,9 @@ public class Helper {
         ZoneId zoneId = ZoneId.systemDefault();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(formatStyle);
         return instant.atZone(zoneId).format(dateTimeFormatter);
+    }
+
+    public static boolean isConnectionError(Throwable throwable){
+        return throwable instanceof SocketTimeoutException || throwable instanceof ConnectException;
     }
 }

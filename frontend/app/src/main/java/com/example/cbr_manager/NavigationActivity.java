@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,34 +68,12 @@ public class NavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
-        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-        clientViewModel.getAllClients().subscribe(new Observer<Client>() {
-            @Override
-            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-                Log.d(TAG, "onSubscribe: ");
-            }
-
-            @Override
-            public void onNext(@io.reactivex.annotations.NonNull Client client) {
-                Log.d(TAG, "OnNext: client id is: " + client.getId());
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: ");
-            }
-        });
-
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         navigationView = findViewById(R.id.nav_view);
 
         handleIncomingSnackBarMessage(navigationView);
@@ -111,6 +91,8 @@ public class NavigationActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        hideAdminOnlyMenuItems();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -133,6 +115,26 @@ public class NavigationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setupAlertsBadge(navigationView);
+    }
+
+    private void hideAdminOnlyMenuItems(){
+        authViewModel.getUser().subscribe(new DisposableSingleObserver<User>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull User user) {
+                if(!user.isAdmin()){
+                    MenuItem itemNavUserCreation = navigationView.getMenu().findItem(R.id.nav_user_creation);
+                    itemNavUserCreation.setEnabled(user.isAdmin());
+                    MenuItem itemNavAlertCreation = navigationView.getMenu().findItem(R.id.nav_alert_creation);
+                    itemNavAlertCreation.setEnabled(user.isAdmin());
+                    MenuItem itemNavStats = navigationView.getMenu().findItem(R.id.nav_statistics);
+                    itemNavStats.setEnabled(user.isAdmin());
+                }
+            }
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
     }
 
     private void setupAlertsBadge(NavigationView navigationView) {

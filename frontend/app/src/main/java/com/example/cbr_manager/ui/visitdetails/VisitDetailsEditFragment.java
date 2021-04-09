@@ -1,10 +1,8 @@
 package com.example.cbr_manager.ui.visitdetails;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,67 +13,64 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.IOException;
-import java.sql.Timestamp;
-
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class VisitDetailsEditFragment extends Fragment {
 
-    private APIService apiService = APIService.getInstance();
-    private View parentLayout;
     private String location="";
     private int visitId = -1;
     private Client currentClient;
+    private VisitViewModel visitViewModel;
+    private ClientViewModel clientViewModel;
+
+    private Visit visit;
 
     public VisitDetailsEditFragment() {
-        // Required empty public constructor
+        super(R.layout.fragment_visit_details_edit);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        View root = inflater.inflate(R.layout.fragment_visit_details_edit, container, false);
-        parentLayout = root.findViewById(android.R.id.content);
-        
-        Bundle bundle = this.getArguments();
-        visitId = bundle.getInt("visitId", -1);
-
-
-        getVisitInfo(visitId, root);
-        setupSubmitButton(root);
-
-        return root;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
     }
 
+    @Override
+    public void onViewCreated(@androidx.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = this.getArguments();
+        visitId = bundle.getInt("visitId", -1);
+        getVisitInfo(visitId, view);
+        setupSubmitButton(view);
+    }
 
     private void getVisitInfo(int visitId, View root) {
-        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
-            @Override
-            public void onResponse(Call<Visit> call, Response<Visit> response) {
-                Visit visit = response.body();
-                setupLocationSpinner(root, visit.getLocationDropDown());
-                setupEditTexts(visit, root);
-                getClientInfo(visit.getClientId());
-            }
-
-            @Override
-            public void onFailure(Call<Visit> call, Throwable t) {
-            }
+        visitViewModel.getVisitAsLiveData(visitId).observe(getViewLifecycleOwner(),visit -> {
+            this.visit = visit;
+            setupLocationSpinner(root, visit.getLocationDropDown());
+            setupEditTexts(visit, root);
+            getClientInfo(visit.getClientId());
         });
     }
 
@@ -148,26 +143,10 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void getClientInfo(int clientId){
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-
-                if(response.isSuccessful()){
-                    Client client = response.body();
-                    setupCurrentClient(client);
-                    setupNameTextView(client.getFullName());
-                    setupImageViews(client.getPhotoURL());
-                } else{
-                    Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
+            setupCurrentClient(client);
+            setupNameTextView(client.getFullName());
+            setupImageViews(client.getPhotoURL());
         });
     }
 
@@ -187,11 +166,12 @@ public class VisitDetailsEditFragment extends Fragment {
 
     private void setupSubmitButton(View root) {
         Button submitButton = root.findViewById(R.id.visitDetailsEditSubmitButton);
-        submitButton.setOnClickListener(v -> {getAndUpdateVisit(visitId,root);});
+        submitButton.setOnClickListener(v -> {
+            getAndUpdateVisit(visitId, root);
+        });
     }
 
     private void getAndUpdateVisit(int visitId, View root) {
-
         EditText editVillageNumber = root.findViewById(R.id.visitDetailsEditVillageNumber);
 
         EditText editHealthWheelChairProvision = root.findViewById(R.id.visitDetailsEditHealthWheelchairProvision);
@@ -219,65 +199,51 @@ public class VisitDetailsEditFragment extends Fragment {
 
         EditText editAdditionalInfo = root.findViewById(R.id.visitDetailsEditAdditionalInfo);
 
-        apiService.visitService.getVisit(visitId).enqueue(new Callback<Visit>() {
-            @Override
-            public void onResponse(Call<Visit> call, Response<Visit> response) {
-                Visit visit = response.body();
-                visit.setClient(currentClient);
-                visit.setLocationDropDown(location);
 
-                visit.setVillageNoVisit(Integer.parseInt(editVillageNumber.getText().toString()));
-                visit.setWheelchairHealthProvisionText(editHealthWheelChairProvision.getText().toString());
-                visit.setProstheticHealthProvisionText(editHealthProstheticProvision.getText().toString());
-                visit.setOrthoticHealthProvisionText(editHealthOrthoticProvision.getText().toString());
-                visit.setRepairsHealthProvisionText(editHealthRepairsProvision.getText().toString());
-                visit.setReferralHealthProvisionText(editHealthReferralProvision.getText().toString());
-                visit.setAdviceHealthProvisionText(editHealthAdviceProvision.getText().toString());
-                visit.setAdvocacyHealthProvisionText(editHealthAdvocacyProvision.getText().toString());
-                visit.setEncouragementHealthProvisionText(editHealthEncouragementProvision.getText().toString());
-                visit.setConclusionHealthProvision(editHealthConclusionProvision.getText().toString());
+        visit.setClient(currentClient);
+        visit.setLocationDropDown(location);
 
-                visit.setReferralEducationProvisionText(editEducationReferralProvision.getText().toString());
-                visit.setAdviceEducationProvisionText(editEducationAdviceProvision.getText().toString());
-                visit.setAdvocacyEducationProvisionText(editEducationAdvocacyProvision.getText().toString());
-                visit.setEncouragementEducationProvisionText(editEducationEncouragementProvision.getText().toString());
-                visit.setConclusionEducationProvision(editEducationConclusionProvision.getText().toString());
+        visit.setVillageNoVisit(Integer.parseInt(editVillageNumber.getText().toString()));
+        visit.setWheelchairHealthProvisionText(editHealthWheelChairProvision.getText().toString());
+        visit.setProstheticHealthProvisionText(editHealthProstheticProvision.getText().toString());
+        visit.setOrthoticHealthProvisionText(editHealthOrthoticProvision.getText().toString());
+        visit.setRepairsHealthProvisionText(editHealthRepairsProvision.getText().toString());
+        visit.setReferralHealthProvisionText(editHealthReferralProvision.getText().toString());
+        visit.setAdviceHealthProvisionText(editHealthAdviceProvision.getText().toString());
+        visit.setAdvocacyHealthProvisionText(editHealthAdvocacyProvision.getText().toString());
+        visit.setEncouragementHealthProvisionText(editHealthEncouragementProvision.getText().toString());
+        visit.setConclusionHealthProvision(editHealthConclusionProvision.getText().toString());
 
-                visit.setReferralSocialProvisionText(editSocialReferralProvision.getText().toString());
-                visit.setAdviceSocialProvisionText(editSocialAdviceProvision.getText().toString());
-                visit.setAdvocacySocialProvisionText(editSocialAdvocacyProvision.getText().toString());
-                visit.setEncouragementSocialProvisionText(editSocialEncouragementProvision.getText().toString());
-                visit.setConclusionSocialProvision(editSocialConclusionProvision.getText().toString());
+        visit.setReferralEducationProvisionText(editEducationReferralProvision.getText().toString());
+        visit.setAdviceEducationProvisionText(editEducationAdviceProvision.getText().toString());
+        visit.setAdvocacyEducationProvisionText(editEducationAdvocacyProvision.getText().toString());
+        visit.setEncouragementEducationProvisionText(editEducationEncouragementProvision.getText().toString());
+        visit.setConclusionEducationProvision(editEducationConclusionProvision.getText().toString());
 
+        visit.setReferralSocialProvisionText(editSocialReferralProvision.getText().toString());
+        visit.setAdviceSocialProvisionText(editSocialAdviceProvision.getText().toString());
+        visit.setAdvocacySocialProvisionText(editSocialAdvocacyProvision.getText().toString());
+        visit.setEncouragementSocialProvisionText(editSocialEncouragementProvision.getText().toString());
+        visit.setConclusionSocialProvision(editSocialConclusionProvision.getText().toString());
+        visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
 
-                visit.setAdditionalInfo(editAdditionalInfo.getText().toString());
-                modifyVisitInfo(visit);
-            }
-            @Override
-            public void onFailure(Call<Visit> call, Throwable t) {
-
-            }
-        });
+        updateVisit(visit);
     }
 
-    private void modifyVisitInfo(Visit visit) {
-        apiService.visitService.modifyVisit(visit).enqueue(new Callback<Visit>() {
+    private void updateVisit(Visit visit) {
+
+        visitViewModel.updateVisit(visit).subscribe(new DisposableCompletableObserver() {
             @Override
-            public void onResponse(Call<Visit> call, Response<Visit> response) {
-                if(response.isSuccessful()) {
-                    Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    Visit visit = response.body();
-                } else{
-                    Snackbar.make(getView(), "Failed to update user", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+            public void onComplete() {
+                Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
                 getActivity().onBackPressed();
             }
 
             @Override
-            public void onFailure(Call<Visit> call, Throwable t) {
-
+            public void onError(@NonNull Throwable e) {
+                Snackbar.make(getView(), "Failed to update user", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
             }
         });
     }

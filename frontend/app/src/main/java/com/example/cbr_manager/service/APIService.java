@@ -10,7 +10,6 @@ import com.example.cbr_manager.service.goal.GoalService;
 import com.example.cbr_manager.service.referral.ReferralService;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserService;
-import com.example.cbr_manager.service.visit.VisitService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +22,6 @@ public class APIService {
     public AuthService authService;
     public ClientService clientService;
     public UserService userService;
-    public VisitService visitService;
     public AlertService alertService;
     public ReferralService referralService;
     public BaselineSurveyService baselineSurveyService;
@@ -44,7 +42,6 @@ public class APIService {
         this.token = token;
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
-        this.visitService = new VisitService(token);
         this.alertService = new AlertService(token);
         this.referralService = initializeReferralService(token);
         this.baselineSurveyService = new BaselineSurveyService(token);

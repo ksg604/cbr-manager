@@ -5,19 +5,33 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.view.View.GONE;
 
@@ -28,13 +42,28 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     TextInputLayout referralInput;
     TextInputLayout encouragementInput;
     TextInputLayout conclusionInput;
+    TextInputLayout newGoalInput;
+    TextInputLayout newGoalDescriptionInput;
     Chip adviceChip;
     Chip advocacyChip;
     Chip referralChip;
     Chip encouragementChip;
     RadioGroup goalsMetRadioGroup;
+    TextView currentGoalTextView;
+    TextView currentGoalStatusTextView;
+    TextView goalsMetTextView;
     private View view;
     private Visit visit;
+    private List<Goal> goalList = new ArrayList<>();
+    private final String GOAL_CONCLUDED_KEY = "concluded";
+    private final String GOAL_CATEGORY_EDUCATION = "education";
+    private APIService apiService = APIService.getInstance();
+    private Integer clientId = -1;
+    Goal educationGoal;
+    Goal previousEducationGoal;
+    private static final String EDUCATION_KEY = "Education";
+    private static final String STATUS_ONGOING_KEY = "Ongoing";
+    private boolean concludedOrNotFound = false;
 
     public CreateVisitEducationFragment() {
         // Required empty public constructor
@@ -56,9 +85,12 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_education, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
+        educationGoal = ((CreateVisitStepperActivity) getActivity()).educationGoalObj;
+        clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
+        getEducationGoal(view);
         setupInputLayoutVisibility();
         return view;
     }
@@ -70,6 +102,79 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         setChipListener(encouragementChip, encouragementInput);
     }
 
+    private void getEducationGoal(View view) {
+        currentGoalTextView = view.findViewById(R.id.educationProvisionCurrentGoalTextView);
+        currentGoalStatusTextView = view.findViewById(R.id.educationProvisionCurrentGoalStatusTextView);
+        if (apiService.isAuthenticated()) {
+            apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
+                @Override
+                public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
+                    if (response.isSuccessful()) {
+                        goalList = response.body();
+                        Goal goal;
+                        Collections.reverse(goalList);
+                        previousEducationGoal = findNonConcludedGoal();
+                        if (previousEducationGoal != null) {
+                            currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
+                            currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
+                        } else {
+                            previousEducationGoal = findConcludedGoal();
+                            if (previousEducationGoal != null) {
+                                currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
+                                currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
+                            } else {
+                                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
+                                currentGoalStatusTextView.setText("Current status: No status.");
+                            }
+                            goalsMetRadioGroup.setVisibility(GONE);
+                            goalsMetTextView.setVisibility(GONE);
+                            newGoalInput.setVisibility(View.VISIBLE);
+                            newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                            concludedOrNotFound = true;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Goal>> call, Throwable t) {
+
+                }
+            });
+        }
+
+
+    }
+
+    private Goal findNonConcludedGoal() {
+        Goal goal;
+        for (int i = 0; i < goalList.size(); i++) {
+            goal = goalList.get(i);
+            Integer id = goal.getClientId();
+            String type = goal.getCategory().trim().toLowerCase();
+            String status = goal.getStatus().trim().toLowerCase();
+            String GOAL_CREATED_KEY = "created";
+            String GOAL_ONGOING_KEY = "ongoing";
+            if (id.equals(clientId) && type.equals(GOAL_CATEGORY_EDUCATION) && (status.equals(GOAL_CREATED_KEY) || status.equals(GOAL_ONGOING_KEY))) {
+                return goal;
+            }
+        }
+        return null;
+    }
+
+    private Goal findConcludedGoal() {
+        Goal goal;
+        for (int i = 0; i < goalList.size(); i++) {
+            goal = goalList.get(i);
+            Integer id = goal.getClientId();
+            String type = goal.getCategory().trim().toLowerCase();
+            String status = goal.getStatus().trim().toLowerCase();
+            if (id.equals(clientId) && type.equals(GOAL_CATEGORY_EDUCATION) && status.equals(GOAL_CONCLUDED_KEY)) {
+                return goal;
+            }
+        }
+        return null;
+    }
+
     private void initializeRadioGroups(View view) {
         goalsMetRadioGroup = view.findViewById(R.id.educationProvisionRadioGroup);
         goalsMetRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -77,8 +182,16 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.educationProvisionConcludedRadioButton) {
                     conclusionInput.setVisibility(View.VISIBLE);
+                    newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.educationProvisionCancelledRadioButton) {
+                    newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                    conclusionInput.setVisibility(GONE);
                 } else {
                     conclusionInput.setVisibility(GONE);
+                    newGoalDescriptionInput.setVisibility(GONE);
+                    newGoalInput.setVisibility(GONE);
                 }
             }
         });
@@ -105,11 +218,14 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     }
 
     private void initializeInputLayouts(View view) {
+        goalsMetTextView = view.findViewById(R.id.educationProvisionRadioGroupTextView);
         adviceInput = view.findViewById(R.id.educationAdviceInputLayout);
         advocacyInput = view.findViewById(R.id.educationAdvocacyInputLayout);
         referralInput = view.findViewById(R.id.educationReferralInputLayout);
         encouragementInput = view.findViewById(R.id.educationEncouragementInputLayout);
         conclusionInput = view.findViewById(R.id.educationConclusionInputLayout);
+        newGoalInput = view.findViewById(R.id.educationNewGoalInputLayout);
+        newGoalDescriptionInput = view.findViewById(R.id.educationNewGoalDescriptionInputLayout);
     }
 
     @Nullable
@@ -132,7 +248,38 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
 
         visit.setConclusionEducationProvision(getInputLayoutString(conclusionInput));
 
-        // TODO: RadioGroup goals
+        if (goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionConcludedRadioButton || goalsMetRadioGroup.getCheckedRadioButtonId() == R.id.educationProvisionCancelledRadioButton || concludedOrNotFound) {
+            if (!newGoalInput.getEditText().getText().toString().isEmpty()) {
+                educationGoal.setCategory(EDUCATION_KEY);
+                educationGoal.setTitle(newGoalInput.getEditText().getText().toString());
+                educationGoal.setStatus(STATUS_ONGOING_KEY);
+                String description = newGoalDescriptionInput.getEditText().getText().toString();
+
+                if (description.isEmpty()) {
+                    educationGoal.setDescription("No description listed.");
+                } else {
+                    educationGoal.setDescription(description);
+                }
+                ((CreateVisitStepperActivity) getActivity()).educationGoalCreated = true;
+            } else {
+                ((CreateVisitStepperActivity) getActivity()).educationGoalCreated = false;
+            }
+        }
+
+        if (!concludedOrNotFound && previousEducationGoal != null) {
+            switch (goalsMetRadioGroup.getCheckedRadioButtonId()) {
+                case R.id.educationProvisionConcludedRadioButton:
+                    previousEducationGoal.setStatus(GOAL_CONCLUDED_KEY);
+                    break;
+                case R.id.educationProvisionOngoingRadioButton:
+                    previousEducationGoal.setStatus(STATUS_ONGOING_KEY);
+                    break;
+                case R.id.educationProvisionCancelledRadioButton:
+                    previousEducationGoal.setStatus("Cancelled");
+                    break;
+            }
+            ((CreateVisitStepperActivity) getActivity()).prevEducationGoalObj = previousEducationGoal;
+        }
     }
 
     private String getInputLayoutString(TextInputLayout textInputLayout) {

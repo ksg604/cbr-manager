@@ -13,8 +13,12 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.APIService;
+import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.visit.Visit;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,6 +27,14 @@ import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.view.View.GONE;
 
@@ -39,6 +51,9 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     TextInputLayout advocacyInput;
     TextInputLayout encouragementInput;
     TextInputLayout conclusionInput;
+    TextInputLayout newGoalInput;
+    TextInputLayout newGoalDescriptionInput;
+    TextView goalMetTextView;
     Chip wheelchairChip;
     Chip prostheticChip;
     Chip orthoticChip;
@@ -48,6 +63,18 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     Chip advocacyChip;
     Chip encouragementChip;
     RadioGroup goalOutcomeRadioGroup;
+    TextView currentGoalTextView;
+    TextView currentGoalStatusTextView;
+    private List<Goal> goalList = new ArrayList<>();
+    private final String GOAL_CONCLUDED_KEY = "concluded";
+    private final String GOAL_CATEGORY_HEALTH = "health";
+    private APIService apiService = APIService.getInstance();
+    private Integer clientId = -1;
+    Goal healthGoal;
+    Goal previousHealthGoal;
+    private static final String HEALTH_KEY = "Health";
+    private static final String STATUS_ONGOING_KEY = "Ongoing";
+    private boolean concludedOrNotFound = false;
 
     public CreateVisitHealthFragment() {
         // Required empty public constructor
@@ -69,11 +96,91 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_visit_health, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
+        healthGoal = ((CreateVisitStepperActivity) getActivity()).healthGoalObj;
+        clientId = ((CreateVisitStepperActivity) getActivity()).clientId;
         initializeInputLayouts(view);
         initializeChips(view);
         initializeRadioGroups(view);
         setupInputLayoutVisibility(view);
+        getHealthGoal(view);
         return view;
+    }
+
+    private void getHealthGoal(View view) {
+        currentGoalTextView = view.findViewById(R.id.healthProvisionCurrentGoalTextView);
+        currentGoalStatusTextView = view.findViewById(R.id.healthProvisionCurrentGoalStatusTextView);
+        if (apiService.isAuthenticated()) {
+            apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
+                @Override
+                public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
+                    if (response.isSuccessful()) {
+                        goalList = response.body();
+                        Goal goal;
+                        Collections.reverse(goalList);
+                        previousHealthGoal = findNonConcludedGoal();
+                        if (previousHealthGoal != null) {
+                            currentGoalTextView.setText("Current goal: " + previousHealthGoal.getTitle());
+                            currentGoalStatusTextView.setText("Current status: " + previousHealthGoal.getStatus());
+                        }
+
+                        if (previousHealthGoal == null) {
+                            previousHealthGoal = findConcludedGoal();
+                            if (previousHealthGoal != null) {
+                                currentGoalTextView.setText("Current goal: " + previousHealthGoal.getTitle());
+                                currentGoalStatusTextView.setText("Current status: " + previousHealthGoal.getStatus());
+                            } else {
+                                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
+                                currentGoalStatusTextView.setText("Current status: No status.");
+                            }
+                            goalOutcomeRadioGroup.setVisibility(GONE);
+                            goalMetTextView.setVisibility(GONE);
+                            newGoalInput.setVisibility(View.VISIBLE);
+                            newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                            concludedOrNotFound = true;
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Response error.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Goal>> call, Throwable t) {
+
+                }
+            });
+        }
+
+
+    }
+
+    private Goal findNonConcludedGoal() {
+        Goal goal;
+        for (int i = 0; i < goalList.size(); i++) {
+            goal = goalList.get(i);
+            Integer id = goal.getClientId();
+            String type = goal.getCategory().trim().toLowerCase();
+            String status = goal.getStatus().trim().toLowerCase();
+            String GOAL_CREATED_KEY = "created";
+            String GOAL_ONGOING_KEY = "ongoing";
+            if (id.equals(clientId) && type.equals(GOAL_CATEGORY_HEALTH) && (status.equals(GOAL_CREATED_KEY) || status.equals(GOAL_ONGOING_KEY))) {
+                return goal;
+            }
+        }
+        return null;
+    }
+
+    private Goal findConcludedGoal() {
+        Goal goal;
+        for (int i = 0; i < goalList.size(); i++) {
+            goal = goalList.get(i);
+            Integer id = goal.getClientId();
+            String type = goal.getCategory().trim().toLowerCase();
+            String status = goal.getStatus().trim().toLowerCase();
+            if (id.equals(clientId) && type.equals(GOAL_CATEGORY_HEALTH) && status.equals(GOAL_CONCLUDED_KEY)) {
+                return goal;
+            }
+        }
+        return null;
     }
 
     private void initializeRadioGroups(View view) {
@@ -83,8 +190,16 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.concludedHPRadioButton) {
                     conclusionInput.setVisibility(View.VISIBLE);
+                    newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.cancelledHPRadioButton) {
+                    newGoalInput.setVisibility(View.VISIBLE);
+                    newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                    conclusionInput.setVisibility(GONE);
                 } else {
                     conclusionInput.setVisibility(GONE);
+                    newGoalDescriptionInput.setVisibility(GONE);
+                    newGoalInput.setVisibility(GONE);
                 }
             }
         });
@@ -116,6 +231,7 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
     }
 
     private void initializeInputLayouts(View view) {
+        goalMetTextView = view.findViewById(R.id.healthGoalMetTextView);
         wheelchairInput = view.findViewById(R.id.healthWheelChairInputLayout);
         prostheticInput = view.findViewById(R.id.healthProstheticInputLayout);
         orthoticInput = view.findViewById(R.id.healthOrthoticInputLayout);
@@ -125,6 +241,8 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         advocacyInput = view.findViewById(R.id.healthAdvocacyInputLayout);
         encouragementInput = view.findViewById(R.id.healthEncouragementInputLayout);
         conclusionInput = view.findViewById(R.id.healthGoalConclusionInputLayout);
+        newGoalInput = view.findViewById(R.id.healthNewGoalInputLayout);
+        newGoalDescriptionInput = view.findViewById(R.id.healthNewGoalDescriptionInputLayout);
     }
 
     private void initializeChips(View view) {
@@ -169,13 +287,38 @@ public class CreateVisitHealthFragment extends Fragment implements Step {
         visit.setAdvocacyHealthProvisionText(getInputLayoutString(advocacyInput));
         visit.setEncouragementHealthProvisionText(getInputLayoutString(encouragementInput));
 
-        if (goalOutcomeRadioGroup.getCheckedRadioButtonId() == -1) {
-            //TODO
-//            visit.getClient().setGoalMetHealthProvision("");
-        } else {
-            //TODO
-            RadioButton radioButton = getView().findViewById(goalOutcomeRadioGroup.getCheckedRadioButtonId());
-//            visit.getClient().setGoalMetHealthProvision(radioButton.getText().toString());
+        if (goalOutcomeRadioGroup.getCheckedRadioButtonId() == R.id.concludedHPRadioButton || goalOutcomeRadioGroup.getCheckedRadioButtonId() == R.id.cancelledHPRadioButton || concludedOrNotFound) {
+            if (!newGoalInput.getEditText().getText().toString().isEmpty()) {
+                healthGoal.setCategory(HEALTH_KEY);
+                healthGoal.setTitle(newGoalInput.getEditText().getText().toString());
+                healthGoal.setStatus(STATUS_ONGOING_KEY);
+                String description = newGoalDescriptionInput.getEditText().getText().toString();
+
+                if (description.isEmpty()) {
+                    healthGoal.setDescription("No description listed.");
+                } else {
+                    healthGoal.setDescription(description);
+                }
+
+                ((CreateVisitStepperActivity) getActivity()).healthGoalCreated = true;
+            } else {
+                ((CreateVisitStepperActivity) getActivity()).healthGoalCreated = false;
+            }
+        }
+
+        if (!concludedOrNotFound && previousHealthGoal != null) {
+            switch (goalOutcomeRadioGroup.getCheckedRadioButtonId()) {
+                case R.id.concludedHPRadioButton:
+                    previousHealthGoal.setStatus(GOAL_CONCLUDED_KEY);
+                    break;
+                case R.id.ongoingHPRadioButton:
+                    previousHealthGoal.setStatus(STATUS_ONGOING_KEY);
+                    break;
+                case R.id.cancelledHPRadioButton:
+                    previousHealthGoal.setStatus("Cancelled");
+                    break;
+            }
+            ((CreateVisitStepperActivity) getActivity()).prevHealthGoalObj = previousHealthGoal;
         }
 
         visit.setConclusionHealthProvision(getInputLayoutString(conclusionInput));

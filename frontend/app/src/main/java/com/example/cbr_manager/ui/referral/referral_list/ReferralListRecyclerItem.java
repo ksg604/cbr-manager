@@ -23,7 +23,7 @@ public class ReferralListRecyclerItem {
     public ReferralListRecyclerItem(String status, String type, String referTo, Referral referral, String date,int clientId, String clientName) {
         this.status = status;
         this.type = type;
-        this.referTo = "Refer to: "+referTo;
+        this.referTo = referTo;
         this.referral = referral;
         this.date = date;
         this.clientId = clientId;

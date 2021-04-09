@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -20,6 +22,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
@@ -30,10 +33,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class DashboardFragment extends Fragment {
 
     private static final int NEW_VISIT_CODE = 100;
@@ -47,6 +52,14 @@ public class DashboardFragment extends Fragment {
     TextView titleTextView;
     int homeAlertId;
     View root;
+
+    private VisitViewModel visitViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -132,41 +145,28 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupVisitStats(View root) {
-        if (apiService.isAuthenticated()) {
-            apiService.visitService.getVisits().enqueue(new Callback<List<Visit>>() {
-                @Override
-                public void onResponse(Call<List<Visit>> call, Response<List<Visit>> response) {
-                    if (response.isSuccessful()) {
-                        List<Visit> visits = response.body();
-                        int totalVisits = visits.size();
+        visitViewModel.getVisitsAsLiveData().observe(getViewLifecycleOwner(), visits -> {
+            int totalVisits = visits.size();
 
-                        TextView totalNumberVisits = root.findViewById(R.id.dashboardTotalVisitsNum);
-                        totalNumberVisits.setText(Integer.toString(totalVisits));
-                        List<String> differentLocations = new ArrayList<>();
-                        List<Integer> differentClients = new ArrayList<>();
-                        for (Visit eachVisit : visits) {
-                            if (!differentClients.contains(eachVisit.getClientId())) {
-                                differentClients.add(eachVisit.getClientId());
-                            }
-                            if (!differentLocations.contains(eachVisit.getLocationDropDown())) {
-                                differentLocations.add(eachVisit.getLocationDropDown());
-                            }
-                        }
-
-                        TextView totalClientsVisited = root.findViewById(R.id.dashboardClientsVisitedNum);
-                        totalClientsVisited.setText(Integer.toString(differentClients.size()));
-
-                        TextView totalLocationsVisited = root.findViewById(R.id.dashboardLocationsNum);
-                        totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
-                    }
+            TextView totalNumberVisits = root.findViewById(R.id.dashboardTotalVisitsNum);
+            totalNumberVisits.setText(Integer.toString(totalVisits));
+            List<String> differentLocations = new ArrayList<>();
+            List<Integer> differentClients = new ArrayList<>();
+            for (Visit eachVisit : visits) {
+                if (!differentClients.contains(eachVisit.getClientId())) {
+                    differentClients.add(eachVisit.getClientId());
                 }
-
-                @Override
-                public void onFailure(Call<List<Visit>> call, Throwable t) {
-
+                if (!differentLocations.contains(eachVisit.getLocationDropDown())) {
+                    differentLocations.add(eachVisit.getLocationDropDown());
                 }
-            });
-        }
+            }
+
+            TextView totalClientsVisited = root.findViewById(R.id.dashboardClientsVisitedNum);
+            totalClientsVisited.setText(Integer.toString(differentClients.size()));
+
+            TextView totalLocationsVisited = root.findViewById(R.id.dashboardLocationsNum);
+            totalLocationsVisited.setText(Integer.toString(differentLocations.size()));
+        });
     }
 
     public void fetchNewestAlert() {

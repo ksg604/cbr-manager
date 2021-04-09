@@ -1,5 +1,6 @@
 package com.example.cbr_manager.service.visit;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,7 +10,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Dao
@@ -18,7 +18,7 @@ public interface VisitDao {
     long insert(Visit visit);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Single<Long> SingleInsert(Visit visit);
+    void insertAll(List<Visit> visits);
 
     @Delete
     void delete(Visit visit);
@@ -30,8 +30,14 @@ public interface VisitDao {
     void clearAll();
 
     @Query("SELECT * FROM visit")
-    Single<List<Visit>> getVisits();
+    LiveData<List<Visit>> getVisitsAsLiveData();
 
-    @Query("SELECT * FROM visit WHERE visit_id = :id")
-    Single<Visit> getVisit(int id);
+    @Query("SELECT * FROM visit WHERE id = :id")
+    Single<Visit> getVisitAsSingle(int id);
+
+    @Query("SELECT * FROM visit WHERE id = :id")
+    LiveData<Visit> getVisitAsLiveData(int id);
+
+    @Query("SELECT * FROM visit WHERE serverId = :id")
+    Visit getVisitByServerId(int id);
 }

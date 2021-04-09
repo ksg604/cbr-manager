@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
@@ -12,10 +13,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.Observable;
 import io.reactivex.Completable;
 import io.reactivex.Single;
-import okhttp3.ResponseBody;
 
 @HiltViewModel
 public class ClientViewModel extends ViewModel {
@@ -29,28 +28,29 @@ public class ClientViewModel extends ViewModel {
         this.clientRepository = clientRepository;
     }
 
-    public Observable<Client> getAllClients() {
-        return this.clientRepository.getAllClient();
+    public LiveData<List<Client>> getAllClients() {
+        return this.clientRepository.getClientsAsLiveData();
     }
 
-    public Single<Client> insert(Client client) {
-        return this.clientRepository.insert(client);
-    }
-
-    public Single<ResponseBody> uploadphoto(File file, int clientId) {
-        return this.clientRepository.uploadPhoto(file, clientId);
-    }
-
-    public Single<Client> update(Client client) {
-        return this.clientRepository.update(client);
-    }
-
-    public Completable sync() {
-        return clientRepository.sync();
-    }
-
-
-    public Single<Client> getClient(int id) {
+    public LiveData<Client> getClient(int id) {
         return clientRepository.getClient(id);
     }
+
+    public Single<Client> getClientAsSingle(int id) {
+        return clientRepository.getClientAsSingle(id);
+    }
+
+    public Single<Client> createClient(Client client) {
+        return this.clientRepository.createClient(client);
+    }
+
+    public Completable uploadphoto(File file, Client client) {
+        return this.clientRepository.uploadPhoto(file, client);
+    }
+
+    public Completable modifyClient(Client client) {
+        return this.clientRepository.modifyClient(client);
+    }
+
+
 }

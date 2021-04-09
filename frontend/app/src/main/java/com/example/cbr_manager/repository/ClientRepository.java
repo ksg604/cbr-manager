@@ -1,5 +1,7 @@
 package com.example.cbr_manager.repository;
 
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
@@ -93,9 +95,10 @@ public class ClientRepository {
     }
 
     public Completable uploadPhoto(File file, Client client) {
-        client.setPhotoURL(file.getAbsolutePath());
+        Uri path = Uri.fromFile(file);
+        client.setPhotoURL(path.toString());
         return Completable.fromAction(() -> clientDao.update(client))
-                .doOnComplete(() -> enqueueUploadPhoto(client))
+                .doOnComplete(() -> enqueueUploadPhoto(client, file.getAbsolutePath()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -121,7 +124,7 @@ public class ClientRepository {
         return createClientRequest.getId();
     }
 
-    private void enqueueUploadPhoto( Client client) {
+    private void enqueueUploadPhoto(Client client, String filePath) {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -129,7 +132,7 @@ public class ClientRepository {
         OneTimeWorkRequest uploadPhotoRequest =
                 new OneTimeWorkRequest.Builder(UploadPhotoWorker.class)
                         .setConstraints(constraints)
-                        .setInputData(UploadPhotoWorker.buildInputData(authHeader, client.getId(), client.getPhotoURL()))
+                        .setInputData(UploadPhotoWorker.buildInputData(authHeader, client.getId(), filePath))
                         .build();
         workManager.enqueue(uploadPhotoRequest);
     }

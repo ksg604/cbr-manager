@@ -310,7 +310,6 @@ public class ClientDetailsFragment extends Fragment {
                             }
                             healthStatus.setText(goal.getStatus());
                             noHealthGoal = false;
-                            modifyCardView(R.id.clientDetailsHealthGoalCardView, noHealthGoal);
                         } else if (goal.getCategory().toLowerCase().equals("education") && noEducationGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 educationTitle.setText(goal.getTitle());

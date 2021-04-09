@@ -100,7 +100,6 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
             textListName = itemView.findViewById(R.id.textListClientName);
             this.onItemListener = onItemListener;
             itemView.setOnClickListener(this);
-
         }
 
         @Override

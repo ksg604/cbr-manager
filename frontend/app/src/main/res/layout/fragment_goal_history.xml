@@ -28,10 +28,12 @@
                 app:lineWidth="2dp"
                 app:markerSize="20dp"
                 app:startLineColor="@color/purple_700">
-
-
             </com.github.vipulasri.timelineview.TimelineView>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/goalHistoryRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>

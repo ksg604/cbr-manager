@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
@@ -27,6 +28,10 @@ import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
@@ -150,15 +155,13 @@ public class ClientDetailsFragment extends Fragment {
             setupLocationTextView(client.getLocation());
             setupAgeTextView(client.getAge().toString());
             setupGenderTextView(client.getGender());
-            setupHealthTextView(client.getGoalMetHealthProvision());
-            setupSocialTextView(client.getGoalMetSocialProvision());
-            setupEducationTextView(client.getGoalMetEducationProvision());
             setupEducationRiskTextView(client.getEducationRisk().toString());
             setupSocialRiskTextView(client.getSocialRisk().toString());
             setupHealthRiskTextView(client.getHealthRisk().toString());
             setupDisabilityTextView(client.getDisability());
             setupRiskLevelTextView(client.calculateRiskScore().toString());
             setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
+            setupGoals();
         });
     }
 
@@ -189,18 +192,6 @@ public class ClientDetailsFragment extends Fragment {
 
     private void setupRiskLevelTextView(String riskLevel) {
         setUpTextView(R.id.clientDetailsRiskLevelTextView, riskLevel);
-    }
-
-    private void setupHealthTextView(String health) {
-        setUpTextView(R.id.clientDetailsHealthGoalTextView, health);
-    }
-
-    private void setupEducationTextView(String education) {
-        setUpTextView(R.id.clientDetailsEducationGoalTextView, education);
-    }
-
-    private void setupSocialTextView(String social) {
-        setUpTextView(R.id.clientDetailsSocialGoalTextView, social);
     }
 
     private void setupHealthRiskTextView(String healthRisk) {
@@ -267,6 +258,70 @@ public class ClientDetailsFragment extends Fragment {
 
     public int getClientId() {
         return clientId;
+    }
+
+    private void setupGoals() {
+        TextView healthTitle = getView().findViewById(R.id.clientDetailsHealthGoalTextView);
+        TextView healthDescription = getView().findViewById(R.id.clientDetailsHealthDescriptionTextView);
+        TextView healthStatus = getView().findViewById(R.id.clientDetailsHealthStatusTextView);
+        TextView socialTitle = getView().findViewById(R.id.clientDetailsSocialGoalTextView);
+        TextView socialDescription = getView().findViewById(R.id.clientDetailsSocialDescriptionTextView);
+        TextView socialStatus = getView().findViewById(R.id.clientDetailsSocialStatusTextView);
+        TextView educationTitle = getView().findViewById(R.id.clientDetailsEducationGoalTextView);
+        TextView educationDescription = getView().findViewById(R.id.clientDetailsEducationDescriptionTextView);
+        TextView educationStatus = getView().findViewById(R.id.clientDetailsEducationStatusTextView);
+
+        apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
+            @Override
+            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
+                List<Goal> goals = new ArrayList<>();
+                boolean noHealthGoal = true;
+                boolean noEducationGoal = true;
+                boolean noSocialGoal = true;
+                goals = response.body();
+                Collections.reverse(goals);
+                for (Goal goal : goals) {
+                    if (goal.getClientId().equals(clientId)) {
+                        if (goal.getCategory().toLowerCase().equals("health") && noHealthGoal) {
+                            if (!goal.getTitle().isEmpty()) {
+                                healthTitle.setText(goal.getTitle());
+                            }
+
+                            if (!goal.getDescription().isEmpty()) {
+                                healthDescription.setText(goal.getDescription());
+                            }
+                            healthStatus.setText(goal.getStatus());
+                            noHealthGoal = false;
+                        } else if (goal.getCategory().toLowerCase().equals("education") && noEducationGoal) {
+                            if (!goal.getTitle().isEmpty()) {
+                                educationTitle.setText(goal.getTitle());
+                            }
+
+                            if (!goal.getDescription().isEmpty()) {
+                                educationDescription.setText(goal.getDescription());
+                            }
+                            educationStatus.setText(goal.getStatus());
+                            noEducationGoal = false;
+                        } else if (goal.getCategory().toLowerCase().equals("social") && noSocialGoal) {
+                            if (!goal.getTitle().isEmpty()) {
+                                socialTitle.setText(goal.getTitle());
+                            }
+
+                            if (!goal.getDescription().isEmpty()) {
+                                socialDescription.setText(goal.getDescription());
+                            }
+                            socialStatus.setText(goal.getStatus());
+                            noSocialGoal = false;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Goal>> call, Throwable t) {
+
+            }
+        });
     }
 
 }

@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientListRecyclerItemAdapter.ClientItemViewHolder> implements Filterable {
+public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAdapter.ClientItemViewHolder> implements Filterable {
 
     private List<Client> clients;
     private List<Client> filteredClientList;
@@ -65,13 +65,7 @@ public class ClientListRecyclerItemAdapter extends RecyclerView.Adapter<ClientLi
 
     };
 
-    public ClientListRecyclerItemAdapter(List<Client> clientList, OnItemClickListener onItemListener) {
-        this.clients = clientList;
-        this.onItemClickListener = onItemListener;
-        this.filteredClientList = new ArrayList<>(clientList);
-    }
-
-    public ClientListRecyclerItemAdapter(OnItemClickListener onItemClickListener) {
+    public ClientListItemAdapter(OnItemClickListener onItemClickListener) {
         clients = new ArrayList<>();
         filteredClientList = new ArrayList<>();
         this.onItemClickListener = onItemClickListener;

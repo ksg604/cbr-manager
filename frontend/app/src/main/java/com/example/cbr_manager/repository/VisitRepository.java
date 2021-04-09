@@ -77,25 +77,7 @@ public class VisitRepository {
     }
 
     public LiveData<Visit> getVisitAsLiveData(int id) {
-        fetchVisitAsync(id);
         return visitDao.getVisitAsLiveData(id);
-    }
-
-    private void fetchVisitAsync(int id) {
-        visitDao.getVisitAsSingle(id)
-                .map(Visit::getServerId)
-                .flatMap(serverId -> visitAPI.getVisitAsSingle(authHeader, serverId))
-                .doOnSuccess(this::insertVisitToLocalDB)
-                .subscribeOn(Schedulers.io())
-                .subscribe(new DisposableSingleObserver<Visit>() {
-                    @Override
-                    public void onSuccess(@NonNull Visit visit) {
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                    }
-                });
     }
 
     public Single<Visit> createVisit(Visit visit) {

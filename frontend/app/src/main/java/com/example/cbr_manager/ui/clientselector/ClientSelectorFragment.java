@@ -16,7 +16,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.baselinesurvey.BaselineSurveyStepperActivity;
-import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
+import com.example.cbr_manager.ui.clientlist.ClientListItemAdapter;
 import com.example.cbr_manager.ui.createreferral.CreateReferralStepperActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 
@@ -26,13 +26,13 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemClickListener {
+public class ClientSelectorFragment extends Fragment implements ClientListItemAdapter.OnItemClickListener {
 
     private static final String TAG = ClientSelectorFragment.class.getName();
     private static final int NEW_VISIT_CODE = 100;
     private static final int NEW_REFERRAL_CODE = 101;
     private static final int NEW_BASELINE_CODE = 102;
-    private ClientListRecyclerItemAdapter clientListAdapter;
+    private ClientListItemAdapter clientListAdapter;
     private ClientViewModel clientViewModel;
 
     public ClientSelectorFragment() {
@@ -49,7 +49,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        clientListAdapter = new ClientListRecyclerItemAdapter(this);
+        clientListAdapter = new ClientListItemAdapter(this);
 
         setupClientSearchView(view, clientListAdapter);
 
@@ -70,21 +70,26 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
         });
     }
 
-    private void setupClientSearchView(View view, ClientListRecyclerItemAdapter clientListAdapter) {
+    private void setupClientSearchView(View view, ClientListItemAdapter clientListAdapter) {
         RecyclerView clientListRecyclerView = view.findViewById(R.id.clientSelectorRecyclerView);
         RecyclerView.LayoutManager clientSelectorLayoutManager = new LinearLayoutManager(getContext());
         clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
     }
 
-    private void populateClientListAdapter(ClientListRecyclerItemAdapter clientListAdapter) {
+    private void populateClientListAdapter(ClientListItemAdapter clientListAdapter) {
         clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
             List<Client> clientList = new ArrayList<>();
-            for (int i = 0; i < clientList1.size(); i++) {
+            for (Client client :
+                    clientList1) {
                 int code = ((ClientSelectorActivity) getActivity()).getCode();
-                if (code == NEW_BASELINE_CODE && clientList1.get(i).isBaselineSurveyTaken()) {
+
+                if (code == NEW_BASELINE_CODE) {
+                    if (!client.isBaselineSurveyTaken()) {
+                        clientList.add(client);
+                    }
                 } else {
-                    clientList.add(clientList1.get(i));
+                    clientList.add(client);
                 }
             }
             clientListAdapter.setClients(clientList);

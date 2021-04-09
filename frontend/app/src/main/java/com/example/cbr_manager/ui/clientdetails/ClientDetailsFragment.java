@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -78,12 +79,29 @@ public class ClientDetailsFragment extends Fragment {
         setupButtons(root);
         setupVectorImages(root);
         setupBottomNavigationView(root);
+        setupCardView(root);
 
         return root;
     }
 
     private void setupToolBar() {
         setHasOptionsMenu(true);
+    }
+
+    private void setupCardView(View view) {
+        CardView healthGoalCardView = view.findViewById(R.id.clientDetailsHealthGoalCardView);
+        healthGoalCardView.setVisibility(View.GONE);
+        CardView EducationGoalCardView = view.findViewById(R.id.clientDetailsEducationGoalCardView);
+        EducationGoalCardView.setVisibility(View.GONE);
+        CardView socialGoalCardView = view.findViewById(R.id.clientDetailsSocialGoalCardView);
+        socialGoalCardView.setVisibility(View.GONE);
+    }
+
+    private void modifyCardView(int cardViewId, boolean noGoal) {
+        if(!noGoal) {
+            CardView cardView = (CardView) getView().findViewById(cardViewId);
+            cardView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupBottomNavigationView(View root) {
@@ -292,6 +310,7 @@ public class ClientDetailsFragment extends Fragment {
                             }
                             healthStatus.setText(goal.getStatus());
                             noHealthGoal = false;
+                            modifyCardView(R.id.clientDetailsHealthGoalCardView, noHealthGoal);
                         } else if (goal.getCategory().toLowerCase().equals("education") && noEducationGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 educationTitle.setText(goal.getTitle());
@@ -315,6 +334,9 @@ public class ClientDetailsFragment extends Fragment {
                         }
                     }
                 }
+                modifyCardView(R.id.clientDetailsHealthGoalCardView, noHealthGoal);
+                modifyCardView(R.id.clientDetailsEducationGoalCardView, noEducationGoal);
+                modifyCardView(R.id.clientDetailsSocialGoalCardView, noSocialGoal);
             }
 
             @Override

@@ -23,6 +23,7 @@ import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
+import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
@@ -234,12 +235,13 @@ public class ClientDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("clientId", clientId);
+                bundle.putInt("CLIENT_ID", clientId);
+                bundle.putInt("GOAL_KEY", 100);
                 bundle.putString("field",field);
-                ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
-                clientHistoryFragment.setArguments(bundle);
+                GoalHistoryFragment goalHistoryFragment = new GoalHistoryFragment();
+                goalHistoryFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_client_details, clientHistoryFragment,null)
+                        .replace(R.id.fragment_client_details, goalHistoryFragment,null)
                         .addToBackStack(null)
                         .commit();
             }

@@ -129,6 +129,7 @@ public class Client extends CBRTimestamp {
         this.socialRisk = 0;
         this.educationRisk = 0;
         this.isNewClient = true;
+        this.cbrClientId = "";
         this.baselineSurveyTaken = false;
     }
 

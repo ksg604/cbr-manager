@@ -90,7 +90,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
 
         TapTargetView.showFor(this,
                 TapTarget.forToolbarNavigationIcon(toolbar,
-                        "Just how you want it.", "Tap the menu icon to navigate to the dashboard, view client, visit, and referral lists, and any alerts.")
+                        "One tap away.", "Tap the menu icon to navigate to the dashboard, view client, visit, and referral lists, and any alerts.")
                         .outerCircleAlpha(0.96f)
                         .targetCircleColor(R.color.white)
                         .titleTextSize(20)

@@ -21,6 +21,8 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +84,16 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                 adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(newText);
             }
         });
+
+        TapTargetView.showFor(getActivity(),
+                TapTarget.forView(root.findViewById(R.id.checkBox), "Filter clients.", "Use the checkbox to filter between all referrals and only outstanding referrals.")
+                    .outerCircleAlpha(0.96f)
+                    .targetCircleColor(R.color.white)
+                    .titleTextSize(20)
+                    .drawShadow(true)
+                    .tintTarget(true)
+                    .dimColor(R.color.black)
+        .targetRadius(60));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

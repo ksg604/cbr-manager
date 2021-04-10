@@ -15,6 +15,7 @@ import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerIte
 import com.github.vipulasri.timelineview.TimelineView;
 
 import java.sql.Time;
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItemAdapter.GoalHistoryItemViewHolder> {

@@ -2,10 +2,12 @@ package com.example.cbr_manager.ui.alert.alert_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
@@ -28,6 +30,8 @@ public class AlertDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_details);
+        setupToolbar();
+
         parentLayout = findViewById(android.R.id.content);
 
         Intent intent = getIntent();
@@ -38,6 +42,11 @@ public class AlertDetailsActivity extends AppCompatActivity {
 
         setupButtons();
 
+    }
+
+    private void setupToolbar(){
+        getSupportActionBar().setTitle("Alerts");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void getAlertInfo(int alertId){
@@ -72,7 +81,6 @@ public class AlertDetailsActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        setupBackButton();
         setupMarkAsReadButton();
     }
 
@@ -86,19 +94,11 @@ public class AlertDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setupBackButton() {
-        Button backButton = findViewById(R.id.buttonSaveDraft);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
-
-    public int getAlertId() {
-        return alertId;
-    }
-
-
 }

@@ -87,21 +87,6 @@ public class NavigationActivity extends AppCompatActivity {
 
         hideAdminOnlyMenuItems();
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-
-                if (id == R.id.nav_new_client) {
-                    Intent intent = new Intent(NavigationActivity.this, CreateClientStepperActivity.class);
-                    startActivity(intent);
-                }
-                NavigationUI.onNavDestinationSelected(item, navController);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-
         setupAlertsBadge(navigationView);
     }
 

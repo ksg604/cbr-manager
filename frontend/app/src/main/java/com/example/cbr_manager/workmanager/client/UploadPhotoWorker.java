@@ -69,7 +69,7 @@ public class UploadPhotoWorker extends RxWorker{
         MultipartBody.Part body = MultipartBody.Part.createFormData("photo", photo.getName(), requestFile);
 
         return clientDao.getClientSingle(clientObjId)
-                .flatMap(client -> clientAPI.uploadPhotoSingle(authHeader, clientObjId, body)
+                .flatMap(client -> clientAPI.uploadPhotoSingle(authHeader, client.getServerId(), body)
                         .doOnSuccess(responseBody -> onSuccessfulUpload(responseBody, client)))
                 .map(photoSingle -> {
                     Log.d(TAG, "uploaded client: " + photoSingle.string());

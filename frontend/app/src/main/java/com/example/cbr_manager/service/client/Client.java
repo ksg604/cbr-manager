@@ -129,6 +129,7 @@ public class Client extends CBRTimestamp {
         this.socialRisk = 0;
         this.educationRisk = 0;
         this.isNewClient = true;
+        this.cbrClientId = "";
         this.baselineSurveyTaken = false;
     }
 
@@ -396,6 +397,10 @@ public class Client extends CBRTimestamp {
         isNewClient = newClient;
     }
 
+    public boolean isBaselineSurveyTaken() { return baselineSurveyTaken; }
+
+    public void setBaselineSurveyTaken(boolean newBaselineSurveyStatus) { baselineSurveyTaken = newBaselineSurveyStatus; }
+
     public Integer calculateRiskScore() {
         double healthRiskLogScale = Math.pow(10, healthRisk)*1.2;
         double socialRiskLogScale = Math.pow(10, socialRisk)*1.1;
@@ -403,8 +408,44 @@ public class Client extends CBRTimestamp {
         return (int) (healthRiskLogScale + socialRiskLogScale + educationRiskLogScale);
     }
 
-    public boolean isBaselineSurveyTaken() { return baselineSurveyTaken; }
-    public void setBaselineSurveyTaken(boolean newBaselineSurveyStatus) { baselineSurveyTaken = newBaselineSurveyStatus; }
+    // some code here inspired by https://stackoverflow.com/questions/6667243/using-enum-values-as-string-literals
+    public enum RiskLabel {
+        LOW("Low"),
+        MEDIUM("Medium"),
+        HIGH("High"),
+        CRITICAL("Critical");
+
+        private final String name;
+
+        RiskLabel(String string) {
+            name = string;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+    }
+
+    public static RiskLabel assignLabelToRiskScore(Integer riskScore) {
+        if (riskScore < 100) {
+            return RiskLabel.LOW;
+        }
+        else if (riskScore < 1000) {
+            return RiskLabel.MEDIUM;
+        }
+        else if (riskScore < 10000) {
+            return RiskLabel.HIGH;
+        }
+        else {
+            return RiskLabel.CRITICAL;
+        }
+    }
+
+    public RiskLabel assignRiskLabel() {
+        Integer riskScore = this.calculateRiskScore();
+        return assignLabelToRiskScore(riskScore);
+    }
 
 
 }

@@ -10,38 +10,33 @@
                 android:id="@+id/nav_home"
                 android:icon="@drawable/ic_home"
                 android:title="Home Page" />
-
             <item
                 android:id="@+id/nav_alert_list"
                 android:icon="@drawable/ic_alert"
                 app:actionViewClass="android.widget.TextView"
                 android:title="Alerts"/>
-
-            <item
-                android:id="@+id/nav_dashboard"
-                android:icon="@drawable/ic_dashboard"
-                android:title="Dashboard" />
     </group>
 
     <item
         android:title="CBR">
         <menu>
             <item
+                android:id="@+id/nav_dashboard"
+                android:icon="@drawable/ic_dashboard"
+                android:title="@string/dashboard_2" />
+
+            <item
                 android:id="@+id/nav_client_list"
                 android:icon="@drawable/ic_clients"
-                android:title="Client List" />
+                android:title="@string/client_list_2" />
             <item
                 android:id="@+id/nav_visits"
                 android:icon="@drawable/ic_visit"
-                android:title="Visits" />
+                android:title="@string/visit_list" />
             <item
                 android:id="@+id/nav_referrals"
                 android:icon="@drawable/ic_disable"
-                android:title="Referrals" />
-            <item
-                android:id="@+id/nav_new_client"
-                android:icon="@drawable/ic_client_add"
-                android:title="New Client"/>
+                android:title="@string/referral_list" />
         </menu>
     </item>
 

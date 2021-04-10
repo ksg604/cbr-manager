@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -76,12 +77,29 @@ public class ClientDetailsFragment extends Fragment {
         setupButtons(root);
         setupVectorImages(root);
         setupBottomNavigationView(root);
+        setupCardView(root);
 
         return root;
     }
 
     private void setupToolBar() {
         setHasOptionsMenu(true);
+    }
+
+    private void setupCardView(View view) {
+        CardView healthGoalCardView = view.findViewById(R.id.clientDetailsHealthGoalCardView);
+        healthGoalCardView.setVisibility(View.GONE);
+        CardView EducationGoalCardView = view.findViewById(R.id.clientDetailsEducationGoalCardView);
+        EducationGoalCardView.setVisibility(View.GONE);
+        CardView socialGoalCardView = view.findViewById(R.id.clientDetailsSocialGoalCardView);
+        socialGoalCardView.setVisibility(View.GONE);
+    }
+
+    private void modifyCardView(int cardViewId, boolean hasGoal) {
+        if(hasGoal) {
+            CardView cardView = (CardView) getView().findViewById(cardViewId);
+            cardView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupBottomNavigationView(View root) {
@@ -157,7 +175,7 @@ public class ClientDetailsFragment extends Fragment {
             setupSocialRiskTextView(client.getSocialRisk().toString());
             setupHealthRiskTextView(client.getHealthRisk().toString());
             setupDisabilityTextView(client.getDisability());
-            setupRiskLevelTextView(client.calculateRiskScore().toString());
+            setupRiskLevelTextView(client.assignRiskLabel().toString());
             setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
             setupGoals();
         });
@@ -269,14 +287,14 @@ public class ClientDetailsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
                 List<Goal> goals = new ArrayList<>();
-                boolean noHealthGoal = true;
-                boolean noEducationGoal = true;
-                boolean noSocialGoal = true;
+                boolean hasHealthGoal = false;
+                boolean hasEducationGoal = false;
+                boolean hasSocialGoal = false;
                 goals = response.body();
                 Collections.reverse(goals);
                 for (Goal goal : goals) {
                     if (goal.getClientId().equals(clientId)) {
-                        if (goal.getCategory().toLowerCase().equals("health") && noHealthGoal) {
+                        if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 healthTitle.setText(goal.getTitle());
                             }
@@ -285,8 +303,8 @@ public class ClientDetailsFragment extends Fragment {
                                 healthDescription.setText(goal.getDescription());
                             }
                             healthStatus.setText(goal.getStatus());
-                            noHealthGoal = false;
-                        } else if (goal.getCategory().toLowerCase().equals("education") && noEducationGoal) {
+                            hasHealthGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 educationTitle.setText(goal.getTitle());
                             }
@@ -295,8 +313,8 @@ public class ClientDetailsFragment extends Fragment {
                                 educationDescription.setText(goal.getDescription());
                             }
                             educationStatus.setText(goal.getStatus());
-                            noEducationGoal = false;
-                        } else if (goal.getCategory().toLowerCase().equals("social") && noSocialGoal) {
+                            hasEducationGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 socialTitle.setText(goal.getTitle());
                             }
@@ -305,10 +323,13 @@ public class ClientDetailsFragment extends Fragment {
                                 socialDescription.setText(goal.getDescription());
                             }
                             socialStatus.setText(goal.getStatus());
-                            noSocialGoal = false;
+                            hasSocialGoal = true;
                         }
                     }
                 }
+                modifyCardView(R.id.clientDetailsHealthGoalCardView, hasHealthGoal);
+                modifyCardView(R.id.clientDetailsEducationGoalCardView, hasEducationGoal);
+                modifyCardView(R.id.clientDetailsSocialGoalCardView, hasSocialGoal);
             }
 
             @Override

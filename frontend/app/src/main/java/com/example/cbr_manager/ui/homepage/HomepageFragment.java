@@ -1,5 +1,6 @@
 package com.example.cbr_manager.ui.homepage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -16,6 +19,8 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 
 public class HomepageFragment extends Fragment {
@@ -33,7 +38,6 @@ public class HomepageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
-
         newClientButton = view.findViewById(R.id.newClientButton);
         newClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +103,21 @@ public class HomepageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+//        Toolbar toolbar = view.findViewById(R.id.toolbar);
+//        TapTargetView.showFor(getActivity(),
+//                TapTarget.forToolbarNavigationIcon(toolbar,
+//                        "test", "ssbeb"
+//                        ));
+
+//        TapTargetView.showFor(getActivity(),
+//                TapTarget.forView(view.findViewById(R.id.newReferralButton), "Testing123", "Check out your clients here!")
+//                        .outerCircleColor(R.color.purple_700)
+//                        .outerCircleAlpha(0.96f)
+//                        .targetCircleColor(R.color.white)
+//                        .titleTextSize(20)
+//                        .titleTextColor(R.color.white)
+//                        .dimColor(R.color.black)
+//                        .transparentTarget(true));
 
         return view;
     }

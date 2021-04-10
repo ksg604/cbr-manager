@@ -34,6 +34,8 @@ import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.example.cbr_manager.ui.user.UserActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -85,6 +87,19 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
         View headerView = navigationView.getHeaderView(0);
 
         setUpHeaderView(headerView);
+
+        TapTargetView.showFor(this,
+                TapTarget.forToolbarNavigationIcon(toolbar,
+                        "Just how you want it.", "Tap the menu icon to navigate to the dashboard, view client, visit, and referral lists, and any alerts.")
+                        .outerCircleAlpha(0.96f)
+                        .targetCircleColor(R.color.white)
+                        .titleTextSize(20)
+                        .drawShadow(true)
+                        .tintTarget(true)
+                        .dimColor(R.color.black)
+//                        .transparentTarget(true)
+
+        );
 
         hideAdminOnlyMenuItems();
     }

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +30,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
-import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
-import com.example.cbr_manager.ui.ClientViewModel;
-import com.example.cbr_manager.ui.StatusViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.example.cbr_manager.ui.user.UserActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -44,7 +40,6 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -53,11 +48,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @AndroidEntryPoint
-public class NavigationActivity extends AppCompatActivity {
+public class NavigationActivity extends AppCompatActivity implements DrawerLayout.DrawerListener {
     public static String KEY_SNACK_BAR_MESSAGE = "KEY_SNACK_BAR_MESSAGE";
     private final String TAG = "NavigationActivity";
-    StatusViewModel statusViewModel;
-    ClientViewModel clientViewModel;
     NavigationView navigationView;
     AuthViewModel authViewModel;
     private APIService apiService = APIService.getInstance();
@@ -66,15 +59,26 @@ public class NavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_navigation);
+
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
-        setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-
         navigationView = findViewById(R.id.nav_view);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.addDrawerListener(this);
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                // each id passed is treated as top level fragment
+                R.id.nav_home, R.id.nav_user_creation, R.id.nav_alert_creation, R.id.nav_statistics
+        )
+                .setDrawerLayout(drawer)
+                .build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
         handleIncomingSnackBarMessage(navigationView);
 
@@ -82,39 +86,7 @@ public class NavigationActivity extends AppCompatActivity {
 
         setUpHeaderView(headerView);
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_dashboard, R.id.nav_client_list, R.id.nav_visits, R.id.nav_user_creation, R.id.nav_alert_creation, R.id.nav_referrals, R.id.nav_alert_list, R.id.nav_statistics)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
         hideAdminOnlyMenuItems();
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.nav_new_client) {
-                    Intent intent = new Intent(NavigationActivity.this, CreateClientStepperActivity.class);
-                    startActivity(intent);
-                }
-                NavigationUI.onNavDestinationSelected(item, navController);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-
-        setupAlertsBadge(navigationView);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setupAlertsBadge(navigationView);
     }
 
     private void hideAdminOnlyMenuItems(){
@@ -236,5 +208,24 @@ public class NavigationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        setupAlertsBadge(navigationView);
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
+    }
 }
 

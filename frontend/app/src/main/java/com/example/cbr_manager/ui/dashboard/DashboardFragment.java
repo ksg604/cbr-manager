@@ -29,6 +29,8 @@ import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.utils.Helper;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import org.threeten.bp.format.FormatStyle;
 
@@ -77,6 +79,17 @@ public class DashboardFragment extends Fragment {
 
         setupVisitStats(root);
         setupOutstandingReferralStats(root);
+
+        TapTargetView.showFor(getActivity(),
+                TapTarget.forView(root.findViewById(R.id.alertTextView), "Never miss an alert.",
+                        "The most recent alerts appear here and as notifications in the navigation bar. Be sure to check often to always stay updated.")
+                        .outerCircleAlpha(0.96f)
+                        .targetCircleColor(R.color.white)
+                        .titleTextSize(20)
+                        .drawShadow(true)
+                        .tintTarget(true)
+                        .targetRadius(60)
+                        .dimColor(R.color.black));
 
         return root;
     }

@@ -48,7 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @AndroidEntryPoint
-public class NavigationActivity extends AppCompatActivity {
+public class NavigationActivity extends AppCompatActivity implements DrawerLayout.DrawerListener {
     public static String KEY_SNACK_BAR_MESSAGE = "KEY_SNACK_BAR_MESSAGE";
     private final String TAG = "NavigationActivity";
     NavigationView navigationView;
@@ -67,6 +67,7 @@ public class NavigationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         navigationView = findViewById(R.id.nav_view);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.addDrawerListener(this);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
@@ -86,12 +87,6 @@ public class NavigationActivity extends AppCompatActivity {
         setUpHeaderView(headerView);
 
         hideAdminOnlyMenuItems();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setupAlertsBadge(navigationView);
     }
 
     private void hideAdminOnlyMenuItems(){
@@ -213,5 +208,24 @@ public class NavigationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        setupAlertsBadge(navigationView);
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
+    }
 }
 

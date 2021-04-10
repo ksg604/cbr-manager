@@ -175,7 +175,7 @@ public class ClientDetailsFragment extends Fragment {
             setupSocialRiskTextView(client.getSocialRisk().toString());
             setupHealthRiskTextView(client.getHealthRisk().toString());
             setupDisabilityTextView(client.getDisability());
-            setupRiskLevelTextView(client.calculateRiskScore().toString());
+            setupRiskLevelTextView(client.assignRiskLabel().toString());
             setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
             setupGoals();
         });

@@ -413,11 +413,11 @@ public class Client extends CBRTimestamp {
         LOW("Low"),
         MEDIUM("Medium"),
         HIGH("High"),
-        CRITICAL("High");
+        CRITICAL("Critical");
 
         private final String name;
 
-        private RiskLabel(String string) {
+        RiskLabel(String string) {
             name = string;
         }
 
@@ -428,18 +428,23 @@ public class Client extends CBRTimestamp {
     }
 
     public static RiskLabel assignLabelToRiskScore(Integer riskScore) {
-        if (riskScore < 330) {
+        if (riskScore < 100) {
             return RiskLabel.LOW;
         }
-        else if (riskScore < 3300) {
+        else if (riskScore < 1000) {
             return RiskLabel.MEDIUM;
         }
-        else if (riskScore < 33000) {
+        else if (riskScore < 10000) {
             return RiskLabel.HIGH;
         }
         else {
             return RiskLabel.CRITICAL;
         }
+    }
+
+    public RiskLabel assignRiskLabel() {
+        Integer riskScore = this.calculateRiskScore();
+        return assignLabelToRiskScore(riskScore);
     }
 
 

@@ -62,7 +62,7 @@ public class Helper {
             return "#c49704";
         }
         else {
-            return "#00ff00";
+            return "#2E8B57";
         }
     }
 

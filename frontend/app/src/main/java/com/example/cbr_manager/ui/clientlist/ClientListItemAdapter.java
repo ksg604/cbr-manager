@@ -98,8 +98,8 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         clientViewHolder.textViewFullName.setText(currentClient.getFullName());
         clientViewHolder.textViewLocation.setText(currentClient.getLocation());
 
-        String riskScoreAsString = Integer.toString(currentClient.calculateRiskScore());
-        clientViewHolder.riskTextView.setText(riskScoreAsString);
+        String riskLabel = currentClient.assignRiskLabel().toString();
+        clientViewHolder.riskTextView.setText(riskLabel);
 
         String riskColourCode = Helper.riskToColourCode(currentClient.calculateRiskScore());
         clientViewHolder.riskTextView.setTextColor(Color.parseColor(riskColourCode));

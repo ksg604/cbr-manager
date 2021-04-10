@@ -71,7 +71,7 @@ public class NavigationActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 // each id passed is treated as top level fragment
-                R.id.nav_home, R.id.nav_dashboard, R.id.nav_user_creation, R.id.nav_alert_creation, R.id.nav_statistics
+                R.id.nav_home, R.id.nav_user_creation, R.id.nav_alert_creation, R.id.nav_statistics
         )
                 .setDrawerLayout(drawer)
                 .build();

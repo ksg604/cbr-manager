@@ -26,6 +26,8 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.utils.Helper;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Ref;
@@ -72,6 +74,7 @@ public class ReferralDetailsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         int referralId = intent.getIntExtra("referralId", -1);
         resolveButton = root.findViewById(R.id.referralDetailsResolveButton);
+
         getReferralInfo(referralId);
 
         this.referralId = referralId;
@@ -99,8 +102,17 @@ public class ReferralDetailsFragment extends Fragment {
                 setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
                 setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getFormattedDate());
                 setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
+
                 if (referral.getStatus().equals("CREATED")) {
                     resolveButton.setVisibility(View.VISIBLE);
+                    TapTargetView.showFor(getActivity(),
+                            TapTarget.forView(getView().findViewById(R.id.referralDetailsResolveButton), "Ready to resolve?", "If the client's referral has been resolved, tap the button to change the status to 'resolved' and to record an outcome.")
+                                    .outerCircleAlpha(0.96f)
+                                    .titleTextSize(20)
+                                    .drawShadow(true)
+                                    .transparentTarget(true)
+                                    .targetRadius(100)
+                                    .dimColor(R.color.black));
                 }
                 setupImageViews(referral.getPhotoURL());
             }

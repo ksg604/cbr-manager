@@ -48,6 +48,7 @@ public class ClientDetailsEditFragment extends Fragment {
     private static final String[] paths = {"Male", "Female"};
     private ClientViewModel clientViewModel;
     private Goal healthGoal, educationGoal, socialGoal;
+    private boolean noHealthGoal = true, noEducationGoal = true, noSocialGoal = true;
 
 
     public ClientDetailsEditFragment() {
@@ -194,7 +195,17 @@ public class ClientDetailsEditFragment extends Fragment {
         Button submitButton = root.findViewById(R.id.clientDetailsEditSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                updateGoalsInfo();
+                if(!noHealthGoal) {
+                    updateGoal(healthGoal);
+                }
+                if(!noEducationGoal) {
+                    updateGoal(educationGoal);
+                }
+                if(!noSocialGoal) {
+                    updateGoal(socialGoal);
+                }
                 getAndModifyClient(clientId, root);
             }
         });
@@ -230,15 +241,15 @@ public class ClientDetailsEditFragment extends Fragment {
                             noHealthGoal = false;
                         } else if (goal.getCategory().toLowerCase().equals("education") && noEducationGoal) {
                             educationGoal = goal;
-                            setupGoalEditTexts(R.id.clientDetailsEditEducationTitleEditText, healthGoal.getTitle());
-                            setupGoalEditTexts(R.id.clientDetailsEditEducationDescriptionEditText, healthGoal.getDescription());
-                            setupGoalEditTexts(R.id.clientDetailsEditEducationStatusEditText, healthGoal.getStatus());
+                            setupGoalEditTexts(R.id.clientDetailsEditEducationTitleEditText, educationGoal.getTitle());
+                            setupGoalEditTexts(R.id.clientDetailsEditEducationDescriptionEditText, educationGoal.getDescription());
+                            setupGoalEditTexts(R.id.clientDetailsEditEducationStatusEditText, educationGoal.getStatus());
                             noEducationGoal = false;
                         } else if (goal.getCategory().toLowerCase().equals("social") && noSocialGoal) {
                             socialGoal = goal;
-                            setupGoalEditTexts(R.id.clientDetailsEditSocialTitleEditText, healthGoal.getTitle());
-                            setupGoalEditTexts(R.id.clientDetailsEditSocialDescriptionEditText, healthGoal.getDescription());
-                            setupGoalEditTexts(R.id.clientDetailsEditSocialStatusEditText, healthGoal.getStatus());
+                            setupGoalEditTexts(R.id.clientDetailsEditSocialTitleEditText, socialGoal.getTitle());
+                            setupGoalEditTexts(R.id.clientDetailsEditSocialDescriptionEditText, socialGoal.getDescription());
+                            setupGoalEditTexts(R.id.clientDetailsEditSocialStatusEditText, socialGoal.getStatus());
                             noSocialGoal = false;
                         }
                     }
@@ -260,5 +271,43 @@ public class ClientDetailsEditFragment extends Fragment {
     private void setupGoalEditTexts(int editTextId, String content) {
         EditText editText = (EditText) getView().findViewById(editTextId);
         editText.setText(content);
+    }
+
+    private void updateGoalsInfo() {
+        if(!noHealthGoal) {
+            healthGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditHealthTitleEditText));
+            healthGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditHealthDescriptionEditText));
+            healthGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditHealthStatusEditText));
+        }
+        if(!noEducationGoal) {
+            educationGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditEducationTitleEditText));
+            educationGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditEducationDescriptionEditText));
+            educationGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditEducationStatusEditText));
+        }
+        if(!noSocialGoal) {
+            socialGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditSocialTitleEditText));
+            socialGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditSocialDescriptionEditText));
+            socialGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditSocialStatusEditText));
+        }
+    }
+
+    private String getStringDataFromEditText(int editTextId) {
+        EditText editText = (EditText) getView().findViewById(editTextId);
+        return editText.getText().toString().trim();
+    }
+
+    private void updateGoal(Goal goal) {
+        apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
+            @Override
+            public void onResponse(Call<Goal> call, Response<Goal> response) {
+                Goal goal = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Goal> call, Throwable t) {
+                Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 }

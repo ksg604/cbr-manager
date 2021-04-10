@@ -47,7 +47,7 @@ public class ClientDetailsEditFragment extends Fragment {
     private static final String[] paths = {"Male", "Female"};
     private ClientViewModel clientViewModel;
     private Goal healthGoal, educationGoal, socialGoal;
-    private boolean noHealthGoal = true, noEducationGoal = true, noSocialGoal = true;
+    private boolean hasHealthGoal = false, hasEducationGoal = false, hasSocialGoal = false;
 
 
     public ClientDetailsEditFragment() {
@@ -173,8 +173,8 @@ public class ClientDetailsEditFragment extends Fragment {
         socialGoalCardView.setVisibility(View.GONE);
     }
 
-    private void modifyCardView(int cardViewId, boolean noGoal) {
-        if(!noGoal) {
+    private void modifyCardView(int cardViewId, boolean hasGoal) {
+        if(hasGoal) {
             CardView cardView = (CardView) getView().findViewById(cardViewId);
             cardView.setVisibility(View.VISIBLE);
         }
@@ -195,13 +195,13 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 updateGoalsInfo();
-                if(!noHealthGoal) {
+                if(hasHealthGoal) {
                     updateGoal(healthGoal);
                 }
-                if(!noEducationGoal) {
+                if(hasEducationGoal) {
                     updateGoal(educationGoal);
                 }
-                if(!noSocialGoal) {
+                if(hasSocialGoal) {
                     updateGoal(socialGoal);
                 }
                 getAndModifyClient(clientId, root);
@@ -228,33 +228,33 @@ public class ClientDetailsEditFragment extends Fragment {
                 Collections.reverse(goals);
                 for (Goal goal : goals) {
                     if (goal.getClientId().equals(clientId)) {
-                        if (goal.getCategory().toLowerCase().equals("health") && noHealthGoal) {
+                        if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
                             healthGoal = goal;
                             setupGoalEditTexts(R.id.clientDetailsEditHealthTitleEditText, healthGoal.getTitle());
                             setupGoalEditTexts(R.id.clientDetailsEditHealthDescriptionEditText, healthGoal.getDescription());
                             setupGoalEditTexts(R.id.clientDetailsEditHealthStatusEditText, healthGoal.getStatus());
-                            noHealthGoal = false;
-                        } else if (goal.getCategory().toLowerCase().equals("education") && noEducationGoal) {
+                            hasHealthGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
                             educationGoal = goal;
                             setupGoalEditTexts(R.id.clientDetailsEditEducationTitleEditText, educationGoal.getTitle());
                             setupGoalEditTexts(R.id.clientDetailsEditEducationDescriptionEditText, educationGoal.getDescription());
                             setupGoalEditTexts(R.id.clientDetailsEditEducationStatusEditText, educationGoal.getStatus());
-                            noEducationGoal = false;
-                        } else if (goal.getCategory().toLowerCase().equals("social") && noSocialGoal) {
+                            hasEducationGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
                             socialGoal = goal;
                             setupGoalEditTexts(R.id.clientDetailsEditSocialTitleEditText, socialGoal.getTitle());
                             setupGoalEditTexts(R.id.clientDetailsEditSocialDescriptionEditText, socialGoal.getDescription());
                             setupGoalEditTexts(R.id.clientDetailsEditSocialStatusEditText, socialGoal.getStatus());
-                            noSocialGoal = false;
+                            hasSocialGoal = true;
                         }
                     }
-                    if(!noHealthGoal && !noEducationGoal && !noSocialGoal) {
+                    if(hasHealthGoal && hasEducationGoal && hasSocialGoal) {
                         break;
                     }
                 }
-                modifyCardView(R.id.clientDetailsEditHealthCardView, noHealthGoal);
-                modifyCardView(R.id.clientDetailsEditEducationCardView, noEducationGoal);
-                modifyCardView(R.id.clientDetailsEditSocialCardView, noSocialGoal);
+                modifyCardView(R.id.clientDetailsEditHealthCardView, hasHealthGoal);
+                modifyCardView(R.id.clientDetailsEditEducationCardView, hasEducationGoal);
+                modifyCardView(R.id.clientDetailsEditSocialCardView, hasSocialGoal);
             }
 
             @Override
@@ -269,17 +269,17 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void updateGoalsInfo() {
-        if(!noHealthGoal) {
+        if(hasHealthGoal) {
             healthGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditHealthTitleEditText));
             healthGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditHealthDescriptionEditText));
             healthGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditHealthStatusEditText));
         }
-        if(!noEducationGoal) {
+        if(hasEducationGoal) {
             educationGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditEducationTitleEditText));
             educationGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditEducationDescriptionEditText));
             educationGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditEducationStatusEditText));
         }
-        if(!noSocialGoal) {
+        if(hasSocialGoal) {
             socialGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditSocialTitleEditText));
             socialGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditSocialDescriptionEditText));
             socialGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditSocialStatusEditText));

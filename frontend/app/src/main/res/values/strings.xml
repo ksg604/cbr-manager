@@ -238,6 +238,9 @@
     <string name="email">Email</string>
     <string name="user_full_name">User full name</string>
     <string name="logout">Logout</string>
+    <string name="referral_list">Referral List</string>
+    <string name="visit_list">Visit List</string>
+    <string name="client_list_2">Client List</string>
 
     <string-array name="general_health">
         <item>N/A</item>

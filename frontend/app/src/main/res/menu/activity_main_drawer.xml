@@ -29,15 +29,15 @@
             <item
                 android:id="@+id/nav_client_list"
                 android:icon="@drawable/ic_clients"
-                android:title="Client List" />
+                android:title="@string/client_list_2" />
             <item
                 android:id="@+id/nav_visits"
                 android:icon="@drawable/ic_visit"
-                android:title="Visits" />
+                android:title="@string/visit_list" />
             <item
                 android:id="@+id/nav_referrals"
                 android:icon="@drawable/ic_disable"
-                android:title="Referrals" />
+                android:title="@string/referral_list" />
         </menu>
     </item>
 

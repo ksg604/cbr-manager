@@ -10,22 +10,21 @@
                 android:id="@+id/nav_home"
                 android:icon="@drawable/ic_home"
                 android:title="Home Page" />
-
             <item
                 android:id="@+id/nav_alert_list"
                 android:icon="@drawable/ic_alert"
                 app:actionViewClass="android.widget.TextView"
                 android:title="Alerts"/>
-
-            <item
-                android:id="@+id/nav_dashboard"
-                android:icon="@drawable/ic_dashboard"
-                android:title="Dashboard" />
     </group>
 
     <item
         android:title="CBR">
         <menu>
+            <item
+                android:id="@+id/nav_dashboard"
+                android:icon="@drawable/ic_dashboard"
+                android:title="@string/dashboard_2" />
+
             <item
                 android:id="@+id/nav_client_list"
                 android:icon="@drawable/ic_clients"

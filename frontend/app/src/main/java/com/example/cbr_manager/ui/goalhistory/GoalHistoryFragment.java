@@ -2,6 +2,8 @@ package com.example.cbr_manager.ui.goalhistory;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +37,7 @@ public class GoalHistoryFragment extends Fragment {
     private GoalHistoryItemAdapter goalHistoryItemAdapter;
 
     public GoalHistoryFragment() {
-        // Required empty public constructor
+        super(R.layout.fragment_goal_history);
     }
 
     public static GoalHistoryFragment newInstance(int goalKey, int clientKey) {
@@ -61,10 +63,14 @@ public class GoalHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_goal_history, container, false);
+        return inflater.inflate(R.layout.fragment_goal_history, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         goalRecyclerView = view.findViewById(R.id.goalHistoryRecyclerView);
         getGoals();
-        return view;
     }
 
     private void getGoals() {

@@ -19,7 +19,7 @@ public class Goal{
     @SerializedName("id")
     @Expose
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "goal_id")
+    @ColumnInfo(name = "goalId")
     private Integer id;
 
     @SerializedName("datetime_created")

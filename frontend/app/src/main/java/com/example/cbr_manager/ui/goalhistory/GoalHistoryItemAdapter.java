@@ -50,7 +50,9 @@ public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItem
         } else if (goal.getStatus().toLowerCase().equals("cancelled")) {
             holder.timelineView.setMarker(context.getDrawable(R.drawable.ic_baseline_remove_circle_outline_24));
         }
-        holder.dateTextView.setText(goal.getDatetimeCreated().toString());
+        String date = goal.getDatetimeCreated().toString();
+        String dateAndTime[] = date.split(" ");
+        holder.dateTextView.setText(dateAndTime[0]);
         holder.goalTitleTextView.setText(goal.getTitle());
         holder.goalDescriptionTextView.setText(goal.getDescription());
         holder.timelineView.setMarkerColor(R.color.purple_700);

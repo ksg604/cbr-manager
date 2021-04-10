@@ -13,7 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
+import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.threeten.bp.format.FormatStyle;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,29 +53,31 @@ public class AlertDetailsActivity extends AppCompatActivity {
     }
 
     private void getAlertInfo(int alertId){
-        apiService.alertService.getAlert(alertId).enqueue(new Callback<Alert>() {
-            @Override
-            public void onResponse(Call<Alert> call, Response<Alert> response) {
+        if (apiService.isAuthenticated()){
+            apiService.alertService.getAlert(alertId).enqueue(new Callback<Alert>() {
+                @Override
+                public void onResponse(Call<Alert> call, Response<Alert> response) {
 
-                if(response.isSuccessful()){
-                    Alert alert = response.body();
+                    if(response.isSuccessful()){
+                        Alert alert = response.body();
 
-                    // Todo: dynamically set the alert info here
-                    setUpTextView(R.id.textTitle, alert.getTitle());
-                    setUpTextView(R.id.textBody, alert.getBody());
-                    setUpTextView(R.id.textDate, "Date posted:  " + alert.getFormattedDate());
-                } else{
+                        // Todo: dynamically set the alert info here
+                        setUpTextView(R.id.textTitle, alert.getTitle());
+                        setUpTextView(R.id.textBody, alert.getBody());
+                        setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(alert.getDate(), FormatStyle.SHORT));
+                    } else{
+                        Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Alert> call, Throwable t) {
                     Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<Alert> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+            });
+        }
     }
 
     private void setUpTextView(int textViewId, String text) {

@@ -24,7 +24,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.lifecycle.ViewModelProvider;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -73,7 +72,6 @@ public class ClientDetailsEditFragment extends Fragment {
         setupCardView(root);
         getGoals();
         setupButtons(root);
-
 
         return root;
     }
@@ -226,9 +224,6 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
                 List<Goal> goals = new ArrayList<>();
-                boolean noHealthGoal = true;
-                boolean noEducationGoal = true;
-                boolean noSocialGoal = true;
                 goals = response.body();
                 Collections.reverse(goals);
                 for (Goal goal : goals) {
@@ -300,7 +295,13 @@ public class ClientDetailsEditFragment extends Fragment {
         apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
             @Override
             public void onResponse(Call<Goal> call, Response<Goal> response) {
-                Goal goal = response.body();
+                if(response.isSuccessful()) {
+                    Goal goal = response.body();
+                }
+                else {
+                    Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
 
             @Override

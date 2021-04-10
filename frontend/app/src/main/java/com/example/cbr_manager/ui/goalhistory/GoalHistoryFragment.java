@@ -38,8 +38,12 @@ public class GoalHistoryFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static GoalHistoryFragment newInstance(String param1, String param2) {
+    public static GoalHistoryFragment newInstance(int goalKey, int clientKey) {
         GoalHistoryFragment fragment = new GoalHistoryFragment();
+        Bundle args = new Bundle();
+        args.putInt("GOAL_KEY", goalKey);
+        args.putInt("CLIENT_ID", clientKey);
+        fragment.setArguments(args);
         return fragment;
     }
 

@@ -231,12 +231,7 @@ public class ClientDetailsFragment extends Fragment {
         someView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("CLIENT_ID", clientId);
-                bundle.putInt("GOAL_KEY", code);
-                bundle.putString("field",field);
-                GoalHistoryFragment goalHistoryFragment = new GoalHistoryFragment();
-                goalHistoryFragment.setArguments(bundle);
+                GoalHistoryFragment goalHistoryFragment = GoalHistoryFragment.newInstance(code, clientId);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_client_details, goalHistoryFragment,null)
                         .addToBackStack(null)

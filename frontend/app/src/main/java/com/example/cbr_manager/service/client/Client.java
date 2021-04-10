@@ -108,6 +108,8 @@ public class Client extends CBRTimestamp {
     @Expose
     private boolean baselineSurveyTaken;
 
+
+
     //Initializing fields that are needed for POST request in itr1
     public Client() {
         super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
@@ -131,6 +133,7 @@ public class Client extends CBRTimestamp {
         this.isNewClient = true;
         this.cbrClientId = "";
         this.baselineSurveyTaken = false;
+
     }
 
     @Ignore
@@ -446,6 +449,8 @@ public class Client extends CBRTimestamp {
         Integer riskScore = this.calculateRiskScore();
         return assignLabelToRiskScore(riskScore);
     }
+
+
 
 
 }

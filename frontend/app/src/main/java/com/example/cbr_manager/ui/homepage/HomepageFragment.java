@@ -16,6 +16,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+import com.example.cbr_manager.ui.map.MapActivity;
 
 
 public class HomepageFragment extends Fragment {
@@ -96,6 +97,15 @@ public class HomepageFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ClientSelectorActivity.class);
                 intent.putExtra("CODE", NEW_BASELINE_CODE);
+                startActivity(intent);
+            }
+        });
+
+        Button mapButton = view.findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MapActivity.class);
                 startActivity(intent);
             }
         });

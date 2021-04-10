@@ -185,14 +185,22 @@
 
             <Button
                 android:id="@+id/baselineSurveyButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="181dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="56dp"
-                android:layout_marginLeft="56dp"
                 android:layout_marginTop="16dp"
                 android:text="Baseline Placeholder"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <Button
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Map"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/baselineSurveyButton"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

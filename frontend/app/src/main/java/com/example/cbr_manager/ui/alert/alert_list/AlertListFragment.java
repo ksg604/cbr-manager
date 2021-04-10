@@ -16,6 +16,9 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
+import com.example.cbr_manager.utils.Helper;
+
+import org.threeten.bp.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +73,7 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
                     if (response.isSuccessful()) {
                         List<Alert> alertList = response.body();
                         for (Alert alert : alertList) {
-                            alertUIList.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, alert.getFormattedDate()));
+                            alertUIList.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, Helper.formatDateTimeToLocalString(alert.getDate(), FormatStyle.SHORT)));
                         }
                     }
                     adapter.notifyDataSetChanged();

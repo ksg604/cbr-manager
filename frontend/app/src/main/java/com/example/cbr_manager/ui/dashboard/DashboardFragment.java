@@ -28,6 +28,9 @@ import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
+import com.example.cbr_manager.utils.Helper;
+
+import org.threeten.bp.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -181,7 +184,7 @@ public class DashboardFragment extends Fragment {
 
                         if (alerts != null & !alerts.isEmpty()) {
                             newestAlert = alerts.get(0);
-                            dateAlertTextView.setText("Date posted:  " + newestAlert.getFormattedDate());
+                            dateAlertTextView.setText("Date posted:  " + Helper.formatDateTimeToLocalString(newestAlert.getDate(), FormatStyle.SHORT));
                             titleTextView.setText(newestAlert.getTitle());
                             homeAlertId = newestAlert.getId();
                         }

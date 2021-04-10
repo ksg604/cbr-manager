@@ -223,14 +223,6 @@ public class Visit extends CBRTimestamp {
     private String conclusionSocialProvision;
 
 
-    @SerializedName("latitude")
-    @Expose
-    private float latitude;
-
-    @SerializedName("longitude")
-    @Expose
-    private float longitude;
-
 
 
     @Ignore
@@ -293,8 +285,7 @@ public class Visit extends CBRTimestamp {
         this.villageNoVisit = 0;
         this.wheelchairHealthProvision = false;
         this.wheelchairHealthProvisionText = "";
-        this.latitude = 0;
-        this.longitude = 0;
+
     }
 
     public Integer getId() {
@@ -706,11 +697,7 @@ public class Visit extends CBRTimestamp {
         this.serverId = serverId;
     }
 
-    public float getLatitude() { return latitude; }
-    public void setLatitude(float newLatitude) { latitude = newLatitude; }
 
-    public float getLongitude() { return longitude; }
-    public void setLongitude(float newLongitude) { longitude = newLongitude; }
 
 
 

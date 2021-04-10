@@ -46,6 +46,9 @@ class Client(TimestampedModel):
     # Field updated by taking baseline survey
     taken_baseline_survey = models.BooleanField(default=False)
 
+    # Fields storing user location
+    latitude = models.DecimalField(default=0, max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(default=0, max_digits=9, decimal_places=6)
 
     class Meta:
         ordering = ['id']

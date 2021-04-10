@@ -108,6 +108,14 @@ public class Client extends CBRTimestamp {
     @Expose
     private boolean baselineSurveyTaken;
 
+    @SerializedName("latitude")
+    @Expose
+    private float latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    private float longitude;
+
 
 
     //Initializing fields that are needed for POST request in itr1
@@ -449,6 +457,12 @@ public class Client extends CBRTimestamp {
         Integer riskScore = this.calculateRiskScore();
         return assignLabelToRiskScore(riskScore);
     }
+
+    public float getLatitude() { return latitude; }
+    public void setLatitude(float newLatitude) { latitude = newLatitude; }
+
+    public float getLongitude() { return longitude; }
+    public void setLongitude(float newLongitude) { longitude = newLongitude; }
 
 
 

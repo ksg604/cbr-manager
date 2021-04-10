@@ -28,8 +28,6 @@ class Visit(TimestampedModel):
     location_visit_gps = models.CharField(blank=True, max_length=30)
     location_drop_down = models.CharField(blank=True, max_length=100)
     village_no_visit = models.IntegerField(blank=True, default=0)
-    latitude = models.DecimalField(default=0, max_digits=9, decimal_places=6)
-    longitude = models.DecimalField(default=0, max_digits=9, decimal_places=6)
 
     wheelchair_health_provision = models.BooleanField(blank=True, default=False)
     prosthetic_health_provision = models.BooleanField(blank=True, default=False)

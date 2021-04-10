@@ -82,8 +82,6 @@ public class ClientDetailsFragment extends Fragment {
         setupBottomNavigationView(root);
         setupCardView(root);
 
-
-
         return root;
     }
 

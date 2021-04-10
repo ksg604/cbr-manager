@@ -86,8 +86,6 @@ public class NavigationActivity extends AppCompatActivity {
         setUpHeaderView(headerView);
 
         hideAdminOnlyMenuItems();
-
-        setupAlertsBadge(navigationView);
     }
 
     @Override

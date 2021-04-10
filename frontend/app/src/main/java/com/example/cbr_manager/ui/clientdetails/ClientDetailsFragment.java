@@ -20,9 +20,9 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
-import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
+import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
@@ -224,9 +224,9 @@ public class ClientDetailsFragment extends Fragment {
     private void setupButtons(View root) {
         setupEditButton(root);
         setupBackButton(root);
-        setupHistoryButton(root,R.id.clientDetailsEducationHistoryTextView,"education_goal");
-        setupHistoryButton(root,R.id.clientDetailsHealthHistoryTextView,"health_goal");
-        setupHistoryButton(root,R.id.clientDetailsSocialHistoryTextView,"social_goal");
+        setupHistoryButton(root,R.id.clientDetailsEducationHistoryTextView,"education_goal", 101);
+        setupHistoryButton(root,R.id.clientDetailsHealthHistoryTextView,"health_goal", 100);
+        setupHistoryButton(root,R.id.clientDetailsSocialHistoryTextView,"social_goal", 102);
     }
 
     private void setupEditButton(View root) {
@@ -244,18 +244,14 @@ public class ClientDetailsFragment extends Fragment {
         });
     }
 
-    private void setupHistoryButton(View root, int ViewID, String field){
+    private void setupHistoryButton(View root, int ViewID, String field, int code){
         View someView = root.findViewById(ViewID);
         someView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("clientId", clientId);
-                bundle.putString("field",field);
-                ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
-                clientHistoryFragment.setArguments(bundle);
+                GoalHistoryFragment goalHistoryFragment = GoalHistoryFragment.newInstance(code, clientId);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_client_details, clientHistoryFragment,null)
+                        .replace(R.id.fragment_client_details, goalHistoryFragment,null)
                         .addToBackStack(null)
                         .commit();
             }

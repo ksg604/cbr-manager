@@ -46,6 +46,7 @@ import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDe
 import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
@@ -120,6 +121,7 @@ public class CreateReferralFragment extends Fragment implements Step {
         clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
             clientName.setText(client.getFullName());
             clientName.setEnabled(false);
+            referral.setFullName(client.getFullName());
         });
 
         getUserId();
@@ -150,7 +152,7 @@ public class CreateReferralFragment extends Fragment implements Step {
 
         int service = selectedService.getCheckedRadioButtonId();
 //        Referral referral = new Referral();
-
+        ServiceDetail serviceDetail = referral.getServiceDetail();
         if (service == R.id.referralPhysioRadioButton) {
             PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
             String clientCondition;
@@ -169,13 +171,14 @@ public class CreateReferralFragment extends Fragment implements Step {
                 validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
                 physiotherapyServiceDetail.setOther_description(otherConditionDescription);
             }
-            physiotherapyServiceDetail.setCondition(clientCondition);
+//            physiotherapyServiceDetail.setCondition(clientCondition);
 
-            referral.setServiceDetail(physiotherapyServiceDetail);
+//            referral.setServiceDetail(physiotherapyServiceDetail);
+            referral.getServiceDetail().setCondition(clientCondition);
+            referral.getServiceDetail().setOther_description(physioOtherCondition.getText().toString());
             referral.setServiceType("Physiotherapy");
 
         } else if (service == R.id.referralProstheticRadioButton) {
-            ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
             RadioGroup aboveOrBelowKnee = view.findViewById(R.id.referralAboveOrBelowKnee);
             if (!validateRadiogroupSelection(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView)) {
                 requiredFieldsFilled = false;
@@ -188,13 +191,12 @@ public class CreateReferralFragment extends Fragment implements Step {
                 getRadioText = aboveOrBelow.getText().toString();
             }
 
-            prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
+            serviceDetail.setKneeInjuryLocation(getRadioText);
 
-            referral.setServiceDetail(prostheticServiceDetail);
             referral.setServiceType("Prosthetic");
 
         } else if (service == R.id.referralOrthoticRadioButton) {
-            OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
+
             RadioGroup aboveOrBelowElbow = view.findViewById(R.id.referralAboveOrBelowElbow);
             if (!validateRadiogroupSelection(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView)) {
                 requiredFieldsFilled = false;
@@ -208,13 +210,12 @@ public class CreateReferralFragment extends Fragment implements Step {
                 getRadioText = aboveOrBelow.getText().toString();
             }
 
-            orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
+            serviceDetail.setElbowInjuryLocation(getRadioText);
 
-            referral.setServiceDetail(orthoticServiceDetail);
             referral.setServiceType("Orthotic");
 
         } else if (service == R.id.referralWheelChairRadioButton) {
-            WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
+
             String hipWidth;
             boolean isExisting = false;
             boolean isRepairable = false;
@@ -226,7 +227,7 @@ public class CreateReferralFragment extends Fragment implements Step {
             validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
             hipWidth = hipWidthEditText.getText().toString();
             if (!hipWidth.isEmpty()) {
-                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+                serviceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
             }
 
             RadioGroup usageExperience = view.findViewById(R.id.referralWheelChairUsageRadioGroup);
@@ -234,9 +235,9 @@ public class CreateReferralFragment extends Fragment implements Step {
                 requiredFieldsFilled = false;
             }
             if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
-                wheelchairServiceDetail.setUsageExperience("Intermediate");
+                serviceDetail.setUsageExperience("Intermediate");
             } else {
-                wheelchairServiceDetail.setUsageExperience("Basic");
+                serviceDetail.setUsageExperience("Basic");
             }
 
             RadioGroup isExistingWheelchair = view.findViewById(R.id.referralExistingWheelchairRadioGroup);
@@ -258,17 +259,14 @@ public class CreateReferralFragment extends Fragment implements Step {
             }
 
             if (!hipWidth.isEmpty()) {
-                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+                serviceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
             }
-            wheelchairServiceDetail.setClientHasExistingWheelchair(isExisting);
-            wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
-            wheelchairServiceDetail.setUsageExperience("Basic");
-            referral.setServiceDetail(wheelchairServiceDetail);
+            serviceDetail.setClientHasExistingWheelchair(isExisting);
+            serviceDetail.setWheelChairRepairable(isRepairable);
+            serviceDetail.setUsageExperience("Basic");
             referral.setServiceType("Wheelchair");
 
         } else if (service == R.id.referralOtherRadioButton) {
-            OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
-
             TextInputEditText otherServiceEditText = view.findViewById(R.id.referralOtherServiceDescription);
             if (!validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText())) {
                 requiredFieldsFilled = false;
@@ -277,8 +275,7 @@ public class CreateReferralFragment extends Fragment implements Step {
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
 
-            otherServiceDetail.setDescription(otherDescription);
-            referral.setServiceDetail(otherServiceDetail);
+            serviceDetail.setDescription(otherDescription);
             referral.setServiceType("Other");
         }
 
@@ -291,7 +288,7 @@ public class CreateReferralFragment extends Fragment implements Step {
         referral.setRefer_to(referToString);
         Date today = Calendar.getInstance().getTime();
         referral.setDateCreated(today.toString());
-        referral.setFullName(clientName.getText().toString());
+
         referral.setClientId(new Integer(clientId));
         referral.setUserId(userId);
         if (requiredFieldsFilled) {

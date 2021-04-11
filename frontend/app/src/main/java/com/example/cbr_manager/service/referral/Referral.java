@@ -5,13 +5,9 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.RoomWarnings;
 
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.utils.CBRTimestamp;
-import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -46,7 +42,7 @@ public class Referral extends CBRTimestamp {
 
     public Referral() {
         super();
-        PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
+        ServiceDetail physiotherapyServiceDetail = new ServiceDetail();
         physiotherapyServiceDetail.setCondition("Amputee");
         this.serviceDetail = physiotherapyServiceDetail;
         this.dateCreated = "";

@@ -96,24 +96,23 @@ public class CreateReferralStepperActivity extends AppCompatActivity implements 
         clientViewModel.getClientAsSingle(clientId)
                 .flatMap(clientResponse -> {
                     formReferralObj.setClientId(clientId);
-                    formReferralObj.setClient(clientResponse);
                     return referralViewModel.createReferral(formReferralObj);
                 })
                 .subscribe(new DisposableSingleObserver<Referral>() {
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull Referral referral) {
                         referralId = referral.getId();
-//                        File photoFile = new File(imageFilePath);
-//                        if(photoFile.exists()) {
-//                            referralViewModel.uploadphoto(photoFile, submittedReferral).subscribe(new DisposableCompletableObserver() {
-//                                @Override
-//                                public void onComplete() {
-//                                }
-//                                @Override
-//                                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-//                                }
-//                            });
-//                        }
+                        File photoFile = new File(imageFilePath);
+                        if(photoFile.exists()) {
+                            referralViewModel.uploadPhoto(photoFile, referral).subscribe(new DisposableCompletableObserver() {
+                                @Override
+                                public void onComplete() {
+                                }
+                                @Override
+                                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                                }
+                            });
+                        }
                         Toast.makeText(CreateReferralStepperActivity.this, "Referral successfully created!", Toast.LENGTH_SHORT).show();
                         onSubmitSuccess();
                     }

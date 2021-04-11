@@ -10,36 +10,45 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.service.client.ClientDBService;
-import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+import dagger.hilt.android.AndroidEntryPoint;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+@AndroidEntryPoint
+public class ClientListFragment extends Fragment implements ClientListItemAdapter.OnItemClickListener {
 
-public class ClientListFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
-
-    List<Client> clientList = new ArrayList<>();
+    private static final String[] locationPaths = {"Any", "BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
+            "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
+    private static final String[] disabilityPaths = {"Any", "Amputee", "Polio", "Spinal Cord Injury", "Cerebral Palsy", "Spina Bifada",
+            "Hydrocephalus", "Visual Impairment", "Hearing Impairment", "Don't Know", "Other"};
+    private static final String[] genderPaths = {"Any", "Male", "Female"};
     private RecyclerView clientListRecyclerView;
-    private ClientListRecyclerItemAdapter clientListAdapter;
+    private ClientListItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager clientListLayoutManager;
-    private APIService apiService = APIService.getInstance();
+    private ClientViewModel clientViewModel;
+    private Spinner genderSpinner;
+    private Spinner locationSpinner;
+    private Spinner disabilitySpinner;
+    private String genderTag = "";
+    private String locationTag = "";
+    private String disabilityTag = "";
+    private SearchView clientSearch;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,16 +57,28 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
         View root = inflater.inflate(R.layout.fragment_client_list, container, false);
 
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+
         clientListRecyclerView = root.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         clientListLayoutManager = new LinearLayoutManager(getContext());
-        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
+        clientListAdapter = new ClientListItemAdapter(this);
         clientListRecyclerView.setLayoutManager(clientListLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
-        fetchClientsToList(clientList);
+        genderSpinner = setUpSpinner(root, R.id.gender_dropdown, genderPaths);
+        locationSpinner = setUpSpinner(root, R.id.location_dropdown, locationPaths);
+        disabilitySpinner = setUpSpinner(root, R.id.disability_dropdown, disabilityPaths);
 
-        SearchView clientSearch = root.findViewById(R.id.clientSearchView);
+        setUpSpinnerListener(genderSpinner);
+        setUpSpinnerListener(locationSpinner);
+        setUpSpinnerListener(disabilitySpinner);
+
+        fetchClientsToList();
+
+        clientSearch = root.findViewById(R.id.clientSearchView);
+
+
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -66,11 +87,43 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                clientListAdapter.getFilter().filter(newText);
+                clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter(newText);
                 return true;
             }
         });
         return root;
+    }
+
+    private Spinner setUpSpinner(View view, int spinnerId, String[] options) {
+        Spinner spinner = (Spinner) view.findViewById(spinnerId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, options);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        return spinner;
+    }
+
+    private void setUpSpinnerListener(Spinner spinner) {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View view, int pos, long unused) {
+                String tag = spinner.getItemAtPosition(pos).toString().toLowerCase().trim();
+                if (spinner == genderSpinner) {
+                    genderTag = tag;
+                } else if (spinner == disabilitySpinner) {
+                    disabilityTag = tag;
+                } else if (spinner == locationSpinner) {
+                    locationTag = tag;
+                }
+                CharSequence newText = clientSearch.getQuery();
+                clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter(newText);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> spinner) {
+            }
+        });
     }
 
     public void setUpToolBar() {
@@ -97,24 +150,10 @@ public class ClientListFragment extends Fragment implements ClientListRecyclerIt
         startActivity(createClientIntent);
     }
 
-    public void fetchClientsToList(List<Client> clientList) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
-                @Override
-                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
-                    if (response.isSuccessful()) {
-                        List<Client> clients = response.body();
-                        clientList.addAll(clients);
-                    }
-                    clientListAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<List<Client>> call, Throwable t) {
-
-                }
-            });
-        }
+    public void fetchClientsToList() {
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clients -> {
+            clientListAdapter.setClients(clients);
+        });
     }
 
     @Override

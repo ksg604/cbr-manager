@@ -2,6 +2,7 @@ package com.example.cbr_manager.workmanager.visit;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.hilt.work.HiltWorker;
@@ -12,11 +13,9 @@ import androidx.work.WorkerParameters;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.service.visit.VisitAPI;
 import com.example.cbr_manager.service.visit.VisitDao;
+import com.example.cbr_manager.utils.Helper;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedInject;
@@ -41,7 +40,7 @@ public class CreateVisitWorker extends RxWorker {
         this.visitDao = visitDao;
     }
 
-    public static Data buildInputData(String authHeader, int visitId){
+    public static Data buildInputData(String authHeader, int visitId) {
         Data.Builder builder = new Data.Builder();
         builder.putString(CreateVisitWorker.KEY_AUTH_HEADER, authHeader);
         builder.putInt(CreateVisitWorker.KEY_VISIT_OBJ_ID, visitId);
@@ -54,22 +53,25 @@ public class CreateVisitWorker extends RxWorker {
         String authHeader = getInputData().getString(KEY_AUTH_HEADER);
         int visitObjId = getInputData().getInt(KEY_VISIT_OBJ_ID, -1);
 
-        return visitDao.getVisit(visitObjId)
-                .flatMap(visit -> visitAPI.createVisitObs(authHeader, visit)
-                        .doOnSuccess(visitResult -> onSuccessfulCreateVisit(visit, visitResult)))
-                .map(visitSingle -> Result.success())
+        return visitDao.getVisitAsSingle(visitObjId)
+                .flatMap(localVisit -> visitAPI.createVisitSingle(authHeader, localVisit)
+                        .doOnSuccess(serverVisit -> updateDBEntry(localVisit, serverVisit)))
+                .map(visitSingle -> {
+                    Log.d(TAG, "created Visit: " + visitSingle.getId());
+                    return Result.success();
+                })
                 .onErrorReturn(this::handleReturnResult);
     }
 
-    private void onSuccessfulCreateVisit(Visit visit, Visit visitResult) {
-        visitDao.delete(visit);
-        visit.setId(visitResult.getId());
-        visitDao.insert(visit);
+    private void updateDBEntry(Visit localVisit, Visit visitResult) {
+        Integer localId = localVisit.getId();
+        visitResult.setId(localId);
+        visitDao.update(visitResult);
     }
 
     @NotNull
     private Result handleReturnResult(Throwable throwable) {
-        if (throwable instanceof ConnectException || throwable instanceof SocketTimeoutException) {
+        if (Helper.isConnectionError(throwable)) {
             return Result.retry();
         }
         return Result.failure();

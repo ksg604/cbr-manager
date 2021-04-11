@@ -7,10 +7,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cbr_manager.R;
@@ -20,7 +18,6 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
-import com.google.android.material.snackbar.Snackbar;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
@@ -52,8 +49,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         formBaselineSurveyObj = new BaselineSurvey();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         baseLineSurveyStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         getClientAge(baseLineSurveyStepperLayout);
@@ -113,6 +108,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
         return baselineStepperAdapter;
     }
 
+
     @Override
     public void onCompleted(View completeButton) {
         submitSurvey();
@@ -120,17 +116,22 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
 
     private void submitSurvey() {
         if (apiService.isAuthenticated()) {
+
+            getUserCreator();
             formBaselineSurveyObj.setUserCreator(userCreatorId);
             formBaselineSurveyObj.setClient(clientId);
             apiService.baselineSurveyService.createBaselineSurvey(formBaselineSurveyObj).enqueue(new Callback<BaselineSurvey>() {
                 @Override
                 public void onResponse(Call<BaselineSurvey> call, Response<BaselineSurvey> response) {
                     if (response.isSuccessful()) {
+
+                        client.setBaselineSurveyTaken(true);
+                        modifyClientInfo(client);
+
                         Toast.makeText(BaselineSurveyStepperActivity.this, "Survey successfully submitted!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
                         Toast.makeText(BaselineSurveyStepperActivity.this, "Response error.", Toast.LENGTH_SHORT).show();
-                        Log.d("Response", response.errorBody().toString());
                     }
                 }
 
@@ -140,6 +141,21 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
                 }
             });
         }
+    }
+
+    private void modifyClientInfo(Client client) {
+
+        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+            @Override
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Client client = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Client> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

@@ -12,17 +12,17 @@ class Client(TimestampedModel):
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    location = models.CharField(max_length=100)
+    location = models.CharField(max_length=100, blank=True)
     gps_location = models.CharField(max_length=100, blank=True)
-    consent = models.CharField(max_length=5)
+    consent = models.CharField(max_length=5, blank=True)
     village_no = models.IntegerField(default=0)
-    gender = models.CharField(max_length=20)
+    gender = models.CharField(max_length=20, blank=True)
     age = models.IntegerField(default=0)
-    contact_client = models.CharField(max_length=20)
-    care_present = models.CharField(max_length=5)
-    contact_care = models.CharField(max_length=20)
+    contact_client = models.CharField(max_length=30, blank=True)
+    care_present = models.CharField(max_length=5, blank=True)
+    contact_care = models.CharField(max_length=30, blank=True)
     photo = models.ImageField(upload_to='images/', default='images/default.png')
-    disability = models.CharField(max_length=250)
+    disability = models.CharField(max_length=250, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     # Extra text field for Client information(Health/Education... etc)
     health_risk = models.IntegerField(default=0)
@@ -41,6 +41,11 @@ class Client(TimestampedModel):
     goal_met_health_provision = models.TextField(blank=True, max_length=30)
     goal_met_education_provision = models.TextField(blank=True, max_length=30)
     goal_met_social_provision = models.TextField(blank=True, max_length=30)
+
+   
+    # Field updated by taking baseline survey
+    taken_baseline_survey = models.BooleanField(default=False)
+
 
     class Meta:
         ordering = ['id']

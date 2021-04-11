@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,10 +15,13 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,17 +30,25 @@ import com.stepstone.stepper.VerificationError;
 
 import java.io.File;
 
-import okhttp3.ResponseBody;
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class CreateClientStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
     public Client formClientObj;
     public File photoFile;
+    public Goal healthGoal, educationGoal, socialGoal;
     private StepperLayout CreateClientStepperLayout;
     private APIService apiService = APIService.getInstance();
+    private static final String TAG = "CreateClientActivity";
+
+    private ClientViewModel clientViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +57,10 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         formClientObj = new Client();
+        healthGoal = new Goal();
+        educationGoal = new Goal();
+        socialGoal = new Goal();
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         setTitle("Create a Client");
 
@@ -64,6 +80,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         createClientStepperAdapter.addFragment(new HealthRiskFragment(), "Health Risk");
         createClientStepperAdapter.addFragment(new EducationRiskFragment(), "Education Risk");
         createClientStepperAdapter.addFragment(new SocialRiskFragment(), "Social Risk");
+        createClientStepperAdapter.addFragment(new GoalFragment(), "Goals");
 
         return createClientStepperAdapter;
     }
@@ -75,31 +92,13 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         this.finish();
     }
 
-    private void submitSurvey() {
-        Call<Client> call = apiService.clientService.createClientManual(formClientObj);
-        call.enqueue(new Callback<Client>() {
+    private void submitGoalSurvey(Goal goal) {
+        Call<Goal> call = apiService.goalService.createGoal(goal);
+        call.enqueue(new Callback<Goal>() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
+            public void onResponse(Call<Goal> call, Response<Goal> response) {
                 if (response.isSuccessful()) {
-
-                    Client client = response.body();
-
-                    if (photoFile.exists()) {
-                        Call<ResponseBody> photoCall = apiService.clientService.uploadClientPhoto(photoFile, client.getId());
-                        photoCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                            }
-                        });
-                    }
-
-                    onSubmitSuccess(client);
+                    Goal goal = response.body();
                 } else {
                     Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -107,8 +106,50 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make( CreateClientStepperLayout, "Failed to create the client. Please try again", Snackbar.LENGTH_LONG)
+            public void onFailure(Call<Goal> call, Throwable t) {
+                Snackbar.make( CreateClientStepperLayout, "Failed to create the goal. Please try again", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void submitSurvey() {
+        clientViewModel.createClient(formClientObj).subscribe(new DisposableSingleObserver<Client>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
+                Log.d(TAG, "onSuccess Client created: " + client.getId());
+                if(photoFile.exists()) {
+                    clientViewModel.uploadphoto(photoFile, client).subscribe(new DisposableCompletableObserver() {
+                        @Override
+                        public void onComplete() {
+                            Log.d(TAG, "onSuccess Client photo uploaded: " + client.getId());
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+                        }
+                    });
+                }
+                if(healthGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                    healthGoal.setClientId(client.getId());
+                    submitGoalSurvey(healthGoal);
+                }
+                if(educationGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                    educationGoal.setClientId(client.getId());
+                    submitGoalSurvey(educationGoal);
+                }
+                if(socialGoal.getStatus().equalsIgnoreCase("Ongoing")) {
+                    socialGoal.setClientId(client.getId());
+                    submitGoalSurvey(socialGoal);
+                }
+
+                onSubmitSuccess(client);
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

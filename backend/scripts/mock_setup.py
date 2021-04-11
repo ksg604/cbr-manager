@@ -14,6 +14,7 @@ django.setup()
 from django.contrib.auth.models import User
 from clients.factories import ClientFactory
 from visits.factories import VisitFactory
+from alerts.factories import AlertFactory
 
 
 def create_default_super_user(username, email, password, firstName, lastName):
@@ -54,11 +55,23 @@ def _download_image(image_url):
     return response
 
 
-if __name__ == '__main__':
+def mock_alerts():
+    AlertFactory.create(title="Welcome to Saturn's CBR Application",
+                        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend lacinia mollis. Vivamus pharetra condimentum purus nec vehicula. Sed lacus risus, finibus id nisi consectetur, posuere pretium enim. Aliquam porta commodo ante, eu vehicula nisi volutpat ut. Etiam ultrices justo nulla, sed malesuada ipsum egestas at. Maecenas in dui ac urna eleifend cursus non aliquet mi. Suspendisse semper nisl vitae nibh lobortis, nec pulvinar justo imperdiet. Ut ac gravida odio, in porta massa.")
+
+    AlertFactory.create()
+def main():
     create_default_super_user("user1", "user1@email.com", "password123", "John", "Doe")
     create_default_super_user("user2", "user2@email.com", "password123", "Jane", "Doe")
 
-    clients = create_random_clients(4)
+    mock_alerts()
+
+    clients = create_random_clients(2)
+
     for c in clients:
         for _ in range(2):
             visit = VisitFactory.create(client=c)
+
+
+if __name__ == '__main__':
+    main()

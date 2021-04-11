@@ -2,12 +2,10 @@ package com.example.cbr_manager.ui.clientselector;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +16,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.baselinesurvey.BaselineSurveyStepperActivity;
-import com.example.cbr_manager.ui.clientlist.ClientListRecyclerItemAdapter;
+import com.example.cbr_manager.ui.clientlist.ClientListItemAdapter;
 import com.example.cbr_manager.ui.createreferral.CreateReferralStepperActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 
@@ -26,24 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DisposableObserver;
 
 @AndroidEntryPoint
-public class ClientSelectorFragment extends Fragment implements ClientListRecyclerItemAdapter.OnItemListener {
+public class ClientSelectorFragment extends Fragment implements ClientListItemAdapter.OnItemClickListener {
 
     private static final String TAG = ClientSelectorFragment.class.getName();
-    private final int NEW_VISIT_CODE = 100;
-    private final int NEW_REFERRAL_CODE = 101;
-    private final int NEW_BASELINE_CODE = 102;
-    List<Client> clientList = new ArrayList<>();
-    private RecyclerView clientListRecyclerView;
-    private ClientListRecyclerItemAdapter clientListAdapter;
-    private RecyclerView.LayoutManager clientSelectorLayoutManager;
+    private static final int NEW_VISIT_CODE = 100;
+    private static final int NEW_REFERRAL_CODE = 101;
+    private static final int NEW_BASELINE_CODE = 102;
+    private ClientListItemAdapter clientListAdapter;
     private ClientViewModel clientViewModel;
 
     public ClientSelectorFragment() {
-        // Required empty public constructor
+        super(R.layout.fragment_client_selector);
     }
 
     @Override
@@ -53,20 +46,16 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_client_selector, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        clientListRecyclerView = root.findViewById(R.id.clientSelectorRecyclerView);
-        clientSelectorLayoutManager = new LinearLayoutManager(getContext());
-        clientListAdapter = new ClientListRecyclerItemAdapter(clientList, this);
-        clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
-        clientListRecyclerView.setAdapter(clientListAdapter);
+        clientListAdapter = new ClientListItemAdapter(this);
 
-        fetchClientsToList(clientList);
+        setupClientSearchView(view, clientListAdapter);
 
-        SearchView search = root.findViewById(R.id.clientSelectorSearchView);
+        populateClientListAdapter(clientListAdapter);
+
+        SearchView search = view.findViewById(R.id.clientSelectorSearchView);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -79,28 +68,31 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
                 return true;
             }
         });
-
-        return root;
     }
 
-    private void fetchClientsToList(List<Client> clientList) {
-        clientViewModel.getAllClients().subscribe(new DisposableObserver<Client>() {
-            @Override
-            public void onNext(@NonNull Client client) {
-                clientList.add(client);
-                Log.d(TAG, "onNext: ");
-            }
+    private void setupClientSearchView(View view, ClientListItemAdapter clientListAdapter) {
+        RecyclerView clientListRecyclerView = view.findViewById(R.id.clientSelectorRecyclerView);
+        RecyclerView.LayoutManager clientSelectorLayoutManager = new LinearLayoutManager(getContext());
+        clientListRecyclerView.setLayoutManager(clientSelectorLayoutManager);
+        clientListRecyclerView.setAdapter(clientListAdapter);
+    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "onError: ");
-            }
+    private void populateClientListAdapter(ClientListItemAdapter clientListAdapter) {
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clientList1 -> {
+            List<Client> clientList = new ArrayList<>();
+            for (Client client :
+                    clientList1) {
+                int code = ((ClientSelectorActivity) getActivity()).getCode();
 
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: ");
-                clientListAdapter.notifyDataSetChanged();
+                if (code == NEW_BASELINE_CODE) {
+                    if (!client.isBaselineSurveyTaken()) {
+                        clientList.add(client);
+                    }
+                } else {
+                    clientList.add(client);
+                }
             }
+            clientListAdapter.setClients(clientList);
         });
     }
 
@@ -125,6 +117,7 @@ public class ClientSelectorFragment extends Fragment implements ClientListRecycl
             baselineIntent.putExtra("CLIENT_ID", clientId);
             startActivity(baselineIntent);
             getActivity().finish();
+
         }
     }
 }

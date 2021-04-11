@@ -2,16 +2,21 @@ package com.example.cbr_manager.ui.alert.alert_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
+import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.threeten.bp.format.FormatStyle;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +33,8 @@ public class AlertDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_details);
+        setupToolbar();
+
         parentLayout = findViewById(android.R.id.content);
 
         Intent intent = getIntent();
@@ -40,30 +47,37 @@ public class AlertDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void setupToolbar(){
+        getSupportActionBar().setTitle("Alerts");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     private void getAlertInfo(int alertId){
-        apiService.alertService.getAlert(alertId).enqueue(new Callback<Alert>() {
-            @Override
-            public void onResponse(Call<Alert> call, Response<Alert> response) {
+        if (apiService.isAuthenticated()){
+            apiService.alertService.getAlert(alertId).enqueue(new Callback<Alert>() {
+                @Override
+                public void onResponse(Call<Alert> call, Response<Alert> response) {
 
-                if(response.isSuccessful()){
-                    Alert alert = response.body();
+                    if(response.isSuccessful()){
+                        Alert alert = response.body();
 
-                    // Todo: dynamically set the alert info here
-                    setUpTextView(R.id.textTitle, alert.getTitle());
-                    setUpTextView(R.id.textBody, alert.getBody());
-                    setUpTextView(R.id.textDate, "Date posted:  " + alert.getFormattedDate());
-                } else{
+                        // Todo: dynamically set the alert info here
+                        setUpTextView(R.id.textTitle, alert.getTitle());
+                        setUpTextView(R.id.textBody, alert.getBody());
+                        setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(alert.getDate(), FormatStyle.SHORT));
+                    } else{
+                        Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Alert> call, Throwable t) {
                     Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<Alert> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+            });
+        }
     }
 
     private void setUpTextView(int textViewId, String text) {
@@ -72,7 +86,6 @@ public class AlertDetailsActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        setupBackButton();
         setupMarkAsReadButton();
     }
 
@@ -86,19 +99,11 @@ public class AlertDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setupBackButton() {
-        Button backButton = findViewById(R.id.buttonSaveDraft);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
-
-    public int getAlertId() {
-        return alertId;
-    }
-
-
 }

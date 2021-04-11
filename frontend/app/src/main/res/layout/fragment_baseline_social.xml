@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:textColor="@color/purple_700"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:text="Social" />
 
             <TextView

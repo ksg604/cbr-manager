@@ -12,29 +12,38 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.ui.client_history.ClientHistoryFragment;
+import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
+import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class ClientDetailsFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
     private int clientId;
     private View parentLayout;
+    private ClientViewModel clientViewModel;
 
     public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
 
@@ -58,6 +67,8 @@ public class ClientDetailsFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_client_details, container, false);
 
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+
         parentLayout = getActivity().findViewById(android.R.id.content);
 
         clientId = getArguments().getInt(KEY_CLIENT_ID, -1);
@@ -66,12 +77,29 @@ public class ClientDetailsFragment extends Fragment {
         setupButtons(root);
         setupVectorImages(root);
         setupBottomNavigationView(root);
+        setupCardView(root);
 
         return root;
     }
 
     private void setupToolBar() {
         setHasOptionsMenu(true);
+    }
+
+    private void setupCardView(View view) {
+        CardView healthGoalCardView = view.findViewById(R.id.clientDetailsHealthGoalCardView);
+        healthGoalCardView.setVisibility(View.GONE);
+        CardView EducationGoalCardView = view.findViewById(R.id.clientDetailsEducationGoalCardView);
+        EducationGoalCardView.setVisibility(View.GONE);
+        CardView socialGoalCardView = view.findViewById(R.id.clientDetailsSocialGoalCardView);
+        socialGoalCardView.setVisibility(View.GONE);
+    }
+
+    private void modifyCardView(int cardViewId, boolean hasGoal) {
+        if(hasGoal) {
+            CardView cardView = (CardView) getView().findViewById(cardViewId);
+            cardView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupBottomNavigationView(View root) {
@@ -136,40 +164,20 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void getClientInfo(int clientId) {
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
+            setupNameTextView(client.getFullName());
+            setupImageViews(client.getPhotoURL());
 
-                if (response.isSuccessful()) {
-                    Client client = response.body();
-
-                    // Todo: dynamically set the client info here
-                    setupNameTextView(client.getFullName());
-                    setupImageViews(client.getPhotoURL());
-
-                    setupLocationTextView(client.getLocation());
-                    setupAgeTextView(client.getAge().toString());
-                    setupGenderTextView(client.getGender());
-                    setupHealthTextView(client.getGoalMetHealthProvision());
-                    setupSocialTextView(client.getGoalMetSocialProvision());
-                    setupEducationTextView(client.getGoalMetEducationProvision());
-                    setupEducationRiskTextView(client.getEducationRisk().toString());
-                    setupSocialRiskTextView(client.getSocialRisk().toString());
-                    setupHealthRiskTextView(client.getHealthRisk().toString());
-                    setupDisabilityTextView(client.getDisability());
-                    setupRiskLevelTextView(client.calculateRiskScore().toString());
-                    setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
-                } else {
-                    Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-                Snackbar.make(parentLayout, "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+            setupLocationTextView(client.getLocation());
+            setupAgeTextView(client.getAge().toString());
+            setupGenderTextView(client.getGender());
+            setupEducationRiskTextView(client.getEducationRisk().toString());
+            setupSocialRiskTextView(client.getSocialRisk().toString());
+            setupHealthRiskTextView(client.getHealthRisk().toString());
+            setupDisabilityTextView(client.getDisability());
+            setupRiskLevelTextView(client.assignRiskLabel().toString());
+            setUpTextView(R.id.clientDetailsCBRClientIDTextView, client.getCbrClientId());
+            setupGoals();
         });
     }
 
@@ -202,18 +210,6 @@ public class ClientDetailsFragment extends Fragment {
         setUpTextView(R.id.clientDetailsRiskLevelTextView, riskLevel);
     }
 
-    private void setupHealthTextView(String health) {
-        setUpTextView(R.id.clientDetailsHealthGoalTextView, health);
-    }
-
-    private void setupEducationTextView(String education) {
-        setUpTextView(R.id.clientDetailsEducationGoalTextView, education);
-    }
-
-    private void setupSocialTextView(String social) {
-        setUpTextView(R.id.clientDetailsSocialGoalTextView, social);
-    }
-
     private void setupHealthRiskTextView(String healthRisk) {
         setUpTextView(R.id.clientDetailsHealthRiskLevelTextView, healthRisk);
     }
@@ -228,9 +224,9 @@ public class ClientDetailsFragment extends Fragment {
     private void setupButtons(View root) {
         setupEditButton(root);
         setupBackButton(root);
-        setupHistoryButton(root,R.id.clientDetailsEducationHistoryTextView,"education_goal");
-        setupHistoryButton(root,R.id.clientDetailsHealthHistoryTextView,"health_goal");
-        setupHistoryButton(root,R.id.clientDetailsSocialHistoryTextView,"social_goal");
+        setupHistoryButton(root,R.id.clientDetailsEducationHistoryTextView,"education_goal", 101);
+        setupHistoryButton(root,R.id.clientDetailsHealthHistoryTextView,"health_goal", 100);
+        setupHistoryButton(root,R.id.clientDetailsSocialHistoryTextView,"social_goal", 102);
     }
 
     private void setupEditButton(View root) {
@@ -248,18 +244,14 @@ public class ClientDetailsFragment extends Fragment {
         });
     }
 
-    private void setupHistoryButton(View root, int ViewID, String field){
+    private void setupHistoryButton(View root, int ViewID, String field, int code){
         View someView = root.findViewById(ViewID);
         someView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("clientId", clientId);
-                bundle.putString("field",field);
-                ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
-                clientHistoryFragment.setArguments(bundle);
+                GoalHistoryFragment goalHistoryFragment = GoalHistoryFragment.newInstance(code, clientId);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_client_details, clientHistoryFragment,null)
+                        .replace(R.id.fragment_client_details, goalHistoryFragment,null)
                         .addToBackStack(null)
                         .commit();
             }
@@ -278,6 +270,73 @@ public class ClientDetailsFragment extends Fragment {
 
     public int getClientId() {
         return clientId;
+    }
+
+    private void setupGoals() {
+        TextView healthTitle = getView().findViewById(R.id.clientDetailsHealthGoalTextView);
+        TextView healthDescription = getView().findViewById(R.id.clientDetailsHealthDescriptionTextView);
+        TextView healthStatus = getView().findViewById(R.id.clientDetailsHealthStatusTextView);
+        TextView socialTitle = getView().findViewById(R.id.clientDetailsSocialGoalTextView);
+        TextView socialDescription = getView().findViewById(R.id.clientDetailsSocialDescriptionTextView);
+        TextView socialStatus = getView().findViewById(R.id.clientDetailsSocialStatusTextView);
+        TextView educationTitle = getView().findViewById(R.id.clientDetailsEducationGoalTextView);
+        TextView educationDescription = getView().findViewById(R.id.clientDetailsEducationDescriptionTextView);
+        TextView educationStatus = getView().findViewById(R.id.clientDetailsEducationStatusTextView);
+
+        apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
+            @Override
+            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
+                List<Goal> goals = new ArrayList<>();
+                boolean hasHealthGoal = false;
+                boolean hasEducationGoal = false;
+                boolean hasSocialGoal = false;
+                goals = response.body();
+                Collections.reverse(goals);
+                for (Goal goal : goals) {
+                    if (goal.getClientId().equals(clientId)) {
+                        if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
+                            if (!goal.getTitle().isEmpty()) {
+                                healthTitle.setText(goal.getTitle());
+                            }
+
+                            if (!goal.getDescription().isEmpty()) {
+                                healthDescription.setText(goal.getDescription());
+                            }
+                            healthStatus.setText(goal.getStatus());
+                            hasHealthGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
+                            if (!goal.getTitle().isEmpty()) {
+                                educationTitle.setText(goal.getTitle());
+                            }
+
+                            if (!goal.getDescription().isEmpty()) {
+                                educationDescription.setText(goal.getDescription());
+                            }
+                            educationStatus.setText(goal.getStatus());
+                            hasEducationGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
+                            if (!goal.getTitle().isEmpty()) {
+                                socialTitle.setText(goal.getTitle());
+                            }
+
+                            if (!goal.getDescription().isEmpty()) {
+                                socialDescription.setText(goal.getDescription());
+                            }
+                            socialStatus.setText(goal.getStatus());
+                            hasSocialGoal = true;
+                        }
+                    }
+                }
+                modifyCardView(R.id.clientDetailsHealthGoalCardView, hasHealthGoal);
+                modifyCardView(R.id.clientDetailsEducationGoalCardView, hasEducationGoal);
+                modifyCardView(R.id.clientDetailsSocialGoalCardView, hasSocialGoal);
+            }
+
+            @Override
+            public void onFailure(Call<List<Goal>> call, Throwable t) {
+
+            }
+        });
     }
 
 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.example.cbr_manager.BuildConfig;
+import com.example.cbr_manager.service.client.Client;
 import com.squareup.picasso.Picasso;
 
 import org.threeten.bp.Instant;
@@ -19,6 +20,8 @@ import org.threeten.bp.format.FormatStyle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.security.Timestamp;
 import java.text.DateFormat;
@@ -49,13 +52,17 @@ public class Helper {
         }
     }
 
-    public static String riskToColourCode(int riskScore) {
-        if (riskScore >= 10000) {
+    public static String riskToColourCode(Integer riskScore) {
+        Client.RiskLabel riskLabel = Client.assignLabelToRiskScore(riskScore);
+        if (riskLabel == Client.RiskLabel.CRITICAL) {
             return "#b02323";
-        } else if (riskScore >= 330) {
+        } else if (riskLabel == Client.RiskLabel.HIGH) {
             return "#c45404";
-        } else {
+        } else if (riskLabel == Client.RiskLabel.MEDIUM){
             return "#c49704";
+        }
+        else {
+            return "#2E8B57";
         }
     }
 
@@ -93,5 +100,9 @@ public class Helper {
         ZoneId zoneId = ZoneId.systemDefault();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(formatStyle);
         return instant.atZone(zoneId).format(dateTimeFormatter);
+    }
+
+    public static boolean isConnectionError(Throwable throwable){
+        return throwable instanceof SocketTimeoutException || throwable instanceof ConnectException;
     }
 }

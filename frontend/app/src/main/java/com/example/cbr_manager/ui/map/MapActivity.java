@@ -4,6 +4,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
+import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -166,7 +167,7 @@ public class MapActivity extends AppCompatActivity implements
                         == PackageManager.PERMISSION_GRANTED) {
                     map.setMyLocationEnabled(true);
                 } else {
-                    Toast.makeText(MapActivity.this, "You have to accept to enjoy all app's services!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MapActivity.this, "You have to allow user permissions to enjoy all of the map's services!", Toast.LENGTH_LONG).show();
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
                         map.setMyLocationEnabled(true);

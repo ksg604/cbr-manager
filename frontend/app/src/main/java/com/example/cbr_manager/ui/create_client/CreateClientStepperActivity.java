@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -257,7 +258,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
             ActivityCompat.requestPermissions(this,
                     new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
         } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            Log.d("LOCATION_PERMISSIONS", "Could not request location permissions");
             getLastLocation();
         }
 
@@ -277,7 +277,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     private void getLastLocation() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            System.out.println("Location permissions available, starting location");
 
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
             fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)
@@ -289,14 +288,13 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
                                 lastLocation = location;
                                 formClientObj.setLatitude(lastLocation.getLatitude());
                                 formClientObj.setLongitude(lastLocation.getLongitude());
-                                Log.d("LATITUDE", String.valueOf(formClientObj.getLatitude()));
                             }
                         }
                     });
 
         }
         else {
-            Log.d("LOCATION", "Location services not enabled");
+            Toast.makeText(CreateClientStepperActivity.this, "You have to allow user permissions to enjoy all of the app's services!", Toast.LENGTH_LONG).show();
         }
     }
 

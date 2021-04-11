@@ -3,6 +3,7 @@ package com.example.cbr_manager.di;
 import com.example.cbr_manager.BuildConfig;
 import com.example.cbr_manager.service.auth.AuthAPI;
 import com.example.cbr_manager.service.client.ClientAPI;
+import com.example.cbr_manager.service.goal.GoalAPI;
 import com.example.cbr_manager.service.referral.ReferralAPI;
 import com.example.cbr_manager.service.sync.StatusAPI;
 import com.example.cbr_manager.service.user.UserAPI;
@@ -87,6 +88,12 @@ public class RetrofitModule {
     @Provides
     VisitAPI provideVisitAPI(Retrofit retrofit) {
         return retrofit.create(VisitAPI.class);
+    }
+
+    @Singleton
+    @Provides
+    GoalAPI provideGoalAPI(Retrofit retrofit) {
+        return retrofit.create(GoalAPI.class);
     }
 
     @Provides

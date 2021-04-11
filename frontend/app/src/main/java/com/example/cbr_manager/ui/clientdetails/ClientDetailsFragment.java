@@ -20,6 +20,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
@@ -44,8 +45,14 @@ public class ClientDetailsFragment extends Fragment {
     private int clientId;
     private View parentLayout;
     private ClientViewModel clientViewModel;
+    private GoalViewModel healthGoalViewModel;
+    private GoalViewModel educationGoalViewModel;
+    private GoalViewModel socialGoalViewModel;
 
     public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
+    public static String HEALTH = "health";
+    public static String EDUCATION = "education";
+    public static String SOCIAL = "social";
 
     public ClientDetailsFragment() {
         // Required empty public constructor
@@ -68,6 +75,7 @@ public class ClientDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_client_details, container, false);
 
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+
 
         parentLayout = getActivity().findViewById(android.R.id.content);
 
@@ -294,7 +302,8 @@ public class ClientDetailsFragment extends Fragment {
                 Collections.reverse(goals);
                 for (Goal goal : goals) {
                     if (goal.getClientId().equals(clientId)) {
-                        if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
+                        if (goal.getCategory().toLowerCase().equals(HEALTH) && !hasHealthGoal) {
+//                            healthGoalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
                             if (!goal.getTitle().isEmpty()) {
                                 healthTitle.setText(goal.getTitle());
                             }
@@ -304,7 +313,7 @@ public class ClientDetailsFragment extends Fragment {
                             }
                             healthStatus.setText(goal.getStatus());
                             hasHealthGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
+                        } else if (goal.getCategory().toLowerCase().equals(EDUCATION) && !hasEducationGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 educationTitle.setText(goal.getTitle());
                             }
@@ -314,7 +323,7 @@ public class ClientDetailsFragment extends Fragment {
                             }
                             educationStatus.setText(goal.getStatus());
                             hasEducationGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
+                        } else if (goal.getCategory().toLowerCase().equals(SOCIAL) && !hasSocialGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 socialTitle.setText(goal.getTitle());
                             }

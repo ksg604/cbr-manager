@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
+from django.shortcuts import get_object_or_404
+from clients.models import Client
 from referral.models import PhysiotherapyService, Referral, WheelchairService, ProstheticService, OrthoticService, \
     OtherService
 from referral.text_choices import ServiceTypes
 from utils.utils import update_object
-
+from clients.serializer import ClientSerializer
 
 class ExposeTypeMixin(metaclass=serializers.SerializerMetaclass):
     type = serializers.CharField(required=False, read_only=True)
@@ -58,8 +59,6 @@ class ServiceJSONField(serializers.JSONField):
 
 class ReferralSerializer(serializers.ModelSerializer):
     service_detail = ServiceJSONField(source='*')
-    # client_name = serializers.ReadOnlyField(source='client.full_name')
-    # client_id = serializers.ReadOnlyField(source='client.id')
 
     class Meta:
         model = Referral
@@ -105,6 +104,7 @@ class ReferralSerializer(serializers.ModelSerializer):
             service_type_obj.save()
         else:
             raise ValidationError({'service_detail': serializer.errors})
+
 
 
 def _get_serializer_class(service_type):

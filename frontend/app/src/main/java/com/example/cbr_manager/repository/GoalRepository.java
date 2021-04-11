@@ -12,6 +12,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.goal.GoalAPI;
 import com.example.cbr_manager.service.goal.GoalDao;
+import com.example.cbr_manager.workmanager.client.ModifyClientWorker;
 import com.example.cbr_manager.workmanager.goal.CreateGoalWorker;
 import com.example.cbr_manager.workmanager.goal.ModifyGoalWorker;
 
@@ -128,6 +129,26 @@ public class GoalRepository {
                         .setInputData(ModifyGoalWorker.buildInputData(authHeader, goal.getServerId()))
                         .build();
         workManager.enqueue(createGoalRequest);
+    }
+
+    public Completable modifyGoal(Goal goal) {
+        return Completable.fromAction(() -> goalDao.update(goal))
+                .doOnComplete(() -> enqueueModifyGoal(goal))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void enqueueModifyGoal(Goal goal) {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        OneTimeWorkRequest modifyGoalRequest =
+                new OneTimeWorkRequest.Builder(ModifyGoalWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(ModifyGoalWorker.buildInputData(authHeader, goal.getId()))
+                        .build();
+        workManager.enqueue(modifyGoalRequest);
     }
 
 //    public LiveData<Client> getGoal(int id) {

@@ -287,20 +287,18 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void updateGoal(Goal goal) {
-        apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
+
+        goalViewModel.modifyGoal(goal).subscribe(new DisposableCompletableObserver() {
+
             @Override
-            public void onResponse(Call<Goal> call, Response<Goal> response) {
-                if(response.isSuccessful()) {
-                    Goal goal = response.body();
-                }
-                else {
-                    Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+            public void onComplete() {
+                Snackbar.make(getView(), "Successfully updated goal", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                getActivity().onBackPressed();
             }
 
             @Override
-            public void onFailure(Call<Goal> call, Throwable t) {
+            public void onError(@NonNull Throwable e) {
                 Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

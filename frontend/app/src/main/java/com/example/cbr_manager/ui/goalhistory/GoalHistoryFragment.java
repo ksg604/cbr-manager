@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.ui.GoalViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +40,8 @@ public class GoalHistoryFragment extends Fragment {
     private View view;
     private RecyclerView goalRecyclerView;
     private GoalHistoryItemAdapter goalHistoryItemAdapter;
+    private GoalViewModel goalViewModel;
+
 
     public GoalHistoryFragment() {
         super(R.layout.fragment_goal_history);
@@ -66,6 +70,7 @@ public class GoalHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
         return inflater.inflate(R.layout.fragment_goal_history, container, false);
     }
 
@@ -77,39 +82,28 @@ public class GoalHistoryFragment extends Fragment {
     }
 
     private void getGoals() {
-        apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
-            @Override
-            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
-                if (response.isSuccessful()) {
-                    List<Goal> goalArrayList = new ArrayList<>();
-                    ArrayList<Goal> goalsToAdd = new ArrayList<>();
-                    goalArrayList = response.body();
-                    Collections.reverse(goalArrayList);
-                    String category = "";
-                    if (goalType == HEALTH_GOAL_KEY) {
-                        category = "health";
-                    } else if (goalType == EDUCATION_GOAL_KEY) {
-                        category = "education";
-                    } else if (goalType == SOCIAL_GOAL_KEY) {
-                        category = "social";
-                    }
+        goalViewModel.getAllGoals().observe(getViewLifecycleOwner(), goals -> {
 
-                    for (Goal goal : goalArrayList) {
-                        if (goal.getClientId().equals(clientId) && goal.getCategory().toLowerCase().equals(category)) {
-                            goalsToAdd.add(goal);
-                        }
-                    }
-                    goalHistoryItemAdapter = new GoalHistoryItemAdapter(getContext(),goalsToAdd);
-                    RecyclerView.LayoutManager goalHistoryLayoutManager = new LinearLayoutManager(getContext());
-                    goalRecyclerView.setLayoutManager(goalHistoryLayoutManager);
-                    goalRecyclerView.setAdapter(goalHistoryItemAdapter);
+            ArrayList<Goal> goalsToAdd = new ArrayList<>();
+            Collections.reverse(goals);
+            String category = "";
+            if (goalType == HEALTH_GOAL_KEY) {
+                category = "health";
+            } else if (goalType == EDUCATION_GOAL_KEY) {
+                category = "education";
+            } else if (goalType == SOCIAL_GOAL_KEY) {
+                category = "social";
+            }
+
+            for (Goal goal : goals) {
+                if (goal.getClientId().equals(clientId) && goal.getCategory().toLowerCase().equals(category)) {
+                    goalsToAdd.add(goal);
                 }
             }
-
-            @Override
-            public void onFailure(Call<List<Goal>> call, Throwable t) {
-
-            }
+            goalHistoryItemAdapter = new GoalHistoryItemAdapter(getContext(),goalsToAdd);
+            RecyclerView.LayoutManager goalHistoryLayoutManager = new LinearLayoutManager(getContext());
+            goalRecyclerView.setLayoutManager(goalHistoryLayoutManager);
+            goalRecyclerView.setAdapter(goalHistoryItemAdapter);
         });
 
     }

@@ -32,6 +32,10 @@ public class GoalViewModel extends ViewModel {
         return this.goalRepository.getGoalsAsLiveData();
     }
 
+    public Completable modifyGoal(Goal goal) {
+        return this.goalRepository.modifyGoal(goal);
+    }
+
 //    public LiveData<Goal> getGoal(int id) {
 //        return goalRepository.getGoal(id);
 //    }

@@ -1,7 +1,9 @@
 package com.example.cbr_manager.ui.referral.referral_list;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,16 +86,21 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                 adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(newText);
             }
         });
-
-        TapTargetView.showFor(getActivity(),
-                TapTarget.forView(root.findViewById(R.id.checkBox), "Filter clients.", "Use the checkbox to filter between all referrals and only outstanding referrals.")
-                    .outerCircleAlpha(0.96f)
-                    .targetCircleColor(R.color.white)
-                    .titleTextSize(20)
-                    .drawShadow(true)
-                    .tintTarget(true)
-                    .dimColor(R.color.black)
-        .targetRadius(60));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeOutstandingReferrals", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(root.findViewById(R.id.checkBox), "Filter clients.", "Use the checkbox to filter between all referrals and only outstanding referrals.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .dimColor(R.color.black)
+                            .targetRadius(60));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeNav", true);
+            editor.apply();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -37,21 +37,34 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     private SearchView searchView;
     private CheckBox checkBox;
     private int clientId = -1;
+    public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
     private final int NO_SPECIFIC_CLIENT = -1;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
     
     private ReferralViewModel referralViewModel;
 
+    public ReferralListFragment() {
+        // Required empty public constructor
+    }
+
+    public static ReferralListFragment newInstance(int clientId) {
+        ReferralListFragment fragment = new ReferralListFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_CLIENT_ID, clientId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
     @Override
     public void onResume() {
         super.onResume();
         fetchReferralsToList(referralRecyclerItems);
-
         if(clientId==NO_SPECIFIC_CLIENT){
             checkBox.setChecked(true);
         }
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
@@ -59,7 +72,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         View root = inflater.inflate(R.layout.fragment_referral_list, container, false);
 
         if(getArguments()!=null){
-        clientId = getArguments().getInt("CLIENT_ID", -1);}
+            clientId = getArguments().getInt(KEY_CLIENT_ID, -1);}
 
         referralListRecyclerView = root.findViewById(R.id.recyclerView);
         referralListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
@@ -96,7 +109,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         return root;
     }
 
-    public void fetchReferralsToList(List<ReferralListRecyclerItem> referralUIList) {
+    public void fetchReferralsToList(ArrayList<ReferralListRecyclerItem> referralUIList) {
             referralViewModel.getReferralsAsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Referral>>() {
                 @Override
                 public void onChanged(List<Referral> referrals) {

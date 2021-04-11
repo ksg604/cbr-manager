@@ -1,5 +1,7 @@
 package com.example.cbr_manager.ui.createvisit;
 
+import android.graphics.Rect;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.stepstone.stepper.Step;
@@ -74,6 +78,17 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         initializeChips(view);
         setupAutoFilledTextViews(view);
         setupProvisionVisibility();
+
+        TapTargetView.showFor(getActivity(),
+                TapTarget.forView(view.findViewById(R.id.cbrTypeChipGroup), "Select a provision.", "Provisions will be updated by selecting the CBR chips.")
+                        .outerCircleAlpha(0.96f)
+                        .targetCircleColor(R.color.white)
+                        .titleTextSize(20)
+                        .drawShadow(true)
+                        .transparentTarget(false)
+//                        .tintTarget(true)
+                        .targetRadius(60)
+                        .dimColor(R.color.black));
         return view;
     }
 

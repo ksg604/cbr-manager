@@ -106,11 +106,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
     private void onSubmitSuccess(Client client) {
 
-
-        client.setLongitude(lastLocation.getLongitude());
-        client.setLatitude(lastLocation.getLatitude());
-        modifyClientInfo(client);
-
         Intent intent = new Intent(this, ClientDetailsActivity.class);
         intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
         startActivity(intent);
@@ -291,6 +286,8 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
                             // Got last known location
                             if ( location != null ) {
                                 lastLocation = location;
+                                formClientObj.setLatitude(lastLocation.getLatitude());
+                                formClientObj.setLongitude(lastLocation.getLongitude());
                                 Log.d("LATITUDE", String.valueOf(formClientObj.getLatitude()));
                             }
                         }
@@ -302,18 +299,4 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         }
     }
 
-    private void modifyClientInfo(Client client) {
-
-        clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
-            @Override
-            public void onComplete() {
-
-            }
-
-            @Override
-            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
-            }
-        });
-    }
 }

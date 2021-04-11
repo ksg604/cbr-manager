@@ -22,6 +22,12 @@ public class ServiceDetail {
         return id;
     }
 
+    public ServiceDetail() {
+        this.type = "Physiotherapy";
+        this.condition = "Amputee";
+        this.other_description = "";
+    }
+
     public void setId(int id) {
         this.id = id;
     }

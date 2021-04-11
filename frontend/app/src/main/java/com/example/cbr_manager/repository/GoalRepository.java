@@ -1,5 +1,7 @@
 package com.example.cbr_manager.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
@@ -59,10 +61,12 @@ public class GoalRepository {
                 .subscribe(new DisposableSingleObserver<List<Goal>>() {
                     @Override
                     public void onSuccess(@NonNull List<Goal> goals) {
+                        Log.d(TAG, "onSuccess: ");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        Log.d(TAG, "onError: " + e.getMessage());
                     }
                 });
     }

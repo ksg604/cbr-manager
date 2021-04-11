@@ -289,59 +289,49 @@ public class ClientDetailsFragment extends Fragment {
         TextView educationDescription = getView().findViewById(R.id.clientDetailsEducationDescriptionTextView);
         TextView educationStatus = getView().findViewById(R.id.clientDetailsEducationStatusTextView);
 
-        apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
-            @Override
-            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
-                List<Goal> goals = new ArrayList<>();
-                boolean hasHealthGoal = false;
-                boolean hasEducationGoal = false;
-                boolean hasSocialGoal = false;
-                goals = response.body();
-                Collections.reverse(goals);
-                for (Goal goal : goals) {
-                    if (goal.getClientId().equals(clientId)) {
-                        if (goal.getCategory().toLowerCase().equals(HEALTH) && !hasHealthGoal) {
-                            if (!goal.getTitle().isEmpty()) {
-                                healthTitle.setText(goal.getTitle());
-                            }
-
-                            if (!goal.getDescription().isEmpty()) {
-                                healthDescription.setText(goal.getDescription());
-                            }
-                            healthStatus.setText(goal.getStatus());
-                            hasHealthGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals(EDUCATION) && !hasEducationGoal) {
-                            if (!goal.getTitle().isEmpty()) {
-                                educationTitle.setText(goal.getTitle());
-                            }
-
-                            if (!goal.getDescription().isEmpty()) {
-                                educationDescription.setText(goal.getDescription());
-                            }
-                            educationStatus.setText(goal.getStatus());
-                            hasEducationGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals(SOCIAL) && !hasSocialGoal) {
-                            if (!goal.getTitle().isEmpty()) {
-                                socialTitle.setText(goal.getTitle());
-                            }
-
-                            if (!goal.getDescription().isEmpty()) {
-                                socialDescription.setText(goal.getDescription());
-                            }
-                            socialStatus.setText(goal.getStatus());
-                            hasSocialGoal = true;
+        goalViewModel.getAllGoals().observe(getViewLifecycleOwner(), goals -> {
+            boolean hasHealthGoal = false;
+            boolean hasEducationGoal = false;
+            boolean hasSocialGoal = false;
+            Collections.reverse(goals);
+            for (Goal goal : goals) {
+                if (goal.getClientId().equals(clientId)) {
+                    if (goal.getCategory().toLowerCase().equals(HEALTH) && !hasHealthGoal) {
+                        if (!goal.getTitle().isEmpty()) {
+                            healthTitle.setText(goal.getTitle());
                         }
+
+                        if (!goal.getDescription().isEmpty()) {
+                            healthDescription.setText(goal.getDescription());
+                        }
+                        healthStatus.setText(goal.getStatus());
+                        hasHealthGoal = true;
+                    } else if (goal.getCategory().toLowerCase().equals(EDUCATION) && !hasEducationGoal) {
+                        if (!goal.getTitle().isEmpty()) {
+                            educationTitle.setText(goal.getTitle());
+                        }
+
+                        if (!goal.getDescription().isEmpty()) {
+                            educationDescription.setText(goal.getDescription());
+                        }
+                        educationStatus.setText(goal.getStatus());
+                        hasEducationGoal = true;
+                    } else if (goal.getCategory().toLowerCase().equals(SOCIAL) && !hasSocialGoal) {
+                        if (!goal.getTitle().isEmpty()) {
+                            socialTitle.setText(goal.getTitle());
+                        }
+
+                        if (!goal.getDescription().isEmpty()) {
+                            socialDescription.setText(goal.getDescription());
+                        }
+                        socialStatus.setText(goal.getStatus());
+                        hasSocialGoal = true;
                     }
                 }
-                modifyCardView(R.id.clientDetailsHealthGoalCardView, hasHealthGoal);
-                modifyCardView(R.id.clientDetailsEducationGoalCardView, hasEducationGoal);
-                modifyCardView(R.id.clientDetailsSocialGoalCardView, hasSocialGoal);
             }
-
-            @Override
-            public void onFailure(Call<List<Goal>> call, Throwable t) {
-
-            }
+            modifyCardView(R.id.clientDetailsHealthGoalCardView, hasHealthGoal);
+            modifyCardView(R.id.clientDetailsEducationGoalCardView, hasEducationGoal);
+            modifyCardView(R.id.clientDetailsSocialGoalCardView, hasSocialGoal);
         });
     }
 

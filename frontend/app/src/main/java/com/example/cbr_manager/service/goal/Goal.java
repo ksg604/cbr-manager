@@ -21,11 +21,11 @@ public class Goal{
 
     @SerializedName("datetime_created")
     @Expose
-    private Timestamp datetimeCreated;
+    private String datetimeCreated;
 
     @SerializedName("datetime_completed")
     @Expose
-    private Timestamp datetimeCompleted;
+    private String datetimeCompleted;
 
     @SerializedName("user_creator")
     @Expose
@@ -56,6 +56,7 @@ public class Goal{
     private String status;
 
     public Goal() {
+        this.datetimeCompleted = null;
         this.userId = 0;
         this.clientId = -1;
         this.category = "";
@@ -73,19 +74,19 @@ public class Goal{
         this.serverId = serverId;
     }
 
-    public Timestamp getDatetimeCreated() {
+    public String getDatetimeCreated() {
         return datetimeCreated;
     }
 
-    public void setDatetimeCreated(Timestamp datetimeCreated) {
+    public void setDatetimeCreated(String datetimeCreated) {
         this.datetimeCreated = datetimeCreated;
     }
 
-    public Timestamp getDatetimeCompleted() {
+    public String getDatetimeCompleted() {
         return datetimeCompleted;
     }
 
-    public void setDatetimeCompleted(Timestamp datetimeCompleted) {
+    public void setDatetimeCompleted(String datetimeCompleted) {
         this.datetimeCompleted = datetimeCompleted;
     }
 

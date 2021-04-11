@@ -1,8 +1,10 @@
 package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,17 +82,20 @@ public class ClientDetailsFragment extends Fragment {
         setupVectorImages(root);
         setupBottomNavigationView(root);
         setupCardView(root);
-
-        TapTargetView.showFor(getActivity(),
-                TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
-                        .outerCircleAlpha(0.96f)
-                        .targetCircleColor(R.color.white)
-                        .titleTextSize(20)
-                        .drawShadow(true)
-                        .tintTarget(true)
-                        .dimColor(R.color.black));
-
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeClientDetailsRisk", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .dimColor(R.color.black));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeNav", true);
+            editor.apply();
+        }
         return root;
     }
 

@@ -49,6 +49,7 @@ import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticService
 import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -60,6 +61,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -79,6 +81,7 @@ public class CreateReferralFragment extends Fragment implements Step {
     private static final int PICK_FROM_GALLERY = 1;
     private static final int REQUEST_GALLERY = 103;
     private AuthViewModel authViewModel;
+    private ClientViewModel clientViewModel;
     private ReferralViewModel referralViewModel;
     private Referral referral;
     private APIService apiService = APIService.getInstance();
@@ -87,6 +90,7 @@ public class CreateReferralFragment extends Fragment implements Step {
     int clientId = -1;
     private Integer userId = -1;
     private String imageFilePath = "";
+    private TextInputEditText clientName;
 
     public CreateReferralFragment() {
         // Required empty public constructor
@@ -101,6 +105,7 @@ public class CreateReferralFragment extends Fragment implements Step {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
         referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
     }
 
@@ -110,26 +115,13 @@ public class CreateReferralFragment extends Fragment implements Step {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_referral, container, false);
         clientId = ((CreateReferralStepperActivity) getActivity()).clientId;
-        referral = ((CreateReferralStepperActivity) getActivity()).newReferralObj;
-        TextInputEditText clientName = view.findViewById(R.id.referralClientName);
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-                @Override
-                public void onResponse(Call<Client> call, Response<Client> response) {
-                    if (response.isSuccessful()) {
-                        client = response.body();
-                        clientName.setText(client.getFullName());
-                        clientName.setFocusable(false);
-                    }
-                }
+        referral = ((CreateReferralStepperActivity) getActivity()).formReferralObj;
+        clientName = view.findViewById(R.id.referralClientName);
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
+            clientName.setText(client.getFullName());
+            clientName.setEnabled(false);
+        });
 
-                @Override
-                public void onFailure(Call<Client> call, Throwable t) {
-
-                }
-            });
-
-        }
         getUserId();
         setupReferralServiceRadioGroup(view);
         setupPhysioLayout(view);
@@ -297,9 +289,11 @@ public class CreateReferralFragment extends Fragment implements Step {
         validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
         referral.setRefer_to(referToString);
-
-        referral.setClient(new Integer(clientId));
-        referral.setUserCreator(userId);
+        Date today = Calendar.getInstance().getTime();
+        referral.setDateCreated(today.toString());
+        referral.setFullName(clientName.getText().toString());
+        referral.setClientId(new Integer(clientId));
+        referral.setUserId(userId);
         if (requiredFieldsFilled) {
             return true;
 //            makeServerCall(referral);

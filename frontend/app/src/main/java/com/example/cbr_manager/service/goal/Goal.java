@@ -1,14 +1,9 @@
 package com.example.cbr_manager.service.goal;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.RoomWarnings;
 
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.utils.CBRTimestamp;
-import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,11 +11,13 @@ import java.sql.Timestamp;
 
 @Entity(tableName = "goal")
 public class Goal{
-    @SerializedName("id")
-    @Expose
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "goalId")
     private Integer id;
+
+    @SerializedName("id")
+    @Expose
+    private Integer serverId;
 
     @SerializedName("datetime_created")
     @Expose
@@ -68,12 +65,12 @@ public class Goal{
         this.status = "";
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getServerId() {
+        return serverId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
     }
 
     public Timestamp getDatetimeCreated() {

@@ -15,7 +15,7 @@ public class GoalService extends BaseService {
     }
 
     public Call<Goal> modifyGoal(Goal goal) {
-        return this.goalAPI.modifyGoal(authHeader, goal.getId(), goal);
+        return this.goalAPI.modifyGoal(authHeader, goal.getServerId(), goal);
     }
 
     public Call<List<Goal>> getGoals() {

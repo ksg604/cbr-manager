@@ -80,11 +80,9 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         socialGoal = new Goal();
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
-        requestLocationPermissions();
-        getLastLocation();
-
-
         setTitle("Create a Client");
+
+        requestLocationPermissions();
 
         CreateClientStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         CreateClientStepperLayout.setAdapter(setUpStepperAdapterWithFragments());
@@ -107,6 +105,12 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void onSubmitSuccess(Client client) {
+
+
+        client.setLongitude(lastLocation.getLongitude());
+        client.setLatitude(lastLocation.getLatitude());
+        modifyClientInfo(client);
+
         Intent intent = new Intent(this, ClientDetailsActivity.class);
         intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
         startActivity(intent);
@@ -135,6 +139,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void submitSurvey() {
+
         clientViewModel.createClient(formClientObj).subscribe(new DisposableSingleObserver<Client>() {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
@@ -286,8 +291,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
                             // Got last known location
                             if ( location != null ) {
                                 lastLocation = location;
-                                formClientObj.setLatitude(lastLocation.getLatitude());
-                                formClientObj.setLongitude(lastLocation.getLongitude());
                                 Log.d("LATITUDE", String.valueOf(formClientObj.getLatitude()));
                             }
                         }
@@ -297,5 +300,20 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         else {
             Log.d("LOCATION", "Location services not enabled");
         }
+    }
+
+    private void modifyClientInfo(Client client) {
+
+        clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
     }
 }

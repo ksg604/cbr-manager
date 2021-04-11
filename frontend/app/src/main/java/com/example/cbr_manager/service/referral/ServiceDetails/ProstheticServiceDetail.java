@@ -16,6 +16,7 @@ public class ProstheticServiceDetail extends ServiceDetail{
     @Expose
     private String kneeInjuryLocation;
 
+
     public String getInfo(){
         return "Knee Injury Location: " + kneeInjuryLocation;
     }

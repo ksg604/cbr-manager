@@ -20,7 +20,8 @@ import io.reactivex.Single;
 @HiltViewModel
 public class ReferralViewModel extends ViewModel {
     private final SavedStateHandle savedStateHandle;
-    private ReferralRepository referralRepository;
+
+    private final ReferralRepository referralRepository;
 
     @Inject
     public ReferralViewModel(SavedStateHandle savedStateHandle, ReferralRepository referralRepository) {
@@ -30,6 +31,10 @@ public class ReferralViewModel extends ViewModel {
 
     public LiveData<Referral> getReferral(int id){
         return referralRepository.getReferral(id);
+    }
+
+    public Single<Referral> getReferralAsSingle(int id){
+        return referralRepository.getReferralAsSingle(id);
     }
 
     public LiveData<List<Referral>> getReferralsAsLiveData() {

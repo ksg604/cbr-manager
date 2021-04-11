@@ -22,6 +22,7 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.AlertViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
@@ -57,11 +58,13 @@ public class DashboardFragment extends Fragment {
     View root;
 
     private VisitViewModel visitViewModel;
+    private AlertViewModel alertViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+        alertViewModel = new ViewModelProvider(this).get(AlertViewModel.class);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -175,29 +178,15 @@ public class DashboardFragment extends Fragment {
     public void fetchNewestAlert() {
         dateAlertTextView = root.findViewById(R.id.dateAlertTextView);
         titleTextView = root.findViewById(R.id.announcementTextView);
-        if (apiService.isAuthenticated()) {
-            apiService.alertService.getAlerts().enqueue(new Callback<List<Alert>>() {
-                @Override
-                public void onResponse(Call<List<Alert>> call, Response<List<Alert>> response) {
-                    if (response.isSuccessful()) {
-                        List<Alert> alerts = response.body();
-
-                        if (alerts != null & !alerts.isEmpty()) {
-                            newestAlert = alerts.get(0);
-                            dateAlertTextView.setText("Date posted:  " + Helper.formatDateTimeToLocalString(newestAlert.getDate(), FormatStyle.SHORT));
-                            titleTextView.setText(newestAlert.getTitle());
-                            homeAlertId = newestAlert.getId();
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Alert>> call, Throwable t) {
-
-                }
-            });
-        }
+        alertViewModel.getAllAlerts().observe(getViewLifecycleOwner(), retrivedAlerts -> {
+            List<Alert> alerts = retrivedAlerts;
+            if (alerts != null & !alerts.isEmpty()) {
+                newestAlert = alerts.get(0);
+                dateAlertTextView.setText("Date posted:  " + Helper.formatDateTimeToLocalString(newestAlert.getDate(), FormatStyle.SHORT));
+                titleTextView.setText(newestAlert.getTitle());
+                homeAlertId = newestAlert.getId();
+            }
+        });
     }
 
     public void setAlertButtons() {

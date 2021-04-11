@@ -3,12 +3,14 @@ package com.example.cbr_manager.ui.referral.referral_details;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -105,14 +107,22 @@ public class ReferralDetailsFragment extends Fragment {
 
                 if (referral.getStatus().equals("CREATED")) {
                     resolveButton.setVisibility(View.VISIBLE);
-                    TapTargetView.showFor(getActivity(),
-                            TapTarget.forView(getView().findViewById(R.id.referralDetailsResolveButton), "Ready to resolve?", "If the client's referral has been resolved, tap the button to change the status to 'resolved' and to record an outcome.")
-                                    .outerCircleAlpha(0.96f)
-                                    .titleTextSize(20)
-                                    .drawShadow(true)
-                                    .transparentTarget(true)
-                                    .targetRadius(100)
-                                    .dimColor(R.color.black));
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    if (!preferences.getBoolean("firstTimeResolve", false)) {
+                        TapTargetView.showFor(getActivity(),
+                                TapTarget.forView(getView().findViewById(R.id.referralDetailsResolveButton), "Ready to resolve?", "If the client's referral has been resolved, tap the button to change the status to 'resolved' and to record an outcome.")
+                                        .outerCircleAlpha(0.96f)
+                                        .titleTextSize(20)
+                                        .drawShadow(true)
+                                        .transparentTarget(true)
+                                        .targetRadius(100)
+                                        .dimColor(R.color.black));
+
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putBoolean("firstTimeNav", true);
+                        editor.apply();
+                    }
+
                 }
                 setupImageViews(referral.getPhotoURL());
             }

@@ -303,10 +303,7 @@ public class ClientDetailsFragment extends Fragment {
                         if (goal.getCategory().toLowerCase().equals(HEALTH) && !hasHealthGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 healthTitle.setText(goal.getTitle());
-                                goalViewModel.getGoal(clientId).observe(getViewLifecycleOwner(), client -> {
-                                    setupNameTextView(client.getFullName());
-
-                                }
+                            }
 
                             if (!goal.getDescription().isEmpty()) {
                                 healthDescription.setText(goal.getDescription());

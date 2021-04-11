@@ -126,7 +126,7 @@ public class GoalRepository {
         workManager.enqueue(createGoalRequest);
     }
 
-    public LiveData<Client> getGoal(int id) {
-        return goalDao.getGoalsAsLiveData(id);
-    }
+//    public LiveData<Client> getGoal(int id) {
+//        return goalDao.getGoalsAsLiveData(id);
+//    }
 }

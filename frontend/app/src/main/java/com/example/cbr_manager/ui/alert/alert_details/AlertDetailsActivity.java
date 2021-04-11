@@ -62,7 +62,7 @@ public class AlertDetailsActivity extends AppCompatActivity {
 
             setUpTextView(R.id.textTitle, localAlert.getTitle());
             setUpTextView(R.id.textBody, localAlert.getBody());
-            setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(localAlert.getDate(), FormatStyle.SHORT));
+            setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(localAlert.getCreatedAt(), FormatStyle.SHORT));
 
         });
 

@@ -110,7 +110,7 @@ public class ReferralDetailsFragment extends Fragment {
                                     .titleTextSize(20)
                                     .drawShadow(true)
                                     .transparentTarget(true)
-                                    .targetRadius(100)
+                                    .targetRadius(90)
                                     .dimColor(R.color.black));
 
                     SharedPreferences.Editor editor = preferences.edit();

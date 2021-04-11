@@ -9,19 +9,20 @@ from referral.text_choices import InjuryLocation, UsageExperience, Condition, Se
 
 
 class Referral(TimestampedModel):
-    user_creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    date_created = models.CharField(max_length=150)
-    limit = models.Q(app_label="referral")
-    status = models.CharField(max_length=200, default="CREATED")
-    outcome = models.TextField(blank=True,max_length=300, default="")
-    refer_to = models.CharField(max_length=100)
+    user_creator = models.IntegerField(blank=True,null=True)
+    client_id = models.IntegerField(blank=True,null=True)
+    client_name = models.CharField(blank=True,max_length=150,null=True)
+    date_created = models.CharField(blank=True,max_length=150,null=True)
 
-    photo = models.ImageField(upload_to='images/', default='images/default.png')
+    status = models.CharField(blank=True,null=True,max_length=200, default="CREATED")
+    outcome = models.TextField(blank=True,null=True,max_length=300, default="")
+    refer_to = models.CharField(blank=True,null=True,max_length=100)
 
-    service_type = models.CharField(max_length=50, choices=ServiceTypes.choices)
-    service_object_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=limit)
-    service_object_id = models.PositiveIntegerField()
+    photo = models.ImageField(blank=True, upload_to='images/', default='images/default.png', null=True)
+
+    service_type = models.CharField(blank=True,null=True,max_length=50)
+    service_object_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True,null=True)
+    service_object_id = models.PositiveIntegerField(blank=True,null=True)
     content_object = GenericForeignKey('service_object_type', 'service_object_id')
 
 
@@ -39,32 +40,32 @@ class ServiceType(models.Model):
 class WheelchairService(ServiceType):
     type = ServiceTypes.WHEELCHAIR
 
-    usage_experience = models.CharField(max_length=100, choices=UsageExperience.choices)
-    client_hip_width = models.FloatField(default=0)
-    client_has_existing_wheelchair = models.BooleanField(default=False)
-    is_wheel_chair_repairable = models.BooleanField()
+    usage_experience = models.CharField(blank=True,max_length=100)
+    client_hip_width = models.FloatField(blank=True,default=0)
+    client_has_existing_wheelchair = models.BooleanField(blank=True,default=False)
+    is_wheel_chair_repairable = models.BooleanField(blank=True,default=False)
 
 
 class PhysiotherapyService(ServiceType):
     type = ServiceTypes.PHYSIOTHERAPY
 
-    condition = models.CharField(choices=Condition.choices, max_length=100)
-    other_description = models.TextField(help_text='Other condition, please specify', blank=True, default="")
+    condition = models.CharField(blank=True, max_length=100)
+    other_description = models.TextField(blank=True,help_text='Other condition, please specify',  default="")
 
 
 class ProstheticService(ServiceType):
     type = ServiceTypes.PROSTHETIC
 
-    knee_injury_location = models.CharField(max_length=20, choices=InjuryLocation.choices)
+    knee_injury_location = models.CharField(blank=True,max_length=20)
 
 
 class OrthoticService(ServiceType):
     type = ServiceTypes.ORTHOTIC
 
-    elbow_injury_location = models.CharField(max_length=20, choices=InjuryLocation.choices)
+    elbow_injury_location = models.CharField(blank=True,max_length=20)
 
 
 class OtherService(ServiceType):
     type = ServiceTypes.OTHER
 
-    description = models.TextField()
+    description = models.TextField(blank=True)

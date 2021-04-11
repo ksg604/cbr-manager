@@ -1,5 +1,10 @@
 package com.example.cbr_manager.service.alert;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.example.cbr_manager.utils.CBRTimestamp;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +14,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Alert {
+@Entity(tableName = "alert")
+public class Alert extends CBRTimestamp {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private Integer id;
+
+    @SerializedName("id")
+    @Expose
+    private Integer serverId;
+
     @SerializedName("title")
     @Expose
     private String title;
@@ -19,20 +33,25 @@ public class Alert {
     @SerializedName("date")
     @Expose
     private String date;
-    @SerializedName("id")
-    @Expose
-    private int id;
 
     public Alert(String title, String body) {
         this.title = title;
         this.body = body;
     }
 
-    public int getId() {
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

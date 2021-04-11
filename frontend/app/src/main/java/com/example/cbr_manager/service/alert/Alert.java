@@ -30,9 +30,6 @@ public class Alert extends CBRTimestamp {
     @SerializedName("body")
     @Expose
     private String body;
-    @SerializedName("date")
-    @Expose
-    private String date;
 
     public Alert(String title, String body) {
         this.title = title;
@@ -69,13 +66,5 @@ public class Alert extends CBRTimestamp {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

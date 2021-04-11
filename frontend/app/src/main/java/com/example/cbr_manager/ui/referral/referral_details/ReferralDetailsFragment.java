@@ -71,11 +71,9 @@ public class ReferralDetailsFragment extends Fragment {
         parentLayout = root.findViewById(android.R.id.content);
 
         Intent intent = getActivity().getIntent();
-        int referralId = intent.getIntExtra("referralId", -1);
+        referralId = intent.getIntExtra("referralId", -1);
         resolveButton = root.findViewById(R.id.referralDetailsResolveButton);
         getReferralInfo(referralId);
-
-        this.referralId = referralId;
 
         resolveButton.setOnClickListener(new View.OnClickListener() {
             @Override

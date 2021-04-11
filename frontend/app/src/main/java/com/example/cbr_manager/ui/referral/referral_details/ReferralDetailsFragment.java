@@ -27,6 +27,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ReferralViewModel;
+import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsEditFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -74,12 +75,9 @@ public class ReferralDetailsFragment extends Fragment {
         parentLayout = root.findViewById(android.R.id.content);
 
         Intent intent = getActivity().getIntent();
-        int referralId = intent.getIntExtra("referralId", -1);
+        referralId = intent.getIntExtra("referralId", -1);
         resolveButton = root.findViewById(R.id.referralDetailsResolveButton);
-
         getReferralInfo(referralId);
-
-        this.referralId = referralId;
 
         resolveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,44 +92,33 @@ public class ReferralDetailsFragment extends Fragment {
     }
 
     private void getReferralInfo(int referralId) {
-        referralViewModel.getReferral(referralId).subscribe(new DisposableSingleObserver<Referral>() {
-            @Override
-            public void onSuccess(@NonNull Referral referral) {
-                setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
-                setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
-                setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
-                setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
-                setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
-                setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getFormattedDate());
-                setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
+        referralViewModel.getReferral(referralId).observe(getViewLifecycleOwner(), referral -> {
+            setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
+            setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
+            setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
+            setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
+            setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo(referral.getServiceType()));
+            setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getDateCreated());
+            setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
+            if (referral.getStatus().equals("CREATED")) {
+                resolveButton.setVisibility(View.VISIBLE);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                if (!preferences.getBoolean("firstTimeResolve", false)) {
+                    TapTargetView.showFor(getActivity(),
+                            TapTarget.forView(getView().findViewById(R.id.referralDetailsResolveButton), "Ready to resolve?", "If the client's referral has been resolved, tap the button to change the status to 'resolved' and to record an outcome.")
+                                    .outerCircleAlpha(0.96f)
+                                    .titleTextSize(20)
+                                    .drawShadow(true)
+                                    .transparentTarget(true)
+                                    .targetRadius(100)
+                                    .dimColor(R.color.black));
 
-                if (referral.getStatus().equals("CREATED")) {
-                    resolveButton.setVisibility(View.VISIBLE);
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    if (!preferences.getBoolean("firstTimeResolve", false)) {
-                        TapTargetView.showFor(getActivity(),
-                                TapTarget.forView(getView().findViewById(R.id.referralDetailsResolveButton), "Ready to resolve?", "If the client's referral has been resolved, tap the button to change the status to 'resolved' and to record an outcome.")
-                                        .outerCircleAlpha(0.96f)
-                                        .titleTextSize(20)
-                                        .drawShadow(true)
-                                        .transparentTarget(true)
-                                        .targetRadius(100)
-                                        .dimColor(R.color.black));
-
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("firstTimeResolve", true);
-                        editor.apply();
-                    }
-
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("firstTimeResolve", true);
+                    editor.apply();
                 }
-                setupImageViews(referral.getPhotoURL());
             }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Snackbar.make(parentLayout, "Failed to get the referral. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+            setupImageViews(referral.getPhotoURL());
         });
     }
 
@@ -160,8 +147,12 @@ public class ReferralDetailsFragment extends Fragment {
         editButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("referralId", referralId);
+                ReferralDetailsEditFragment referralDetailsEditFragment = new ReferralDetailsEditFragment();
+                referralDetailsEditFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_referral_details, ReferralDetailsEditFragment.class, null)
+                        .replace(R.id.fragment_referral_details, referralDetailsEditFragment, null)
                         .addToBackStack(null)
                         .commit();
             }
@@ -221,7 +212,7 @@ public class ReferralDetailsFragment extends Fragment {
                 referral.setStatus("RESOLVED");
 
                 referral.setOutcome(outcome);
-                apiService.referralService.updateReferral(referral).enqueue(new Callback<Referral>() {
+                apiService.referralService.modifyReferral(referral).enqueue(new Callback<Referral>() {
                     @Override
                     public void onResponse(Call<Referral> call, Response<Referral> response) {
                         if (response.isSuccessful()) {

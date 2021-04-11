@@ -19,8 +19,7 @@ import java.util.List;
 
 public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertListRecyclerItemAdapter.AlertItemViewHolder> implements Filterable {
 
-    private ArrayList<AlertListRecyclerItem> alertListRecyclerItems;
-    private List<AlertListRecyclerItem> alertListRecyclerItemsFull;
+    private List<AlertListRecyclerItem> alertListRecyclerItems;
     private OnItemListener onItemListener;
     private List<AlertListRecyclerItem> filteredAlerts;
 
@@ -42,7 +41,6 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
                 filteredAlerts = alertListRecyclerItems;
             } else {
                 ArrayList<AlertListRecyclerItem> tempFilteredList = new ArrayList<>();
-
                 for (AlertListRecyclerItem alertListRecyclerItem : alertListRecyclerItems) {
                     if (alertListRecyclerItem.getTitle().toLowerCase().trim().contains(searchString) | alertListRecyclerItem.getBody().toLowerCase().trim().contains(searchString)) {
                         tempFilteredList.add(alertListRecyclerItem);
@@ -58,8 +56,8 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredAlerts = (ArrayList<AlertListRecyclerItem>) results.values;
-
+            filteredAlerts.clear();
+            filteredAlerts.addAll((List) results.values);
             notifyDataSetChanged();
         }
     };
@@ -93,8 +91,6 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
 
     public AlertListRecyclerItemAdapter(ArrayList<AlertListRecyclerItem> alertListRecyclerItems, OnItemListener onItemListener) {
         this.alertListRecyclerItems = alertListRecyclerItems;
-        this.alertListRecyclerItemsFull = new ArrayList<>();
-        this.alertListRecyclerItemsFull.addAll(alertListRecyclerItems);
         this.filteredAlerts = alertListRecyclerItems;
         this.onItemListener = onItemListener;
     }

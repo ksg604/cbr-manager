@@ -44,7 +44,7 @@ public class ClientDetailsEditFragment extends Fragment {
     Client localClient;
     private String location = "";
     private int clientId;
-    private static final String[] statusPaths = {"Ongoing", "Complete"};
+    private static final String[] statusPaths = {"Ongoing", "Concluded", "Cancelled"};
     private ClientViewModel clientViewModel;
     private Goal healthGoal, educationGoal, socialGoal;
     private boolean hasHealthGoal = false, hasEducationGoal = false, hasSocialGoal = false;

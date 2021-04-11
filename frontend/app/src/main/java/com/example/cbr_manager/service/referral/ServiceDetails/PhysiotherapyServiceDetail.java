@@ -27,6 +27,7 @@ public class PhysiotherapyServiceDetail extends ServiceDetail {
 
         this.other_description = other_description;
     }
+
     public String getInfo(){
         if(other_description.equals("")){other_description="None";}
         return "Condition: " + condition +"\n"

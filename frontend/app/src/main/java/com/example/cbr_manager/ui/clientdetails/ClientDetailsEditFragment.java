@@ -40,14 +40,15 @@ public class ClientDetailsEditFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
-    private Spinner genderSpinner;
     String gender="";
     Client localClient;
+    private String location = "";
     private int clientId;
-    private static final String[] paths = {"Male", "Female"};
+    private static final String[] statusPaths = {"Ongoing", "Complete"};
     private ClientViewModel clientViewModel;
     private Goal healthGoal, educationGoal, socialGoal;
     private boolean hasHealthGoal = false, hasEducationGoal = false, hasSocialGoal = false;
+    private String healthStatus = "", educationStatus = "" , socialStatus = "";
 
 
     public ClientDetailsEditFragment() {
@@ -67,7 +68,6 @@ public class ClientDetailsEditFragment extends Fragment {
         this.clientId = bundle.getInt("clientId", -1);
         this.localClient = new Client();
 
-        setupGenderSpinner(root);
         setupClientEditTexts(clientId, root);
         setupCardView(root);
         getGoals();
@@ -99,9 +99,7 @@ public class ClientDetailsEditFragment extends Fragment {
 
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
-        EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
         EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
-
         EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
         EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
         EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
@@ -111,7 +109,7 @@ public class ClientDetailsEditFragment extends Fragment {
         localClient.setFirstName(clientName[0]);
         localClient.setLastName(clientName[1]);
         localClient.setAge(Integer.parseInt(editClientAge.getText().toString()));
-        localClient.setLocation(editClientLocation.getText().toString());
+        localClient.setLocation(location);
         localClient.setDisability(editClientDisability.getText().toString());
         localClient.setEducationRisk(Integer.parseInt((editClientEducationRisk.getText().toString())));
         localClient.setSocialRisk(Integer.parseInt(editClientSocialRisk.getText().toString()));
@@ -119,7 +117,7 @@ public class ClientDetailsEditFragment extends Fragment {
         modifyClientInfo(localClient);
     }
 
-    private void setupGenderSpinner(View root) {
+    private void setupGenderSpinner(View root, String initialGender) {
         String[] paths = {"Male", "Female"};
         Spinner spinner = (Spinner) root.findViewById(R.id.clientDetailsEditGenderSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
@@ -127,6 +125,14 @@ public class ClientDetailsEditFragment extends Fragment {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        int initialPosition=0;
+        for(int i=0 ; i<paths.length ; i++) {
+            if (paths[i].equalsIgnoreCase(initialGender)) {
+                initialPosition = i;
+                break;
+            }
+        }
+        spinner.setSelection(initialPosition);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -143,7 +149,6 @@ public class ClientDetailsEditFragment extends Fragment {
     private void setupClientEditTexts(int clientId, View root) {
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
-        EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
         EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
 
         EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
@@ -154,13 +159,45 @@ public class ClientDetailsEditFragment extends Fragment {
             this.localClient = observeClient;
             String clientFirstName = observeClient.getFirstName();
             String clientLastName = observeClient.getLastName();
+            setupGenderSpinner(root, observeClient.getGender());
             editClientName.setText(clientFirstName + " " + clientLastName);
             editClientAge.setText(observeClient.getAge().toString());
-            editClientLocation.setText(observeClient.getLocation());
+            setupLocationSpinner(root, observeClient.getLocation());
             editClientDisability.setText(observeClient.getDisability());
             editClientEducationRisk.setText(observeClient.getEducationRisk().toString());
             editClientSocialRisk.setText(observeClient.getSocialRisk().toString());
             editClientHealthRisk.setText(observeClient.getHealthRisk().toString());
+        });
+    }
+
+    private void setupLocationSpinner(View root, String locationDropDown) {
+        String[] paths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
+                "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
+        Spinner spinner = (Spinner) root.findViewById(R.id.clientDetailsEditLocationSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        int initialPosition=0;
+        for(int i=0 ; i<paths.length ; i++) {
+            if (paths[i].equalsIgnoreCase(locationDropDown)) {
+                initialPosition = i;
+                break;
+            }
+        }
+        spinner.setSelection(initialPosition);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                location = paths[position];
+                spinner.setSelection(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                location = paths[0];
+            }
         });
     }
 
@@ -232,19 +269,19 @@ public class ClientDetailsEditFragment extends Fragment {
                             healthGoal = goal;
                             setupGoalEditTexts(R.id.clientDetailsEditHealthTitleEditText, healthGoal.getTitle());
                             setupGoalEditTexts(R.id.clientDetailsEditHealthDescriptionEditText, healthGoal.getDescription());
-                            setupGoalEditTexts(R.id.clientDetailsEditHealthStatusEditText, healthGoal.getStatus());
+                            setupGoalSpinner(R.id.clientDetailsEditHealthGoalStatusSpinner, healthGoal.getStatus());
                             hasHealthGoal = true;
                         } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
                             educationGoal = goal;
                             setupGoalEditTexts(R.id.clientDetailsEditEducationTitleEditText, educationGoal.getTitle());
                             setupGoalEditTexts(R.id.clientDetailsEditEducationDescriptionEditText, educationGoal.getDescription());
-                            setupGoalEditTexts(R.id.clientDetailsEditEducationStatusEditText, educationGoal.getStatus());
+                            setupGoalSpinner(R.id.clientDetailsEditEducationGoalStatusSpinner, educationGoal.getStatus());
                             hasEducationGoal = true;
                         } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
                             socialGoal = goal;
                             setupGoalEditTexts(R.id.clientDetailsEditSocialTitleEditText, socialGoal.getTitle());
                             setupGoalEditTexts(R.id.clientDetailsEditSocialDescriptionEditText, socialGoal.getDescription());
-                            setupGoalEditTexts(R.id.clientDetailsEditSocialStatusEditText, socialGoal.getStatus());
+                            setupGoalSpinner(R.id.clientDetailsEditSocialGoalStatusSpinner, socialGoal.getStatus());
                             hasSocialGoal = true;
                         }
                     }
@@ -272,18 +309,64 @@ public class ClientDetailsEditFragment extends Fragment {
         if(hasHealthGoal) {
             healthGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditHealthTitleEditText));
             healthGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditHealthDescriptionEditText));
-            healthGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditHealthStatusEditText));
+            healthGoal.setStatus(healthStatus);
         }
         if(hasEducationGoal) {
             educationGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditEducationTitleEditText));
             educationGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditEducationDescriptionEditText));
-            educationGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditEducationStatusEditText));
+            educationGoal.setStatus(educationStatus);
         }
         if(hasSocialGoal) {
             socialGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditSocialTitleEditText));
             socialGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditSocialDescriptionEditText));
-            socialGoal.setStatus(getStringDataFromEditText(R.id.clientDetailsEditSocialStatusEditText));
+            socialGoal.setStatus(socialStatus);
         }
+    }
+
+    private void setupGoalSpinner(int spinnerId, String initialStatus) {
+        Spinner spinner = (Spinner) getView().findViewById(spinnerId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,statusPaths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        int initialPosition=0;
+        for(int i=0 ; i<statusPaths.length ; i++) {
+            if (statusPaths[i].equalsIgnoreCase(initialStatus)) {
+                initialPosition = i;
+                break;
+            }
+        }
+        spinner.setSelection(initialPosition);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(spinnerId) {
+                    case R.id.clientDetailsEditHealthGoalStatusSpinner:
+                        healthStatus = statusPaths[position];
+                        break;
+                    case R.id.clientDetailsEditEducationGoalStatusSpinner:
+                        educationStatus = statusPaths[position];
+                        break;
+                    case R.id.clientDetailsEditSocialGoalStatusSpinner:
+                        socialStatus = statusPaths[position];
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                switch(spinnerId) {
+                    case R.id.clientDetailsEditHealthGoalStatusSpinner:
+                        healthStatus = statusPaths[0];
+                        break;
+                    case R.id.clientDetailsEditEducationGoalStatusSpinner:
+                        educationStatus = statusPaths[0];
+                        break;
+                    case R.id.clientDetailsEditSocialGoalStatusSpinner:
+                        socialStatus = statusPaths[0];
+                }
+            }
+        });
     }
 
     private String getStringDataFromEditText(int editTextId) {

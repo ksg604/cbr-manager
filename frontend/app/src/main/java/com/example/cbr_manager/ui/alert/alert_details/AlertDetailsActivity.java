@@ -9,39 +9,43 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
+import com.example.cbr_manager.ui.AlertViewModel;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.threeten.bp.format.FormatStyle;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class AlertDetailsActivity extends AppCompatActivity {
 
 
     private APIService apiService = APIService.getInstance();
-    private int alertId = -1;
+    private int alertId;
     private View parentLayout;
-
+    private Alert localAlert;
+    private AlertViewModel alertViewModel;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_details);
         setupToolbar();
-
+        alertViewModel = new ViewModelProvider(this).get(AlertViewModel.class);
         parentLayout = findViewById(android.R.id.content);
 
         Intent intent = getIntent();
-        int alertId = intent.getIntExtra("alertId", -1);
+        alertId = intent.getIntExtra("alertId", -1);
         getAlertInfo(alertId);
-
-        this.alertId = alertId;
 
         setupButtons();
 
@@ -53,31 +57,15 @@ public class AlertDetailsActivity extends AppCompatActivity {
     }
 
     private void getAlertInfo(int alertId){
-        if (apiService.isAuthenticated()){
-            apiService.alertService.getAlert(alertId).enqueue(new Callback<Alert>() {
-                @Override
-                public void onResponse(Call<Alert> call, Response<Alert> response) {
+        alertViewModel.getAlert(alertId).observe(this, requestedAlert -> {
+            localAlert = requestedAlert;
 
-                    if(response.isSuccessful()){
-                        Alert alert = response.body();
+            setUpTextView(R.id.textTitle, localAlert.getTitle());
+            setUpTextView(R.id.textBody, localAlert.getBody());
+            setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(localAlert.getDate(), FormatStyle.SHORT));
 
-                        // Todo: dynamically set the alert info here
-                        setUpTextView(R.id.textTitle, alert.getTitle());
-                        setUpTextView(R.id.textBody, alert.getBody());
-                        setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(alert.getDate(), FormatStyle.SHORT));
-                    } else{
-                        Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                }
+        });
 
-                @Override
-                public void onFailure(Call<Alert> call, Throwable t) {
-                    Snackbar.make(parentLayout, "Failed to get the alert. Please try again", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-        }
     }
 
     private void setUpTextView(int textViewId, String text) {

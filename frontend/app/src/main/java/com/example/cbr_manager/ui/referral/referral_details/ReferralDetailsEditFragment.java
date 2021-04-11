@@ -62,7 +62,7 @@ public class ReferralDetailsEditFragment extends Fragment {
 
     private void modifyReferralInfo(Referral referral) {
 
-        apiService.referralService.updateReferral(referral).enqueue(new Callback<Referral>() {
+        apiService.referralService.modifyReferral(referral).enqueue(new Callback<Referral>() {
             @Override
             public void onResponse(Call<Referral> call, Response<Referral> response) {
                 getActivity().onBackPressed();
@@ -155,7 +155,7 @@ public class ReferralDetailsEditFragment extends Fragment {
             @Override
             public void onResponse(Call<Referral> call, Response<Referral> response) {
                 Referral referral = response.body();
-                setupClientTextView(referral.getClient());
+                setupClientTextView(referral.getClientId());
                 setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
                 setUpEditTextView(R.id.referralDetailsReferToEditTextView, referral.getRefer_to());
                 setUpEditTextView(R.id.referralDetailsOutcomeEditTextView, referral.getOutcome());

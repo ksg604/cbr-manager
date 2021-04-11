@@ -294,7 +294,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
         }
         else {
-            Toast.makeText(CreateClientStepperActivity.this, "You have to allow user permissions to enjoy all of the app's services!", Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateClientStepperActivity.this, "You have to allow location permissions in order to associate a location with this client!", Toast.LENGTH_LONG).show();
         }
     }
 

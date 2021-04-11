@@ -104,7 +104,7 @@ public class MapActivity extends AppCompatActivity implements
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
-        
+
         mapFragment.getMapAsync(this);
 
     }
@@ -171,7 +171,7 @@ public class MapActivity extends AppCompatActivity implements
                         == PackageManager.PERMISSION_GRANTED) {
                     map.setMyLocationEnabled(true);
                 } else {
-                    Toast.makeText(MapActivity.this, "You have to allow user permissions to enjoy all of the map's services!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MapActivity.this, "You have to allow location permissions to enjoy all of the map's services!", Toast.LENGTH_LONG).show();
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
                         map.setMyLocationEnabled(true);

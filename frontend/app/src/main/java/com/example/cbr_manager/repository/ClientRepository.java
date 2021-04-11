@@ -94,18 +94,18 @@ public class ClientRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Completable modifyClient(Client client) {
+        return Completable.fromAction(() -> clientDao.update(client))
+                .doOnComplete(() -> enqueueModifyClient(client))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public Completable uploadPhoto(File file, Client client) {
         Uri path = Uri.fromFile(file);
         client.setPhotoURL(path.toString());
         return Completable.fromAction(() -> clientDao.update(client))
                 .doOnComplete(() -> enqueueUploadPhoto(client, file.getAbsolutePath()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    public Completable modifyClient(Client client) {
-        return Completable.fromAction(() -> clientDao.update(client))
-                .doOnComplete(() -> enqueueModifyClient(client))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

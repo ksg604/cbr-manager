@@ -42,13 +42,10 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
-import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
+import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -60,14 +57,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableSingleObserver;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -79,6 +74,7 @@ public class CreateReferralFragment extends Fragment implements Step {
     private static final int PICK_FROM_GALLERY = 1;
     private static final int REQUEST_GALLERY = 103;
     private AuthViewModel authViewModel;
+    private ClientViewModel clientViewModel;
     private ReferralViewModel referralViewModel;
     private Referral referral;
     private APIService apiService = APIService.getInstance();
@@ -87,6 +83,7 @@ public class CreateReferralFragment extends Fragment implements Step {
     int clientId = -1;
     private Integer userId = -1;
     private String imageFilePath = "";
+    private TextInputEditText clientName;
 
     public CreateReferralFragment() {
         // Required empty public constructor
@@ -101,6 +98,7 @@ public class CreateReferralFragment extends Fragment implements Step {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
         referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
     }
 
@@ -110,26 +108,14 @@ public class CreateReferralFragment extends Fragment implements Step {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_create_referral, container, false);
         clientId = ((CreateReferralStepperActivity) getActivity()).clientId;
-        referral = ((CreateReferralStepperActivity) getActivity()).newReferralObj;
-        TextInputEditText clientName = view.findViewById(R.id.referralClientName);
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-                @Override
-                public void onResponse(Call<Client> call, Response<Client> response) {
-                    if (response.isSuccessful()) {
-                        client = response.body();
-                        clientName.setText(client.getFullName());
-                        clientName.setFocusable(false);
-                    }
-                }
+        referral = ((CreateReferralStepperActivity) getActivity()).formReferralObj;
+        clientName = view.findViewById(R.id.referralClientName);
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
+            clientName.setText(client.getFullName());
+            clientName.setEnabled(false);
+            referral.setFullName(client.getFullName());
+        });
 
-                @Override
-                public void onFailure(Call<Client> call, Throwable t) {
-
-                }
-            });
-
-        }
         getUserId();
         setupReferralServiceRadioGroup(view);
         setupPhysioLayout(view);
@@ -158,13 +144,11 @@ public class CreateReferralFragment extends Fragment implements Step {
 
         int service = selectedService.getCheckedRadioButtonId();
 //        Referral referral = new Referral();
-
+        ServiceDetail serviceDetail = referral.getServiceDetail();
         if (service == R.id.referralPhysioRadioButton) {
-            PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
+
             String clientCondition;
-
             TextInputEditText physioOtherCondition = view.findViewById(R.id.referralOtherPhysio);
-
             String otherConditionDescription = "";
             Spinner referralPhysioDDL = view.findViewById(R.id.referralPhysioDDL);
             clientCondition = referralPhysioDDL.getSelectedItem().toString();
@@ -175,15 +159,13 @@ public class CreateReferralFragment extends Fragment implements Step {
                     requiredFieldsFilled = false;
                 }
                 validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
-                physiotherapyServiceDetail.setOther_description(otherConditionDescription);
+                serviceDetail.setOther_description(otherConditionDescription);
+                referral.getServiceDetail().setOther_description(physioOtherCondition.getText().toString());
             }
-            physiotherapyServiceDetail.setCondition(clientCondition);
-
-            referral.setServiceDetail(physiotherapyServiceDetail);
+            referral.getServiceDetail().setCondition(clientCondition);
             referral.setServiceType("Physiotherapy");
 
         } else if (service == R.id.referralProstheticRadioButton) {
-            ProstheticServiceDetail prostheticServiceDetail = new ProstheticServiceDetail();
             RadioGroup aboveOrBelowKnee = view.findViewById(R.id.referralAboveOrBelowKnee);
             if (!validateRadiogroupSelection(R.id.referralAboveOrBelowKnee, R.id.referralNoProstheticSelectedTextView)) {
                 requiredFieldsFilled = false;
@@ -196,13 +178,12 @@ public class CreateReferralFragment extends Fragment implements Step {
                 getRadioText = aboveOrBelow.getText().toString();
             }
 
-            prostheticServiceDetail.setKneeInjuryLocation(getRadioText);
+            serviceDetail.setKneeInjuryLocation(getRadioText);
 
-            referral.setServiceDetail(prostheticServiceDetail);
             referral.setServiceType("Prosthetic");
 
         } else if (service == R.id.referralOrthoticRadioButton) {
-            OrthoticServiceDetail orthoticServiceDetail = new OrthoticServiceDetail();
+
             RadioGroup aboveOrBelowElbow = view.findViewById(R.id.referralAboveOrBelowElbow);
             if (!validateRadiogroupSelection(R.id.referralAboveOrBelowElbow, R.id.referralNoOrthoticSelectedTextView)) {
                 requiredFieldsFilled = false;
@@ -216,13 +197,12 @@ public class CreateReferralFragment extends Fragment implements Step {
                 getRadioText = aboveOrBelow.getText().toString();
             }
 
-            orthoticServiceDetail.setElbowInjuryLocation(getRadioText);
+            serviceDetail.setElbowInjuryLocation(getRadioText);
 
-            referral.setServiceDetail(orthoticServiceDetail);
             referral.setServiceType("Orthotic");
 
         } else if (service == R.id.referralWheelChairRadioButton) {
-            WheelchairServiceDetail wheelchairServiceDetail = new WheelchairServiceDetail();
+
             String hipWidth;
             boolean isExisting = false;
             boolean isRepairable = false;
@@ -234,7 +214,7 @@ public class CreateReferralFragment extends Fragment implements Step {
             validationErrorListener(R.id.referralHipWidth, R.id.referralHipWidthTextInputLayout);
             hipWidth = hipWidthEditText.getText().toString();
             if (!hipWidth.isEmpty()) {
-                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+                serviceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
             }
 
             RadioGroup usageExperience = view.findViewById(R.id.referralWheelChairUsageRadioGroup);
@@ -242,9 +222,9 @@ public class CreateReferralFragment extends Fragment implements Step {
                 requiredFieldsFilled = false;
             }
             if (usageExperience.getCheckedRadioButtonId() == R.id.referralWheelchairIntermediate) {
-                wheelchairServiceDetail.setUsageExperience("Intermediate");
+                serviceDetail.setUsageExperience("Intermediate");
             } else {
-                wheelchairServiceDetail.setUsageExperience("Basic");
+                serviceDetail.setUsageExperience("Basic");
             }
 
             RadioGroup isExistingWheelchair = view.findViewById(R.id.referralExistingWheelchairRadioGroup);
@@ -266,17 +246,14 @@ public class CreateReferralFragment extends Fragment implements Step {
             }
 
             if (!hipWidth.isEmpty()) {
-                wheelchairServiceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
+                serviceDetail.setClientHipWidth(Float.parseFloat(hipWidth));
             }
-            wheelchairServiceDetail.setClientHasExistingWheelchair(isExisting);
-            wheelchairServiceDetail.setIsWheelChairRepairable(isRepairable);
-            wheelchairServiceDetail.setUsageExperience("Basic");
-            referral.setServiceDetail(wheelchairServiceDetail);
+            serviceDetail.setClientHasExistingWheelchair(isExisting);
+            serviceDetail.setWheelChairRepairable(isRepairable);
+            serviceDetail.setUsageExperience("Basic");
             referral.setServiceType("Wheelchair");
 
         } else if (service == R.id.referralOtherRadioButton) {
-            OtherServiceDetail otherServiceDetail = new OtherServiceDetail();
-
             TextInputEditText otherServiceEditText = view.findViewById(R.id.referralOtherServiceDescription);
             if (!validateEditText(R.id.referralDescribeOtherTextInputLayout, otherServiceEditText.getText())) {
                 requiredFieldsFilled = false;
@@ -285,8 +262,7 @@ public class CreateReferralFragment extends Fragment implements Step {
             String otherDescription = "";
             otherDescription = otherServiceEditText.getText().toString();
 
-            otherServiceDetail.setDescription(otherDescription);
-            referral.setServiceDetail(otherServiceDetail);
+            serviceDetail.setDescription(otherDescription);
             referral.setServiceType("Other");
         }
 
@@ -297,9 +273,11 @@ public class CreateReferralFragment extends Fragment implements Step {
         validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
         referral.setRefer_to(referToString);
+        Date today = Calendar.getInstance().getTime();
+        referral.setDateCreated(today.toString());
 
-        referral.setClient(new Integer(clientId));
-        referral.setUserCreator(userId);
+        referral.setClientId(new Integer(clientId));
+        referral.setUserId(userId);
         if (requiredFieldsFilled) {
             return true;
 //            makeServerCall(referral);

@@ -4,19 +4,20 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from clients.models import Client
-from referral.text_choices import InjuryLocation, UsageExperience, Condition, ReferralStatus, ServiceTypes
+from tools.models import TimestampedModel
+from referral.text_choices import InjuryLocation, UsageExperience, Condition, ServiceTypes
 
 
-class Referral(models.Model):
+class Referral(TimestampedModel):
     user_creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.CharField(max_length=150)
     limit = models.Q(app_label="referral")
-    status = models.CharField(max_length=20, choices=ReferralStatus.choices, default=ReferralStatus.CREATED)
-    outcome = models.TextField(blank=True, default="")
+    status = models.CharField(max_length=200, default="CREATED")
+    outcome = models.TextField(blank=True,max_length=300, default="")
     refer_to = models.CharField(max_length=100)
 
-    photo = models.ImageField(blank=True, upload_to='images/')
+    photo = models.ImageField(upload_to='images/', default='images/default.png')
 
     service_type = models.CharField(max_length=50, choices=ServiceTypes.choices)
     service_object_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=limit)

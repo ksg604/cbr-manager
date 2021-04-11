@@ -85,9 +85,9 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
                         .targetCircleColor(R.color.white)
                         .titleTextSize(20)
                         .drawShadow(true)
-                        .transparentTarget(false)
+                        .transparentTarget(true)
+                        .targetRadius(75)
 //                        .tintTarget(true)
-                        .targetRadius(60)
                         .dimColor(R.color.black));
         return view;
     }

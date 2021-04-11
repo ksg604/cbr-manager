@@ -1,9 +1,13 @@
 package com.example.cbr_manager.ui.create_client;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +19,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
@@ -24,6 +30,10 @@ import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -37,6 +47,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
+
+
 @AndroidEntryPoint
 public class CreateClientStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
@@ -46,8 +59,13 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     private StepperLayout CreateClientStepperLayout;
     private APIService apiService = APIService.getInstance();
     private static final String TAG = "CreateClientActivity";
-
     private ClientViewModel clientViewModel;
+
+    // Provides the entry point to the Fused Location Provider API
+    private FusedLocationProviderClient fusedLocationClient;
+
+    protected Location lastLocation;
+    private int LOCATION_REQUEST_CODE = 123;
 
 
     @Override
@@ -61,6 +79,10 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         educationGoal = new Goal();
         socialGoal = new Goal();
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+
+        requestLocationPermissions();
+        getLastLocation();
+
 
         setTitle("Create a Client");
 
@@ -81,7 +103,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         createClientStepperAdapter.addFragment(new EducationRiskFragment(), "Education Risk");
         createClientStepperAdapter.addFragment(new SocialRiskFragment(), "Social Risk");
         createClientStepperAdapter.addFragment(new GoalFragment(), "Goals");
-
         return createClientStepperAdapter;
     }
 
@@ -227,5 +248,54 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
 
     public void setPhotoFile(File file) {
         photoFile = file;
+    }
+
+
+
+    private void requestLocationPermissions() {
+        if ( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        } else {
+            Log.d("LOCATION_PERMISSIONS", "Could not request location permissions");
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation();
+            }
+        }
+    }
+
+    private void getLastLocation() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            System.out.println("Location permissions available, starting location");
+
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location
+                            if ( location != null ) {
+                                lastLocation = location;
+                                formClientObj.setLatitude(lastLocation.getLatitude());
+                                formClientObj.setLongitude(lastLocation.getLongitude());
+                                Log.d("LATITUDE", String.valueOf(formClientObj.getLatitude()));
+                            }
+                        }
+                    });
+
+        }
+        else {
+            Log.d("LOCATION", "Location services not enabled");
+        }
     }
 }

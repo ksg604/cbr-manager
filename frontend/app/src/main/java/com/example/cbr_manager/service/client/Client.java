@@ -110,11 +110,11 @@ public class Client extends CBRTimestamp {
 
     @SerializedName("latitude")
     @Expose
-    private float latitude;
+    private double latitude;
 
     @SerializedName("longitude")
     @Expose
-    private float longitude;
+    private double longitude;
 
 
 
@@ -141,6 +141,8 @@ public class Client extends CBRTimestamp {
         this.isNewClient = true;
         this.cbrClientId = "";
         this.baselineSurveyTaken = false;
+        this.longitude = 0;
+        this.latitude = 0;
 
     }
 
@@ -458,11 +460,11 @@ public class Client extends CBRTimestamp {
         return assignLabelToRiskScore(riskScore);
     }
 
-    public float getLatitude() { return latitude; }
-    public void setLatitude(float newLatitude) { latitude = newLatitude; }
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double newLatitude) { latitude = newLatitude; }
 
-    public float getLongitude() { return longitude; }
-    public void setLongitude(float newLongitude) { longitude = newLongitude; }
+    public double getLongitude() { return longitude; }
+    public void setLongitude(double newLongitude) { longitude = newLongitude; }
 
 
 

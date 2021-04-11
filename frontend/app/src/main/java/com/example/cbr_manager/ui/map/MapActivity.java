@@ -3,6 +3,7 @@ package com.example.cbr_manager.ui.map;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -26,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -43,6 +46,7 @@ public class MapActivity extends AppCompatActivity implements
        class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
            private final View customInfoWindowView;
+           HashMap<String, String> clientInfoTable = new HashMap<String, String>();
 
            CustomInfoWindowAdapter(){
                customInfoWindowView = getLayoutInflater().inflate(R.layout.custom_map_marker_info_window, null);
@@ -51,13 +55,28 @@ public class MapActivity extends AppCompatActivity implements
            @Override
            public View getInfoContents(Marker marker) {
 
-               setupImageViews(marker.getTag().toString());
-               TextView tvTitle = ((TextView)customInfoWindowView.findViewById(R.id.customInfoWindowNameTextView));
-               tvTitle.setText("Name: " + marker.getTitle());
+               clientInfoTable = (HashMap<String, String>)marker.getTag();
 
+               setupImageViews(clientInfoTable.get("photourl"));
+               TextView nameTextView = ((TextView)customInfoWindowView.findViewById(R.id.customInfoWindowNameTextView));
+               nameTextView.setText("Name: " + clientInfoTable.get("name"));
 
+               TextView locationTextView = ((TextView)customInfoWindowView.findViewById(R.id.customInfoWindowLocationTextView));
+               locationTextView.setText("Location: " + clientInfoTable.get("location"));
+
+               Button customInfoWindowButton = ((Button)customInfoWindowView.findViewById(R.id.customInfoWindowButton));
+               customInfoWindowButton.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       Intent intent = new Intent(getApplicationContext(), ClientDetailsActivity.class);
+                       intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, Integer.parseInt(clientInfoTable.get("id")));
+                       startActivity(intent);
+                   }
+               });
+               
                return customInfoWindowView;
            }
+
 
            @Override
            public View getInfoWindow(Marker marker) {
@@ -91,6 +110,8 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        HashMap<String, String> clientInfoTable = new HashMap<String, String>();
         Intent intent = getIntent();
 
         ClientViewModel clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
@@ -101,7 +122,11 @@ public class MapActivity extends AppCompatActivity implements
                         .position(new LatLng(client.getLatitude(), client.getLongitude()))
                         .title(client.getFullName())
                         );
-                marker.setTag(client.getPhotoURL());
+                clientInfoTable.put("photourl", client.getPhotoURL());
+                clientInfoTable.put("id", client.getId().toString());
+                clientInfoTable.put("location", client.getLocation());
+                clientInfoTable.put("name", client.getFullName());
+                marker.setTag(clientInfoTable);
                 googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
             }
         });

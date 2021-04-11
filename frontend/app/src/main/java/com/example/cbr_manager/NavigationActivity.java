@@ -90,7 +90,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
 
         setUpHeaderView(headerView);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(!preferences.getBoolean("firstTime", false)) {
+        if(!preferences.getBoolean("firstTimeNav", false)) {
             TapTargetView.showFor(this,
                     TapTarget.forToolbarNavigationIcon(toolbar,
                             "One tap away.", "Tap the menu icon to navigate to the dashboard, view client, visit, and referral lists, and any alerts.")
@@ -104,8 +104,8 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
 
             );
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("firstTime", true);
-            editor.commit();
+            editor.putBoolean("firstTimeNav", true);
+            editor.apply();
         }
 
 

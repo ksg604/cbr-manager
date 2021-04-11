@@ -1,7 +1,9 @@
 package com.example.cbr_manager.ui.dashboard;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,17 +81,23 @@ public class DashboardFragment extends Fragment {
 
         setupVisitStats(root);
         setupOutstandingReferralStats(root);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeDashboardAlert", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(root.findViewById(R.id.alertTextView), "Never miss an alert.",
+                            "The most recent alerts appear here and as notifications in the navigation bar. Be sure to check often to always stay updated.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .targetRadius(60)
+                            .dimColor(R.color.black));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeNav", true);
+            editor.apply();
+        }
 
-        TapTargetView.showFor(getActivity(),
-                TapTarget.forView(root.findViewById(R.id.alertTextView), "Never miss an alert.",
-                        "The most recent alerts appear here and as notifications in the navigation bar. Be sure to check often to always stay updated.")
-                        .outerCircleAlpha(0.96f)
-                        .targetCircleColor(R.color.white)
-                        .titleTextSize(20)
-                        .drawShadow(true)
-                        .tintTarget(true)
-                        .targetRadius(60)
-                        .dimColor(R.color.black));
 
         return root;
     }

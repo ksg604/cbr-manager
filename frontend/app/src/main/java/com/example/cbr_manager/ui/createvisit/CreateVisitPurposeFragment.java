@@ -1,8 +1,10 @@
 package com.example.cbr_manager.ui.createvisit;
 
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,16 +81,22 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         setupAutoFilledTextViews(view);
         setupProvisionVisibility();
 
-        TapTargetView.showFor(getActivity(),
-                TapTarget.forView(view.findViewById(R.id.cbrTypeChipGroup), "Select a provision.", "Provisions will be updated by selecting the CBR chips.")
-                        .outerCircleAlpha(0.96f)
-                        .targetCircleColor(R.color.white)
-                        .titleTextSize(20)
-                        .drawShadow(true)
-                        .transparentTarget(true)
-                        .targetRadius(75)
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeProvision", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(view.findViewById(R.id.cbrTypeChipGroup), "Select a provision.", "Provisions will be updated by selecting the CBR chips.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .transparentTarget(true)
+                            .targetRadius(75)
 //                        .tintTarget(true)
-                        .dimColor(R.color.black));
+                            .dimColor(R.color.black));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeProvision", true);
+            editor.apply();
+        }
         return view;
     }
 

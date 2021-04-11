@@ -45,19 +45,5 @@ public class ReferralService extends BaseService {
         MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
         return referralAPI.uploadPhoto(authHeader, referralId, body);
     }
-    @Override
-    protected ReferralAPI buildRetrofitAPI() {
-        GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-
-        ReferralSerializer referralSerializer = new ReferralSerializer();
-        gsonBuilder.registerTypeAdapter(Referral.class, referralSerializer);
-
-        Gson gson = gsonBuilder.create();
-
-        return (ReferralAPI) new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build().create(retroFitAPIClass);
-    }
 
 }

@@ -32,9 +32,9 @@ public class GoalViewModel extends ViewModel {
         return this.goalRepository.getGoalsAsLiveData();
     }
 
-//    public LiveData<Goal> getGoal(int id) {
-//        return goalRepository.getGoal(id);
-//    }
+    public LiveData<Goal> getGoal(int id) {
+        return goalRepository.getGoal(id);
+    }
 
 //    public Single<Goal> getGoalAsSingle(int id) {
 //        return goalRepository.getGoalAsSingle(id);

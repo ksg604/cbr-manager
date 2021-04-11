@@ -45,9 +45,7 @@ public class ClientDetailsFragment extends Fragment {
     private int clientId;
     private View parentLayout;
     private ClientViewModel clientViewModel;
-    private GoalViewModel healthGoalViewModel;
-    private GoalViewModel educationGoalViewModel;
-    private GoalViewModel socialGoalViewModel;
+    private GoalViewModel goalViewModel;
 
     public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
     public static String HEALTH = "health";
@@ -75,9 +73,7 @@ public class ClientDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_client_details, container, false);
 
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-        healthGoalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
-        educationGoalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
-        socialGoalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
 
         parentLayout = getActivity().findViewById(android.R.id.content);
 
@@ -307,7 +303,10 @@ public class ClientDetailsFragment extends Fragment {
                         if (goal.getCategory().toLowerCase().equals(HEALTH) && !hasHealthGoal) {
                             if (!goal.getTitle().isEmpty()) {
                                 healthTitle.setText(goal.getTitle());
-                            }
+                                goalViewModel.getGoal(clientId).observe(getViewLifecycleOwner(), client -> {
+                                    setupNameTextView(client.getFullName());
+
+                                }
 
                             if (!goal.getDescription().isEmpty()) {
                                 healthDescription.setText(goal.getDescription());

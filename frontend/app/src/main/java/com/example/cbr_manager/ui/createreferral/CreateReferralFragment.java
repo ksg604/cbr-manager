@@ -42,12 +42,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
-import com.example.cbr_manager.service.referral.ServiceDetails.OrthoticServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.OtherServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.PhysiotherapyServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.ProstheticServiceDetail;
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
-import com.example.cbr_manager.service.referral.ServiceDetails.WheelchairServiceDetail;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ClientViewModel;
@@ -68,9 +63,6 @@ import java.util.Locale;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.observers.DisposableSingleObserver;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -154,11 +146,9 @@ public class CreateReferralFragment extends Fragment implements Step {
 //        Referral referral = new Referral();
         ServiceDetail serviceDetail = referral.getServiceDetail();
         if (service == R.id.referralPhysioRadioButton) {
-            PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
+
             String clientCondition;
-
             TextInputEditText physioOtherCondition = view.findViewById(R.id.referralOtherPhysio);
-
             String otherConditionDescription = "";
             Spinner referralPhysioDDL = view.findViewById(R.id.referralPhysioDDL);
             clientCondition = referralPhysioDDL.getSelectedItem().toString();
@@ -169,13 +159,10 @@ public class CreateReferralFragment extends Fragment implements Step {
                     requiredFieldsFilled = false;
                 }
                 validationErrorListener(R.id.referralOtherPhysio, R.id.referralPhysioOtherTextInputLayout);
-                physiotherapyServiceDetail.setOther_description(otherConditionDescription);
+                serviceDetail.setOther_description(otherConditionDescription);
+                referral.getServiceDetail().setOther_description(physioOtherCondition.getText().toString());
             }
-//            physiotherapyServiceDetail.setCondition(clientCondition);
-
-//            referral.setServiceDetail(physiotherapyServiceDetail);
             referral.getServiceDetail().setCondition(clientCondition);
-            referral.getServiceDetail().setOther_description(physioOtherCondition.getText().toString());
             referral.setServiceType("Physiotherapy");
 
         } else if (service == R.id.referralProstheticRadioButton) {

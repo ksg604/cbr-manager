@@ -119,7 +119,7 @@ public class ReferralDetailsFragment extends Fragment {
                                         .dimColor(R.color.black));
 
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("firstTimeNav", true);
+                        editor.putBoolean("firstTimeResolve", true);
                         editor.apply();
                     }
 

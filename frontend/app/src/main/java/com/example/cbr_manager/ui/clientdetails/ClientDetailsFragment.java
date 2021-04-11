@@ -93,7 +93,7 @@ public class ClientDetailsFragment extends Fragment {
                             .tintTarget(true)
                             .dimColor(R.color.black));
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("firstTimeNav", true);
+            editor.putBoolean("firstTimeClientDetailsRisk", true);
             editor.apply();
         }
         return root;

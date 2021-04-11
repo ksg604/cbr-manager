@@ -94,7 +94,7 @@ public class DashboardFragment extends Fragment {
                             .targetRadius(60)
                             .dimColor(R.color.black));
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("firstTimeNav", true);
+            editor.putBoolean("firstTimeDashboardAlert", true);
             editor.apply();
         }
 

@@ -98,7 +98,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                             .dimColor(R.color.black)
                             .targetRadius(60));
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("firstTimeNav", true);
+            editor.putBoolean("firstTimeOutstandingReferrals", true);
             editor.apply();
         }
 

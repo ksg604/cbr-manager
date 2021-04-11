@@ -57,6 +57,7 @@ public class Referral extends CBRTimestamp {
         this.fullName = "";
         this.userId = 0;
         this.refer_to = "";
+        this.photoURL = "images/default.png";
     }
     @Ignore
     public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer clientId, String fullName, Integer userId, String refer_to, String photoURL) {
@@ -75,7 +76,7 @@ public class Referral extends CBRTimestamp {
 
     @SerializedName("outcome")
     @Expose
-    private String outcome = "";
+    private String outcome;
 
     @SerializedName("service_type")
     @Expose
@@ -99,7 +100,7 @@ public class Referral extends CBRTimestamp {
 
     @SerializedName("photo")
     @Expose(serialize = false) // Do not send 'photo' attribute to API
-    private String photoURL = "images/default.png";
+    private String photoURL;
 
     public String getPhotoURL() {
         return photoURL;

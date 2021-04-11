@@ -256,8 +256,9 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         if ( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(this,
                     new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-        } else {
+        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             Log.d("LOCATION_PERMISSIONS", "Could not request location permissions");
+            getLastLocation();
         }
 
     }

@@ -113,15 +113,14 @@ public class MapActivity extends AppCompatActivity implements
     public void onMapReady(GoogleMap googleMap) {
 
         map = googleMap;
-        HashMap<String, String> clientInfoTable = new HashMap<String, String>();
-
-
+        map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
 
         ClientViewModel clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         clientViewModel.getAllClients().observe(this, clients -> {
             for ( Client client : clients ) {
-                Marker marker = googleMap.addMarker(new MarkerOptions()
+                HashMap<String, String> clientInfoTable = new HashMap<String, String>();
+                Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(client.getLatitude(), client.getLongitude()))
                         .title(client.getFullName())
                         );
@@ -130,18 +129,18 @@ public class MapActivity extends AppCompatActivity implements
                 clientInfoTable.put("location", client.getLocation());
                 clientInfoTable.put("name", client.getFullName());
                 marker.setTag(clientInfoTable);
-                googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+                map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        Intent intent = new Intent(getBaseContext(), ClientDetailsActivity.class);
+                        intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, Integer.parseInt(clientInfoTable.get("id")));
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                Intent intent = new Intent(getBaseContext(), ClientDetailsActivity.class);
-                intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, Integer.parseInt(clientInfoTable.get("id")));
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override

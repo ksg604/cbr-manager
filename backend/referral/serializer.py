@@ -58,12 +58,12 @@ class ServiceJSONField(serializers.JSONField):
 
 class ReferralSerializer(serializers.ModelSerializer):
     service_detail = ServiceJSONField(source='*')
-    client_name = serializers.ReadOnlyField(source='client.full_name')
+    # client_name = serializers.ReadOnlyField(source='client.full_name')
+    # client_id = serializers.ReadOnlyField(source='client.id')
 
     class Meta:
         model = Referral
-        fields = ('id', 'service_detail', 'date_created', 'status', 'outcome', 'service_type', 'client', 'user_creator',
-                  'refer_to', 'photo', 'client_name')
+        fields = "__all__"
 
     def create(self, validated_data):
         def extract_service_details():

@@ -133,9 +133,7 @@ public class ClientDetailsFragment extends Fragment {
                                 .replace(android.R.id.content, fragment).addToBackStack(null).commit();
                         break;
                     case R.id.referralsFragment:
-                        arguments = new Bundle();
-                        arguments.putInt("CLIENT_ID", clientId);
-                        fragment = new ReferralListFragment();
+                        fragment = ReferralListFragment.newInstance(clientId);
                         fragment.setArguments(arguments);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(android.R.id.content, fragment).addToBackStack(null).commit();

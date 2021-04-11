@@ -104,8 +104,7 @@ public class MapActivity extends AppCompatActivity implements
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
+        
         mapFragment.getMapAsync(this);
 
     }
@@ -115,6 +114,11 @@ public class MapActivity extends AppCompatActivity implements
 
         map = googleMap;
         map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+        }
 
         ClientViewModel clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
@@ -187,15 +191,8 @@ public class MapActivity extends AppCompatActivity implements
                             return false;
                         }
                     });
-
                 }
-
             }
         }
     }
-
-
-
-
-
    }

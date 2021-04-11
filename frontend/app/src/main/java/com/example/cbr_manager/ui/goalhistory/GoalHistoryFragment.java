@@ -24,6 +24,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class GoalHistoryFragment extends Fragment {
 
     private static final int HEALTH_GOAL_KEY = 100;

@@ -43,23 +43,9 @@ public class Referral extends CBRTimestamp {
     @Expose
     private String status = "CREATED";
 
-    @SerializedName("client")
-    @Expose
-    @Embedded(prefix = "client_")
-    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
-    private Client client;
-
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     public Referral() {
-        super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
+        super();
         PhysiotherapyServiceDetail physiotherapyServiceDetail = new PhysiotherapyServiceDetail();
         physiotherapyServiceDetail.setCondition("Amputee");
         this.serviceDetail = physiotherapyServiceDetail;
@@ -72,8 +58,9 @@ public class Referral extends CBRTimestamp {
         this.userId = 0;
         this.refer_to = "";
     }
-
+    @Ignore
     public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer clientId, String fullName, Integer userId, String refer_to, String photoURL) {
+        super();
         this.serviceDetail = serviceDetail;
         this.dateCreated = dateCreated;
         this.status = status;
@@ -99,7 +86,7 @@ public class Referral extends CBRTimestamp {
     private Integer clientId;
 
     @SerializedName("client_name")
-    @Expose(serialize = false) // read only field
+    @Expose
     private String fullName;
 
     @SerializedName("user_creator")
@@ -112,7 +99,7 @@ public class Referral extends CBRTimestamp {
 
     @SerializedName("photo")
     @Expose(serialize = false) // Do not send 'photo' attribute to API
-    private String photoURL;
+    private String photoURL = "images/default.png";
 
     public String getPhotoURL() {
         return photoURL;

@@ -74,7 +74,7 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
         alertViewModel.getAllAlerts().observe(getViewLifecycleOwner(), alerts -> {
             alertUIList.clear();
             for (Alert alert : alerts) {
-                alertUIList.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, Helper.formatDateTimeToLocalString(alert.getDate(), FormatStyle.SHORT)));
+                alertUIList.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, Helper.formatDateTimeToLocalString(alert.getCreatedAt(), FormatStyle.SHORT)));
             }
             adapter.notifyDataSetChanged();
         });

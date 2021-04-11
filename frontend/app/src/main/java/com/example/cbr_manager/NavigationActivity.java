@@ -2,9 +2,11 @@ package com.example.cbr_manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -87,19 +89,26 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
         View headerView = navigationView.getHeaderView(0);
 
         setUpHeaderView(headerView);
-
-        TapTargetView.showFor(this,
-                TapTarget.forToolbarNavigationIcon(toolbar,
-                        "One tap away.", "Tap the menu icon to navigate to the dashboard, view client, visit, and referral lists, and any alerts.")
-                        .outerCircleAlpha(0.96f)
-                        .targetCircleColor(R.color.white)
-                        .titleTextSize(20)
-                        .drawShadow(true)
-                        .tintTarget(true)
-                        .dimColor(R.color.black)
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(!preferences.getBoolean("firstTime", false)) {
+            TapTargetView.showFor(this,
+                    TapTarget.forToolbarNavigationIcon(toolbar,
+                            "One tap away.", "Tap the menu icon to navigate to the dashboard, view client, visit, and referral lists, and any alerts.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .dimColor(R.color.black)
 //                        .transparentTarget(true)
 
-        );
+            );
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
+        }
+
+
 
         hideAdminOnlyMenuItems();
     }

@@ -89,27 +89,18 @@ public class ReferralDetailsFragment extends Fragment {
     }
 
     private void getReferralInfo(int referralId) {
-        referralViewModel.getReferral(referralId).subscribe(new DisposableSingleObserver<Referral>() {
-            @Override
-            public void onSuccess(@NonNull Referral referral) {
-                setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
-                setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
-                setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
-                setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
-                setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
-                setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getFormattedDate());
-                setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
-                if (referral.getStatus().equals("CREATED")) {
-                    resolveButton.setVisibility(View.VISIBLE);
-                }
-                setupImageViews(referral.getPhotoURL());
+        referralViewModel.getReferral(referralId).observe(getViewLifecycleOwner(), referral -> {
+            setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
+            setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
+            setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
+            setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
+            setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
+            setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getDateCreated());
+            setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
+            if (referral.getStatus().equals("CREATED")) {
+                resolveButton.setVisibility(View.VISIBLE);
             }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Snackbar.make(parentLayout, "Failed to get the referral. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+            setupImageViews(referral.getPhotoURL());
         });
     }
 
@@ -199,7 +190,7 @@ public class ReferralDetailsFragment extends Fragment {
                 referral.setStatus("RESOLVED");
 
                 referral.setOutcome(outcome);
-                apiService.referralService.updateReferral(referral).enqueue(new Callback<Referral>() {
+                apiService.referralService.modifyReferral(referral).enqueue(new Callback<Referral>() {
                     @Override
                     public void onResponse(Call<Referral> call, Response<Referral> response) {
                         if (response.isSuccessful()) {

@@ -25,6 +25,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ReferralViewModel;
+import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsEditFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -94,7 +95,7 @@ public class ReferralDetailsFragment extends Fragment {
             setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
             setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
             setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
-            setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo());
+            setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo(referral.getServiceType()));
             setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getDateCreated());
             setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
             if (referral.getStatus().equals("CREATED")) {
@@ -129,8 +130,12 @@ public class ReferralDetailsFragment extends Fragment {
         editButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("referralId", referralId);
+                ReferralDetailsEditFragment referralDetailsEditFragment = new ReferralDetailsEditFragment();
+                referralDetailsEditFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_referral_details, ReferralDetailsEditFragment.class, null)
+                        .replace(R.id.fragment_referral_details, referralDetailsEditFragment, null)
                         .addToBackStack(null)
                         .commit();
             }

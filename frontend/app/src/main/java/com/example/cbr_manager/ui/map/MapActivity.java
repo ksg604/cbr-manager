@@ -63,16 +63,6 @@ public class MapActivity extends AppCompatActivity implements
 
                TextView locationTextView = ((TextView)customInfoWindowView.findViewById(R.id.customInfoWindowLocationTextView));
                locationTextView.setText("Location: " + clientInfoTable.get("location"));
-
-               Button customInfoWindowButton = ((Button)customInfoWindowView.findViewById(R.id.customInfoWindowButton));
-               customInfoWindowButton.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       Intent intent = new Intent(getApplicationContext(), ClientDetailsActivity.class);
-                       intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, Integer.parseInt(clientInfoTable.get("id")));
-                       startActivity(intent);
-                   }
-               });
                
                return customInfoWindowView;
            }
@@ -92,8 +82,6 @@ public class MapActivity extends AppCompatActivity implements
        }
 
 
-
-
     private GoogleMap map;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -111,6 +99,7 @@ public class MapActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        map = googleMap;
         HashMap<String, String> clientInfoTable = new HashMap<String, String>();
         Intent intent = getIntent();
 
@@ -128,6 +117,15 @@ public class MapActivity extends AppCompatActivity implements
                 clientInfoTable.put("name", client.getFullName());
                 marker.setTag(clientInfoTable);
                 googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+            }
+        });
+
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(getBaseContext(), ClientDetailsActivity.class);
+                intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, Integer.parseInt(clientInfoTable.get("id")));
+                startActivity(intent);
             }
         });
 

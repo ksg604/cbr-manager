@@ -84,8 +84,8 @@ public class DashboardFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeDashboardAlert", false)) {
             TapTargetView.showFor(getActivity(),
-                    TapTarget.forView(root.findViewById(R.id.alertTextView), "Never miss an alert.",
-                            "The most recent alerts appear here and as notifications in the navigation bar. Be sure to check often to always stay updated.")
+                    TapTarget.forView(root.findViewById(R.id.seeAllTextView), "Never miss an alert.",
+                            "Click here to see all the alerts. Be sure to check often to always stay updated.")
                             .outerCircleAlpha(0.96f)
                             .targetCircleColor(R.color.white)
                             .titleTextSize(20)

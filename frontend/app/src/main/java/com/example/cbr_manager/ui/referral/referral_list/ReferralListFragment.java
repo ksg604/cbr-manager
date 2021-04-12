@@ -143,7 +143,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
                     for (Referral referral :
                             referrals) {
                         if (clientId == NO_SPECIFIC_CLIENT || referral.getClientId() == clientId) {
-                            referralList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(), referral.getClientId(), referral.getFullName()));
+                            referralList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getCreatedAt(), referral.getClientId(), referral.getFullName()));
                         }
                     }
                     adapter.setReferrals(referralList);

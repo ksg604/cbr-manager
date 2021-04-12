@@ -24,7 +24,10 @@ import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
+import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.threeten.bp.format.FormatStyle;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.annotations.NonNull;
@@ -141,7 +144,7 @@ public class ReferralDetailsEditFragment extends Fragment {
                 setUpEditTextView(R.id.referralDetailsReferToEditTextView, localReferral.getRefer_to());
                 setUpEditTextView(R.id.referralDetailsOutcomeEditTextView, localReferral.getOutcome());
                 setUpTextView(R.id.referralDetailsServiceDetailTextView, localReferral.getServiceDetail().getInfo(localReferral.getServiceType()));
-                setUpTextView(R.id.referralDetailsDateCreatedTextView, localReferral.getDateCreated());
+                setUpTextView(R.id.referralDetailsDateCreatedTextView, Helper.formatDateTimeToLocalString(localReferral.getCreatedAt(), FormatStyle.SHORT));
         });
     }
 

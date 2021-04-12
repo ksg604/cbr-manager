@@ -31,9 +31,6 @@ public class Referral extends CBRTimestamp {
     @Expose
     private ServiceDetail serviceDetail;
 
-    @SerializedName("date_created")
-    @Expose
-    private String dateCreated;
 
     @SerializedName("status")
     @Expose
@@ -45,7 +42,6 @@ public class Referral extends CBRTimestamp {
         ServiceDetail physiotherapyServiceDetail = new ServiceDetail();
         physiotherapyServiceDetail.setCondition("Amputee");
         this.serviceDetail = physiotherapyServiceDetail;
-        this.dateCreated = "";
         this.status = "CREATED";
         this.outcome = "";
         this.serviceType = "Physiotherapy";
@@ -56,10 +52,9 @@ public class Referral extends CBRTimestamp {
         this.photoURL = "images/default.png";
     }
     @Ignore
-    public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer clientId, String fullName, Integer userId, String refer_to, String photoURL) {
+    public Referral(ServiceDetail serviceDetail, String status, String outcome, String serviceType, Integer clientId, String fullName, Integer userId, String refer_to, String photoURL) {
         super();
         this.serviceDetail = serviceDetail;
-        this.dateCreated = dateCreated;
         this.status = status;
         this.outcome = outcome;
         this.serviceType = serviceType;
@@ -122,14 +117,6 @@ public class Referral extends CBRTimestamp {
         this.id = id;
     }
 
-    public String getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public String getFullName() {
         return fullName;
     }
@@ -184,22 +171,6 @@ public class Referral extends CBRTimestamp {
 
     public ServiceDetail getServiceDetail(){
         return this.serviceDetail;
-    }
-
-    public String getFormattedDate() {
-        String datePython = getDateCreated().substring(0,19);
-        String patternOutput = "MM/dd/yyyy  HH:mm";
-        String patternInput = "yyyy-MM-dd'T'HH:mm:ss";
-
-        SimpleDateFormat sdfInput = new SimpleDateFormat(patternInput);
-        SimpleDateFormat sdfOutput = new SimpleDateFormat(patternOutput);
-        Date date = null;
-        try {
-            date = sdfInput.parse(datePython);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return sdfOutput.format(date);
     }
 
     public Integer getServerId() {

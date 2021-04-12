@@ -273,8 +273,6 @@ public class CreateReferralFragment extends Fragment implements Step {
         validationErrorListener(R.id.referralReferToEditText, R.id.createReferralReferToInputLayout);
         String referToString = referTo.getText().toString();
         referral.setRefer_to(referToString);
-        Date today = Calendar.getInstance().getTime();
-        referral.setDateCreated(today.toString());
 
         referral.setClientId(new Integer(clientId));
         referral.setUserId(userId);

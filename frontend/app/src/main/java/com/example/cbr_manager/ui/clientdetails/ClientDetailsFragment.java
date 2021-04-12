@@ -100,14 +100,11 @@ public class ClientDetailsFragment extends Fragment {
     private void setupTapTarget(View root) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeClientDetailsRisk", false)) {
-//            TapTargetView.showFor(getActivity(),
-//                    TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
-//                            .outerCircleAlpha(0.96f)
-//                            .targetCircleColor(R.color.white)
-//                            .titleTextSize(20)
-//                            .drawShadow(true)
-//                            .tintTarget(true)
-//                            .dimColor(R.color.black));
+            BottomNavigationView bottomNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
+            int[] l = new int[2];
+            bottomNavigationView.getLocationOnScreen(l);
+            Rect rect = new Rect(l[0], l[1], l[0] + bottomNavigationView.getWidth(), l[1] + bottomNavigationView.getHeight());
+            bottomNavigationView.getLocalVisibleRect(rect);
             TapTargetSequence clientDetailsTapSequence = new TapTargetSequence(getActivity()).targets(
                     TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
                             .outerCircleAlpha(0.96f)
@@ -116,7 +113,11 @@ public class ClientDetailsFragment extends Fragment {
                             .drawShadow(true)
                             .tintTarget(true)
                             .dimColor(R.color.black),
-                    TapTarget.forView(root.findViewById(R.id.editClient), "Everything at your fingertips.")
+                    TapTarget.forView(root.findViewById(R.id.createReferralActivityClient), "Changes right at your fingertips.", "Create new visits and referrals here. Additionally, edit client personal info, risk, and goals directly.")
+                    .transparentTarget(true)
+                    .targetRadius(100),
+                    TapTarget.forView(root.findViewById(R.id.visitsFragment), "View previous interactions.", "View details of all previous visits and referrals with the current client here.")
+                    .targetRadius(90)
                     .transparentTarget(true)
             );
             clientDetailsTapSequence.start();

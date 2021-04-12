@@ -59,15 +59,14 @@ public class AlertDetailsActivity extends AppCompatActivity {
     }
 
     private void getAlertInfo(int alertId){
-        alertViewModel.getAlert(alertId).observe(this, requestedAlert -> {
-            localAlert = requestedAlert;
-
-            setUpTextView(R.id.textTitle, localAlert.getTitle());
-            setUpTextView(R.id.textBody, localAlert.getBody());
-            setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(localAlert.getCreatedAt(), FormatStyle.SHORT));
-
-        });
-
+        if(alertId!=-1) {
+            alertViewModel.getAlert(alertId).observe(this, requestedAlert -> {
+                localAlert = requestedAlert;
+                setUpTextView(R.id.textTitle, localAlert.getTitle());
+                setUpTextView(R.id.textBody, localAlert.getBody());
+                setUpTextView(R.id.textViewDate, Helper.formatDateTimeToLocalString(localAlert.getCreatedAt(), FormatStyle.SHORT));
+            });
+        }
     }
 
     private void setUpTextView(int textViewId, String text) {

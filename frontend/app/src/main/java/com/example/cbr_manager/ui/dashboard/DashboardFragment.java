@@ -177,8 +177,8 @@ public class DashboardFragment extends Fragment {
     }
 
     public void fetchNewestAlert() {
-        dateAlertTextView = root.findViewById(R.id.dateAlertTextView);
-        titleTextView = root.findViewById(R.id.announcementTextView);
+        dateAlertTextView = getView().findViewById(R.id.dateAlertTextView);
+        titleTextView = getView().findViewById(R.id.announcementTextView);
         alertViewModel.getAllAlerts().observe(getViewLifecycleOwner(), retrivedAlerts -> {
             List<Alert> alerts = retrivedAlerts;
             if (alerts != null & !alerts.isEmpty()) {

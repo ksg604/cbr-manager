@@ -279,6 +279,16 @@ Redid the client details UI to be more clean and consistent by removing colours,
 
 At the request of the customer, redid the UI of the dashboard to be much less cluttered by adding whitespace, removing colours, and redoing the general look.
 
+### Iteration 3
+1. Baseline Survey: Implement UI, backend, frontend, and upload to server.
+2. General UI: Consistent margins, fonts, sizes, etc
+3. Specific UI modifications: Login page, Home page, User creation, Navigation bar
+4. Rework: New Referrals into stepper activity, Complete rework of New Visits to stepper activity
+5. Add risk levels to client creation
+6. Goals: goal history in client details, goals in new visits with ability to create new goal.
+7. Onboarding UX via TapTarget
+8. General nice-to-haves: Gallery upload, back button alert dialog
+9. Misc bug fixes
 
 ## Andrew's Contribution
 

@@ -94,7 +94,6 @@ public class ClientDetailsEditFragment extends Fragment {
         this.clientId = bundle.getInt("clientId", -1);
         this.localClient = new Client();
 
-        setupGenderSpinner(view);
         setupClientEditTexts(clientId, view);
         setupCardView(view);
         getGoals();

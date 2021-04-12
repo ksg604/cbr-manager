@@ -145,9 +145,12 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
             alertsTV.setGravity(Gravity.CENTER_VERTICAL);
             alertsTV.setTypeface(null, Typeface.BOLD);
             alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
-            int size = retrievedAlerts.size();
-            if (size > 0) {
-                alertsTV.setText(Integer.toString(size));
+
+            if(retrievedAlerts!=null){
+                int size = retrievedAlerts.size();
+                if (size > 0) {
+                    alertsTV.setText(Integer.toString(size));
+                }
             }
         });
     }

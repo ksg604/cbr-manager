@@ -2,7 +2,7 @@ package com.example.cbr_manager.ui.referral.referral_list;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +12,12 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
-import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
@@ -26,9 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
+
 
 @AndroidEntryPoint
 public class ReferralListFragment extends Fragment implements ReferralListRecyclerItemAdapter.OnItemListener{
@@ -39,22 +37,34 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     private SearchView searchView;
     private CheckBox checkBox;
     private int clientId = -1;
-    private final int FROM_DASHBOARD = -1;
+    public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
+    private final int NO_SPECIFIC_CLIENT = -1;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
-
-    private APIService apiService = APIService.getInstance();
+    
     private ReferralViewModel referralViewModel;
 
+    public ReferralListFragment() {
+        // Required empty public constructor
+    }
+
+    public static ReferralListFragment newInstance(int clientId) {
+        ReferralListFragment fragment = new ReferralListFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_CLIENT_ID, clientId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
     @Override
     public void onResume() {
         super.onResume();
         fetchReferralsToList(referralRecyclerItems);
-
-        if(clientId==FROM_DASHBOARD){
+        if(clientId==NO_SPECIFIC_CLIENT){
             checkBox.setChecked(true);
         }
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
@@ -62,7 +72,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         View root = inflater.inflate(R.layout.fragment_referral_list, container, false);
 
         if(getArguments()!=null){
-        clientId = getArguments().getInt("CLIENT_ID", -1);}
+            clientId = getArguments().getInt(KEY_CLIENT_ID, -1);}
 
         referralListRecyclerView = root.findViewById(R.id.recyclerView);
         referralListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
@@ -99,30 +109,19 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         return root;
     }
 
-    public void fetchReferralsToList(List<ReferralListRecyclerItem> referralUIList) {
-            referralViewModel.getReferrals().subscribe(new Observer<Referral>() {
+    public void fetchReferralsToList(ArrayList<ReferralListRecyclerItem> referralUIList) {
+            referralViewModel.getReferralsAsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Referral>>() {
                 @Override
-                public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-                    referralUIList.clear();
-                }
-
-                @Override
-                public void onNext(@io.reactivex.annotations.NonNull Referral referral) {
-                    if (referral.getClient() == clientId | clientId < 0) {
-                        Log.d(TAG, "onNext: " + referral.getId());
-                        referralUIList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(), referral.getClient(), referral.getFullName()));
+                public void onChanged(List<Referral> referrals) {
+                    ArrayList<ReferralListRecyclerItem> referralList = new ArrayList<>();
+                    for (Referral referral :
+                            referrals) {
+                        if (clientId == NO_SPECIFIC_CLIENT || referral.getClientId() == clientId) {
+                            referralList.add(new ReferralListRecyclerItem(referral.getStatus(), referral.getServiceType(), referral.getRefer_to(), referral, referral.getDateCreated(), referral.getClientId(), referral.getFullName()));
+                        }
                     }
-                }
-
-                @Override
-                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                    Log.d(TAG, "onError: " + e.getMessage());
-                }
-
-                @Override
-                public void onComplete() {
-                    Log.d(TAG, "onComplete: ");
-                    adapter.getFilterWithCheckBox(checkBox.isChecked()).filter(searchView.getQuery());
+                    adapter.setReferrals(referralList);
+                    adapter.notifyDataSetChanged();
                 }
             });
     }

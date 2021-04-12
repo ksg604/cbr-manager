@@ -108,6 +108,16 @@ public class Client extends CBRTimestamp {
     @Expose
     private boolean baselineSurveyTaken;
 
+    @SerializedName("latitude")
+    @Expose
+    private double latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    private double longitude;
+
+
+
     //Initializing fields that are needed for POST request in itr1
     public Client() {
         super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
@@ -131,6 +141,9 @@ public class Client extends CBRTimestamp {
         this.isNewClient = true;
         this.cbrClientId = "";
         this.baselineSurveyTaken = false;
+        this.longitude = 0;
+        this.latitude = 0;
+
     }
 
     @Ignore
@@ -446,6 +459,14 @@ public class Client extends CBRTimestamp {
         Integer riskScore = this.calculateRiskScore();
         return assignLabelToRiskScore(riskScore);
     }
+
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double newLatitude) { latitude = newLatitude; }
+
+    public double getLongitude() { return longitude; }
+    public void setLongitude(double newLongitude) { longitude = newLongitude; }
+
+
 
 
 }

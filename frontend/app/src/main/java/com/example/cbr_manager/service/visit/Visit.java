@@ -222,6 +222,9 @@ public class Visit extends CBRTimestamp {
     @Expose
     private String conclusionSocialProvision;
 
+
+
+
     @Ignore
     public Visit(String additionalInfo, Integer clientId, Integer userId, Client client) {
         super();
@@ -282,6 +285,7 @@ public class Visit extends CBRTimestamp {
         this.villageNoVisit = 0;
         this.wheelchairHealthProvision = false;
         this.wheelchairHealthProvisionText = "";
+
     }
 
     public Integer getId() {
@@ -692,5 +696,10 @@ public class Visit extends CBRTimestamp {
     public void setServerId(Integer serverId) {
         this.serverId = serverId;
     }
+
+
+
+
+
 
 }

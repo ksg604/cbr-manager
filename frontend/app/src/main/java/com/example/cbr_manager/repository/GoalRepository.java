@@ -8,11 +8,9 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.goal.GoalAPI;
 import com.example.cbr_manager.service.goal.GoalDao;
-import com.example.cbr_manager.workmanager.client.ModifyClientWorker;
 import com.example.cbr_manager.workmanager.goal.CreateGoalWorker;
 import com.example.cbr_manager.workmanager.goal.ModifyGoalWorker;
 
@@ -151,7 +149,4 @@ public class GoalRepository {
         workManager.enqueue(modifyGoalRequest);
     }
 
-//    public LiveData<Client> getGoal(int id) {
-//        return goalDao.getGoalsAsLiveData(id);
-//    }
 }

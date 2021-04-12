@@ -315,14 +315,12 @@ public class ClientDetailsEditFragment extends Fragment {
 
             @Override
             public void onComplete() {
-                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
     }

@@ -138,14 +138,10 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
             @Override
             public void onComplete() {
-                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
     }
@@ -205,14 +201,12 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Goal goal) {
-                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
     }

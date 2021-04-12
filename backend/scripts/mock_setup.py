@@ -61,6 +61,8 @@ def mock_alerts():
                         body="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend lacinia mollis. Vivamus pharetra condimentum purus nec vehicula. Sed lacus risus, finibus id nisi consectetur, posuere pretium enim. Aliquam porta commodo ante, eu vehicula nisi volutpat ut. Etiam ultrices justo nulla, sed malesuada ipsum egestas at. Maecenas in dui ac urna eleifend cursus non aliquet mi. Suspendisse semper nisl vitae nibh lobortis, nec pulvinar justo imperdiet. Ut ac gravida odio, in porta massa.")
 
     AlertFactory.create()
+
+
 def main():
     create_default_super_user("user1", "user1@email.com", "password123", "John", "Doe")
     create_default_super_user("user2", "user2@email.com", "password123", "Jane", "Doe")
@@ -72,6 +74,7 @@ def main():
     for c in clients:
         for _ in range(2):
             VisitFactory.create(client=c)
+        for _ in range(3):
             GoalFactory(client_id=c.id)
 
 

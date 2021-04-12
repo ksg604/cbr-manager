@@ -109,11 +109,15 @@ public class ClientDetailsFragment extends Fragment {
                             .tintTarget(true)
                             .dimColor(R.color.black),
                     TapTarget.forView(root.findViewById(R.id.createReferralActivityClient), "Changes right at your fingertips.", "Create new visits and referrals here. Additionally, edit client personal info, risk, and goals directly.")
-                    .transparentTarget(true)
-                    .targetRadius(100),
+                            .transparentTarget(true)
+                            .drawShadow(true)
+                            .targetRadius(100)
+                            .dimColor(R.color.black),
                     TapTarget.forView(root.findViewById(R.id.visitsFragment), "View previous interactions.", "View details of all previous visits and referrals with the current client here.")
-                    .targetRadius(90)
-                    .transparentTarget(true)
+                            .targetRadius(90)
+                            .drawShadow(true)
+                            .transparentTarget(true)
+                            .dimColor(R.color.black)
             );
             clientDetailsTapSequence.start();
             SharedPreferences.Editor editor = preferences.edit();

@@ -32,34 +32,18 @@ public class ReferralService extends BaseService {
         return referralAPI.getReferral(authHeader, id);
     }
 
-    public Call<Referral> updateReferral(Referral referral) {
-        return referralAPI.updateReferral(authHeader, referral.getId(), referral);
+    public Call<Referral> modifyReferral(Referral referral) {
+        return referralAPI.modifyReferral(authHeader, referral.getId(), referral);
     }
 
     public Call<Referral> createReferral(Referral referral) {
         return referralAPI.createReferral(authHeader, referral);
     }
 
-    public Call<ResponseBody> uploadPhoto(File file, int referralId) {
+    public Call<ResponseBody> uploadReferralPhoto(File file, int referralId) {
         RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
         MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
         return referralAPI.uploadPhoto(authHeader, referralId, body);
     }
-
-    @Override
-    protected ReferralAPI buildRetrofitAPI() {
-        GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-
-        ReferralSerializer referralSerializer = new ReferralSerializer();
-        gsonBuilder.registerTypeAdapter(Referral.class, referralSerializer);
-
-        Gson gson = gsonBuilder.create();
-
-        return (ReferralAPI) new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build().create(retroFitAPIClass);
-    }
-
 
 }

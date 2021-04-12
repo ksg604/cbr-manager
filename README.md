@@ -349,7 +349,7 @@ At the request of the customer, redid the UI of the dashboard to be much less cl
 4. Search/ Filtering with tags for client list: keywords include provision, purpose etc.
 5. Offline fucntionality for Alerts: automatically syncs all operations from local to server
 6. Mark as read for Alerts: be able to mark alerts as read
-7. Alert badge only counts unread alerts 
+7. Alert badge only counts unread alerts
 8. Remove all legacy API calls for Referrals and Alerts
 9. Misc bug fixes
 
@@ -500,7 +500,7 @@ All these tasks deals with Business logic for utilizing the data under the abstr
 * Create a mock-up of sync logic to be used when making the synchronization architecture for the app
 
 ### Iteration 3 Syncing data between Room database and Django database
-Make sure each data in local Room database correspond to an entry on Django server database 
+Make sure each data in local Room database correspond to an entry on Django server database
 Mainly deals with the Repository pattern, making a prototype from client model for other type of data
 
 * Create initial sync logic (ended up being changed to Repository Pattern)
@@ -532,6 +532,13 @@ For this iteration, I've done some minor changes to the home page, fixed a few b
 1. Added a navigation drawer to the homepage
 2. Fixed a bug where some buttons on homepage was not working
 3. Researched some techniques on having history on the frontend (likely be done by iteration 3).
+
+### Iteration 3
+
+For this iteration, I worked on a statistics page, and also added a functionality to export the statistics page as a CSV file.
+
+1. Added a statistics page
+2. Added an export to CSV button for the statistics page (ability to export with gmail or google drive)
 
 ## Jonathan's Contribution
 

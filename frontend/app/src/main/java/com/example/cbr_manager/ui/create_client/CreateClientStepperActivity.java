@@ -98,18 +98,17 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void submitGoalSurvey(Goal goal) {
+        Log.d(TAG, "submitGoalSurvey: reached here");
         goalViewModel.createGoal(goal).subscribe(new DisposableSingleObserver<Goal>() {
-
+        
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Goal goal) {
-                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Log.d(TAG, "onSuccess: ");
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Log.d(TAG, "onError: ");
             }
         });
     }

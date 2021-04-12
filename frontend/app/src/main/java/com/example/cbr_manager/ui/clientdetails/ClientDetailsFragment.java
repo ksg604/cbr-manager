@@ -26,6 +26,7 @@ import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.GoalViewModel;
 import com.example.cbr_manager.ui.createreferral.CreateReferralFragment;
+import com.example.cbr_manager.ui.createreferral.CreateReferralStepperActivity;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
 
@@ -169,12 +170,9 @@ public class ClientDetailsFragment extends Fragment {
                         startActivity(createVisitIntent);
                         break;
                     case R.id.createReferralActivityClient:
-                        arguments = new Bundle();
-                        arguments.putInt("CLIENT_ID", clientId);
-                        fragment = new CreateReferralFragment();
-                        fragment.setArguments(arguments);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(android.R.id.content, fragment).addToBackStack(null).commit();
+                        Intent referralIntent = new Intent(getContext(), CreateReferralStepperActivity.class);
+                        referralIntent.putExtra("CLIENT_ID", clientId);
+                        startActivity(referralIntent);
                         break;
                     case R.id.referralsFragment:
                         fragment = ReferralListFragment.newInstance(clientId);

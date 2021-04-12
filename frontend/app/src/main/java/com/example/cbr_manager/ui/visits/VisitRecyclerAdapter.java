@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.alert.alert_list.AlertListRecyclerItem;
 import com.example.cbr_manager.utils.Helper;
 
 import org.threeten.bp.Instant;
@@ -27,6 +28,15 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
     private final onVisitClickListener onItemListener;
     private List<Visit> visitList;
     private List<Visit> visitFilteredList;
+    private String purposeTag = "";
+    private String provisionTag = "";
+
+    public Filter getFilterWithTags(String purpose, String provision) {
+        provisionTag = provision;
+        purposeTag = purpose;
+        return filter;
+    }
+
     public Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -34,13 +44,36 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
 
             List<Visit> tempFilteredList = new ArrayList<>();
 
-            if (searchString.isEmpty()) {
+            if (searchString.isEmpty()&provisionTag.isEmpty()&purposeTag.equals("All")) {
                 tempFilteredList.addAll(visitList);
             } else {
                 for (Visit visit : visitList) {
                     Client client = visit.getClient();
-                    if (client.getFullName().toLowerCase().trim().contains(searchString)) {
-                        tempFilteredList.add(visit);
+                    if (client.getFullName().toLowerCase().trim().contains(searchString)&visit.getProvisionText().toLowerCase().trim().contains(provisionTag)) {
+                        boolean pass=false;
+                        switch(purposeTag){
+                            case "All":
+                                pass = true;
+                                break;
+                            case "CBR":
+                                if(visit.isCBRPurpose()){
+                                    pass = true;
+                                }
+                                break;
+                            case "Disability Referral":
+                                if(visit.isDisabilityReferralPurpose()){
+                                    pass = true;
+                                }
+                                break;
+                            case "Disability Follow Up":
+                                if(visit.isDisabilityFollowUpPurpose()){
+                                    pass = true;
+                                }
+                                break;
+                        }
+                        if(pass){
+                            tempFilteredList.add(visit);
+                        }
                     }
                 }
             }
@@ -59,13 +92,12 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
 
     public VisitRecyclerAdapter(onVisitClickListener onItemListener) {
         this.visitFilteredList = new ArrayList<>();
-        this.visitList = new ArrayList<>();
         this.onItemListener = onItemListener;
     }
 
     @Override
     public Filter getFilter() {
-        return filter;
+        return null;
     }
 
     public Visit getVisitItem(int position) {
@@ -85,7 +117,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
         holder.dateTextView.setText(Helper.formatDateTimeToLocalString(visit.getCreatedAt(), FormatStyle.SHORT));
         holder.fullnameTextView.setText(visit.getClient().getFullName());
         holder.purposeTextView.setText(formatPurposeString(visit));
-        holder.locationTextView.setText(visit.getLocationDropDown());
+        holder.provisionTextView.setText(visit.getLocationDropDown());
     }
 
     private String formatPurposeString(Visit visit) {
@@ -133,7 +165,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
         public TextView dateTextView;
         public TextView fullnameTextView;
         public TextView purposeTextView;
-        public TextView locationTextView;
+        public TextView provisionTextView;
         onVisitClickListener onItemListener;
 
         public VisitItemViewHolder(@NonNull View itemView, onVisitClickListener onItemListener) {
@@ -141,7 +173,7 @@ public class VisitRecyclerAdapter extends RecyclerView.Adapter<VisitRecyclerAdap
             dateTextView = itemView.findViewById(R.id.textViewDate);
             fullnameTextView = itemView.findViewById(R.id.textViewFullName);
             purposeTextView = itemView.findViewById(R.id.visitItemPurposeList);
-            locationTextView = itemView.findViewById(R.id.textLocationVisitItem);
+            provisionTextView = itemView.findViewById(R.id.textLocationVisitItem);
             this.onItemListener = onItemListener;
 
             itemView.setOnClickListener(this);

@@ -1,28 +1,20 @@
 package com.example.cbr_manager.service;
 
-import com.example.cbr_manager.service.alert.AlertService;
-import com.example.cbr_manager.service.auth.AuthDetail;
 import com.example.cbr_manager.service.auth.AuthService;
-import com.example.cbr_manager.service.auth.LoginUserPass;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurveyService;
 import com.example.cbr_manager.service.client.ClientService;
 import com.example.cbr_manager.service.goal.GoalService;
 import com.example.cbr_manager.service.referral.ReferralService;
-import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.user.UserService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class APIService {
 
     private static APIService INSTANCE = null;
     public AuthService authService;
+    @Deprecated
     public ClientService clientService;
     public UserService userService;
-    public AlertService alertService;
     public ReferralService referralService;
     public BaselineSurveyService baselineSurveyService;
     private String token;
@@ -42,7 +34,6 @@ public class APIService {
         this.token = token;
         this.clientService = new ClientService(token);
         this.userService = new UserService(token);
-        this.alertService = new AlertService(token);
         this.referralService = initializeReferralService(token);
         this.baselineSurveyService = new BaselineSurveyService(token);
         this.goalService = new GoalService(token);

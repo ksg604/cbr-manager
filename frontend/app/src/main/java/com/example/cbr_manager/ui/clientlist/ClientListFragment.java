@@ -161,12 +161,9 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
 
     @Override
     public void onItemClick(int position) {
-
         Intent clientInfoIntent = new Intent(getContext(), ClientDetailsActivity.class);
-
         Client client = clientListAdapter.getClient(position);
         clientInfoIntent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
-
         startActivity(clientInfoIntent);
     }
 

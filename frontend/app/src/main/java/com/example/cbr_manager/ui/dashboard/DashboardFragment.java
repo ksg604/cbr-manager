@@ -24,12 +24,12 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.AlertViewModel;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -58,33 +58,39 @@ public class DashboardFragment extends Fragment {
     TextView dateAlertTextView;
     TextView titleTextView;
     int homeAlertId;
-    View root;
 
     private VisitViewModel visitViewModel;
+    private AlertViewModel alertViewModel;
+    private ClientViewModel clientViewModel;
+
+    public DashboardFragment() {
+        super(R.layout.fragment_home);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+        alertViewModel = new ViewModelProvider(this).get(AlertViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         fetchNewestAlert();
-        setupViewPager(root);
-        setupButtons(root);
+        setupViewPager(view);
+        setupButtons(view);
         setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
-        setupVisitStats(root);
-        setupOutstandingReferralStats(root);
+        setupVisitStats(view);
+        setupOutstandingReferralStats(view);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeDashboardAlert", false)) {
             TapTargetView.showFor(getActivity(),
-                    TapTarget.forView(root.findViewById(R.id.seeAllTextView), "Never miss an alert.",
+                    TapTarget.forView(view.findViewById(R.id.seeAllTextView), "Never miss an alert.",
                             "Click here to see all the alerts. Be sure to check often to always stay updated.")
                             .outerCircleAlpha(0.96f)
                             .targetCircleColor(R.color.white)
@@ -96,9 +102,6 @@ public class DashboardFragment extends Fragment {
             editor.putBoolean("firstTimeDashboardAlert", true);
             editor.apply();
         }
-
-
-        return root;
     }
 
     private void setupOutstandingReferralStats(View root) {
@@ -193,36 +196,22 @@ public class DashboardFragment extends Fragment {
     }
 
     public void fetchNewestAlert() {
-        dateAlertTextView = root.findViewById(R.id.dateAlertTextView);
-        titleTextView = root.findViewById(R.id.announcementTextView);
-        if (apiService.isAuthenticated()) {
-            apiService.alertService.getAlerts().enqueue(new Callback<List<Alert>>() {
-                @Override
-                public void onResponse(Call<List<Alert>> call, Response<List<Alert>> response) {
-                    if (response.isSuccessful()) {
-                        List<Alert> alerts = response.body();
-
-                        if (alerts != null & !alerts.isEmpty()) {
-                            newestAlert = alerts.get(0);
-                            dateAlertTextView.setText("Date posted:  " + Helper.formatDateTimeToLocalString(newestAlert.getDate(), FormatStyle.SHORT));
-                            titleTextView.setText(newestAlert.getTitle());
-                            homeAlertId = newestAlert.getId();
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Alert>> call, Throwable t) {
-
-                }
-            });
-        }
+        dateAlertTextView = getView().findViewById(R.id.dateAlertTextView);
+        titleTextView = getView().findViewById(R.id.announcementTextView);
+        alertViewModel.getAllAlerts().observe(getViewLifecycleOwner(), retrivedAlerts -> {
+            List<Alert> alerts = retrivedAlerts;
+            if (alerts != null & !alerts.isEmpty()) {
+                newestAlert = alerts.get(0);
+                dateAlertTextView.setText("Date posted:  " + Helper.formatDateTimeToLocalString(newestAlert.getCreatedAt(), FormatStyle.SHORT));
+                titleTextView.setText(newestAlert.getTitle());
+                homeAlertId = newestAlert.getId();
+            }
+        });
     }
 
     public void setAlertButtons() {
-        seeMoreTextView = root.findViewById(R.id.seeAllTextView);
-        TextView moreTextView = root.findViewById(R.id.dashboardAlertsMoreTextView);
+        seeMoreTextView = getView().findViewById(R.id.seeAllTextView);
+        TextView moreTextView = getView().findViewById(R.id.dashboardAlertsMoreTextView);
         moreTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,35 +230,18 @@ public class DashboardFragment extends Fragment {
     }
 
     public void fetchTopFiveRiskiestClients(List<Client> clientList) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
-                @Override
-                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
-                    if (response.isSuccessful()) {
-                        List<Client> clients = response.body();
-
-                        if (clients != null & !clients.isEmpty()) {
-                            Collections.sort(clients, new ClientRiskScoreComparator(ClientRiskScoreComparator.SortOrder.DESCENDING));
-
-                            List<Client> topFiveClients = null;
-                            if (clients.size() > 5) {
-                                topFiveClients = clients.subList(0, 5);
-                            } else {
-                                topFiveClients = clients;
-                            }
-
-                            clientList.addAll(topFiveClients);
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<List<Client>> call, Throwable t) {
-
-                }
-            });
-        }
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clients -> {
+            clientList.clear();
+            clients.sort(new ClientRiskScoreComparator(ClientRiskScoreComparator.SortOrder.DESCENDING));
+            List<Client> topFiveClients;
+            if (clients.size() > 5) {
+                topFiveClients = clients.subList(0, 5);
+            } else {
+                topFiveClients = clients;
+            }
+            clientList.addAll(topFiveClients);
+            adapter.notifyDataSetChanged();
+        });
     }
 
     private void setupButtons(View root) {

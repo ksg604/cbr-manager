@@ -33,6 +33,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.user.User;
+import com.example.cbr_manager.ui.AlertViewModel;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.example.cbr_manager.ui.user.UserActivity;
@@ -57,7 +58,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
     private final String TAG = "NavigationActivity";
     NavigationView navigationView;
     AuthViewModel authViewModel;
-    private APIService apiService = APIService.getInstance();
+    AlertViewModel alertViewModel;
     private AppBarConfiguration appBarConfiguration;
 
     @Override
@@ -66,7 +67,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
         setContentView(R.layout.activity_navigation);
 
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-
+        alertViewModel = new ViewModelProvider(this).get(AlertViewModel.class);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         navigationView = findViewById(R.id.nav_view);
@@ -134,29 +135,16 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
     }
 
     private void setupAlertsBadge(NavigationView navigationView) {
-
-        if (apiService.isAuthenticated()) {
-            apiService.alertService.getAlerts().enqueue(new Callback<List<Alert>>() {
-                @Override
-                public void onResponse(Call<List<Alert>> call, Response<List<Alert>> response) {
-                    if (response.isSuccessful()) {
-                        List<Alert> alerts = response.body();
-                        TextView alertsTV = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_alert_list));
-                        alertsTV.setGravity(Gravity.CENTER_VERTICAL);
-                        alertsTV.setTypeface(null, Typeface.BOLD);
-                        alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
-                        if (alerts.size() > 0) {
-                            alertsTV.setText(Integer.toString(alerts.size()));
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Alert>> call, Throwable t) {
-
-                }
-            });
-        }
+        alertViewModel.getAllAlerts().observe(this, retrievedAlerts -> {
+            List<Alert> alerts = retrievedAlerts;
+            TextView alertsTV = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_alert_list));
+            alertsTV.setGravity(Gravity.CENTER_VERTICAL);
+            alertsTV.setTypeface(null, Typeface.BOLD);
+            alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
+            if (alerts.size() > 0) {
+                alertsTV.setText(Integer.toString(alerts.size()));
+            }
+        });
     }
 
     private void setUpHeaderView(View headerView) {

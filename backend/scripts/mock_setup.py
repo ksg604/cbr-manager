@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 from pathlib import Path
 
@@ -75,7 +76,7 @@ def main():
         for _ in range(2):
             VisitFactory.create(client=c)
         for _ in range(3):
-            GoalFactory(client_id=c.id)
+            GoalFactory(client_id=c.id, is_completed=random.choice([True, False]))
 
 
 if __name__ == '__main__':

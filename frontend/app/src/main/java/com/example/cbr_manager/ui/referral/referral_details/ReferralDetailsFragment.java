@@ -3,12 +3,14 @@ package com.example.cbr_manager.ui.referral.referral_details;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +29,8 @@ import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsEditFragment;
 import com.example.cbr_manager.utils.Helper;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Ref;
@@ -98,9 +102,28 @@ public class ReferralDetailsFragment extends Fragment {
             setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
             if (referral.getStatus().equals("CREATED")) {
                 resolveButton.setVisibility(View.VISIBLE);
+                setupTapTarget();
             }
             setupImageViews(referral.getPhotoURL());
         });
+    }
+
+    private void setupTapTarget() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeResolve", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(getView().findViewById(R.id.referralDetailsResolveButton), "Ready to resolve?", "If the client's referral has been resolved, tap the button to change the status to 'resolved' and to record an outcome.")
+                            .outerCircleAlpha(0.96f)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .transparentTarget(true)
+                            .targetRadius(90)
+                            .dimColor(R.color.black));
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeResolve", true);
+            editor.apply();
+        }
     }
 
     private void setUpTextView(int textViewId, String text) {

@@ -1,6 +1,10 @@
 package com.example.cbr_manager.ui.createvisit;
 
+import android.content.SharedPreferences;
+import android.graphics.Rect;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,8 @@ import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.stepstone.stepper.Step;
@@ -74,7 +80,27 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         initializeChips(view);
         setupAutoFilledTextViews(view);
         setupProvisionVisibility();
+        setupTapTarget(view);
+
         return view;
+    }
+
+    private void setupTapTarget(View view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeProvision", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(view.findViewById(R.id.cbrTypeTextView), "Select a provision.", "Provisions will be updated by selecting the CBR chips.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .transparentTarget(true)
+                            .tintTarget(true)
+                            .dimColor(R.color.black));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeProvision", true);
+            editor.apply();
+        }
     }
 
     private void setupProvisionVisibility() {

@@ -1,7 +1,9 @@
 package com.example.cbr_manager.ui.dashboard;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.example.cbr_manager.utils.Helper;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import org.threeten.bp.format.FormatStyle;
 
@@ -83,6 +87,26 @@ public class DashboardFragment extends Fragment {
 
         setupVisitStats(view);
         setupOutstandingReferralStats(view);
+        setupTapTarget(view);
+
+    }
+
+    private void setupTapTarget(View view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeDashboardAlert", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(view.findViewById(R.id.seeAllTextView), "Never miss an alert.",
+                            "Click here to see all the alerts. Be sure to check often to always stay updated.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .dimColor(R.color.black));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeDashboardAlert", true);
+            editor.apply();
+        }
     }
 
     private void setupOutstandingReferralStats(View root) {

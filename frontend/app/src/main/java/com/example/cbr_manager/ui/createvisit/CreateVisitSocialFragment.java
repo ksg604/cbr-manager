@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
 import com.stepstone.stepper.Step;
@@ -29,12 +31,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.view.View.GONE;
 
+@AndroidEntryPoint
 public class CreateVisitSocialFragment extends Fragment implements Step {
 
     Chip adviceChip;
@@ -54,7 +58,6 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     TextView goalMetTextView;
     private View view;
     private Visit visit;
-    private List<Goal> goalList = new ArrayList<>();
     private final String GOAL_CONCLUDED_KEY = "concluded";
     private final String GOAL_CATEGORY_SOCIAL = "social";
     private APIService apiService = APIService.getInstance();
@@ -64,6 +67,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     private static final String SOCIAL_KEY = "Social";
     private static final String STATUS_ONGOING_KEY = "Ongoing";
     private boolean concludedOrNotFound = false;
+    private GoalViewModel goalViewModel;
 
     public CreateVisitSocialFragment() {
         // Required empty public constructor
@@ -83,6 +87,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
         view = inflater.inflate(R.layout.fragment_create_visit_social, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         socialGoal = ((CreateVisitStepperActivity) getActivity()).socialGoalObj;
@@ -98,49 +103,34 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
     private void getSocialGoal(View view) {
         currentGoalTextView = view.findViewById(R.id.socialProvisionCurrentGoalTextView);
         currentGoalStatusTextView = view.findViewById(R.id.socialProvisionCurrentGoalStatusTextView);
-        if (apiService.isAuthenticated()) {
-            apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
-                @Override
-                public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
-                    if (response.isSuccessful()) {
-                        goalList = response.body();
-                        Goal goal;
-                        Collections.reverse(goalList);
-                        previousSocialGoal = findNonConcludedGoal();
-                        if (previousSocialGoal != null) {
-                            currentGoalTextView.setText("Current goal: " + previousSocialGoal.getTitle());
-                            currentGoalStatusTextView.setText("Current status: " + previousSocialGoal.getStatus());
-                        }
 
-                        if (previousSocialGoal == null) {
-                            previousSocialGoal = findConcludedGoal();
-                            if (previousSocialGoal != null) {
-                                currentGoalTextView.setText("Current goal: " + previousSocialGoal.getTitle());
-                                currentGoalStatusTextView.setText("Current status: " + previousSocialGoal.getStatus());
-                            } else {
-                                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
-                                currentGoalStatusTextView.setText("Current status: No status.");
-                            }
-                            goalMetRadioGroup.setVisibility(GONE);
-                            goalMetTextView.setVisibility(GONE);
-                            newGoalInput.setVisibility(View.VISIBLE);
-                            newGoalDescriptionInput.setVisibility(View.VISIBLE);
-                            concludedOrNotFound = true;
-                        }
-                    }
+        goalViewModel.getAllGoals().observe(getViewLifecycleOwner(), goals -> {
+            Collections.reverse(goals);
+            previousSocialGoal = findNonConcludedGoal(goals);
+            if (previousSocialGoal != null) {
+                currentGoalTextView.setText("Current goal: " + previousSocialGoal.getTitle());
+                currentGoalStatusTextView.setText("Current status: " + previousSocialGoal.getStatus());
+            }
+
+            if (previousSocialGoal == null) {
+                previousSocialGoal = findConcludedGoal(goals);
+                if (previousSocialGoal != null) {
+                    currentGoalTextView.setText("Current goal: " + previousSocialGoal.getTitle());
+                    currentGoalStatusTextView.setText("Current status: " + previousSocialGoal.getStatus());
+                } else {
+                    currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
+                    currentGoalStatusTextView.setText("Current status: No status.");
                 }
+                goalMetTextView.setVisibility(GONE);
+                newGoalInput.setVisibility(View.VISIBLE);
+                newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                concludedOrNotFound = true;
 
-                @Override
-                public void onFailure(Call<List<Goal>> call, Throwable t) {
-
-                }
-            });
-        }
-
-
+            }
+        });
     }
 
-    private Goal findNonConcludedGoal() {
+    private Goal findNonConcludedGoal(List<Goal> goalList) {
         Goal goal;
         for (int i = 0; i < goalList.size(); i++) {
             goal = goalList.get(i);
@@ -156,7 +146,7 @@ public class CreateVisitSocialFragment extends Fragment implements Step {
         return null;
     }
 
-    private Goal findConcludedGoal() {
+    private Goal findConcludedGoal(List<Goal> goalList) {
         Goal goal;
         for (int i = 0; i < goalList.size(); i++) {
             goal = goalList.get(i);

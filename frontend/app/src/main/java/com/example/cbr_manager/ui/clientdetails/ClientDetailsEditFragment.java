@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -20,6 +21,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -46,13 +48,15 @@ public class ClientDetailsEditFragment extends Fragment {
     private int clientId;
     private static final String[] statusPaths = {"Ongoing", "Concluded", "Cancelled"};
     private ClientViewModel clientViewModel;
+    private GoalViewModel goalViewModel;
     private Goal healthGoal, educationGoal, socialGoal;
     private boolean hasHealthGoal = false, hasEducationGoal = false, hasSocialGoal = false;
+    private View view;
     private String healthStatus = "", educationStatus = "" , socialStatus = "";
-
 
     public ClientDetailsEditFragment() {
         // Required empty public constructor
+        super(R.layout.fragment_client_details_edit);
     }
 
     @Override
@@ -63,6 +67,7 @@ public class ClientDetailsEditFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
 
         Bundle bundle = this.getArguments();
         this.clientId = bundle.getInt("clientId", -1);
@@ -76,19 +81,38 @@ public class ClientDetailsEditFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        this.view = view;
+        super.onViewCreated(view, savedInstanceState);
+
+        parentLayout = view.findViewById(android.R.id.content);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
+
+        Bundle bundle = this.getArguments();
+        this.clientId = bundle.getInt("clientId", -1);
+        this.localClient = new Client();
+
+        setupClientEditTexts(clientId, view);
+        setupCardView(view);
+        getGoals();
+        setupButtons(view);
+    }
+
     private void modifyClientInfo(Client client) {
 
         clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
             @Override
             public void onComplete() {
-                Snackbar.make(getView(), "Successfully updated client", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Successfully updated client", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 getActivity().onBackPressed();
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Snackbar.make(getView(), "Failed to update client", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Failed to update client", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -257,47 +281,43 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void getGoals() {
-        apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
-            @Override
-            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
-                List<Goal> goals = new ArrayList<>();
-                goals = response.body();
-                Collections.reverse(goals);
-                for (Goal goal : goals) {
-                    if (goal.getClientId().equals(clientId)) {
-                        if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
-                            healthGoal = goal;
-                            setupGoalEditTexts(R.id.clientDetailsEditHealthTitleEditText, healthGoal.getTitle());
-                            setupGoalEditTexts(R.id.clientDetailsEditHealthDescriptionEditText, healthGoal.getDescription());
-                            setupGoalSpinner(R.id.clientDetailsEditHealthGoalStatusSpinner, healthGoal.getStatus());
-                            hasHealthGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
-                            educationGoal = goal;
-                            setupGoalEditTexts(R.id.clientDetailsEditEducationTitleEditText, educationGoal.getTitle());
-                            setupGoalEditTexts(R.id.clientDetailsEditEducationDescriptionEditText, educationGoal.getDescription());
-                            setupGoalSpinner(R.id.clientDetailsEditEducationGoalStatusSpinner, educationGoal.getStatus());
-                            hasEducationGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
-                            socialGoal = goal;
-                            setupGoalEditTexts(R.id.clientDetailsEditSocialTitleEditText, socialGoal.getTitle());
-                            setupGoalEditTexts(R.id.clientDetailsEditSocialDescriptionEditText, socialGoal.getDescription());
-                            setupGoalSpinner(R.id.clientDetailsEditSocialGoalStatusSpinner, socialGoal.getStatus());
-                            hasSocialGoal = true;
-                        }
+        goalViewModel.getAllGoals().observe(getViewLifecycleOwner(), goals -> {
+
+            Collections.reverse(goals);
+            for (Goal goal : goals) {
+                if (goal.getClientId().equals(clientId)) {
+                    if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
+                        healthGoal = goal;
+                        setupGoalEditTexts(R.id.clientDetailsEditHealthTitleEditText, healthGoal.getTitle());
+                        setupGoalEditTexts(R.id.clientDetailsEditHealthDescriptionEditText, healthGoal.getDescription());
+                        setupGoalSpinner(R.id.clientDetailsEditHealthGoalStatusSpinner, healthGoal.getStatus());
+                        hasHealthGoal = true;
+                    } 
+                    else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
+                        educationGoal = goal;
+                        setupGoalEditTexts(R.id.clientDetailsEditEducationTitleEditText, educationGoal.getTitle());
+                        setupGoalEditTexts(R.id.clientDetailsEditEducationDescriptionEditText, educationGoal.getDescription());
+                        setupGoalSpinner(R.id.clientDetailsEditEducationGoalStatusSpinner, educationGoal.getStatus());
+                        hasEducationGoal = true;
+                    } 
+                    else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
+                        socialGoal = goal;
+                        setupGoalEditTexts(R.id.clientDetailsEditSocialTitleEditText, socialGoal.getTitle());
+                        setupGoalEditTexts(R.id.clientDetailsEditSocialDescriptionEditText, socialGoal.getDescription());
+                        setupGoalSpinner(R.id.clientDetailsEditSocialGoalStatusSpinner, socialGoal.getStatus());
+                        hasSocialGoal = true;
                     }
                     if(hasHealthGoal && hasEducationGoal && hasSocialGoal) {
                         break;
                     }
                 }
-                modifyCardView(R.id.clientDetailsEditHealthCardView, hasHealthGoal);
-                modifyCardView(R.id.clientDetailsEditEducationCardView, hasEducationGoal);
-                modifyCardView(R.id.clientDetailsEditSocialCardView, hasSocialGoal);
+                if (hasHealthGoal && hasEducationGoal && hasSocialGoal) {
+                    break;
+                }
             }
-
-            @Override
-            public void onFailure(Call<List<Goal>> call, Throwable t) {
-
-            }
+            modifyCardView(R.id.clientDetailsEditHealthCardView, hasHealthGoal);
+            modifyCardView(R.id.clientDetailsEditEducationCardView, hasEducationGoal);
+            modifyCardView(R.id.clientDetailsEditSocialCardView, hasSocialGoal);
         });
     }
     private void setupGoalEditTexts(int editTextId, String content) {
@@ -375,22 +395,17 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void updateGoal(Goal goal) {
-        apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
+
+        goalViewModel.modifyGoal(goal).subscribe(new DisposableCompletableObserver() {
+
             @Override
-            public void onResponse(Call<Goal> call, Response<Goal> response) {
-                if(response.isSuccessful()) {
-                    Goal goal = response.body();
-                }
-                else {
-                    Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+            public void onComplete() {
+
             }
 
             @Override
-            public void onFailure(Call<Goal> call, Throwable t) {
-                Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onError(@NonNull Throwable e) {
+
             }
         });
     }

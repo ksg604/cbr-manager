@@ -256,6 +256,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Risk Level"
+                            android:layout_weight="1"
                             android:textColor="@color/purple_700"
                             android:textSize="16sp" />
 
@@ -263,7 +264,7 @@
                             android:id="@+id/clientDetailsRiskLevelTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0"
                             android:text="Risk Level"
                             android:gravity="right"
                             android:textSize="16sp" />

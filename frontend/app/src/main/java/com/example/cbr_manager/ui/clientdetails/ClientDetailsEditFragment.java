@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -50,10 +51,12 @@ public class ClientDetailsEditFragment extends Fragment {
     private GoalViewModel goalViewModel;
     private Goal healthGoal, educationGoal, socialGoal;
     private boolean hasHealthGoal = false, hasEducationGoal = false, hasSocialGoal = false;
+    private View view;
 
 
     public ClientDetailsEditFragment() {
         // Required empty public constructor
+        super(R.layout.fragment_client_details_edit);
     }
 
     @Override
@@ -79,19 +82,39 @@ public class ClientDetailsEditFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        this.view = view;
+        super.onViewCreated(view, savedInstanceState);
+
+        parentLayout = view.findViewById(android.R.id.content);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
+
+        Bundle bundle = this.getArguments();
+        this.clientId = bundle.getInt("clientId", -1);
+        this.localClient = new Client();
+
+        setupGenderSpinner(view);
+        setupClientEditTexts(clientId, view);
+        setupCardView(view);
+        getGoals();
+        setupButtons(view);
+    }
+
     private void modifyClientInfo(Client client) {
 
         clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
             @Override
             public void onComplete() {
-                Snackbar.make(getView(), "Successfully updated client", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Successfully updated client", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 getActivity().onBackPressed();
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Snackbar.make(getView(), "Failed to update client", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Failed to update client", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -292,14 +315,13 @@ public class ClientDetailsEditFragment extends Fragment {
 
             @Override
             public void onComplete() {
-                Snackbar.make(getView(), "Successfully updated goal", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                getActivity().onBackPressed();
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

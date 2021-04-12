@@ -112,7 +112,7 @@ public class GoalRepository {
         OneTimeWorkRequest createGoalRequest =
                 new OneTimeWorkRequest.Builder(CreateGoalWorker.class)
                         .setConstraints(constraints)
-                        .setInputData(CreateGoalWorker.buildInputData(authHeader, goal.getServerId()))
+                        .setInputData(CreateGoalWorker.buildInputData(authHeader, goal.getId()))
                         .build();
         workManager.enqueue(createGoalRequest);
         return createGoalRequest.getId();
@@ -126,7 +126,7 @@ public class GoalRepository {
         OneTimeWorkRequest createGoalRequest =
                 new OneTimeWorkRequest.Builder(ModifyGoalWorker.class)
                         .setConstraints(constraints)
-                        .setInputData(ModifyGoalWorker.buildInputData(authHeader, goal.getServerId()))
+                        .setInputData(ModifyGoalWorker.buildInputData(authHeader, goal.getId()))
                         .build();
         workManager.enqueue(createGoalRequest);
     }

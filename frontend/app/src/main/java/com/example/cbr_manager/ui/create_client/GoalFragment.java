@@ -18,6 +18,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.google.android.material.chip.Chip;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
@@ -39,6 +40,7 @@ public class GoalFragment extends Fragment implements Step {
     private EditText healthGoalDescription, educationGoalDescription, socialGoalDescription;
     private TextView errorTextView;
     private AuthViewModel authViewModel;
+    private GoalViewModel goalViewModel;
     private int userId = -1;
 
     @Override

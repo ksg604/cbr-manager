@@ -22,6 +22,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -46,8 +47,10 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     private StepperLayout CreateClientStepperLayout;
     private APIService apiService = APIService.getInstance();
     private static final String TAG = "CreateClientActivity";
+    private View view;
 
     private ClientViewModel clientViewModel;
+    private GoalViewModel goalViewModel;
 
 
     @Override
@@ -61,6 +64,8 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         educationGoal = new Goal();
         socialGoal = new Goal();
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
+
 
         setTitle("Create a Client");
 
@@ -93,21 +98,17 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void submitGoalSurvey(Goal goal) {
-        Call<Goal> call = apiService.goalService.createGoal(goal);
-        call.enqueue(new Callback<Goal>() {
+        goalViewModel.createGoal(goal).subscribe(new DisposableSingleObserver<Goal>() {
+
             @Override
-            public void onResponse(Call<Goal> call, Response<Goal> response) {
-                if (response.isSuccessful()) {
-                    Goal goal = response.body();
-                } else {
-                    Snackbar.make( CreateClientStepperLayout, "Failed to create the client.", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+            public void onSuccess(@io.reactivex.annotations.NonNull Goal goal) {
+                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
 
             @Override
-            public void onFailure(Call<Goal> call, Throwable t) {
-                Snackbar.make( CreateClientStepperLayout, "Failed to create the goal. Please try again", Snackbar.LENGTH_LONG)
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

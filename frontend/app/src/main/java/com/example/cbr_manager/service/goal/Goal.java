@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -57,6 +58,7 @@ public class Goal{
 
     public Goal() {
         this.datetimeCompleted = null;
+        this.datetimeCreated = Helper.getCurrentUTCTime().toString();
         this.userId = 0;
         this.clientId = -1;
         this.category = "";

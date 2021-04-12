@@ -120,7 +120,6 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void submitGoalSurvey(Goal goal) {
-        Log.d(TAG, "submitGoalSurvey: reached here");
         goalViewModel.createGoal(goal).subscribe(new DisposableSingleObserver<Goal>() {
         
             @Override

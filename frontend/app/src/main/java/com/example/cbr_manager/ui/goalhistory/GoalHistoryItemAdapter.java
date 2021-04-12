@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
+import com.example.cbr_manager.utils.Helper;
 import com.github.vipulasri.timelineview.TimelineView;
+
+import org.threeten.bp.format.FormatStyle;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -59,19 +62,11 @@ public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItem
         } else if (goal.getStatus().toLowerCase().equals("cancelled")) {
             holder.timelineView.setMarker(context.getDrawable(R.drawable.ic_baseline_remove_circle_outline_24));
         }
-        Log.d("BindView", "onBindViewHolder: past ifs");
-        String date = goal.getDatetimeCreated();
-        String dateAndTime[] = new String[2];
+        holder.dateTextView.setText(Helper.formatDateTimeToLocalString(goal.getDatetimeCreated(), FormatStyle.SHORT));
+        holder.dateTextView.setText(Helper.formatDateTimeToLocalString(goal.getDatetimeCreated(), FormatStyle.SHORT));
 
-        if (date != null) {
-            dateAndTime = date.split(" ");
-        }
-
-        holder.dateTextView.setText(dateAndTime[0]);
-        holder.goalTitleTextView.setText(goal.getTitle());
         holder.goalDescriptionTextView.setText(goal.getDescription());
         holder.timelineView.setMarkerColor(R.color.purple_700);
-        Log.d("BindView", "onBindViewHolder: made it to end");
     }
 
     @Override

@@ -111,12 +111,7 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         return filteredClientList.size();
     }
 
-    public Filter getFilterWithTags(String genderTag, String disabilityTag, String locationTag) {
-        this.genderTag = genderTag;
-        this.locationTag = locationTag;
-        this.disabilityTag = disabilityTag;
-        return filter;
-    }
+
 
     private boolean passTagFilterTest(Client client) {
         boolean genderResult, locationResult, disabilityResult;
@@ -140,6 +135,13 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
 
     @Override
     public Filter getFilter() {
+        return filter;
+    }
+
+    public Filter getFilter(String genderTag, String disabilityTag, String locationTag) {
+        this.genderTag = genderTag;
+        this.locationTag = locationTag;
+        this.disabilityTag = disabilityTag;
         return filter;
     }
 

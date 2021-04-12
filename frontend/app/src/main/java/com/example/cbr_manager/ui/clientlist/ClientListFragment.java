@@ -57,6 +57,8 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
     private String disabilityTag = "";
     private SearchView clientSearch;
 
+    private static final String TAG = "ClientListFragment";
+
     public ClientListFragment() {
         super(R.layout.fragment_client_list);
     }
@@ -98,11 +100,11 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter(newText);
+                clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter(newText);
                 return true;
             }
         });
-        clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter("");
+        clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter("");
     }
 
     private Spinner setUpSpinner(View view, int spinnerId, String[] options) {
@@ -128,7 +130,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                     locationTag = tag;
                 }
                 CharSequence newText = clientSearch.getQuery();
-                clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter(newText);
+                clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter(newText);
             }
 
             @Override

@@ -2,10 +2,16 @@ package com.example.cbr_manager.ui.visits;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.VisitViewModel;
+import com.example.cbr_manager.ui.alert.alert_list.AlertListRecyclerItem;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +42,14 @@ public class VisitsFragment extends Fragment implements VisitRecyclerAdapter.onV
     private VisitRecyclerAdapter adapter;
     private int clientId;
     private VisitViewModel visitViewModel;
+    private Spinner purposeSpinner;
+    private EditText provisionEdit;
+    private String purposeTag = "";
+    private String provisionTag = "";
+    private SearchView visitSearch;
 
-    @Override
+    private static final String[] purposePaths = {"All","CBR", "Disability Referral", "Disability Follow Up"};
+
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
@@ -61,16 +76,43 @@ public class VisitsFragment extends Fragment implements VisitRecyclerAdapter.onV
 
         fetchVisitsToList();
 
-        SearchView visitSearch = view.findViewById(R.id.visitSearchView);
+        provisionEdit = view.findViewById(R.id.provision_edit);
+        provisionEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                provisionTag = s.toString();
+                adapter.getFilterWithTags(purposeTag, provisionTag).filter(visitSearch.getQuery());
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        purposeSpinner = setUpSpinner(view, R.id.purpose_dropdown, purposePaths);
+        purposeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View view, int pos, long unused) {
+                purposeTag = spinner.getItemAtPosition(pos).toString();
+                CharSequence newText = visitSearch.getQuery();
+                adapter.getFilterWithTags(purposeTag, provisionTag).filter(newText);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> spinner) {
+            }
+        });
+
+        visitSearch = view.findViewById(R.id.visitSearchView);
         visitSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                adapter.getFilterWithTags(purposeTag, provisionTag).filter(newText);
                 return true;
             }
         });
@@ -108,4 +150,16 @@ public class VisitsFragment extends Fragment implements VisitRecyclerAdapter.onV
         visitInfoIntent.putExtra(VisitDetailsActivity.KEY_VISIT_ID, visit.getId());
         startActivity(visitInfoIntent);
     }
+
+    private Spinner setUpSpinner(View view, int spinnerId, String[] options) {
+        Spinner spinner = (Spinner) view.findViewById(spinnerId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, options);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        return spinner;
+    }
+
+
 }

@@ -12,7 +12,6 @@ class Referral(TimestampedModel):
     user_creator = models.IntegerField(blank=True,null=True)
     client_id = models.IntegerField(blank=True,null=True)
     client_name = models.CharField(blank=True,max_length=150,null=True)
-    date_created = models.CharField(blank=True,max_length=150,null=True)
 
     status = models.CharField(blank=True,null=True,max_length=200, default="CREATED")
     outcome = models.TextField(blank=True,null=True,max_length=300, default="")

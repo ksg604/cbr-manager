@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,25 +57,31 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
     private String disabilityTag = "";
     private SearchView clientSearch;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public ClientListFragment() {
+        super(R.layout.fragment_client_list);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setUpToolBar();
 
-        View root = inflater.inflate(R.layout.fragment_client_list, container, false);
-
-        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-
-        clientListRecyclerView = root.findViewById(R.id.recyclerView);
+        clientListRecyclerView = view.findViewById(R.id.recyclerView);
         clientListRecyclerView.setHasFixedSize(true); // if we know it won't change size.
         clientListLayoutManager = new LinearLayoutManager(getContext());
         clientListAdapter = new ClientListItemAdapter(this);
         clientListRecyclerView.setLayoutManager(clientListLayoutManager);
         clientListRecyclerView.setAdapter(clientListAdapter);
 
-        genderSpinner = setUpSpinner(root, R.id.gender_dropdown, genderPaths);
-        locationSpinner = setUpSpinner(root, R.id.location_dropdown, locationPaths);
-        disabilitySpinner = setUpSpinner(root, R.id.disability_dropdown, disabilityPaths);
+        genderSpinner = setUpSpinner(view, R.id.gender_dropdown, genderPaths);
+        locationSpinner = setUpSpinner(view, R.id.location_dropdown, locationPaths);
+        disabilitySpinner = setUpSpinner(view, R.id.disability_dropdown, disabilityPaths);
 
         setUpSpinnerListener(genderSpinner);
         setUpSpinnerListener(locationSpinner);
@@ -82,9 +89,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
 
         fetchClientsToList();
 
-        clientSearch = root.findViewById(R.id.clientSearchView);
-
-
+        clientSearch = view.findViewById(R.id.clientSearchView);
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -97,9 +102,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                 return true;
             }
         });
-
         clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter("");
-        return root;
     }
 
     private Spinner setUpSpinner(View view, int spinnerId, String[] options) {

@@ -100,11 +100,6 @@ public class ClientDetailsFragment extends Fragment {
     private void setupTapTarget(View root) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeClientDetailsRisk", false)) {
-            BottomNavigationView bottomNavigationView = root.findViewById(R.id.clientDetailsBottomNavigationView);
-            int[] l = new int[2];
-            bottomNavigationView.getLocationOnScreen(l);
-            Rect rect = new Rect(l[0], l[1], l[0] + bottomNavigationView.getWidth(), l[1] + bottomNavigationView.getHeight());
-            bottomNavigationView.getLocalVisibleRect(rect);
             TapTargetSequence clientDetailsTapSequence = new TapTargetSequence(getActivity()).targets(
                     TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
                             .outerCircleAlpha(0.96f)

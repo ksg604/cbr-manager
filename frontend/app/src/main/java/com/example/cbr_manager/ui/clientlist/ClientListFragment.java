@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -159,7 +160,9 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
 
     public void fetchClientsToList() {
         clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clients -> {
+            Log.d(this.getClass().getSimpleName(), "fetchClientsToList: " + clients.size());
             clientListAdapter.setClients(clients);
+            clientListAdapter.notifyDataSetChanged();
         });
     }
 

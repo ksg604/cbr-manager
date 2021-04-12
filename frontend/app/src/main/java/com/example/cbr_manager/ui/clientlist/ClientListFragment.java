@@ -2,26 +2,19 @@ package com.example.cbr_manager.ui.clientlist;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,8 +25,6 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetView;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -45,6 +36,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
     private static final String[] disabilityPaths = {"Any", "Amputee", "Polio", "Spinal Cord Injury", "Cerebral Palsy", "Spina Bifada",
             "Hydrocephalus", "Visual Impairment", "Hearing Impairment", "Don't Know", "Other"};
     private static final String[] genderPaths = {"Any", "Male", "Female"};
+    private static final String TAG = "ClientListFragment";
     private RecyclerView clientListRecyclerView;
     private ClientListItemAdapter clientListAdapter;
     private RecyclerView.LayoutManager clientListLayoutManager;
@@ -56,8 +48,6 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
     private String locationTag = "";
     private String disabilityTag = "";
     private SearchView clientSearch;
-
-    private static final String TAG = "ClientListFragment";
 
     public ClientListFragment() {
         super(R.layout.fragment_client_list);
@@ -85,11 +75,6 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
         locationSpinner = setUpSpinner(view, R.id.location_dropdown, locationPaths);
         disabilitySpinner = setUpSpinner(view, R.id.disability_dropdown, disabilityPaths);
 
-        setUpSpinnerListener(genderSpinner);
-        setUpSpinnerListener(locationSpinner);
-        setUpSpinnerListener(disabilitySpinner);
-
-        fetchClientsToList();
 
         clientSearch = view.findViewById(R.id.clientSearchView);
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -104,7 +89,12 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                 return true;
             }
         });
-        clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter("");
+
+        setUpSpinnerListener(genderSpinner);
+        setUpSpinnerListener(locationSpinner);
+        setUpSpinnerListener(disabilitySpinner);
+
+        fetchClientsToList();
     }
 
     private Spinner setUpSpinner(View view, int spinnerId, String[] options) {
@@ -130,7 +120,10 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                     locationTag = tag;
                 }
                 CharSequence newText = clientSearch.getQuery();
-                clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter(newText);
+
+                if (clientListAdapter.getItemCount() != 0) {
+                    clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter(newText.toString());
+                }
             }
 
             @Override

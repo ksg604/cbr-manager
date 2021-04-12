@@ -52,7 +52,6 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
             }
             FilterResults results = new FilterResults();
             results.values = tempFilteredList;
-
             return results;
         }
 

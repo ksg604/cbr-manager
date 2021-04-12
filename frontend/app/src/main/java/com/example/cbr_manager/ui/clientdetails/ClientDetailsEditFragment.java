@@ -12,31 +12,43 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.goal.Goal;
+import com.example.cbr_manager.ui.ClientViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableCompletableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class ClientDetailsEditFragment extends Fragment {
 
     private APIService apiService = APIService.getInstance();
     private View parentLayout;
-    private Spinner genderSpinner;
     String gender="";
-    Client client;
+    Client localClient;
+    private String location = "";
     private int clientId;
-    private static final String[] paths = {"Male", "Female"};
+    private static final String[] statusPaths = {"Ongoing", "Concluded", "Cancelled"};
+    private ClientViewModel clientViewModel;
+    private Goal healthGoal, educationGoal, socialGoal;
+    private boolean hasHealthGoal = false, hasEducationGoal = false, hasSocialGoal = false;
+    private String healthStatus = "", educationStatus = "" , socialStatus = "";
 
 
     public ClientDetailsEditFragment() {
@@ -50,31 +62,34 @@ public class ClientDetailsEditFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_client_details_edit, container, false);
         parentLayout = root.findViewById(android.R.id.content);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         Bundle bundle = this.getArguments();
         this.clientId = bundle.getInt("clientId", -1);
+        this.localClient = new Client();
 
-        setupGenderSpinner(root);
-        setupEditTexts(clientId, root);
+        setupClientEditTexts(clientId, root);
+        setupCardView(root);
+        getGoals();
         setupButtons(root);
-
 
         return root;
     }
 
     private void modifyClientInfo(Client client) {
 
-
-        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+        clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
+            public void onComplete() {
+                Snackbar.make(getView(), "Successfully updated client", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
                 getActivity().onBackPressed();
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
+            public void onError(@NonNull Throwable e) {
+                Snackbar.make(getView(), "Failed to update client", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
@@ -84,45 +99,25 @@ public class ClientDetailsEditFragment extends Fragment {
 
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
-        EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
-        EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
         EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
-        EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
-        EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
-
         EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
         EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
         EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
 
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
-                client.setGender(gender);
-
-                String [] clientName = editClientName.getText().toString().split(" ");
-                client.setFirstName(clientName[0]);
-                client.setLastName(clientName[1]);
-                client.setAge(Integer.parseInt(editClientAge.getText().toString()));
-                client.setLocation(editClientLocation.getText().toString());
-                client.setEducationGoal(editClientEducation.getText().toString());
-                client.setDisability(editClientDisability.getText().toString());
-                client.setSocialGoal(editClientSocial.getText().toString());
-                client.setHealthGoal(editClientHealth.getText().toString());
-                client.setEducationRisk(Integer.parseInt((editClientEducationRisk.getText().toString())));
-                client.setSocialRisk(Integer.parseInt(editClientSocialRisk.getText().toString()));
-                client.setHealthRisk(Integer.parseInt(editClientHealthRisk.getText().toString()));
-                modifyClientInfo(client);
-            }
-
-            @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
-            }
-        });
+        localClient.setGender(gender);
+        String [] clientName = editClientName.getText().toString().split(" ");
+        localClient.setFirstName(clientName[0]);
+        localClient.setLastName(clientName[1]);
+        localClient.setAge(Integer.parseInt(editClientAge.getText().toString()));
+        localClient.setLocation(location);
+        localClient.setDisability(editClientDisability.getText().toString());
+        localClient.setEducationRisk(Integer.parseInt((editClientEducationRisk.getText().toString())));
+        localClient.setSocialRisk(Integer.parseInt(editClientSocialRisk.getText().toString()));
+        localClient.setHealthRisk(Integer.parseInt(editClientHealthRisk.getText().toString()));
+        modifyClientInfo(localClient);
     }
 
-    private void setupGenderSpinner(View root) {
+    private void setupGenderSpinner(View root, String initialGender) {
         String[] paths = {"Male", "Female"};
         Spinner spinner = (Spinner) root.findViewById(R.id.clientDetailsEditGenderSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
@@ -130,6 +125,14 @@ public class ClientDetailsEditFragment extends Fragment {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        int initialPosition=0;
+        for(int i=0 ; i<paths.length ; i++) {
+            if (paths[i].equalsIgnoreCase(initialGender)) {
+                initialPosition = i;
+                break;
+            }
+        }
+        spinner.setSelection(initialPosition);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -143,43 +146,75 @@ public class ClientDetailsEditFragment extends Fragment {
         });
     }
 
-    private void setupEditTexts(int clientId, View root) {
+    private void setupClientEditTexts(int clientId, View root) {
         EditText editClientName = (EditText) root.findViewById(R.id.clientDetailsEditName);
         EditText editClientAge = (EditText) root.findViewById(R.id.clientDetailsEditAge);
-        EditText editClientLocation = (EditText) root.findViewById(R.id.clientDetailsEditLocation);
-        EditText editClientEducation = (EditText) root.findViewById(R.id.clientDetailsEditEducation);
         EditText editClientDisability = (EditText) root.findViewById(R.id.clientDetailsEditDisability);
-        EditText editClientSocial = (EditText) root.findViewById(R.id.clientDetailsEditSocial);
-        EditText editClientHealth = (EditText) root.findViewById(R.id.clientDetailsEditHealth);
 
         EditText editClientEducationRisk = (EditText) root.findViewById(R.id.clientDetailsEditEducationRiskLevel);
         EditText editClientSocialRisk = (EditText) root.findViewById(R.id.clientDetailsEditSocialRiskLevel);
         EditText editClientHealthRisk = (EditText) root.findViewById(R.id.clientDetailsEditHealthRiskLevel);
 
-        apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-            @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
-                String clientFirstName = client.getFirstName();
-                String clientLastName = client.getLastName();
-                editClientName.setText(clientFirstName + " " + clientLastName);
-                editClientAge.setText(client.getAge().toString());
-                editClientLocation.setText(client.getLocation());
-                editClientEducation.setText(client.getEducationGoal());
-                editClientDisability.setText(client.getDisability());
-                editClientSocial.setText(client.getSocialGoal());
-                editClientHealth.setText(client.getHealthGoal());
-                editClientEducationRisk.setText(client.getEducationRisk().toString());
-                editClientSocialRisk.setText(client.getSocialRisk().toString());
-                editClientHealthRisk.setText(client.getHealthRisk().toString());
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), observeClient -> {
+            this.localClient = observeClient;
+            String clientFirstName = observeClient.getFirstName();
+            String clientLastName = observeClient.getLastName();
+            setupGenderSpinner(root, observeClient.getGender());
+            editClientName.setText(clientFirstName + " " + clientLastName);
+            editClientAge.setText(observeClient.getAge().toString());
+            setupLocationSpinner(root, observeClient.getLocation());
+            editClientDisability.setText(observeClient.getDisability());
+            editClientEducationRisk.setText(observeClient.getEducationRisk().toString());
+            editClientSocialRisk.setText(observeClient.getSocialRisk().toString());
+            editClientHealthRisk.setText(observeClient.getHealthRisk().toString());
+        });
+    }
 
+    private void setupLocationSpinner(View root, String locationDropDown) {
+        String[] paths = {"BidiBidi Zone 1", "BidiBidi Zone 2", "BidiBidi Zone 3", "BidiBidi Zone 4", "BidiBidi Zone 5",
+                "Palorinya Basecamp", "Palorinya Zone 1", "Palorinya Zone 2", "Palorinya Zone 3"};
+        Spinner spinner = (Spinner) root.findViewById(R.id.clientDetailsEditLocationSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        int initialPosition=0;
+        for(int i=0 ; i<paths.length ; i++) {
+            if (paths[i].equalsIgnoreCase(locationDropDown)) {
+                initialPosition = i;
+                break;
+            }
+        }
+        spinner.setSelection(initialPosition);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                location = paths[position];
+                spinner.setSelection(position);
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
+            public void onNothingSelected(AdapterView<?> parent) {
+                location = paths[0];
             }
         });
+    }
+
+    private void setupCardView(View view) {
+        CardView healthGoalCardView = view.findViewById(R.id.clientDetailsEditHealthCardView);
+        healthGoalCardView.setVisibility(View.GONE);
+        CardView EducationGoalCardView = view.findViewById(R.id.clientDetailsEditEducationCardView);
+        EducationGoalCardView.setVisibility(View.GONE);
+        CardView socialGoalCardView = view.findViewById(R.id.clientDetailsEditSocialCardView);
+        socialGoalCardView.setVisibility(View.GONE);
+    }
+
+    private void modifyCardView(int cardViewId, boolean hasGoal) {
+        if(hasGoal) {
+            CardView cardView = (CardView) getView().findViewById(cardViewId);
+            cardView.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -195,7 +230,17 @@ public class ClientDetailsEditFragment extends Fragment {
         Button submitButton = root.findViewById(R.id.clientDetailsEditSubmitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                updateGoalsInfo();
+                if(hasHealthGoal) {
+                    updateGoal(healthGoal);
+                }
+                if(hasEducationGoal) {
+                    updateGoal(educationGoal);
+                }
+                if(hasSocialGoal) {
+                    updateGoal(socialGoal);
+                }
                 getAndModifyClient(clientId, root);
             }
         });
@@ -207,6 +252,145 @@ public class ClientDetailsEditFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
+            }
+        });
+    }
+
+    private void getGoals() {
+        apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
+            @Override
+            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
+                List<Goal> goals = new ArrayList<>();
+                goals = response.body();
+                Collections.reverse(goals);
+                for (Goal goal : goals) {
+                    if (goal.getClientId().equals(clientId)) {
+                        if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
+                            healthGoal = goal;
+                            setupGoalEditTexts(R.id.clientDetailsEditHealthTitleEditText, healthGoal.getTitle());
+                            setupGoalEditTexts(R.id.clientDetailsEditHealthDescriptionEditText, healthGoal.getDescription());
+                            setupGoalSpinner(R.id.clientDetailsEditHealthGoalStatusSpinner, healthGoal.getStatus());
+                            hasHealthGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
+                            educationGoal = goal;
+                            setupGoalEditTexts(R.id.clientDetailsEditEducationTitleEditText, educationGoal.getTitle());
+                            setupGoalEditTexts(R.id.clientDetailsEditEducationDescriptionEditText, educationGoal.getDescription());
+                            setupGoalSpinner(R.id.clientDetailsEditEducationGoalStatusSpinner, educationGoal.getStatus());
+                            hasEducationGoal = true;
+                        } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
+                            socialGoal = goal;
+                            setupGoalEditTexts(R.id.clientDetailsEditSocialTitleEditText, socialGoal.getTitle());
+                            setupGoalEditTexts(R.id.clientDetailsEditSocialDescriptionEditText, socialGoal.getDescription());
+                            setupGoalSpinner(R.id.clientDetailsEditSocialGoalStatusSpinner, socialGoal.getStatus());
+                            hasSocialGoal = true;
+                        }
+                    }
+                    if(hasHealthGoal && hasEducationGoal && hasSocialGoal) {
+                        break;
+                    }
+                }
+                modifyCardView(R.id.clientDetailsEditHealthCardView, hasHealthGoal);
+                modifyCardView(R.id.clientDetailsEditEducationCardView, hasEducationGoal);
+                modifyCardView(R.id.clientDetailsEditSocialCardView, hasSocialGoal);
+            }
+
+            @Override
+            public void onFailure(Call<List<Goal>> call, Throwable t) {
+
+            }
+        });
+    }
+    private void setupGoalEditTexts(int editTextId, String content) {
+        EditText editText = (EditText) getView().findViewById(editTextId);
+        editText.setText(content);
+    }
+
+    private void updateGoalsInfo() {
+        if(hasHealthGoal) {
+            healthGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditHealthTitleEditText));
+            healthGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditHealthDescriptionEditText));
+            healthGoal.setStatus(healthStatus);
+        }
+        if(hasEducationGoal) {
+            educationGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditEducationTitleEditText));
+            educationGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditEducationDescriptionEditText));
+            educationGoal.setStatus(educationStatus);
+        }
+        if(hasSocialGoal) {
+            socialGoal.setTitle(getStringDataFromEditText(R.id.clientDetailsEditSocialTitleEditText));
+            socialGoal.setDescription(getStringDataFromEditText(R.id.clientDetailsEditSocialDescriptionEditText));
+            socialGoal.setStatus(socialStatus);
+        }
+    }
+
+    private void setupGoalSpinner(int spinnerId, String initialStatus) {
+        Spinner spinner = (Spinner) getView().findViewById(spinnerId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,statusPaths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        int initialPosition=0;
+        for(int i=0 ; i<statusPaths.length ; i++) {
+            if (statusPaths[i].equalsIgnoreCase(initialStatus)) {
+                initialPosition = i;
+                break;
+            }
+        }
+        spinner.setSelection(initialPosition);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(spinnerId) {
+                    case R.id.clientDetailsEditHealthGoalStatusSpinner:
+                        healthStatus = statusPaths[position];
+                        break;
+                    case R.id.clientDetailsEditEducationGoalStatusSpinner:
+                        educationStatus = statusPaths[position];
+                        break;
+                    case R.id.clientDetailsEditSocialGoalStatusSpinner:
+                        socialStatus = statusPaths[position];
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                switch(spinnerId) {
+                    case R.id.clientDetailsEditHealthGoalStatusSpinner:
+                        healthStatus = statusPaths[0];
+                        break;
+                    case R.id.clientDetailsEditEducationGoalStatusSpinner:
+                        educationStatus = statusPaths[0];
+                        break;
+                    case R.id.clientDetailsEditSocialGoalStatusSpinner:
+                        socialStatus = statusPaths[0];
+                }
+            }
+        });
+    }
+
+    private String getStringDataFromEditText(int editTextId) {
+        EditText editText = (EditText) getView().findViewById(editTextId);
+        return editText.getText().toString().trim();
+    }
+
+    private void updateGoal(Goal goal) {
+        apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
+            @Override
+            public void onResponse(Call<Goal> call, Response<Goal> response) {
+                if(response.isSuccessful()) {
+                    Goal goal = response.body();
+                }
+                else {
+                    Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Goal> call, Throwable t) {
+                Snackbar.make(getView(), "Failed to update goal", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }

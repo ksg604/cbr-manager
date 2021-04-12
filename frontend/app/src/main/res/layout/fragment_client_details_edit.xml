@@ -144,13 +144,12 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
-                        <EditText
-                            android:id="@+id/clientDetailsEditLocation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <Spinner
+                            android:id="@+id/clientDetailsEditLocationSpinner"
+                            android:layout_width="100dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:inputType="textPersonName" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -275,64 +274,89 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/clientDetailsEditHealthCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsHealthTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Health Goal"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/clientDetailsEditHealthGoalStatusSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey"/>
+
+                    <EditText
+                        android:id="@+id/clientDetailsEditHealthTitleEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:text="No health goal listed! Add a goal by clicking the edit icon at the bottom."
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/clientDetailsEditHealthDescriptionEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clientDetailsEditEducationCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="8dp">
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:id="@+id/clientDetailsEditEducationGoalTitleTextView"
+                            android:id="@+id/clientDetailsEducationTitleTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="Education Goal"
                             android:textColor="@color/purple_700"
                             android:textSize="16sp" />
+                        <Spinner
+                            android:id="@+id/clientDetailsEditEducationGoalStatusSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000" />
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grey"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"/>
 
-                    <EditText
-                        android:id="@+id/clientDetailsEditEducation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="textMultiLine" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/clientDetailsSocialGoalTitleTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Social Goal"
-                        android:textColor="@color/purple_700"
-                        android:textSize="16sp" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -341,35 +365,50 @@
                         android:background="@color/grey"/>
 
                     <EditText
-                        android:id="@+id/clientDetailsEditSocial"
-                        android:layout_width="match_parent"
+                        android:id="@+id/clientDetailsEditEducationTitleEditText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="textMultiLine" />
-                </LinearLayout>
+                        android:textColor="#000"
+                        android:text="No education goal listed! Add a goal by clicking the edit icon at the bottom."
+                        android:textSize="16sp" />
 
+                    <EditText
+                        android:id="@+id/clientDetailsEditEducationDescriptionEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/clientDetailsEditSocialCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_margin="8dp">
 
-                    <TextView
-                        android:id="@+id/clientDetailsHealthGoalTitleTextView"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Health Goal:"
-                        android:textColor="@color/purple_700"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsSocialTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Social Goal"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp" />
+                        <Spinner
+                            android:id="@+id/clientDetailsEditSocialGoalStatusSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000" />
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -377,16 +416,25 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:background="@color/grey"/>
+
                     <EditText
-                        android:id="@+id/clientDetailsEditHealth"
-                        android:layout_width="match_parent"
+                        android:id="@+id/clientDetailsEditSocialTitleEditText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="textMultiLine" />
+                        android:textColor="#000"
+                        android:text="No social goal listed! Add a goal by clicking the edit icon at the bottom."
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/clientDetailsEditSocialDescriptionEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 

@@ -8,7 +8,7 @@ from referral.models import Referral, WheelchairService, PhysiotherapyService, O
 @admin.register(Referral)
 class ReferralAdmin(admin.ModelAdmin):
     readonly_fields = ('service_type', 'service_object_id', 'service_object_type')
-    list_display = ('status', 'service_type', 'user_creator', 'client_name',)
+    list_display = ('status', 'service_type', 'user_creator', 'client_name')
 
     def user_creator(self, obj):
         return obj.user

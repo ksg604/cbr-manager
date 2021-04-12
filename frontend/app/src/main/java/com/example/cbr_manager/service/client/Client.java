@@ -12,11 +12,13 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "client")
 public class Client extends CBRTimestamp {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private Integer id;
+
     @SerializedName("id")
     @Expose
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "client_id")
-    private Integer id;
+    private Integer serverId;
 
     @SerializedName("cbr_client_id")
     @Expose
@@ -106,6 +108,16 @@ public class Client extends CBRTimestamp {
     @Expose
     private boolean baselineSurveyTaken;
 
+    @SerializedName("latitude")
+    @Expose
+    private double latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    private double longitude;
+
+
+
     //Initializing fields that are needed for POST request in itr1
     public Client() {
         super(Helper.getCurrentUTCTime().toString(), Helper.getCurrentUTCTime().toString());
@@ -116,7 +128,6 @@ public class Client extends CBRTimestamp {
         this.contactClient = "";
         this.age = 0;
         this.gender = "";
-        this.id = 0;
         this.location = "";
         this.villageNo = 0;
         this.disability = "";
@@ -128,7 +139,11 @@ public class Client extends CBRTimestamp {
         this.socialRisk = 0;
         this.educationRisk = 0;
         this.isNewClient = true;
+        this.cbrClientId = "";
         this.baselineSurveyTaken = false;
+        this.longitude = 0;
+        this.latitude = 0;
+
     }
 
     @Ignore
@@ -157,6 +172,14 @@ public class Client extends CBRTimestamp {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
     }
 
     public String getFirstName() {
@@ -387,6 +410,10 @@ public class Client extends CBRTimestamp {
         isNewClient = newClient;
     }
 
+    public boolean isBaselineSurveyTaken() { return baselineSurveyTaken; }
+
+    public void setBaselineSurveyTaken(boolean newBaselineSurveyStatus) { baselineSurveyTaken = newBaselineSurveyStatus; }
+
     public Integer calculateRiskScore() {
         double healthRiskLogScale = Math.pow(10, healthRisk)*1.2;
         double socialRiskLogScale = Math.pow(10, socialRisk)*1.1;
@@ -394,6 +421,52 @@ public class Client extends CBRTimestamp {
         return (int) (healthRiskLogScale + socialRiskLogScale + educationRiskLogScale);
     }
 
-    public boolean isBaselineSurveyTaken() { return baselineSurveyTaken; }
-    public void setBaselineSurveyTaken(boolean newBaselineSurveyStatus) { baselineSurveyTaken = newBaselineSurveyStatus; }
+    // some code here inspired by https://stackoverflow.com/questions/6667243/using-enum-values-as-string-literals
+    public enum RiskLabel {
+        LOW("Low"),
+        MEDIUM("Medium"),
+        HIGH("High"),
+        CRITICAL("Critical");
+
+        private final String name;
+
+        RiskLabel(String string) {
+            name = string;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+    }
+
+    public static RiskLabel assignLabelToRiskScore(Integer riskScore) {
+        if (riskScore < 100) {
+            return RiskLabel.LOW;
+        }
+        else if (riskScore < 1000) {
+            return RiskLabel.MEDIUM;
+        }
+        else if (riskScore < 10000) {
+            return RiskLabel.HIGH;
+        }
+        else {
+            return RiskLabel.CRITICAL;
+        }
+    }
+
+    public RiskLabel assignRiskLabel() {
+        Integer riskScore = this.calculateRiskScore();
+        return assignLabelToRiskScore(riskScore);
+    }
+
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double newLatitude) { latitude = newLatitude; }
+
+    public double getLongitude() { return longitude; }
+    public void setLongitude(double newLongitude) { longitude = newLongitude; }
+
+
+
+
 }

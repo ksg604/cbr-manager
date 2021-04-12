@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.referral.Referral;
+import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
 
 import org.w3c.dom.Text;
 
@@ -33,7 +35,6 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
     private List<ReferralListRecyclerItem> referralListRecyclerItemsFull;
     public OnItemListener onItemListener;
     private List<ReferralListRecyclerItem> filteredReferrals;
-    private APIService apiService = APIService.getInstance();
     private boolean outstandingChecked = false;
 
     public ReferralListRecyclerItem getReferral(int position) {
@@ -100,7 +101,6 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
             textListName = itemView.findViewById(R.id.textListClientName);
             this.onItemListener = onItemListener;
             itemView.setOnClickListener(this);
-
         }
 
         @Override
@@ -121,6 +121,12 @@ public class ReferralListRecyclerItemAdapter extends RecyclerView.Adapter<Referr
         this.onItemListener = onItemListener;
     }
 
+    public void setReferrals(ArrayList<ReferralListRecyclerItem> referralList) {
+//        referralList.sort(new ReferralListRecyclerItemAdapter.ReferralByDateComparator().reversed());
+        this.referralListRecyclerItems = referralList;
+        this.filteredReferrals = new ArrayList<>(referralList);
+    }
+    
     @NonNull
     @Override
     public ReferralItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

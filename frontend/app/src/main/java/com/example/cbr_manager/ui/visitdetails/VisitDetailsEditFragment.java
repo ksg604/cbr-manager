@@ -143,20 +143,10 @@ public class VisitDetailsEditFragment extends Fragment {
     }
 
     private void getClientInfo(int clientId){
-
-        clientViewModel.getClient(clientId).subscribe(new DisposableSingleObserver<Client>() {
-            @Override
-            public void onSuccess(@NonNull Client client) {
-                setupCurrentClient(client);
-                setupNameTextView(client.getFullName());
-                setupImageViews(client.getPhotoURL());
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Snackbar.make(getView().findViewById(R.id.content), "Failed to get the client. Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        clientViewModel.getClient(clientId).observe(getViewLifecycleOwner(), client -> {
+            setupCurrentClient(client);
+            setupNameTextView(client.getFullName());
+            setupImageViews(client.getPhotoURL());
         });
     }
 
@@ -247,6 +237,7 @@ public class VisitDetailsEditFragment extends Fragment {
             public void onComplete() {
                 Snackbar.make(getView(), "Successfully updated user", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                getActivity().onBackPressed();
             }
 
             @Override

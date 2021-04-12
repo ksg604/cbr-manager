@@ -59,20 +59,4 @@ public class Alert {
     public void setDate(String date) {
         this.date = date;
     }
-
-    public String getFormattedDate() {
-        String datePython = getDate().substring(0,19);
-        String patternOutput = "MM/dd/yyyy   HH:mm";
-        String patternInput = "yyyy-MM-DD'T'HH:mm:ss";
-
-        SimpleDateFormat sdfInput = new SimpleDateFormat(patternInput);
-        SimpleDateFormat sdfOutput = new SimpleDateFormat(patternOutput);
-        Date date = null;
-        try {
-            date = sdfInput.parse(datePython);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return sdfOutput.format(date);
-    }
 }

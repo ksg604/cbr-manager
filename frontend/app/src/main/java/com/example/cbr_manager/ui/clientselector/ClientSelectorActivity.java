@@ -14,12 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ClientSelectorActivity extends AppCompatActivity {
 
-    int code = -1;
-    boolean isNewVisit = false;
-    boolean isNewReferral = false;
-    private final int NEW_VISIT_CODE = 100;
-    private final int NEW_REFERRAL_CODE = 101;
-    private final int NEW_BASELINE_CODE = 102;
+    private int code;
+
+    public static final String CODE_KEY = "CODE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +26,8 @@ public class ClientSelectorActivity extends AppCompatActivity {
         setTitle("Select a Client");
 
         Intent intent = getIntent();
-        code = intent.getIntExtra("CODE", -1);
+
+        code = intent.getIntExtra(CODE_KEY, -1);
     }
 
     @Override

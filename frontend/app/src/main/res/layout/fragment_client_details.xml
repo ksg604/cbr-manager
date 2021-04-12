@@ -349,6 +349,78 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/clientDetailsHealthGoalCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsHealthTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Health Goal"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/clientDetailsHealthStatusTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="NO STATUS"
+                            android:textColor="#000"
+                            android:gravity="right"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:id="@+id/clientDetailsHealthGoalTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:text="No health goal listed! Add a goal by clicking the edit icon at the bottom."
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/clientDetailsHealthDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:id="@+id/clientDetailsHealthHistoryTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="View History"
+                        android:textColor="@color/purple_200"
+                        android:gravity="center"
+                        android:textAllCaps="true"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clientDetailsEducationGoalCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
@@ -358,13 +430,25 @@
                     android:layout_margin="8dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/profileEducationTitle"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Education Goal"
-                        android:textColor="@color/purple_700"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/profileEducationTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Education Goal"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/clientDetailsEducationStatusTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="NO STATUS"
+                            android:textColor="#000"
+                            android:gravity="right"/>
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -377,8 +461,16 @@
                         android:id="@+id/clientDetailsEducationGoalTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="No education goal listed! Add a goal by clicking the edit icon at the top."
+                        android:text="No education goal listed! Add a goal by clicking the edit icon at the bottom."
+                        android:textColor="#000"
                         android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/clientDetailsEducationDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -401,6 +493,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/clientDetailsSocialGoalCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
@@ -411,14 +504,27 @@
                     android:layout_margin="8dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/clientDetailsSocialTitleTextView"
-                        android:layout_width="wrap_content"
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Social Goal"
-                        android:textColor="@color/purple_700"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/clientDetailsSocialTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Social Goal"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/clientDetailsSocialStatusTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="NO STATUS"
+                            android:textColor="#000"
+                            android:gravity="right"/>
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -431,8 +537,16 @@
                         android:id="@+id/clientDetailsSocialGoalTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No social goal listed! Add a goal by clicking the edit icon at the top."
+                        android:textColor="#000"
+                        android:text="No social goal listed! Add a goal by clicking the edit icon at the bottom."
                         android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/clientDetailsSocialDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No goal description listed."
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -451,57 +565,6 @@
                         android:textAllCaps="true"/>
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_margin="8dp">
-
-                    <TextView
-                        android:id="@+id/clientDetailsHealthTitleTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Health Goal"
-                        android:textColor="@color/purple_700"
-                        android:textSize="16sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@color/grey"/>
-
-                    <TextView
-                        android:id="@+id/clientDetailsHealthGoalTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="No health goal listed! Add a goal by clicking the edit icon at the top."
-                        android:textSize="16sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@color/grey"/>
-
-                    <TextView
-                        android:id="@+id/clientDetailsHealthHistoryTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="View History"
-                        android:textColor="@color/purple_200"
-                        android:gravity="center"
-                        android:textAllCaps="true"/>
-                </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>

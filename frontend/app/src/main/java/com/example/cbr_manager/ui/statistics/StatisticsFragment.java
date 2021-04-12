@@ -38,7 +38,7 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class StatisticsFragment extends Fragment {
 
-    private static final int HIGH_RISK_THRESHOLD = 20;
+    private static final int HIGH_RISK_THRESHOLD = 1000;
     private final APIService apiService = APIService.getInstance();
     private HashMap<String, String> csvFields = new HashMap<>();
     View view;

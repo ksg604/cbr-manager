@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
@@ -21,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.threeten.bp.format.FormatStyle;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.observers.DisposableCompletableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +30,7 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class AlertDetailsActivity extends AppCompatActivity {
 
-
+//    AppCompatActivity myActivity = this.etBaseContext();
     private APIService apiService = APIService.getInstance();
     private int alertId;
     private View parentLayout;
@@ -82,7 +84,20 @@ public class AlertDetailsActivity extends AppCompatActivity {
         newVisitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: add function to mark email as read (requires local database)
+                localAlert.setMarkedRead(true);
+                alertViewModel.modifyAlertOffline(localAlert).subscribe(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        Snackbar.make(parentLayout, "Marked as read", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Snackbar.make(parentLayout, "Failed to mark as read", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                });
             }
         });
     }

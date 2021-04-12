@@ -23,12 +23,11 @@ import com.example.cbr_manager.service.client.ClientRiskScoreComparator;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AlertViewModel;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
-import com.example.cbr_manager.ui.clientdetails.ClientDetailsEditFragment;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
-import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.utils.Helper;
 
 import org.threeten.bp.format.FormatStyle;
@@ -55,33 +54,35 @@ public class DashboardFragment extends Fragment {
     TextView dateAlertTextView;
     TextView titleTextView;
     int homeAlertId;
-    View root;
 
     private VisitViewModel visitViewModel;
     private AlertViewModel alertViewModel;
+    private ClientViewModel clientViewModel;
+
+    public DashboardFragment() {
+        super(R.layout.fragment_home);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
         alertViewModel = new ViewModelProvider(this).get(AlertViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         fetchNewestAlert();
-        setupViewPager(root);
-        setupButtons(root);
+        setupViewPager(view);
+        setupButtons(view);
         setAlertButtons();
 
         fetchTopFiveRiskiestClients(clientViewPagerList);
 
-        setupVisitStats(root);
-        setupOutstandingReferralStats(root);
-
-        return root;
+        setupVisitStats(view);
+        setupOutstandingReferralStats(view);
     }
 
     private void setupOutstandingReferralStats(View root) {
@@ -190,8 +191,8 @@ public class DashboardFragment extends Fragment {
     }
 
     public void setAlertButtons() {
-        seeMoreTextView = root.findViewById(R.id.seeAllTextView);
-        TextView moreTextView = root.findViewById(R.id.dashboardAlertsMoreTextView);
+        seeMoreTextView = getView().findViewById(R.id.seeAllTextView);
+        TextView moreTextView = getView().findViewById(R.id.dashboardAlertsMoreTextView);
         moreTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,35 +211,18 @@ public class DashboardFragment extends Fragment {
     }
 
     public void fetchTopFiveRiskiestClients(List<Client> clientList) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
-                @Override
-                public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
-                    if (response.isSuccessful()) {
-                        List<Client> clients = response.body();
-
-                        if (clients != null & !clients.isEmpty()) {
-                            Collections.sort(clients, new ClientRiskScoreComparator(ClientRiskScoreComparator.SortOrder.DESCENDING));
-
-                            List<Client> topFiveClients = null;
-                            if (clients.size() > 5) {
-                                topFiveClients = clients.subList(0, 5);
-                            } else {
-                                topFiveClients = clients;
-                            }
-
-                            clientList.addAll(topFiveClients);
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<List<Client>> call, Throwable t) {
-
-                }
-            });
-        }
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clients -> {
+            clientList.clear();
+            clients.sort(new ClientRiskScoreComparator(ClientRiskScoreComparator.SortOrder.DESCENDING));
+            List<Client> topFiveClients;
+            if (clients.size() > 5) {
+                topFiveClients = clients.subList(0, 5);
+            } else {
+                topFiveClients = clients;
+            }
+            clientList.addAll(topFiveClients);
+            adapter.notifyDataSetChanged();
+        });
     }
 
     private void setupButtons(View root) {

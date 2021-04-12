@@ -380,9 +380,22 @@ As an admin, I want to be able to create new clients' data, so I can track their
 * Improved UI experience by making visit details page show only filled fields, so that the user doesn't see unnecessary blank spaces.
 * Linked the visit details and visit details edit page to backend database so it properly stores and updates new data.
 
-**Questions for the customer:**
+**Iteration 3:**
 
-1. Is the Homepage simple and informative enough? Is there other features or shortcuts that you would like us to add / change?
+### Implement Goal Model to frontend
+
+**User story:**
+   As a admin/user, I want to be able to create and modify goals so that clients can track their progress better.
+
+* Created Goal Class and set up API calls to store / update goal data in the backend.
+
+### Add initial goals to client creation process
+**User story:**
+   As a admin/user, I want to be able to create initial goals during client creation process.
+
+### Allows users to edit goals in client details page
+**User story:**
+   As a admin/user, I want to be able to modify goals on client details page.
 
 
 ## Sean's Contribution

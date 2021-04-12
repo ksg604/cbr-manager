@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from clients.factories import ClientFactory
 from visits.factories import VisitFactory
 from alerts.factories import AlertFactory
+from goals.factories import GoalFactory
 
 
 def create_default_super_user(username, email, password, firstName, lastName):
@@ -70,7 +71,8 @@ def main():
 
     for c in clients:
         for _ in range(2):
-            visit = VisitFactory.create(client=c)
+            VisitFactory.create(client=c)
+            GoalFactory(client_id=c.id)
 
 
 if __name__ == '__main__':

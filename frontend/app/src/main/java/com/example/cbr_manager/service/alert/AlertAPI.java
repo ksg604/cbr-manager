@@ -3,7 +3,7 @@ package com.example.cbr_manager.service.alert;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.alert.Alert;
-import com.example.cbr_manager.service.client.Client;
+import com.example.cbr_manager.service.alert.Alert;
 
 import java.util.List;
 
@@ -45,5 +45,12 @@ public interface AlertAPI {
 
     @GET("api/alerts/{id}/")
     Single<Alert> getAlertSingle(@Header("Authorization") String authHeader, @Path("id") int id);
+
+    @PUT("api/alerts/{id}/")
+    Call<Alert> modifyAlert(@Header("Authorization") String authHeader, @Path("id") int id, @Body Alert alert);
+
+    @PUT("api/alerts/{id}/")
+    Single<Alert> modifyAlertSingle(@Header("Authorization") String authHeader, @Path("id") int id, @Body Alert alert);
+
 
 }

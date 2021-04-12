@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -36,9 +38,10 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
     private RecyclerView alertListRecyclerView;
     private AlertListRecyclerItemAdapter adapter;
     private RecyclerView.LayoutManager alertLayoutManager;
-    private SearchView searchView;
+    private SearchView alertSearchView;
+    private CheckBox unreadCheckBox;
     private AlertViewModel alertViewModel;
-    ArrayList<AlertListRecyclerItem> alertRecyclerItems = new ArrayList<>();
+    List<AlertListRecyclerItem> alertRecyclerItems = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,9 +55,9 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
         adapter = new AlertListRecyclerItemAdapter(alertRecyclerItems, this);
         alertListRecyclerView.setLayoutManager(alertLayoutManager);
         alertListRecyclerView.setAdapter(adapter);
-        fetchAlertsToList(alertRecyclerItems);
+        fetchAlertsToList();
 
-        SearchView alertSearchView = root.findViewById(R.id.alertSearchView);
+        alertSearchView = root.findViewById(R.id.alertSearchView);
         alertSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -63,20 +66,31 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                adapter.getFilterWithCheckBox(unreadCheckBox.isChecked()).filter(newText);
                 return true;
             }
         });
+        unreadCheckBox = root.findViewById(R.id.unreadCheckBox);
+
+        unreadCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                CharSequence newText = alertSearchView.getQuery();
+                adapter.getFilterWithCheckBox(unreadCheckBox.isChecked()).filter(newText);
+            }
+        });
+
+        unreadCheckBox.setChecked(true);
         return root;
     }
 
-    public void fetchAlertsToList(List<AlertListRecyclerItem> alertUIList) {
+    public void fetchAlertsToList() {
         alertViewModel.getAllAlerts().observe(getViewLifecycleOwner(), alerts -> {
-            alertUIList.clear();
+            alertRecyclerItems.clear();
             for (Alert alert : alerts) {
-                alertUIList.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, Helper.formatDateTimeToLocalString(alert.getCreatedAt(), FormatStyle.SHORT)));
+                alertRecyclerItems.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, Helper.formatDateTimeToLocalString(alert.getCreatedAt(), FormatStyle.SHORT),alert.getMarkedRead()));
             }
-            adapter.notifyDataSetChanged();
+            adapter.getFilterWithCheckBox(true).filter("");
         });
     }
 

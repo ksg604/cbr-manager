@@ -28,7 +28,6 @@
         <activity android:name=".ui.createvisit.CreateVisitStepperActivity" />
         <activity android:name=".ui.create_client.CreateClientStepperActivity" />
         <activity android:name=".ui.clientselector.ClientSelectorActivity" />
-        <activity android:name=".ui.createreferral.CreateReferralActivity" />
         <activity
             android:name=".ui.visitdetails.VisitDetailsActivity"
             android:label=".VisitDetailsActivity"

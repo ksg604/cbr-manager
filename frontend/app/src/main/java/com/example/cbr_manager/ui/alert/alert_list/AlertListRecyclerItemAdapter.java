@@ -13,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cbr_manager.R;
+import com.example.cbr_manager.service.visit.Visit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertListRecyclerItemAdapter.AlertItemViewHolder> implements Filterable {
@@ -22,35 +24,43 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
     private List<AlertListRecyclerItem> alertListRecyclerItems;
     private OnItemListener onItemListener;
     private List<AlertListRecyclerItem> filteredAlerts;
-
+    private boolean unreadChecked = false;
+    
     public AlertListRecyclerItem getAlert(int position) {
         return filteredAlerts.get(position);
     }
 
     @Override
     public Filter getFilter() {
-        return filter;
+        return null;
     }
 
-    public Filter filter = new Filter() {
+    public Filter getFilterWithCheckBox(boolean unreadChecked){
+        this.unreadChecked = unreadChecked;
+        return newFilter;
+    }
+
+    public Filter newFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String searchString = constraint.toString().toLowerCase().trim();
 
-            if (searchString.isEmpty()) {
-                filteredAlerts = alertListRecyclerItems;
+            List<AlertListRecyclerItem> tempFilteredList = new ArrayList<>();
+
+            if (searchString.isEmpty()&!unreadChecked) {
+                tempFilteredList.addAll(alertListRecyclerItems);
             } else {
-                ArrayList<AlertListRecyclerItem> tempFilteredList = new ArrayList<>();
                 for (AlertListRecyclerItem alertListRecyclerItem : alertListRecyclerItems) {
                     if (alertListRecyclerItem.getTitle().toLowerCase().trim().contains(searchString) | alertListRecyclerItem.getBody().toLowerCase().trim().contains(searchString)) {
-                        tempFilteredList.add(alertListRecyclerItem);
+                        if(!alertListRecyclerItem.getMarkedRead()|!unreadChecked){
+                            tempFilteredList.add(alertListRecyclerItem);
+                        }
                     }
                 }
-                filteredAlerts = tempFilteredList;
             }
-            FilterResults results = new FilterResults();
-            results.values = filteredAlerts;
 
+            FilterResults results = new FilterResults();
+            results.values = tempFilteredList;
             return results;
         }
 
@@ -58,6 +68,7 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredAlerts.clear();
             filteredAlerts.addAll((List) results.values);
+            Collections.reverse(filteredAlerts);
             notifyDataSetChanged();
         }
     };
@@ -89,9 +100,9 @@ public class AlertListRecyclerItemAdapter extends RecyclerView.Adapter<AlertList
         void onItemClick(int position);
     }
 
-    public AlertListRecyclerItemAdapter(ArrayList<AlertListRecyclerItem> alertListRecyclerItems, OnItemListener onItemListener) {
+    public AlertListRecyclerItemAdapter(List<AlertListRecyclerItem> alertListRecyclerItems, OnItemListener onItemListener) {
         this.alertListRecyclerItems = alertListRecyclerItems;
-        this.filteredAlerts = alertListRecyclerItems;
+        this.filteredAlerts = new ArrayList<>();
         this.onItemListener = onItemListener;
     }
 

@@ -11,7 +11,9 @@ import androidx.work.WorkManager;
 import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.service.alert.AlertAPI;
 import com.example.cbr_manager.service.alert.AlertDao;
+import com.example.cbr_manager.service.alert.Alert;
 import com.example.cbr_manager.workmanager.alert.CreateAlertWorker;
+import com.example.cbr_manager.workmanager.alert.ModifyAlertWorker;
 
 import java.io.File;
 import java.util.List;
@@ -46,6 +48,14 @@ public class AlertRepository {
         return alertDao.getAlertsLiveData();
     }
 
+    public LiveData<List<Alert>> getUnreadAlertsAsLiveData(){
+        return alertDao.getUnreadAlertsLiveData();
+    }
+
+    public LiveData<List<Alert>> getAlertsAsLiveDataOffline(){
+        return alertDao.getAlertsLiveData();
+    }
+
     private void fetchAlertAsync() {
         alertAPI.getAlertsAsSingle(authHeader)
                 .doOnSuccess(alerts -> {
@@ -70,6 +80,7 @@ public class AlertRepository {
         Alert localAlert = alertDao.getAlertByServerId(alert.getServerId());
         if(localAlert != null) {
             alert.setId(localAlert.getId());
+            alert.setMarkedRead(localAlert.getMarkedRead());
             alertDao.update(alert);
         }
         else {
@@ -110,5 +121,31 @@ public class AlertRepository {
         return alertDao.getAlertSingle(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable modifyAlertOffline(Alert alert) {
+        return Completable.fromAction(() -> alertDao.update(alert))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable modifyAlert(Alert alert) {
+        return Completable.fromAction(() -> alertDao.update(alert))
+                .doOnComplete(() -> enqueueModifyAlert(alert))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void enqueueModifyAlert(Alert alert) {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        OneTimeWorkRequest modifyAlertRequest =
+                new OneTimeWorkRequest.Builder(ModifyAlertWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(ModifyAlertWorker.buildInputData(authHeader, alert.getId()))
+                        .build();
+        workManager.enqueue(modifyAlertRequest);
     }
 }

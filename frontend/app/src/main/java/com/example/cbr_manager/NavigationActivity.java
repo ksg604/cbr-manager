@@ -140,14 +140,14 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
     }
 
     private void setupAlertsBadge(NavigationView navigationView) {
-        alertViewModel.getAllAlerts().observe(this, retrievedAlerts -> {
-            List<Alert> alerts = retrievedAlerts;
+        alertViewModel.getUnreadAlerts().observe(this,retrievedAlerts ->{
             TextView alertsTV = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_alert_list));
             alertsTV.setGravity(Gravity.CENTER_VERTICAL);
             alertsTV.setTypeface(null, Typeface.BOLD);
             alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
-            if (alerts.size() > 0) {
-                alertsTV.setText(Integer.toString(alerts.size()));
+            int size = retrievedAlerts.size();
+            if (size > 0) {
+                alertsTV.setText(Integer.toString(size));
             }
         });
     }

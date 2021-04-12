@@ -34,6 +34,9 @@ public interface AlertDao {
     @Query("SELECT * FROM alert")
     LiveData<List<Alert>> getAlertsLiveData();
 
+    @Query("SELECT * FROM alert WHERE markedRead = 0")
+    LiveData<List<Alert>> getUnreadAlertsLiveData();
+
     @Query("SELECT * FROM alert WHERE id = :alertId")
     Single<Alert> getAlertSingle(int alertId);
 

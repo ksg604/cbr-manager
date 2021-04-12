@@ -2,7 +2,9 @@ package com.example.cbr_manager.service.alert;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Update;
 
 import com.example.cbr_manager.utils.CBRTimestamp;
 import com.google.gson.annotations.Expose;
@@ -27,13 +29,37 @@ public class Alert extends CBRTimestamp {
     @SerializedName("title")
     @Expose
     private String title;
+
     @SerializedName("body")
     @Expose
     private String body;
 
+    @ColumnInfo(name = "markedRead")
+    private Boolean markedRead;
+
+    public Alert() {
+        this.title = "";
+        this.body = "";
+        if(this.markedRead==null) {
+            this.markedRead = false;
+        }
+    }
+
+    @Ignore
     public Alert(String title, String body) {
         this.title = title;
         this.body = body;
+        if(this.markedRead==null) {
+            this.markedRead = false;
+        }
+    }
+
+    public Boolean getMarkedRead() {
+        return markedRead;
+    }
+
+    public void setMarkedRead(Boolean markedRead) {
+        this.markedRead = markedRead;
     }
 
     public Integer getServerId() {

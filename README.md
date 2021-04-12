@@ -311,10 +311,6 @@ At the request of the customer, redid the UI of the dashboard to be much less cl
 
 * User creation(new user registration),including making the user creation page in android and uploading the new user info to the backend.
 
-**Unfinished parts:**
-
-1. Implementing the different levels of permission for each type of user
-
 ### Alerts Creation, List and Details (Iteration 1)
 
 **User story:** As a user, I want to be able to see alerts from the dashboard, so I can prioritize clients/activities based on urgency
@@ -323,31 +319,36 @@ At the request of the customer, redid the UI of the dashboard to be much less cl
 * The alerts include a title, body and date.
 * The newest alerts(currently 1) show up in the the dashboard
 
-**Unfinished parts:**
-
-1. Specifying which users the alert messages are desginated to. (Needs user permission)
-
-2. Adding an urgency tag/flag and the ability to mark each message as read. (Needs local database)
-
-### Referrals List and Details
+### Referrals List and Details (Iteration 2)
 
 **User story:** As a user, I want to be able to view all my clients/visits, so I can monitor and record client related activity
 
 * Referral List to hold either referrals of a specific client or all, depending on where the list was accessed from(client details for that client, all for from dashboard/nav bar)
 * Referral Details to show all fields related to a certain referral.
 
-### Referrals Editing
+### Referrals Editing (Iteration 2)
 
 **User story:** As a user, I want to be able to record and edit client/visit data, so I can better manage my duties
 
 * Referral Editing page for editing and updating a referral's status and other info intended for update (refer to field, outcome descriptions etc.).
 
-### Tag Filtering logic
+### Tag Filtering logic (Iteration 2)
 
 **User story:** As a user, I want to be able to search for one or some of my clients, so I can monitor and record client related activity
 
 * Implemented resuable filtering logic with checkboxes. Currently used for filtering outstanding referral items . If referral status is resolved then it won't show if "Outstanding" is checked.
 * It works in conjunction with the search bar that looks for matching substrings, so if either is changed the results refresh.
+
+### Iteration 3
+1. User permissions for admin and normal user. Only admin can make user, alerts, view stats.
+2. Search/ Filtering with tags for client list: five keywords including location disability gender etc.
+3. Offline fucntionality for Referrals, automatically syncs all operations from local to server
+4. Search/ Filtering with tags for client list: keywords include provision, purpose etc.
+5. Offline fucntionality for Alerts: automatically syncs all operations from local to server
+6. Mark as read for Alerts: be able to mark alerts as read
+7. Alert badge only counts unread alerts 
+8. Remove all legacy API calls for Referrals and Alerts
+9. Misc bug fixes
 
 
 ## Kevin's Contribution

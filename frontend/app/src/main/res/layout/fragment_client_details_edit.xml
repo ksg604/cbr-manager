@@ -144,13 +144,12 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
-                        <EditText
-                            android:id="@+id/clientDetailsEditLocation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <Spinner
+                            android:id="@+id/clientDetailsEditLocationSpinner"
+                            android:layout_width="100dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:inputType="textPersonName" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -296,13 +295,12 @@
                             android:text="Health Goal"
                             android:textColor="@color/purple_700"
                             android:textSize="16sp" />
-                        <EditText
-                            android:id="@+id/clientDetailsEditHealthStatusEditText"
+
+                        <Spinner
+                            android:id="@+id/clientDetailsEditHealthGoalStatusSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="NO STATUS"
-                            android:textColor="#000"
-                            android:gravity="right"/>
+                            android:textColor="#000"/>
                     </LinearLayout>
 
                     <View
@@ -352,13 +350,11 @@
                             android:text="Education Goal"
                             android:textColor="@color/purple_700"
                             android:textSize="16sp" />
-                        <EditText
-                            android:id="@+id/clientDetailsEditEducationStatusEditText"
+                        <Spinner
+                            android:id="@+id/clientDetailsEditEducationGoalStatusSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="NO STATUS"
-                            android:textColor="#000"
-                            android:gravity="right"/>
+                            android:textColor="#000" />
                     </LinearLayout>
 
                     <View
@@ -407,13 +403,11 @@
                             android:text="Social Goal"
                             android:textColor="@color/purple_700"
                             android:textSize="16sp" />
-                        <EditText
-                            android:id="@+id/clientDetailsEditSocialStatusEditText"
+                        <Spinner
+                            android:id="@+id/clientDetailsEditSocialGoalStatusSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="NO STATUS"
-                            android:textColor="#000"
-                            android:gravity="right"/>
+                            android:textColor="#000" />
                     </LinearLayout>
 
                     <View

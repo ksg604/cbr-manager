@@ -91,7 +91,6 @@ public class DashboardFragment extends Fragment {
                             .titleTextSize(20)
                             .drawShadow(true)
                             .tintTarget(true)
-                            .targetRadius(60)
                             .dimColor(R.color.black));
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("firstTimeDashboardAlert", true);

@@ -56,6 +56,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
     AuthViewModel authViewModel;
     AlertViewModel alertViewModel;
     private AppBarConfiguration appBarConfiguration;
+    int numUnread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,14 +112,20 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
     }
 
     private void setupAlertsBadge(NavigationView navigationView) {
-        alertViewModel.getAllAlerts().observe(this, retrievedAlerts -> {
+        alertViewModel.getAllAlertsOffline().observe(this, retrievedAlerts -> {
             List<Alert> alerts = retrievedAlerts;
             TextView alertsTV = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_alert_list));
             alertsTV.setGravity(Gravity.CENTER_VERTICAL);
             alertsTV.setTypeface(null, Typeface.BOLD);
             alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
-            if (alerts.size() > 0) {
-                alertsTV.setText(Integer.toString(alerts.size()));
+            numUnread=0;
+            for(Alert alert:alerts){
+                if(!alert.getMarkedRead()){
+                    numUnread+=1;
+                }
+            }
+            if (numUnread > 0) {
+                alertsTV.setText(Integer.toString(numUnread));
             }
         });
     }

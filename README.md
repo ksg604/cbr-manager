@@ -15,8 +15,11 @@ In iteration 1, we've designed the UI for the majority of required pages and cre
 ### Iteration 2
 In iteration 2, we focused on adding the ability for users to create referrals for clients, which can then be viewed and edited. Speaking of editing, this was another area we focused on this iteration. Now clients and visits can also be edited through the app as well. We also placed a search feature in a lot of the pages, which will be handy once the number of clients and visits grows. Another focus this iteration was on using a local db with syncing to allow users to use the app offline. Finally, we improved a lot of the app's UI this iteration, based on feedback from the customer, and also based on having a better understanding of the flow of the app and how to use Android at this point. One of these changes was login caching, which we feel definitely makes the app more convenient to use (and to test!).
 
-## Upcoming
-For next iteration we plan to finalize the risk algorithm, finish work on local database syncing, add the ability to easily view historical changes, and improve client goal tracking. We also will finalize the UI across the board to get everything looking and feeling as good as possible. And of course we'll make changes based on the customer's feedback of our iteration 2 demo!
+### Iteration 3
+In iteration 3, we focused on goals, offline functionality, maps, statistics, admin privileges, the risk algorithm, baseline surveys, and general quality of life improvements for the user. Goals are now their own objects rather than simply being an attribute of client, so they can be created and updated in several places, and their full history can be viewed. Nearly the entire app is now functional offline. Every table except baseline surveys (which is less likely to be accessed offline) can be written to, updated, and viewed from offline using a local database, which will sync to the global database when internet becomes available again. There is now also a map showing all client locations, and a statistics page that can export CSV files to Google Drive (if the user is an admin). The risk algorithm is now fully operational, with complex-ish calculations under the hood, but displaying the results in easily digestible English categories. Users can also now fill out baseline surveys for clients. Finally, the UI across the board has been cleaned up, instructions are added for the first time a user uses the app, and some code refactoring has been done to clean up the code.
+
+## To do in the future
+Baseline surveys definitely should get offline functionality. Baseline surveys should also be represented in the statistics. There are also a few counterintuitive quirks in the UI that should be changed, such as when creating a goal in visit for a category that doesn't yet have a goal, where it will ask the status of the nonexistent goal. It's a process, so I'm sure there will also be other things to change based on the customer's feedback. Overall though, we're very happy with what we've accomplished on this app this term. We're proud of the "final" product, and we've all learned a lot.
 
 
 # How to setup Local Development
@@ -461,6 +464,24 @@ The login page allows users to log in to reach their personalized home screen
 **User Story** (#1)
 As an admin, I want to be able to edit all user (CBR worker, clinician) data, so I can perform management duties if input was incorrect or priorities changed
 
+**Iteration 3:**
+
+**User story:**
+   As a admin/user, I want to be able to create and modify goals so that clients can track their progress better.
+
+* I created the goal model on the back end, which was used in the app in multiple places.
+
+**User story:**
+   As a admin/user, I want to see clients' risk scores and sort by these scores so I can prioritize more at-risk clients.
+
+* I designed the new risk algorithm, which uses a log scale with some priority modifiers to capture Izzy's requested prioritization of clients. I then modified the risk labels that the user will see to just be English categories, since the numbers became very high, and would likely have been more confusing for users to explicity see, so the numbers are mostly just used behind the scenes now.
+
+**User story:**
+   As a admin/user, I want to be able to use the app offline, so that I can go to areas without internet and not worry about losing functionality.
+
+* I was responsible for giving offline functionality to everything related to goals. This includes viewing goals on the client details, goal history and create visit pages. It also includes creating goals on the create client and create visit pages. Finally, it includes editing goals on the edit client details and create visit pages. Jonathan (who had previously implemented offline functionality for visits) was a very big help with this.
+
+
 ## William Tran's Contribution
 
 ### Iteration 1 Creation of New Clients
@@ -605,13 +626,17 @@ Once the app is running, you will be on the login screen. Input "user1" as the u
 
 <img src="/readme-images/login.png"  width="432" height="888">
 
-After logging in, you will see the homepage. Here, you can click different icons to quickly go to their pages. The sync button will sync your local database with the global one, so that you can use the app safely without internet.
+After logging in, you will see the homepage. Here, you can click different icons to quickly go to their pages.
 
 <img src="/readme-images/homepage.png"  width="432" height="888">
 
 If you click on the dashboard, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
 
 <img src="/readme-images/dashboard.png"  width="432" height="888">
+
+There are now tutorial messages that get displayed the first time a user uses the app.
+
+<img src="/readme-images/tutorial.png"  width="432" height="888">
 
 To access the navigation bar, click on the three horizontal bars in the top left corner.
 
@@ -703,8 +728,24 @@ You can edit a referral by clicking the edit button. One major thing you might e
 
 Once a referral is marked RESOLVED, it will no longer show up in the outstanding toggle
 
-<img src="/readme-images/no_outstanding_referrals.png"  width="432" height="888">
+<img src="/readme-images/no_outstanding_referrals.png"  width="78" height="517">
 
-Note: you may need to use the back button built into Android devices and emulators to exit from certain pages. This is something that will be addressed in the next iteration.
+You can view the location of all clients through the map, which is accessible from the homepage
 
-<img src="/readme-images/back.png"  width="78" height="517">
+<img src="/readme-images/map.png"  width="432" height="888">
+
+You can also create a baseline survey for a client by selecting "BASELINE SURVEY" on the home page and selecting a client
+
+<img src="/readme-images/baseline_survey.png"  width="432" height="888">
+
+Admins can view statistics on the statistics page, accessible through the navigation bar.
+
+<img src="/readme-images/statistics.png"  width="432" height="888">
+
+They then can export the statistics to Google Drive
+
+<img src="/readme-images/export.png"  width="432" height="888">
+
+There, it can be viewed as a CSV file
+
+<img src="/readme-images/statistics_csv.png">

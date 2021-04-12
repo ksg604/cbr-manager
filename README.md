@@ -205,6 +205,19 @@ if you can see `STATE 4 RUNNING` it mean the installation run correctly
 4. Follow the instruction from [How to setup local development](#how-to-setup-local-development)
 
 
+## Maps
+
+To get maps to work, an additional dependency needs to be installed.
+
+1. Open up Android Studio and go to Tools -> SDK Manager -> Android SDK -> SDK Tools
+2. Download and install 'Google Play services'
+3. Search for the 'local.properties' file using Android Studio search and add this line:
+
+MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA
+
+![Map Setup](/readme-images/map-readme.PNG)
+
+
 
 ## Peter's Contribution
 
@@ -363,6 +376,18 @@ As a user, I want to be able to record and edit client/visit data, so I can bett
 * User has the ability to edit visit information by accessing a client's details, navigating to their visit list, selecting a visit and then tapping edit button (pencil) on the visit
 * Fixed backend problem with visit model not processing PUT requests properly to edit visit information
 * Added additional fields to visit edit details which are more intuitive to be editable by the user
+
+
+**Iteration 3:**
+
+**User story:** (#5)
+As a user, I want to be able to view all my clients/visits, so I can monitor and record client related activity
+
+* Fixed baseline survey multiple submission bug
+* Implemented Map activity which uses Google Maps API
+* Created custom information windows for Google Maps markers
+* Added custom latitude and longitude location coordinate field for Client model
+* Map activity displays all the clients that have been created as markers
 
 
 ## Kun Hyung Park(Arthur)'s Contribution

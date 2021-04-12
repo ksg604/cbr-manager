@@ -22,6 +22,7 @@ import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 
 import java.io.File;
@@ -45,6 +46,7 @@ public class StatisticsFragment extends Fragment {
 
     private VisitViewModel visitViewModel;
     private ClientViewModel clientViewModel;
+    private ReferralViewModel referralViewModel;
 
     public StatisticsFragment() {
         super(R.layout.fragment_statistics);
@@ -55,6 +57,7 @@ public class StatisticsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
     }
 
     @Override
@@ -84,23 +87,12 @@ public class StatisticsFragment extends Fragment {
 
 
     private void setupReferralStats(View view) {
-        apiService.referralService.getReferrals().enqueue(new Callback<List<Referral>>() {
-            @Override
-            public void onResponse(Call<List<Referral>> call, Response<List<Referral>> response) {
-                if (response.isSuccessful()) {
-                    List<Referral> referrals = response.body();
+        referralViewModel.getReferralsAsLiveData().observe(getViewLifecycleOwner(), referrals -> {
                     int numReferrals = referrals.size();
                     saveIntToCSV("numReferrals", numReferrals);
 
                     TextView textView1 = view.findViewById(R.id.statistic4_sub2);
                     textView1.setText(Integer.toString(numReferrals));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Referral>> call, Throwable t) {
-
-            }
         });
     }
 

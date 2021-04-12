@@ -282,8 +282,6 @@ public class ClientDetailsEditFragment extends Fragment {
     }
 
     private void getGoals() {
-<<<<<<< frontend/app/src/main/java/com/example/cbr_manager/ui/clientdetails/ClientDetailsEditFragment.java
-
         goalViewModel.getAllGoals().observe(getViewLifecycleOwner(), goals -> {
 
             Collections.reverse(goals);

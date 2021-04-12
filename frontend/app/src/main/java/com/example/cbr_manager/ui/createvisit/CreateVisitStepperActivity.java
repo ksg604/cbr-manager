@@ -134,21 +134,21 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     }
 
     private void modifyPreviousGoal(Goal goal) {
-            goalViewModel.modifyGoal(goal).subscribe(new DisposableCompletableObserver() {
+        goalViewModel.modifyGoal(goal).subscribe(new DisposableCompletableObserver() {
 
-                @Override
-                public void onComplete() {
-                    Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
+            @Override
+            public void onComplete() {
+                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }
+            }
 
-                @Override
-                public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                    Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-        }
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
 
     @Override
     public void onCompleted(View completeButton) {
@@ -200,13 +200,19 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     private void createNewGoals(Goal goal) {
         goal.setClientId(clientId);
         goal.setUserId(userCreatorId);
-        apiService.goalService.createGoal(goal).enqueue(new Callback<Goal>() {
+
+        goalViewModel.createGoal(goal).subscribe(new DisposableSingleObserver<Goal>() {
+
             @Override
-            public void onResponse(Call<Goal> call, Response<Goal> response) {
+            public void onSuccess(@io.reactivex.annotations.NonNull Goal goal) {
+                Snackbar.make(view, "Successfully updated goal", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
+
             @Override
-            public void onFailure(Call<Goal> call, Throwable t) {
-                Toast.makeText(CreateVisitStepperActivity.this, "Failed goal creation.", Toast.LENGTH_SHORT).show();
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Snackbar.make(view, "Failed to update goal", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }

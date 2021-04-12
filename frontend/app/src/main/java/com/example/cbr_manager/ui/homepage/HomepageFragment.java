@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -24,6 +25,7 @@ public class HomepageFragment extends Fragment {
     private APIService apiService = APIService.getInstance();
     private ImageButton newClientButton, newVisitButton, dashboardButton;
     private ImageButton newReferralButton, clientListButton, syncButton;
+    private CardView newClientCard, dashboardCard, clientListCard, surveyCard, newVisitCard, newReferralCard, syncCard, mapCard;
     private ImageButton newSurvey;
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
@@ -36,37 +38,63 @@ public class HomepageFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-        newClientButton = view.findViewById(R.id.newClientButton);
-        newClientButton.setOnClickListener(new View.OnClickListener() {
+        newClientCard = view.findViewById(R.id.newClientCardView);
+        newClientCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), CreateClientStepperActivity.class);
                 startActivity(intent);
             }
         });
+//        newClientButton = view.findViewById(R.id.newClientButton);
+//        newClientButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), CreateClientStepperActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
-        newVisitButton = view.findViewById(R.id.newVisitButton);
-        newVisitButton.setOnClickListener(new View.OnClickListener() {
+        newVisitCard = view.findViewById(R.id.newVisitCardView);
+        newVisitCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(HomepageActivity.this, CreateVisitActivity.class);
+            public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), ClientSelectorActivity.class);
                 intent.putExtra("CODE", NEW_VISIT_CODE);
                 startActivity(intent);
             }
         });
+//        newVisitButton = view.findViewById(R.id.newVisitButton);
+//        newVisitButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Intent intent = new Intent(HomepageActivity.this, CreateVisitActivity.class);
+//                Intent intent = new Intent(view.getContext(), ClientSelectorActivity.class);
+//                intent.putExtra("CODE", NEW_VISIT_CODE);
+//                startActivity(intent);
+//            }
+//        });
 
-        dashboardButton = view.findViewById(R.id.dashboardButton);
-        dashboardButton.setOnClickListener(new View.OnClickListener() {
+        dashboardCard = view.findViewById(R.id.dashboardCardView);
+        dashboardCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 NavHostFragment.findNavController(HomepageFragment.this)
                         .navigate(R.id.action_nav_home_to_nav_dashboard);
             }
         });
+//
+//        dashboardButton = view.findViewById(R.id.dashboardButton);
+//        dashboardButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NavHostFragment.findNavController(HomepageFragment.this)
+//                        .navigate(R.id.action_nav_home_to_nav_dashboard);
+//            }
+//        });
 
-        newReferralButton = view.findViewById(R.id.newReferralButton);
-        newReferralButton.setOnClickListener(new View.OnClickListener() {
+        newReferralCard = view.findViewById(R.id.newReferralCardView);
+        newReferralCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), ClientSelectorActivity.class);
@@ -74,26 +102,51 @@ public class HomepageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+//        newReferralButton = view.findViewById(R.id.newReferralButton);
+//        newReferralButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(view.getContext(), ClientSelectorActivity.class);
+//                intent.putExtra("CODE", NEW_REFERRAL_CODE);
+//                startActivity(intent);
+//            }
+//        });
 
-        clientListButton = view.findViewById(R.id.clientListButton);
-        clientListButton.setOnClickListener(new View.OnClickListener() {
+        clientListCard = view.findViewById(R.id.clientListCardView);
+        clientListCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(HomepageFragment.this)
                         .navigate(R.id.action_nav_home_to_nav_client_list);
             }
         });
+//        clientListButton = view.findViewById(R.id.clientListButton);
+//        clientListButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavHostFragment.findNavController(HomepageFragment.this)
+//                        .navigate(R.id.action_nav_home_to_nav_client_list);
+//            }
+//        });
 
-        syncButton = view.findViewById(R.id.syncButton);
-        syncButton.setOnClickListener(new View.OnClickListener() {
+        syncCard = view.findViewById(R.id.syncCardView);
+        syncCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
 
-        newSurvey = view.findViewById(R.id.baselineSurveyImageButton);
-        newSurvey.setOnClickListener(new View.OnClickListener() {
+//        syncButton = view.findViewById(R.id.syncButton);
+//        syncButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+        surveyCard = view.findViewById(R.id.baselineSurveyCardView);
+        surveyCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ClientSelectorActivity.class);
@@ -101,15 +154,32 @@ public class HomepageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+//        newSurvey = view.findViewById(R.id.baselineSurveyImageButton);
+//        newSurvey.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), ClientSelectorActivity.class);
+//                intent.putExtra("CODE", NEW_BASELINE_CODE);
+//                startActivity(intent);
+//            }
+//        });
 
-       ImageView mapButton = view.findViewById(R.id.mapButton);
-        mapButton.setOnClickListener(new View.OnClickListener() {
+        mapCard = view.findViewById(R.id.mapCardView);
+        mapCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MapActivity.class);
                 startActivity(intent);
             }
         });
+//       ImageView mapButton = view.findViewById(R.id.mapButton);
+//        mapButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), MapActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
     }

@@ -17,16 +17,20 @@ import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.ui.AuthViewModel;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.stepstone.stepper.adapter.StepAdapter;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class BaselineSurveyStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
     private StepperLayout baseLineSurveyStepperLayout;
@@ -34,13 +38,17 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     private APIService apiService = APIService.getInstance();
     private int clientId = -1;
     private int userCreatorId = 1;
-    private AuthViewModel authViewModel;
     public Client client;
     int age;
+    private ClientViewModel clientViewModel;
+    private AuthViewModel authViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
         setContentView(R.layout.stepper);
         setTitle("Baseline Survey");
         client = new Client();
@@ -55,25 +63,18 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     }
 
     private void getClientAge(StepperLayout baseLineSurveyStepperLayout) {
-        if (apiService.isAuthenticated()) {
-            apiService.clientService.getClient(clientId).enqueue(new Callback<Client>() {
-                @Override
-                public void onResponse(Call<Client> call, Response<Client> response) {
-                    if (response.isSuccessful()) {
-                        client = response.body();
-                        age = client.getAge();
-                        setupStepperAdapterWithFragments(age);
-                    } else {
-                        Toast.makeText(BaselineSurveyStepperActivity.this, "Failed.", Toast.LENGTH_SHORT).show();
-                    }
-                }
+        clientViewModel.getClientAsSingle(clientId).subscribe(new DisposableSingleObserver<Client>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
+                age = client.getAge();
+                setupStepperAdapterWithFragments(age);
+            }
 
-                @Override
-                public void onFailure(Call<Client> call, Throwable t) {
-                    Toast.makeText(BaselineSurveyStepperActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Toast.makeText(BaselineSurveyStepperActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getUserCreator() {
@@ -115,7 +116,7 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     }
 
     private void submitSurvey() {
-        if (apiService.isAuthenticated()) {
+        if (authViewModel.isAuthenticated()) {
 
             getUserCreator();
             formBaselineSurveyObj.setUserCreator(userCreatorId);
@@ -127,7 +128,6 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
 
                         client.setBaselineSurveyTaken(true);
                         modifyClientInfo(client);
-
                         Toast.makeText(BaselineSurveyStepperActivity.this, "Survey successfully submitted!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
@@ -144,16 +144,13 @@ public class BaselineSurveyStepperActivity extends AppCompatActivity implements 
     }
 
     private void modifyClientInfo(Client client) {
-
-        apiService.clientService.modifyClient(client).enqueue(new Callback<Client>() {
+        clientViewModel.modifyClient(client).subscribe(new DisposableCompletableObserver() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
-                Client client = response.body();
+            public void onComplete() {
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
-
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
             }
         });
     }

@@ -21,6 +21,7 @@ import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.baseline_survey.BaselineSurvey;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.referral.Referral;
+import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 
 import java.io.File;
@@ -41,18 +42,25 @@ public class StatisticsFragment extends Fragment {
     private static final int HIGH_RISK_THRESHOLD = 1000;
     private final APIService apiService = APIService.getInstance();
     private HashMap<String, String> csvFields = new HashMap<>();
-    View view;
+
     private VisitViewModel visitViewModel;
+    private ClientViewModel clientViewModel;
+
+    public StatisticsFragment() {
+        super(R.layout.fragment_statistics);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_statistics, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         setupStats(view);
 
         Button exportButton = view.findViewById(R.id.export_button);
@@ -63,9 +71,7 @@ public class StatisticsFragment extends Fragment {
             }
         });
 
-        return view;
     }
-
 
     private void setupStats(View view) {
         if (apiService.isAuthenticated()) {
@@ -100,43 +106,31 @@ public class StatisticsFragment extends Fragment {
 
 
     private void setupClientStats(View view) {
-        apiService.clientService.getClients().enqueue(new Callback<List<Client>>() {
-            @Override
-            public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
-                if (response.isSuccessful()) {
-                    List<Client> clients = response.body();
 
-                    int totalClients = clients.size();
-                    saveIntToCSV("totalClients", totalClients);
+        clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clients -> {
+            int totalClients = clients.size();
+            saveIntToCSV("totalClients", totalClients);
 
-                    double averageAge = getAndSaveAverageAge("averageAge", clients);
-                    int totalFemales = getAndSaveTotalFemales("totalFemales", clients);
-                    int totalMales = getAndSaveTotalMales("totalMales", clients);
-                    int totalHighRisk = getAndSaveHighRiskClients("totalHighRisk", clients);
-                    int totalNoCareGiver = getAndSaveTotalNoCareGiver("totalNoCareGiver", clients);
-                    double averageHealthRisk = getAndSaveAverageHealthRisk("averageHealthRisk", clients);
-                    double averageEducationRisk = getAndSaveAverageEducationRisk("averageEducationRisk", clients);
-                    double averageSocialRisk = getAndSaveAverageSocialRisk("averageSocialRisk", clients);
-                    double averageRiskScore = getAndSaveAverageRiskScore("averageRiskScore", clients);
+            double averageAge = getAndSaveAverageAge("averageAge", clients);
+            int totalFemales = getAndSaveTotalFemales("totalFemales", clients);
+            int totalMales = getAndSaveTotalMales("totalMales", clients);
+            int totalHighRisk = getAndSaveHighRiskClients("totalHighRisk", clients);
+            int totalNoCareGiver = getAndSaveTotalNoCareGiver("totalNoCareGiver", clients);
+            double averageHealthRisk = getAndSaveAverageHealthRisk("averageHealthRisk", clients);
+            double averageEducationRisk = getAndSaveAverageEducationRisk("averageEducationRisk", clients);
+            double averageSocialRisk = getAndSaveAverageSocialRisk("averageSocialRisk", clients);
+            double averageRiskScore = getAndSaveAverageRiskScore("averageRiskScore", clients);
 
-                    setTextViewInteger(R.id.statistic1_sub1, totalClients);
-                    setTextViewDouble(R.id.statistic1_sub2, averageAge);
-                    setTextViewInteger(R.id.statistic1_sub3, totalFemales);
-                    setTextViewInteger(R.id.statistic1_sub4, totalMales);
-                    setTextViewInteger(R.id.statistic1_sub5, totalHighRisk);
-                    setTextViewInteger(R.id.statistic1_sub6, totalNoCareGiver);
-                    setTextViewDouble(R.id.statistic2_sub1, averageHealthRisk);
-                    setTextViewDouble(R.id.statistic2_sub2, averageEducationRisk);
-                    setTextViewDouble(R.id.statistic2_sub3, averageSocialRisk);
-                    setTextViewDouble(R.id.statistic2_sub4, averageRiskScore);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Client>> call, Throwable t) {
-
-            }
+            setTextViewInteger(R.id.statistic1_sub1, totalClients);
+            setTextViewDouble(R.id.statistic1_sub2, averageAge);
+            setTextViewInteger(R.id.statistic1_sub3, totalFemales);
+            setTextViewInteger(R.id.statistic1_sub4, totalMales);
+            setTextViewInteger(R.id.statistic1_sub5, totalHighRisk);
+            setTextViewInteger(R.id.statistic1_sub6, totalNoCareGiver);
+            setTextViewDouble(R.id.statistic2_sub1, averageHealthRisk);
+            setTextViewDouble(R.id.statistic2_sub2, averageEducationRisk);
+            setTextViewDouble(R.id.statistic2_sub3, averageSocialRisk);
+            setTextViewDouble(R.id.statistic2_sub4, averageRiskScore);
         });
     }
 
@@ -349,13 +343,13 @@ public class StatisticsFragment extends Fragment {
 
 
     private void setTextViewInteger(int id, int value) {
-        TextView integerView = view.findViewById(id);
+        TextView integerView = getView().findViewById(id);
         integerView.setText(Integer.toString(value));
     }
 
 
     private void setTextViewDouble(int id, double value) {
-        TextView doubleView = view.findViewById(id);
+        TextView doubleView = getView().findViewById(id);
         doubleView.setText(Double.toString(value));
     }
 

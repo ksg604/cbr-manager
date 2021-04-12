@@ -12,6 +12,7 @@ public class APIService {
 
     private static APIService INSTANCE = null;
     public AuthService authService;
+    @Deprecated
     public ClientService clientService;
     public UserService userService;
     public ReferralService referralService;

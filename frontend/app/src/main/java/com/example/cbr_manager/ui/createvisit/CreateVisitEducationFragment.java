@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.service.visit.Visit;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
 import com.stepstone.stepper.Step;
@@ -29,12 +31,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.view.View.GONE;
 
+@AndroidEntryPoint
 public class CreateVisitEducationFragment extends Fragment implements Step {
 
     TextInputLayout adviceInput;
@@ -54,7 +58,6 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     TextView goalsMetTextView;
     private View view;
     private Visit visit;
-    private List<Goal> goalList = new ArrayList<>();
     private final String GOAL_CONCLUDED_KEY = "concluded";
     private final String GOAL_CATEGORY_EDUCATION = "education";
     private APIService apiService = APIService.getInstance();
@@ -64,6 +67,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     private static final String EDUCATION_KEY = "Education";
     private static final String STATUS_ONGOING_KEY = "Ongoing";
     private boolean concludedOrNotFound = false;
+    private GoalViewModel goalViewModel;
 
     public CreateVisitEducationFragment() {
         // Required empty public constructor
@@ -83,6 +87,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
         view = inflater.inflate(R.layout.fragment_create_visit_education, container, false);
         visit = ((CreateVisitStepperActivity) getActivity()).formVisitObj;
         educationGoal = ((CreateVisitStepperActivity) getActivity()).educationGoalObj;
@@ -105,47 +110,33 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
     private void getEducationGoal(View view) {
         currentGoalTextView = view.findViewById(R.id.educationProvisionCurrentGoalTextView);
         currentGoalStatusTextView = view.findViewById(R.id.educationProvisionCurrentGoalStatusTextView);
-        if (apiService.isAuthenticated()) {
-            apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
-                @Override
-                public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
-                    if (response.isSuccessful()) {
-                        goalList = response.body();
-                        Goal goal;
-                        Collections.reverse(goalList);
-                        previousEducationGoal = findNonConcludedGoal();
-                        if (previousEducationGoal != null) {
-                            currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
-                            currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
-                        } else {
-                            previousEducationGoal = findConcludedGoal();
-                            if (previousEducationGoal != null) {
-                                currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
-                                currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
-                            } else {
-                                currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
-                                currentGoalStatusTextView.setText("Current status: No status.");
-                            }
-                            goalsMetRadioGroup.setVisibility(GONE);
-                            goalsMetTextView.setVisibility(GONE);
-                            newGoalInput.setVisibility(View.VISIBLE);
-                            newGoalDescriptionInput.setVisibility(View.VISIBLE);
-                            concludedOrNotFound = true;
-                        }
-                    }
+
+        goalViewModel.getAllGoals().observe(getViewLifecycleOwner(), goals -> {
+            Collections.reverse(goals);
+            previousEducationGoal = findNonConcludedGoal(goals);
+            if (previousEducationGoal != null) {
+                currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
+                currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
+            }
+
+            if (previousEducationGoal == null) {
+                previousEducationGoal = findConcludedGoal(goals);
+                if (previousEducationGoal != null) {
+                    currentGoalTextView.setText("Current goal: " + previousEducationGoal.getTitle());
+                    currentGoalStatusTextView.setText("Current status: " + previousEducationGoal.getStatus());
+                } else {
+                    currentGoalTextView.setText("Current goal: No goal found. Please make one below.");
+                    currentGoalStatusTextView.setText("Current status: No status.");
                 }
+                newGoalInput.setVisibility(View.VISIBLE);
+                newGoalDescriptionInput.setVisibility(View.VISIBLE);
+                concludedOrNotFound = true;
 
-                @Override
-                public void onFailure(Call<List<Goal>> call, Throwable t) {
-
-                }
-            });
-        }
-
-
+            }
+        });
     }
 
-    private Goal findNonConcludedGoal() {
+    private Goal findNonConcludedGoal(List<Goal> goalList) {
         Goal goal;
         for (int i = 0; i < goalList.size(); i++) {
             goal = goalList.get(i);
@@ -161,7 +152,7 @@ public class CreateVisitEducationFragment extends Fragment implements Step {
         return null;
     }
 
-    private Goal findConcludedGoal() {
+    private Goal findConcludedGoal(List<Goal> goalList) {
         Goal goal;
         for (int i = 0; i < goalList.size(); i++) {
             goal = goalList.get(i);

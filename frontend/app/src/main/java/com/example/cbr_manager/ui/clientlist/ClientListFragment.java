@@ -90,9 +90,15 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
             }
         });
 
-        setUpSpinnerListener(genderSpinner);
-        setUpSpinnerListener(locationSpinner);
-        setUpSpinnerListener(disabilitySpinner);
+        clientListAdapter.setOnSetupListener(new ClientListItemAdapter.onSetupListener() {
+            @Override
+            public void onSetup() {
+                setUpSpinnerListener(genderSpinner);
+                setUpSpinnerListener(locationSpinner);
+                setUpSpinnerListener(disabilitySpinner);
+            }
+        });
+
 
         fetchClientsToList();
     }
@@ -120,10 +126,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                     locationTag = tag;
                 }
                 CharSequence newText = clientSearch.getQuery();
-
-                if (clientListAdapter.getItemCount() != 0) {
-                    clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter(newText.toString());
-                }
+                clientListAdapter.getFilter(genderTag, disabilityTag, locationTag).filter(newText.toString());
             }
 
             @Override

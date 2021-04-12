@@ -30,6 +30,8 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
     private String genderTag = "";
     private String locationTag = "";
     private String disabilityTag = "";
+
+    private onSetupListener onSetupListener;
     private Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -75,6 +77,7 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         this.clients = clients;
         filteredClientList = new ArrayList<>(clients);
         Collections.sort(filteredClientList, new ClientAlphabeticalComparator());
+        this.onSetupListener.onSetup();
         notifyDataSetChanged();
     }
 
@@ -144,8 +147,16 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         return filter;
     }
 
+    public void setOnSetupListener(ClientListItemAdapter.onSetupListener onSetupListener) {
+        this.onSetupListener = onSetupListener;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
+
+    public interface onSetupListener {
+        void onSetup();
     }
 
     public static class ClientAlphabeticalComparator implements Comparator<Client> {

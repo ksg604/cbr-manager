@@ -94,6 +94,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                 return true;
             }
         });
+        clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter("");
         return root;
     }
 

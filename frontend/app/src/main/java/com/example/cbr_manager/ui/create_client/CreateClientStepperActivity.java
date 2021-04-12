@@ -1,9 +1,13 @@
 package com.example.cbr_manager.ui.create_client;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,10 +15,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cbr_manager.R;
@@ -24,6 +31,10 @@ import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -37,6 +48,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
+
+
 @AndroidEntryPoint
 public class CreateClientStepperActivity extends AppCompatActivity implements StepperLayout.StepperListener {
 
@@ -46,8 +60,13 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     private StepperLayout CreateClientStepperLayout;
     private APIService apiService = APIService.getInstance();
     private static final String TAG = "CreateClientActivity";
-
     private ClientViewModel clientViewModel;
+
+    // Provides the entry point to the Fused Location Provider API
+    private FusedLocationProviderClient fusedLocationClient;
+
+    protected Location lastLocation;
+    private int LOCATION_REQUEST_CODE = 123;
 
 
     @Override
@@ -63,6 +82,8 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
 
         setTitle("Create a Client");
+
+        requestLocationPermissions();
 
         CreateClientStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
         CreateClientStepperLayout.setAdapter(setUpStepperAdapterWithFragments());
@@ -81,11 +102,11 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
         createClientStepperAdapter.addFragment(new EducationRiskFragment(), "Education Risk");
         createClientStepperAdapter.addFragment(new SocialRiskFragment(), "Social Risk");
         createClientStepperAdapter.addFragment(new GoalFragment(), "Goals");
-
         return createClientStepperAdapter;
     }
 
     private void onSubmitSuccess(Client client) {
+
         Intent intent = new Intent(this, ClientDetailsActivity.class);
         intent.putExtra(ClientDetailsActivity.KEY_CLIENT_ID, client.getId());
         startActivity(intent);
@@ -114,6 +135,7 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     }
 
     private void submitSurvey() {
+
         clientViewModel.createClient(formClientObj).subscribe(new DisposableSingleObserver<Client>() {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Client client) {
@@ -228,4 +250,52 @@ public class CreateClientStepperActivity extends AppCompatActivity implements St
     public void setPhotoFile(File file) {
         photoFile = file;
     }
+
+
+
+    private void requestLocationPermissions() {
+        if ( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            getLastLocation();
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation();
+            }
+        }
+    }
+
+    private void getLastLocation() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location
+                            if ( location != null ) {
+                                lastLocation = location;
+                                formClientObj.setLatitude(lastLocation.getLatitude());
+                                formClientObj.setLongitude(lastLocation.getLongitude());
+                            }
+                        }
+                    });
+
+        }
+        else {
+            Toast.makeText(CreateClientStepperActivity.this, "You have to allow location permissions in order to associate a location with this client!", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

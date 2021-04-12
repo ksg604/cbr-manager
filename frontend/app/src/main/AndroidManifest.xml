@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".BaseApplication"
@@ -18,15 +19,16 @@
         android:theme="@style/Theme.Cbr_manager"
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="n">
+        <activity android:name=".ui.map.MapActivity"></activity>
         <activity
             android:name=".ui.user.UserActivity"
             android:parentActivityName=".NavigationActivity" />
-        <activity android:name=".ui.createreferral.CreateReferralStepperActivity"></activity>
-        <activity android:name=".ui.baselinesurvey.BaselineSurveyStepperActivity"></activity>
-        <activity android:name=".ui.createvisit.CreateVisitStepperActivity"></activity>
+        <activity android:name=".ui.createreferral.CreateReferralStepperActivity" />
+        <activity android:name=".ui.baselinesurvey.BaselineSurveyStepperActivity" />
+        <activity android:name=".ui.createvisit.CreateVisitStepperActivity" />
         <activity android:name=".ui.create_client.CreateClientStepperActivity" />
         <activity android:name=".ui.clientselector.ClientSelectorActivity" />
-        <activity android:name=".ui.createreferral.CreateReferralActivity"></activity>
+        <activity android:name=".ui.createreferral.CreateReferralActivity" />
         <activity
             android:name=".ui.visitdetails.VisitDetailsActivity"
             android:label=".VisitDetailsActivity"
@@ -66,11 +68,17 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
             tools:node="remove" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
     </application>
 
 </manifest>

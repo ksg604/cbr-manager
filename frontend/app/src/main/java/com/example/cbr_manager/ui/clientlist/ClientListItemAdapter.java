@@ -75,7 +75,6 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         this.clients = clients;
         filteredClientList = new ArrayList<>(clients);
         Collections.sort(filteredClientList, new ClientAlphabeticalComparator());
-        Log.d(this.getClass().getSimpleName(), "setClients: ");
     }
 
     public Client getClient(int position) {

@@ -61,6 +61,7 @@ public class AlertCreationFragment extends Fragment {
         alertViewModel.createAlert(alert).subscribe(new DisposableSingleObserver<Alert>() {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Alert alert) {
+                getActivity().onBackPressed();
                 NavHostFragment.findNavController(AlertCreationFragment.this)
                         .navigate(R.id.nav_alert_list);
             }

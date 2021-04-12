@@ -2,6 +2,7 @@ package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +32,7 @@ import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
 import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -92,14 +94,26 @@ public class ClientDetailsFragment extends Fragment {
     private void setupTapTarget(View root) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeClientDetailsRisk", false)) {
-            TapTargetView.showFor(getActivity(),
+//            TapTargetView.showFor(getActivity(),
+//                    TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
+//                            .outerCircleAlpha(0.96f)
+//                            .targetCircleColor(R.color.white)
+//                            .titleTextSize(20)
+//                            .drawShadow(true)
+//                            .tintTarget(true)
+//                            .dimColor(R.color.black));
+            TapTargetSequence clientDetailsTapSequence = new TapTargetSequence(getActivity()).targets(
                     TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
                             .outerCircleAlpha(0.96f)
                             .targetCircleColor(R.color.white)
                             .titleTextSize(20)
                             .drawShadow(true)
                             .tintTarget(true)
-                            .dimColor(R.color.black));
+                            .dimColor(R.color.black),
+                    TapTarget.forView(root.findViewById(R.id.editClient), "Everything at your fingertips.")
+                    .transparentTarget(true)
+            );
+            clientDetailsTapSequence.start();
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("firstTimeClientDetailsRisk", true);
             editor.apply();

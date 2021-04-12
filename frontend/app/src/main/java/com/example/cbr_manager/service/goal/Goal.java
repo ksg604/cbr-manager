@@ -1,13 +1,9 @@
 package com.example.cbr_manager.service.goal;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.RoomWarnings;
 
-import com.example.cbr_manager.service.client.Client;
-import com.example.cbr_manager.utils.CBRTimestamp;
 import com.example.cbr_manager.utils.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -16,19 +12,21 @@ import java.sql.Timestamp;
 
 @Entity(tableName = "goal")
 public class Goal{
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "goalId")
+    private Integer id;
+
     @SerializedName("id")
     @Expose
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "goal_id")
-    private Integer id;
+    private Integer serverId;
 
     @SerializedName("datetime_created")
     @Expose
-    private Timestamp datetimeCreated;
+    private String datetimeCreated;
 
     @SerializedName("datetime_completed")
     @Expose
-    private Timestamp datetimeCompleted;
+    private String datetimeCompleted;
 
     @SerializedName("user_creator")
     @Expose
@@ -59,6 +57,8 @@ public class Goal{
     private String status;
 
     public Goal() {
+        this.datetimeCompleted = null;
+        this.datetimeCreated = Helper.getCurrentUTCTime().toString();
         this.userId = 0;
         this.clientId = -1;
         this.category = "";
@@ -68,27 +68,27 @@ public class Goal{
         this.status = "";
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getServerId() {
+        return serverId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
     }
 
-    public Timestamp getDatetimeCreated() {
+    public String getDatetimeCreated() {
         return datetimeCreated;
     }
 
-    public void setDatetimeCreated(Timestamp datetimeCreated) {
+    public void setDatetimeCreated(String datetimeCreated) {
         this.datetimeCreated = datetimeCreated;
     }
 
-    public Timestamp getDatetimeCompleted() {
+    public String getDatetimeCompleted() {
         return datetimeCompleted;
     }
 
-    public void setDatetimeCompleted(Timestamp datetimeCompleted) {
+    public void setDatetimeCompleted(String datetimeCompleted) {
         this.datetimeCompleted = datetimeCompleted;
     }
 
@@ -147,4 +147,8 @@ public class Goal{
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 }

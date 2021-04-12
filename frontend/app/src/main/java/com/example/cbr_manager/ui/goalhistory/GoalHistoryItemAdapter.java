@@ -1,6 +1,7 @@
 package com.example.cbr_manager.ui.goalhistory;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListRecyclerItemAdapter;
+import com.example.cbr_manager.utils.Helper;
 import com.github.vipulasri.timelineview.TimelineView;
+
+import org.threeten.bp.format.FormatStyle;
 
 import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItemAdapter.GoalHistoryItemViewHolder> {
 
@@ -44,16 +50,21 @@ public class GoalHistoryItemAdapter extends RecyclerView.Adapter<GoalHistoryItem
     @Override
     public void onBindViewHolder(@NonNull GoalHistoryItemViewHolder holder, int position) {
         Goal goal = goals.get(position);
+
+        if (goal == null){
+            return;
+        }
+
         holder.statusTextView.setText(goal.getStatus());
+
         if (goal.getStatus().toLowerCase().equals("concluded")) {
             holder.timelineView.setMarker(context.getDrawable(R.drawable.ic_check_circle_green));
         } else if (goal.getStatus().toLowerCase().equals("cancelled")) {
             holder.timelineView.setMarker(context.getDrawable(R.drawable.ic_baseline_remove_circle_outline_24));
         }
-        String date = goal.getDatetimeCreated().toString();
-        String dateAndTime[] = date.split(" ");
-        holder.dateTextView.setText(dateAndTime[0]);
-        holder.goalTitleTextView.setText(goal.getTitle());
+        holder.dateTextView.setText(Helper.formatDateTimeToLocalString(goal.getDatetimeCreated(), FormatStyle.SHORT));
+        holder.dateTextView.setText(Helper.formatDateTimeToLocalString(goal.getDatetimeCreated(), FormatStyle.SHORT));
+
         holder.goalDescriptionTextView.setText(goal.getDescription());
         holder.timelineView.setMarkerColor(R.color.purple_700);
     }

@@ -21,13 +21,16 @@ import com.example.cbr_manager.service.user.User;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AuthViewModel;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.stepper.GenericStepperAdapter;
 import com.example.cbr_manager.ui.visitdetails.VisitDetailsActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +66,8 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
     private VisitViewModel visitViewModel;
     private ClientViewModel clientViewModel;
+    private GoalViewModel goalViewModel;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,7 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
 
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
 
         setTitle("Create Visit");
         Intent intent = getIntent();
@@ -128,18 +134,16 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     }
 
     private void modifyPreviousGoal(Goal goal) {
-        if (apiService.isAuthenticated()) {
-            apiService.goalService.modifyGoal(goal).enqueue(new Callback<Goal>() {
-                @Override
-                public void onResponse(Call<Goal> call, Response<Goal> response) {
-                }
+        goalViewModel.modifyGoal(goal).subscribe(new DisposableCompletableObserver() {
 
-                @Override
-                public void onFailure(Call<Goal> call, Throwable t) {
+            @Override
+            public void onComplete() {
+            }
 
-                }
-            });
-        }
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            }
+        });
     }
 
     @Override
@@ -192,13 +196,17 @@ public class CreateVisitStepperActivity extends AppCompatActivity implements Ste
     private void createNewGoals(Goal goal) {
         goal.setClientId(clientId);
         goal.setUserId(userCreatorId);
-        apiService.goalService.createGoal(goal).enqueue(new Callback<Goal>() {
+
+        goalViewModel.createGoal(goal).subscribe(new DisposableSingleObserver<Goal>() {
+
             @Override
-            public void onResponse(Call<Goal> call, Response<Goal> response) {
+            public void onSuccess(@io.reactivex.annotations.NonNull Goal goal) {
+
             }
+
             @Override
-            public void onFailure(Call<Goal> call, Throwable t) {
-                Toast.makeText(CreateVisitStepperActivity.this, "Failed goal creation.", Toast.LENGTH_SHORT).show();
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
             }
         });
     }

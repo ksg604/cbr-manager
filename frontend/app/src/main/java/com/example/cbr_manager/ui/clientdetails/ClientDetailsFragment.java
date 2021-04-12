@@ -24,6 +24,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.APIService;
 import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.GoalViewModel;
 import com.example.cbr_manager.ui.createreferral.CreateReferralFragment;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
@@ -52,8 +53,12 @@ public class ClientDetailsFragment extends Fragment {
     private int clientId;
     private View parentLayout;
     private ClientViewModel clientViewModel;
+    private GoalViewModel goalViewModel;
 
     public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
+    public static String HEALTH = "health";
+    public static String EDUCATION = "education";
+    public static String SOCIAL = "social";
 
     public ClientDetailsFragment() {
         // Required empty public constructor
@@ -76,6 +81,7 @@ public class ClientDetailsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_client_details, container, false);
 
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
 
         parentLayout = getActivity().findViewById(android.R.id.content);
 
@@ -322,59 +328,49 @@ public class ClientDetailsFragment extends Fragment {
         TextView educationDescription = getView().findViewById(R.id.clientDetailsEducationDescriptionTextView);
         TextView educationStatus = getView().findViewById(R.id.clientDetailsEducationStatusTextView);
 
-        apiService.goalService.getGoals().enqueue(new Callback<List<Goal>>() {
-            @Override
-            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
-                List<Goal> goals = new ArrayList<>();
-                boolean hasHealthGoal = false;
-                boolean hasEducationGoal = false;
-                boolean hasSocialGoal = false;
-                goals = response.body();
-                Collections.reverse(goals);
-                for (Goal goal : goals) {
-                    if (goal.getClientId().equals(clientId)) {
-                        if (goal.getCategory().toLowerCase().equals("health") && !hasHealthGoal) {
-                            if (!goal.getTitle().isEmpty()) {
-                                healthTitle.setText(goal.getTitle());
-                            }
-
-                            if (!goal.getDescription().isEmpty()) {
-                                healthDescription.setText(goal.getDescription());
-                            }
-                            healthStatus.setText(goal.getStatus());
-                            hasHealthGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals("education") && !hasEducationGoal) {
-                            if (!goal.getTitle().isEmpty()) {
-                                educationTitle.setText(goal.getTitle());
-                            }
-
-                            if (!goal.getDescription().isEmpty()) {
-                                educationDescription.setText(goal.getDescription());
-                            }
-                            educationStatus.setText(goal.getStatus());
-                            hasEducationGoal = true;
-                        } else if (goal.getCategory().toLowerCase().equals("social") && !hasSocialGoal) {
-                            if (!goal.getTitle().isEmpty()) {
-                                socialTitle.setText(goal.getTitle());
-                            }
-
-                            if (!goal.getDescription().isEmpty()) {
-                                socialDescription.setText(goal.getDescription());
-                            }
-                            socialStatus.setText(goal.getStatus());
-                            hasSocialGoal = true;
+        goalViewModel.getAllGoals().observe(getViewLifecycleOwner(), goals -> {
+            boolean hasHealthGoal = false;
+            boolean hasEducationGoal = false;
+            boolean hasSocialGoal = false;
+            Collections.reverse(goals);
+            for (Goal goal : goals) {
+                if (goal.getClientId().equals(clientId)) {
+                    if (goal.getCategory().toLowerCase().equals(HEALTH) && !hasHealthGoal) {
+                        if (!goal.getTitle().isEmpty()) {
+                            healthTitle.setText(goal.getTitle());
                         }
+
+                        if (!goal.getDescription().isEmpty()) {
+                            healthDescription.setText(goal.getDescription());
+                        }
+                        healthStatus.setText(goal.getStatus());
+                        hasHealthGoal = true;
+                    } else if (goal.getCategory().toLowerCase().equals(EDUCATION) && !hasEducationGoal) {
+                        if (!goal.getTitle().isEmpty()) {
+                            educationTitle.setText(goal.getTitle());
+                        }
+
+                        if (!goal.getDescription().isEmpty()) {
+                            educationDescription.setText(goal.getDescription());
+                        }
+                        educationStatus.setText(goal.getStatus());
+                        hasEducationGoal = true;
+                    } else if (goal.getCategory().toLowerCase().equals(SOCIAL) && !hasSocialGoal) {
+                        if (!goal.getTitle().isEmpty()) {
+                            socialTitle.setText(goal.getTitle());
+                        }
+
+                        if (!goal.getDescription().isEmpty()) {
+                            socialDescription.setText(goal.getDescription());
+                        }
+                        socialStatus.setText(goal.getStatus());
+                        hasSocialGoal = true;
                     }
                 }
-                modifyCardView(R.id.clientDetailsHealthGoalCardView, hasHealthGoal);
-                modifyCardView(R.id.clientDetailsEducationGoalCardView, hasEducationGoal);
-                modifyCardView(R.id.clientDetailsSocialGoalCardView, hasSocialGoal);
             }
-
-            @Override
-            public void onFailure(Call<List<Goal>> call, Throwable t) {
-
-            }
+            modifyCardView(R.id.clientDetailsHealthGoalCardView, hasHealthGoal);
+            modifyCardView(R.id.clientDetailsEducationGoalCardView, hasEducationGoal);
+            modifyCardView(R.id.clientDetailsSocialGoalCardView, hasSocialGoal);
         });
     }
 

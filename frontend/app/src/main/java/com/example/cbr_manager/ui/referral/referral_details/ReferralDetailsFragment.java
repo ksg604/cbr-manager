@@ -33,10 +33,13 @@ import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.threeten.bp.format.FormatStyle;
+
 import java.sql.Ref;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +52,7 @@ import retrofit2.Response;
 public class ReferralDetailsFragment extends Fragment {
 
     private int referralId = -1;
-    private Referral myReferral;
+    private Referral localReferral;
     private View parentLayout;
     private Button resolveButton;
     private ReferralViewModel referralViewModel;
@@ -79,6 +82,7 @@ public class ReferralDetailsFragment extends Fragment {
         resolveButton = root.findViewById(R.id.referralDetailsResolveButton);
         getReferralInfo(referralId);
 
+
         resolveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,12 +97,13 @@ public class ReferralDetailsFragment extends Fragment {
 
     private void getReferralInfo(int referralId) {
         referralViewModel.getReferral(referralId).observe(getViewLifecycleOwner(), referral -> {
+            localReferral = referral;
             setUpTextView(R.id.referralDetailsTypeTextView, referral.getServiceType());
             setUpTextView(R.id.referralDetailsReferToTextView, referral.getRefer_to());
             setUpTextView(R.id.referralDetailsStatusTextView, referral.getStatus());
             setUpTextView(R.id.referralDetailsOutcomeTextView, referral.getOutcome());
             setUpTextView(R.id.referralDetailsServiceDetailTextView, referral.getServiceDetail().getInfo(referral.getServiceType()));
-            setUpTextView(R.id.referralDetailsDateCreatedTextView, referral.getDateCreated());
+            setUpTextView(R.id.referralDetailsDateCreatedTextView, Helper.formatDateTimeToLocalString(referral.getCreatedAt(), FormatStyle.SHORT));
             setUpTextView(R.id.referralDetailsClientTextView, referral.getFullName());
             if (referral.getStatus().equals("CREATED")) {
                 resolveButton.setVisibility(View.VISIBLE);
@@ -209,38 +214,24 @@ public class ReferralDetailsFragment extends Fragment {
     }
 
     private void getReferral(String outcome) {
-        apiService.referralService.getReferral(referralId).enqueue(new Callback<Referral>() {
+        localReferral.setStatus("RESOLVED");
+        localReferral.setOutcome(outcome);
+        referralViewModel.modifyReferral(localReferral).subscribe(new DisposableCompletableObserver() {
             @Override
-            public void onResponse(Call<Referral> call, Response<Referral> response) {
-                Referral referral = response.body();
-                referral.setStatus("RESOLVED");
-
-                referral.setOutcome(outcome);
-                apiService.referralService.modifyReferral(referral).enqueue(new Callback<Referral>() {
-                    @Override
-                    public void onResponse(Call<Referral> call, Response<Referral> response) {
-                        if (response.isSuccessful()) {
-                            TextView statusTextView = getView().findViewById(R.id.referralDetailsStatusTextView);
-                            statusTextView.setText("RESOLVED");
-                            TextView outcomeTextView = getView().findViewById(R.id.referralDetailsOutcomeTextView);
-                            if (outcome.isEmpty()) {
-                                outcomeTextView.setText("None");
-                            } else {
-                                outcomeTextView.setText(outcome);
-                            }
-                            resolveButton.setVisibility(View.GONE);
-                            Toast.makeText(getContext(), "Update successful!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Referral> call, Throwable t) {
-                    }
-                });
+            public void onComplete() {
+                TextView statusTextView = getView().findViewById(R.id.referralDetailsStatusTextView);
+                statusTextView.setText("RESOLVED");
+                TextView outcomeTextView = getView().findViewById(R.id.referralDetailsOutcomeTextView);
+                if (outcome.isEmpty()) {
+                    outcomeTextView.setText("None");
+                } else {
+                    outcomeTextView.setText(outcome);
+                }
+                resolveButton.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Update successful!", Toast.LENGTH_SHORT).show();
             }
             @Override
-            public void onFailure(Call<Referral> call, Throwable t) {
-
+            public void onError(@NonNull Throwable e) {
             }
         });
     }
@@ -250,6 +241,5 @@ public class ReferralDetailsFragment extends Fragment {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 dp, resources.getDisplayMetrics());
     }
-
 
 }

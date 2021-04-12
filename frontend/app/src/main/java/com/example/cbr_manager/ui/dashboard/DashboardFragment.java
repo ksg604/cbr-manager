@@ -26,6 +26,7 @@ import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.AlertViewModel;
 import com.example.cbr_manager.ui.ClientViewModel;
+import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.VisitViewModel;
 import com.example.cbr_manager.ui.alert.alert_details.AlertDetailsActivity;
 import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
@@ -62,6 +63,7 @@ public class DashboardFragment extends Fragment {
     private VisitViewModel visitViewModel;
     private AlertViewModel alertViewModel;
     private ClientViewModel clientViewModel;
+    private ReferralViewModel referralViewModel;
 
     public DashboardFragment() {
         super(R.layout.fragment_home);
@@ -73,6 +75,7 @@ public class DashboardFragment extends Fragment {
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
         alertViewModel = new ViewModelProvider(this).get(AlertViewModel.class);
         clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        referralViewModel = new ViewModelProvider(this).get(ReferralViewModel.class);
     }
 
     @Override
@@ -110,40 +113,24 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setupOutstandingReferralStats(View root) {
-        if (apiService.isAuthenticated()) {
-            apiService.referralService.getReferrals().enqueue(new Callback<List<Referral>>() {
-                @Override
-                public void onResponse(Call<List<Referral>> call, Response<List<Referral>> response) {
-                    if (response.isSuccessful()) {
-                        List<Referral> referrals = response.body();
-                        int createdReferrals = 0;
-                        int completedReferrals = 0;
-                        String status;
-                        for (Referral referral : referrals) {
-                            status = referral.getStatus();
-
-                            if (status.toLowerCase().trim().equals("created")) {
-                                createdReferrals++;
-                            } else if (status.toLowerCase().trim().equals("resolved")) {
-                                completedReferrals++;
-                            }
-                        }
-
+        referralViewModel.getReferralsAsLiveData().observe(getViewLifecycleOwner(), referrals -> {
+            int createdReferrals = 0;
+            int completedReferrals = 0;
+            String status;
+            for (Referral referral : referrals) {
+                status = referral.getStatus();
+                if (status.toLowerCase().trim().equals("created")) {
+                    createdReferrals++;
+                } else if (status.toLowerCase().trim().equals("resolved")) {
+                    completedReferrals++;
+                }
+            }
 //                        fillTopThreeOutstandingReferrals(referrals);
-
-                        TextView createdReferralsTextView = root.findViewById(R.id.dashboardOutstandingReferralsNumTextView);
-                        createdReferralsTextView.setText(Integer.toString(createdReferrals));
-                        TextView completedReferralsTextView = root.findViewById(R.id.dashboardCompletedReferralsNumTextView);
-                        completedReferralsTextView.setText(Integer.toString(completedReferrals));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Referral>> call, Throwable t) {
-
-                }
-            });
-        }
+            TextView createdReferralsTextView = root.findViewById(R.id.dashboardOutstandingReferralsNumTextView);
+            createdReferralsTextView.setText(Integer.toString(createdReferrals));
+            TextView completedReferralsTextView = root.findViewById(R.id.dashboardCompletedReferralsNumTextView);
+            completedReferralsTextView.setText(Integer.toString(completedReferrals));
+        });
     }
 
     private void fillTopThreeOutstandingReferrals(List<Referral> referrals) {

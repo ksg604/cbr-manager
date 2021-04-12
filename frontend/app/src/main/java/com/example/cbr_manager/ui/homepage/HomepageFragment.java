@@ -24,7 +24,7 @@ public class HomepageFragment extends Fragment {
     private APIService apiService = APIService.getInstance();
     private ImageButton newClientButton, newVisitButton, dashboardButton;
     private ImageButton newReferralButton, clientListButton, syncButton;
-    private Button newSurvey;
+    private ImageButton newSurvey;
     private final int NEW_VISIT_CODE = 100;
     private final int NEW_REFERRAL_CODE = 101;
     private final int NEW_BASELINE_CODE = 102;
@@ -92,7 +92,7 @@ public class HomepageFragment extends Fragment {
             }
         });
 
-        newSurvey = view.findViewById(R.id.baselineSurveyButton);
+        newSurvey = view.findViewById(R.id.baselineSurveyImageButton);
         newSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

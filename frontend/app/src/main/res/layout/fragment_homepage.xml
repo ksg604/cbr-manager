@@ -14,7 +14,7 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -99,11 +99,11 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="25dp"
+                android:contentDescription="TODO"
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"
-                app:srcCompat="@drawable/ic_client_list"
-                android:contentDescription="TODO" />
+                app:srcCompat="@drawable/ic_client_list" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -185,14 +185,35 @@
 
             <Button
                 android:id="@+id/baselineSurveyButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="181dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="56dp"
-                android:layout_marginLeft="56dp"
                 android:layout_marginTop="16dp"
                 android:text="Baseline Placeholder"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <ImageButton
+                android:id="@+id/mapButton"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_menu_mapmode" />
+
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:gravity="center_horizontal"
+                android:text="MAP"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mapButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

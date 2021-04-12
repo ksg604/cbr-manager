@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toolbar;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.example.cbr_manager.ui.clientselector.ClientSelectorActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.example.cbr_manager.ui.map.MapActivity;
 
 
 public class HomepageFragment extends Fragment {
@@ -103,21 +105,15 @@ public class HomepageFragment extends Fragment {
                 startActivity(intent);
             }
         });
-//        Toolbar toolbar = view.findViewById(R.id.toolbar);
-//        TapTargetView.showFor(getActivity(),
-//                TapTarget.forToolbarNavigationIcon(toolbar,
-//                        "test", "ssbeb"
-//                        ));
 
-//        TapTargetView.showFor(getActivity(),
-//                TapTarget.forView(view.findViewById(R.id.newReferralButton), "Testing123", "Check out your clients here!")
-//                        .outerCircleColor(R.color.purple_700)
-//                        .outerCircleAlpha(0.96f)
-//                        .targetCircleColor(R.color.white)
-//                        .titleTextSize(20)
-//                        .titleTextColor(R.color.white)
-//                        .dimColor(R.color.black)
-//                        .transparentTarget(true));
+       ImageView mapButton = view.findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

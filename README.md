@@ -429,6 +429,15 @@ All these tasks deals with Business logic for utilizing the data under the abstr
 * Implement basic CRUD operations with local database using executuors threads
 * Create a mock-up of sync logic to be used when making the synchronization architecture for the app
 
+### Iteration 3 Syncing data between Room database and Django database
+Make sure each data in local Room database correspond to an entry on Django server database 
+Mainly deals with the Repository pattern, making a prototype from client model for other type of data
+
+* Create initial sync logic (ended up being changed to Repository Pattern)
+* Update Client repo with sync and offline data
+* Debug Repository pattern for client database
+* Create worker class for client photo upload (also used in referrals)
+* Test and review implementations of Repository for other models (group work)
 
 
 ## Vincent's Contribution

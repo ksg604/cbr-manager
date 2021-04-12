@@ -13,7 +13,6 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-properties.load(project.rootProject.file('prod.properties').newDataInputStream())
 
 android {
     compileSdkVersion 30
@@ -34,7 +33,6 @@ android {
     buildTypes {
         stagingRelease {
             signingConfig signingConfigs.debug
-            buildConfigField "String", "API_URL", properties.getProperty("PROD_API_URL", '"http://127.0.0.1:8000/"')
             debuggable true
             minifyEnabled false
         }

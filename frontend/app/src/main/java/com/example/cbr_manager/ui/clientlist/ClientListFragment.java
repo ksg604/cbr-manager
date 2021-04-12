@@ -159,7 +159,6 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
     public void fetchClientsToList() {
         clientViewModel.getAllClients().observe(getViewLifecycleOwner(), clients -> {
             clientListAdapter.setClients(clients);
-            clientListAdapter.notifyDataSetChanged();
         });
     }
 

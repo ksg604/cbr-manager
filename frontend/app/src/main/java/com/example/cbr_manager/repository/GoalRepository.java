@@ -50,9 +50,9 @@ public class GoalRepository {
     private void fetchGoalsAsync() {
         goalAPI.getGoalsAsSingle(authHeader)
                 .doOnSuccess(goals -> {
-                            for (Goal v :
+                            for (Goal goal :
                                     goals) {
-                                insertGoalToLocalDB(v);
+                                insertGoalToLocalDB(goal);
                             }
                         }
                 )

@@ -49,8 +49,7 @@ public class AlertCreationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sendAlertCreateRequest();
-                NavHostFragment.findNavController(AlertCreationFragment.this)
-                        .navigate(R.id.nav_alert_list_to_action_nav_dashboard);
+
             }
         });
         return root;
@@ -62,6 +61,8 @@ public class AlertCreationFragment extends Fragment {
         alertViewModel.createAlert(alert).subscribe(new DisposableSingleObserver<Alert>() {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull Alert alert) {
+                NavHostFragment.findNavController(AlertCreationFragment.this)
+                        .navigate(R.id.nav_alert_list);
             }
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {

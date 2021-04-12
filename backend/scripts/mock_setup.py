@@ -75,7 +75,7 @@ def main():
     for c in clients:
         for _ in range(2):
             VisitFactory.create(client=c)
-        for _ in range(3):
+        for _ in range(4):
             GoalFactory(client_id=c.id, is_completed=random.choice([True, False]))
 
 

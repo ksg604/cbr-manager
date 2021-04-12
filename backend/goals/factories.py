@@ -24,4 +24,4 @@ class GoalFactory(factory.django.DjangoModelFactory):
     title = factory.Faker("sentence", nb_words=3)
     description = factory.Faker("sentence", nb_words=10)
     is_initial_goal = factory.fuzzy.FuzzyChoice([True, False])
-    status = factory.lazy_attribute(lambda o: "Completed" if o.is_completed else "Ongoing")
+    status = factory.lazy_attribute(lambda o: "Concluded" if o.is_completed else random.choice(["Ongoing", "Cancelled"]))

@@ -697,7 +697,16 @@ public class Visit extends CBRTimestamp {
         this.serverId = serverId;
     }
 
-
+    public String getProvisionText(){
+        String result="";
+        result = result.concat(getAdviceEducationProvisionText()).concat(getAdviceHealthProvisionText()).concat(getAdviceSocialProvisionText());
+        result = result.concat(getAdvocacyEducationProvisionText()).concat(getAdvocacyHealthProvisionText()).concat(getAdvocacySocialProvisionText());
+        result = result.concat(getConclusionEducationProvision()).concat(getConclusionHealthProvision()).concat(getConclusionSocialProvision());
+        result = result.concat(getEncouragementEducationProvisionText()).concat(getEncouragementHealthProvisionText()).concat(getEncouragementSocialProvisionText());
+        result = result.concat(getReferralEducationProvisionText()).concat(getReferralHealthProvisionText()).concat(getReferralSocialProvisionText());
+        result = result.concat(getOrthoticHealthProvisionText()).concat(getProstheticHealthProvisionText()).concat(getRepairsHealthProvisionText()).concat(getWheelchairHealthProvisionText());
+        return result;
+    }
 
 
 

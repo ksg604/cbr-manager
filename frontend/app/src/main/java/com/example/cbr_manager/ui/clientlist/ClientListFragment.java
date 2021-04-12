@@ -82,6 +82,8 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
         fetchClientsToList();
 
         clientSearch = root.findViewById(R.id.clientSearchView);
+
+
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -94,6 +96,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                 return true;
             }
         });
+
         clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter("");
         return root;
     }

@@ -13,18 +13,78 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
-        android:queryHint="@string/hint_search"
+        android:queryHint= "@string/hint_search_by_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPurpose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/visitSearchView">
+
+        <TextView
+            android:id="@+id/textViewPurposeVisitList"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="28dp"
+            android:text="Purpose: "
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/purpose_dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="0dp"
+            android:dropDownWidth="match_parent"
+            android:minWidth="250dp"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutProvision"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutPurpose">
+
+        <TextView
+            android:id="@+id/textViewProvisionVisitList"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="28dp"
+            android:text="Provision: "
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/provision_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="0dp"
+            android:hint="Search in all provisions"
+            android:minWidth="250dp"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:padding="4dp"
-        tools:listitem="@layout/visit_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitSearchView" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutProvision"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/visit_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

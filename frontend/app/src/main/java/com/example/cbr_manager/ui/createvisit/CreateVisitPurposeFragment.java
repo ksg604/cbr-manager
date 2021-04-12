@@ -84,14 +84,13 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeProvision", false)) {
             TapTargetView.showFor(getActivity(),
-                    TapTarget.forView(view.findViewById(R.id.cbrTypeChipGroup), "Select a provision.", "Provisions will be updated by selecting the CBR chips.")
+                    TapTarget.forView(view.findViewById(R.id.cbrTypeTextView), "Select a provision.", "Provisions will be updated by selecting the CBR chips.")
                             .outerCircleAlpha(0.96f)
                             .targetCircleColor(R.color.white)
                             .titleTextSize(20)
                             .drawShadow(true)
                             .transparentTarget(true)
-                            .targetRadius(75)
-//                        .tintTarget(true)
+                        .tintTarget(true)
                             .dimColor(R.color.black));
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("firstTimeProvision", true);

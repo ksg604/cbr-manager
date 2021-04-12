@@ -11,11 +11,14 @@ public class AlertListRecyclerItem {
 
     private Alert alert;
 
-    public AlertListRecyclerItem(String title, String body, Alert alert, String date) {
+    private Boolean markedRead;
+
+    public AlertListRecyclerItem(String title, String body, Alert alert, String date,Boolean markedRead) {
         this.title = title;
         this.body = body;
         this.alert = alert;
         this.date = date;
+        this.markedRead = markedRead;
     }
 
     public String getTitle() {
@@ -28,6 +31,10 @@ public class AlertListRecyclerItem {
 
     public String getDate() {
         return date;
+    }
+
+    public Boolean getMarkedRead() {
+        return markedRead;
     }
 
     public Alert getAlert() {

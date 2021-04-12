@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.cbr_manager.repository.AlertRepository;
 import com.example.cbr_manager.service.alert.Alert;
+import com.example.cbr_manager.service.alert.Alert;
 
 import java.io.File;
 import java.util.List;
@@ -32,6 +33,10 @@ public class AlertViewModel extends ViewModel {
         return this.alertRepository.getAlertsAsLiveData();
     }
 
+    public LiveData<List<Alert>> getAllAlertsOffline() {
+        return this.alertRepository.getAlertsAsLiveDataOffline();
+    }
+
     public LiveData<Alert> getAlert(int id) {
         return alertRepository.getAlert(id);
     }
@@ -44,5 +49,12 @@ public class AlertViewModel extends ViewModel {
         return this.alertRepository.createAlert(alert);
     }
 
+    public Completable modifyAlert(Alert alert) {
+        return this.alertRepository.modifyAlert(alert);
+    }
+
+    public Completable modifyAlertOffline(Alert alert) {
+        return this.alertRepository.modifyAlertOffline(alert);
+    }
 
 }

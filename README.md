@@ -467,6 +467,17 @@ For this iteration I mostly focused on UI enhancement and research on the archit
 5. Fix some bugs to production deployment and add a home page to our API where the user can download the APK.
 6. Research into architecture to support offline app usage. Will hopefully be setup and usable for iteration 3.
 
+### Iteration 3
+
+For this iteration, I spent majority of my time looking into offline support as it was a tough task to tackle.
+
+- Researched and implemented offline architecture using MVVM design and WorkManager to support offline viewing and operations. I implemented Visits as the first offline fully  supported offline feature. This would be used as a reference to implement the other components.
+- Improved build variants such as the `stagingRelease` which uses its own API_URL aside from the one used in development.
+- Refactored various components in the app, using best practices, proper life cycle method, and simplifying code.
+- Allowed for apks to be easily uploaded from the Django admin.
+- Added login functionality offline.
+- Added docker scripts that makes managing docker container easier.
+
 # Deployment with Docker
 
 Use docker to deploy

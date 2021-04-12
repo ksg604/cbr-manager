@@ -89,7 +89,7 @@ public class GoalRepository {
     public Single<Goal> createGoal(Goal goal) {
         return Single.fromCallable(() -> goalDao.insert(goal))
                 .map(aLong -> {
-                    goal.setServerId(aLong.intValue());
+                    goal.setId(aLong.intValue());
                     return goal;
                 })
                 .doOnSuccess(this::enqueueCreateGoalWorker)

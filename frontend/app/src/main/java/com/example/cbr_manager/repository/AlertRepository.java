@@ -76,7 +76,8 @@ public class AlertRepository {
         Alert localAlert = alertDao.getAlertByServerId(alert.getServerId());
         if(localAlert != null) {
             alert.setId(localAlert.getId());
-//            alertDao.update(alert);
+            alert.setMarkedRead(localAlert.getMarkedRead());
+            alertDao.update(alert);
         }
         else {
             alertDao.insert(alert);

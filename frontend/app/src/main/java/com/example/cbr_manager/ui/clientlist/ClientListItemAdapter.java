@@ -1,6 +1,7 @@
 package com.example.cbr_manager.ui.clientlist;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
     private String genderTag = "";
     private String locationTag = "";
     private String disabilityTag = "";
+
+    private onSetupListener onSetupListener;
     private Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -51,7 +54,6 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
             }
             FilterResults results = new FilterResults();
             results.values = tempFilteredList;
-
             return results;
         }
 
@@ -76,6 +78,10 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         filteredClientList = new ArrayList<>(clients);
         Collections.sort(filteredClientList, new ClientAlphabeticalComparator());
         notifyDataSetChanged();
+
+        if (onSetupListener != null){
+            this.onSetupListener.onSetup();
+        }
     }
 
     public Client getClient(int position) {
@@ -110,12 +116,7 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         return filteredClientList.size();
     }
 
-    public Filter getFilterWithTags(String genderTag, String disabilityTag, String locationTag) {
-        this.genderTag = genderTag;
-        this.locationTag = locationTag;
-        this.disabilityTag = disabilityTag;
-        return filter;
-    }
+
 
     private boolean passTagFilterTest(Client client) {
         boolean genderResult, locationResult, disabilityResult;
@@ -142,8 +143,23 @@ public class ClientListItemAdapter extends RecyclerView.Adapter<ClientListItemAd
         return filter;
     }
 
+    public Filter getFilter(String genderTag, String disabilityTag, String locationTag) {
+        this.genderTag = genderTag;
+        this.locationTag = locationTag;
+        this.disabilityTag = disabilityTag;
+        return filter;
+    }
+
+    public void setOnSetupListener(ClientListItemAdapter.onSetupListener onSetupListener) {
+        this.onSetupListener = onSetupListener;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
+
+    public interface onSetupListener {
+        void onSetup();
     }
 
     public static class ClientAlphabeticalComparator implements Comparator<Client> {

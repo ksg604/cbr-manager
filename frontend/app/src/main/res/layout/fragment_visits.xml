@@ -71,6 +71,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="0dp"
+            android:hint="Search in all provisions"
             android:minWidth="250dp"
             android:textSize="12sp" />
     </LinearLayout>

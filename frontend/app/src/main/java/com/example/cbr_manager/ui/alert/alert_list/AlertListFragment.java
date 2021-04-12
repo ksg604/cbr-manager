@@ -86,6 +86,7 @@ public class AlertListFragment extends Fragment implements AlertListRecyclerItem
 
     public void fetchAlertsToList() {
         alertViewModel.getAllAlerts().observe(getViewLifecycleOwner(), alerts -> {
+            alertRecyclerItems.clear();
             for (Alert alert : alerts) {
                 alertRecyclerItems.add(new AlertListRecyclerItem(alert.getTitle(), alert.getBody(), alert, Helper.formatDateTimeToLocalString(alert.getCreatedAt(), FormatStyle.SHORT),alert.getMarkedRead()));
             }

@@ -727,7 +727,7 @@ You can edit a referral by clicking the edit button. One major thing you might e
 
 Once a referral is marked RESOLVED, it will no longer show up in the outstanding toggle
 
-<img src="/readme-images/back.png"  width="78" height="517">
+<img src="/readme-images/no_outstanding_referrals.png"  width="78" height="517">
 
 You can view the location of all clients through the map, which is accessible from the homepage
 
@@ -747,4 +747,4 @@ They then can export the statistics to Google Drive
 
 There, it can be viewed as a CSV file
 
-<img src="/readme-images/statistics_csv.png"  width="432" height="888">
+<img src="/readme-images/statistics_csv.png">

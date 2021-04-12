@@ -25,7 +25,7 @@ import io.reactivex.Single;
 public class CreateAlertWorker extends RxWorker {
 
     public static final String KEY_AUTH_HEADER = "KEY_AUTH_HEADER";
-    public static final String KEY_CLIENT_OBJ_ID = "KEY_CLIENT_OBJ_ID";
+    public static final String KEY_ALERT_OBJ_ID = "KEY_ALERT_OBJ_ID";
     private static final String TAG = CreateAlertWorker.class.getSimpleName();
     private final AlertAPI alertAPI;
     private final AlertDao alertDao;
@@ -43,7 +43,7 @@ public class CreateAlertWorker extends RxWorker {
     public static Data buildInputData(String authHeader, int alertId){
         Data.Builder builder = new Data.Builder();
         builder.putString(CreateAlertWorker.KEY_AUTH_HEADER, authHeader);
-        builder.putInt(CreateAlertWorker.KEY_CLIENT_OBJ_ID, alertId);
+        builder.putInt(CreateAlertWorker.KEY_ALERT_OBJ_ID, alertId);
         return builder.build();
     }
 
@@ -51,7 +51,7 @@ public class CreateAlertWorker extends RxWorker {
     @Override
     public Single<Result> createWork() {
         String authHeader = getInputData().getString(KEY_AUTH_HEADER);
-        int alertObjId = getInputData().getInt(KEY_CLIENT_OBJ_ID, -1);
+        int alertObjId = getInputData().getInt(KEY_ALERT_OBJ_ID, -1);
 
         return alertDao.getAlertSingle(alertObjId)
                 .flatMap(localAlert -> alertAPI.createAlertSingle(authHeader, localAlert)

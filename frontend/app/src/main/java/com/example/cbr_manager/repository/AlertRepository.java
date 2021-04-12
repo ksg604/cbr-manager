@@ -48,6 +48,10 @@ public class AlertRepository {
         return alertDao.getAlertsLiveData();
     }
 
+    public LiveData<List<Alert>> getUnreadAlertsAsLiveData(){
+        return alertDao.getUnreadAlertsLiveData();
+    }
+
     public LiveData<List<Alert>> getAlertsAsLiveDataOffline(){
         return alertDao.getAlertsLiveData();
     }

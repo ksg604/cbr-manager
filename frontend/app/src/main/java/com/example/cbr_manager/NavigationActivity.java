@@ -112,20 +112,30 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
     }
 
     private void setupAlertsBadge(NavigationView navigationView) {
-        alertViewModel.getAllAlertsOffline().observe(this, retrievedAlerts -> {
-            List<Alert> alerts = retrievedAlerts;
+//        alertViewModel.getAllAlertsOffline().observe(this, retrievedAlerts -> {
+//            List<Alert> alerts = retrievedAlerts;
+//            TextView alertsTV = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_alert_list));
+//            alertsTV.setGravity(Gravity.CENTER_VERTICAL);
+//            alertsTV.setTypeface(null, Typeface.BOLD);
+//            alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
+//            numUnread=0;
+//            for(Alert alert:alerts){
+//                if(!alert.getMarkedRead()){
+//                    numUnread+=1;
+//                }
+//            }
+//            if (numUnread > 0) {
+//                alertsTV.setText(Integer.toString(numUnread));
+//            }
+//        });
+        alertViewModel.getUnreadAlerts().observe(this,retrievedAlerts ->{
             TextView alertsTV = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_alert_list));
             alertsTV.setGravity(Gravity.CENTER_VERTICAL);
             alertsTV.setTypeface(null, Typeface.BOLD);
             alertsTV.setTextColor(getResources().getColor(R.color.purple_700));
-            numUnread=0;
-            for(Alert alert:alerts){
-                if(!alert.getMarkedRead()){
-                    numUnread+=1;
-                }
-            }
-            if (numUnread > 0) {
-                alertsTV.setText(Integer.toString(numUnread));
+            int size = retrievedAlerts.size();
+            if (size > 0) {
+                alertsTV.setText(Integer.toString(size));
             }
         });
     }

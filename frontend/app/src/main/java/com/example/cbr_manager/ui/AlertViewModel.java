@@ -33,6 +33,10 @@ public class AlertViewModel extends ViewModel {
         return this.alertRepository.getAlertsAsLiveData();
     }
 
+    public LiveData<List<Alert>> getUnreadAlerts() {
+        return this.alertRepository.getUnreadAlertsAsLiveData();
+    }
+
     public LiveData<List<Alert>> getAllAlertsOffline() {
         return this.alertRepository.getAlertsAsLiveDataOffline();
     }

@@ -84,6 +84,12 @@ public class ClientDetailsFragment extends Fragment {
         setupVectorImages(root);
         setupBottomNavigationView(root);
         setupCardView(root);
+        setupTapTarget(root);
+
+        return root;
+    }
+
+    private void setupTapTarget(View root) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeClientDetailsRisk", false)) {
             TapTargetView.showFor(getActivity(),
@@ -98,7 +104,6 @@ public class ClientDetailsFragment extends Fragment {
             editor.putBoolean("firstTimeClientDetailsRisk", true);
             editor.apply();
         }
-        return root;
     }
 
     private void setupToolBar() {

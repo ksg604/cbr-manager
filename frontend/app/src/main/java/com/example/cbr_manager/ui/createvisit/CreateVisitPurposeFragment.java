@@ -80,7 +80,12 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
         initializeChips(view);
         setupAutoFilledTextViews(view);
         setupProvisionVisibility();
+        setupTapTarget(view);
 
+        return view;
+    }
+
+    private void setupTapTarget(View view) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeProvision", false)) {
             TapTargetView.showFor(getActivity(),
@@ -90,13 +95,12 @@ public class CreateVisitPurposeFragment extends Fragment implements Step {
                             .titleTextSize(20)
                             .drawShadow(true)
                             .transparentTarget(true)
-                        .tintTarget(true)
+                            .tintTarget(true)
                             .dimColor(R.color.black));
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("firstTimeProvision", true);
             editor.apply();
         }
-        return view;
     }
 
     private void setupProvisionVisibility() {

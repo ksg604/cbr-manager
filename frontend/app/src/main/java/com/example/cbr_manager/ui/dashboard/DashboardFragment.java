@@ -87,6 +87,11 @@ public class DashboardFragment extends Fragment {
 
         setupVisitStats(view);
         setupOutstandingReferralStats(view);
+        setupTapTarget(view);
+
+    }
+
+    private void setupTapTarget(View view) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (!preferences.getBoolean("firstTimeDashboardAlert", false)) {
             TapTargetView.showFor(getActivity(),

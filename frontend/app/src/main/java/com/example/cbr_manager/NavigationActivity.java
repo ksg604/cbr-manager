@@ -90,6 +90,15 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
         View headerView = navigationView.getHeaderView(0);
 
         setUpHeaderView(headerView);
+        setupTapTarget(toolbar);
+
+
+
+
+        hideAdminOnlyMenuItems();
+    }
+
+    private void setupTapTarget(Toolbar toolbar) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(!preferences.getBoolean("firstTimeNav", false)) {
             TapTargetView.showFor(this,
@@ -108,10 +117,6 @@ public class NavigationActivity extends AppCompatActivity implements DrawerLayou
             editor.putBoolean("firstTimeNav", true);
             editor.apply();
         }
-
-
-
-        hideAdminOnlyMenuItems();
     }
 
     private void hideAdminOnlyMenuItems(){

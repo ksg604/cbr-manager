@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,8 +23,10 @@ import com.example.cbr_manager.service.goal.Goal;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.GoalViewModel;
 import com.example.cbr_manager.ui.createreferral.CreateReferralActivity;
+import com.example.cbr_manager.ui.createreferral.CreateReferralFragment;
 import com.example.cbr_manager.ui.createvisit.CreateVisitStepperActivity;
 import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
+
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
@@ -113,7 +116,8 @@ public class ClientDetailsFragment extends Fragment {
         clientDetailsNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+                Bundle arguments = new Bundle();
+                Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.visitsFragment:
                         Bundle args = new Bundle();
@@ -130,15 +134,15 @@ public class ClientDetailsFragment extends Fragment {
                         startActivity(createVisitIntent);
                         break;
                     case R.id.createReferralActivityClient:
-                        // TODO: Navigate to create referral fragment instead of activity
-                        Intent createReferralIntent = new Intent(getActivity(), CreateReferralActivity.class);
-                        createReferralIntent.putExtra("CLIENT_ID", clientId);
-                        startActivity(createReferralIntent);
+                        arguments = new Bundle();
+                        arguments.putInt("CLIENT_ID", clientId);
+                        fragment = new CreateReferralFragment();
+                        fragment.setArguments(arguments);
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(android.R.id.content, fragment).addToBackStack(null).commit();
                         break;
                     case R.id.referralsFragment:
-                        Bundle arguments = new Bundle();
-                        arguments.putInt("CLIENT_ID", clientId);
-                        ReferralListFragment fragment = new ReferralListFragment();
+                        fragment = ReferralListFragment.newInstance(clientId);
                         fragment.setArguments(arguments);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(android.R.id.content, fragment).addToBackStack(null).commit();

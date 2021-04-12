@@ -1,6 +1,7 @@
 package com.example.cbr_manager.di;
 
 import com.example.cbr_manager.BuildConfig;
+import com.example.cbr_manager.service.alert.AlertAPI;
 import com.example.cbr_manager.service.auth.AuthAPI;
 import com.example.cbr_manager.service.client.ClientAPI;
 import com.example.cbr_manager.service.goal.GoalAPI;
@@ -64,6 +65,12 @@ public class RetrofitModule {
     @Provides
     AuthAPI provideAuthAPI(Retrofit retrofit) {
         return retrofit.create(AuthAPI.class);
+    }
+
+    @Singleton
+    @Provides
+    AlertAPI provideAlertAPI(Retrofit retrofit) {
+        return retrofit.create(AlertAPI.class);
     }
 
     @Singleton

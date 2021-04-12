@@ -1,6 +1,7 @@
 package com.example.cbr_manager.ui.visitdetails;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.service.visit.Visit;
 import com.example.cbr_manager.ui.VisitViewModel;
+import com.example.cbr_manager.ui.map.MapActivity;
 import com.example.cbr_manager.utils.Helper;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -41,6 +44,7 @@ public class VisitDetailsFragment extends Fragment {
     public static String KEY_VISIT_ID = "KEY_VISIT_ID";
     private int visitId;
     private VisitViewModel visitViewModel;
+
 
     public static VisitDetailsFragment newInstance(String param1, String param2) {
         VisitDetailsFragment fragment = new VisitDetailsFragment();
@@ -65,6 +69,8 @@ public class VisitDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         visitViewModel = new ViewModelProvider(this).get(VisitViewModel.class);
+
+
     }
 
     @Override
@@ -75,6 +81,8 @@ public class VisitDetailsFragment extends Fragment {
         visitId = requireArguments().getInt(KEY_VISIT_ID, -1);
 
         getVisitInfo(visitId);
+
+
     }
 
     public void setUpToolBar() {

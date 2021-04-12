@@ -7,6 +7,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.cbr_manager.service.referral.ServiceDetails.ServiceDetail;
+import com.example.cbr_manager.utils.CBRTimestamp;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,12 +16,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity (tableName = "referral")
-public class Referral {
+public class Referral extends CBRTimestamp {
+
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "referralId")
+    @ColumnInfo(name = "id")
+    private Integer id;
+
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Integer serverId;
 
     @Embedded
     @SerializedName("service_detail")
@@ -33,21 +37,35 @@ public class Referral {
 
     @SerializedName("status")
     @Expose
-    private String status;
+    private String status = "CREATED";
 
-    @Ignore
+
     public Referral() {
+        super();
+        ServiceDetail physiotherapyServiceDetail = new ServiceDetail();
+        physiotherapyServiceDetail.setCondition("Amputee");
+        this.serviceDetail = physiotherapyServiceDetail;
+        this.dateCreated = "";
+        this.status = "CREATED";
+        this.outcome = "";
+        this.serviceType = "Physiotherapy";
+        this.clientId = 0;
+        this.fullName = "";
+        this.userId = 0;
+        this.refer_to = "";
+        this.photoURL = "images/default.png";
     }
-
-    public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer client, String fullName, Integer userCreator, String refer_to, String photoURL) {
+    @Ignore
+    public Referral(ServiceDetail serviceDetail, String dateCreated, String status, String outcome, String serviceType, Integer clientId, String fullName, Integer userId, String refer_to, String photoURL) {
+        super();
         this.serviceDetail = serviceDetail;
         this.dateCreated = dateCreated;
         this.status = status;
         this.outcome = outcome;
         this.serviceType = serviceType;
-        this.client = client;
+        this.clientId = clientId;
         this.fullName = fullName;
-        this.userCreator = userCreator;
+        this.userId = userId;
         this.refer_to = refer_to;
         this.photoURL = photoURL;
     }
@@ -60,17 +78,17 @@ public class Referral {
     @Expose
     private String serviceType;
 
-    @SerializedName("client")
+    @SerializedName("client_id")
     @Expose
-    private Integer client;
+    private Integer clientId;
 
     @SerializedName("client_name")
-    @Expose(serialize = false) // read only field
+    @Expose
     private String fullName;
 
     @SerializedName("user_creator")
     @Expose
-    private Integer userCreator;
+    private Integer userId;
 
     @SerializedName("refer_to")
     @Expose
@@ -144,20 +162,20 @@ public class Referral {
         this.serviceType = serviceType;
     }
 
-    public Integer getClient() {
-        return client;
+    public Integer getClientId() {
+        return clientId;
     }
 
-    public void setClient(Integer client) {
-        this.client = client;
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
     }
 
-    public Integer getUserCreator() {
-        return userCreator;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserCreator(Integer userCreator) {
-        this.userCreator = userCreator;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public void setServiceDetail(ServiceDetail serviceDetail) {
@@ -183,5 +201,14 @@ public class Referral {
         }
         return sdfOutput.format(date);
     }
+
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
+    }
+
 }
 

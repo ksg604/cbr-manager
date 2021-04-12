@@ -14,9 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +30,8 @@ import com.example.cbr_manager.service.client.Client;
 import com.example.cbr_manager.ui.ClientViewModel;
 import com.example.cbr_manager.ui.clientdetails.ClientDetailsActivity;
 import com.example.cbr_manager.ui.create_client.CreateClientStepperActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -77,8 +82,6 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
         fetchClientsToList();
 
         clientSearch = root.findViewById(R.id.clientSearchView);
-
-
         clientSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -91,6 +94,7 @@ public class ClientListFragment extends Fragment implements ClientListItemAdapte
                 return true;
             }
         });
+        clientListAdapter.getFilterWithTags(genderTag, disabilityTag, locationTag).filter("");
         return root;
     }
 

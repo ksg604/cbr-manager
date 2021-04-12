@@ -1,8 +1,11 @@
 package com.example.cbr_manager.ui.clientdetails;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +32,9 @@ import com.example.cbr_manager.ui.goalhistory.GoalHistoryFragment;
 import com.example.cbr_manager.ui.referral.referral_list.ReferralListFragment;
 import com.example.cbr_manager.ui.visits.VisitsFragment;
 import com.example.cbr_manager.utils.Helper;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -86,8 +92,38 @@ public class ClientDetailsFragment extends Fragment {
         setupVectorImages(root);
         setupBottomNavigationView(root);
         setupCardView(root);
+        setupTapTarget(root);
 
         return root;
+    }
+
+    private void setupTapTarget(View root) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeClientDetailsRisk", false)) {
+            TapTargetSequence clientDetailsTapSequence = new TapTargetSequence(getActivity()).targets(
+                    TapTarget.forView(root.findViewById(R.id.clientDetailsRiskLevelTextView), "Client Risk.", "Prioritize clients by their determined risk level. This is calculated during the risk assessment of client creation.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .dimColor(R.color.black),
+                    TapTarget.forView(root.findViewById(R.id.createReferralActivityClient), "Changes right at your fingertips.", "Create new visits and referrals here. Additionally, edit client personal info, risk, and goals directly.")
+                            .transparentTarget(true)
+                            .drawShadow(true)
+                            .targetRadius(100)
+                            .dimColor(R.color.black),
+                    TapTarget.forView(root.findViewById(R.id.visitsFragment), "View previous interactions.", "View details of all previous visits and referrals with the current client here.")
+                            .targetRadius(90)
+                            .drawShadow(true)
+                            .transparentTarget(true)
+                            .dimColor(R.color.black)
+            );
+            clientDetailsTapSequence.start();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeClientDetailsRisk", true);
+            editor.apply();
+        }
     }
 
     private void setupToolBar() {

@@ -1,7 +1,10 @@
 package com.example.cbr_manager.ui.referral.referral_list;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,8 @@ import com.example.cbr_manager.R;
 import com.example.cbr_manager.service.referral.Referral;
 import com.example.cbr_manager.ui.ReferralViewModel;
 import com.example.cbr_manager.ui.referral.referral_details.ReferralDetailsActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +45,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
     public static String KEY_CLIENT_ID = "KEY_CLIENT_ID";
     private final int NO_SPECIFIC_CLIENT = -1;
     ArrayList<ReferralListRecyclerItem> referralRecyclerItems = new ArrayList<>();;
-    
+
     private ReferralViewModel referralViewModel;
 
     public ReferralListFragment() {
@@ -54,7 +59,7 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
@@ -93,6 +98,9 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
             }
         });
 
+        setupTapTarget(root);
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -107,6 +115,24 @@ public class ReferralListFragment extends Fragment implements ReferralListRecycl
         });
 
         return root;
+    }
+
+    private void setupTapTarget(View root) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!preferences.getBoolean("firstTimeOutstandingReferrals", false)) {
+            TapTargetView.showFor(getActivity(),
+                    TapTarget.forView(root.findViewById(R.id.checkBox), "Filter clients.", "Use the checkbox to filter between all referrals and only outstanding referrals.")
+                            .outerCircleAlpha(0.96f)
+                            .targetCircleColor(R.color.white)
+                            .titleTextSize(20)
+                            .drawShadow(true)
+                            .tintTarget(true)
+                            .dimColor(R.color.black)
+                            .targetRadius(60));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstTimeOutstandingReferrals", true);
+            editor.apply();
+        }
     }
 
     public void fetchReferralsToList(ArrayList<ReferralListRecyclerItem> referralUIList) {

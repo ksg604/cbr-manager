@@ -58,7 +58,7 @@ public class DashboardFragment extends Fragment {
     TextView seeMoreTextView;
     TextView dateAlertTextView;
     TextView titleTextView;
-    int homeAlertId;
+    int homeAlertId = -1;
 
     private VisitViewModel visitViewModel;
     private AlertViewModel alertViewModel;

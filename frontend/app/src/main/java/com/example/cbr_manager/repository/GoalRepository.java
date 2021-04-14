@@ -73,7 +73,7 @@ public class GoalRepository {
     private void insertGoalToLocalDB(Goal goal) {
         Goal localGoal = goalDao.getGoalByServerId(goal.getServerId());
         if (localGoal != null) {
-            goal.setServerId(localGoal.getServerId());
+            goal.setId(localGoal.getId());
             goalDao.update(goal);
         } else {
             goalDao.insert(goal);

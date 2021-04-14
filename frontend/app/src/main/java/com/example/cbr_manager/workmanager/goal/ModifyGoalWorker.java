@@ -54,7 +54,7 @@ public class ModifyGoalWorker extends RxWorker {
         int goalObjId = getInputData().getInt(KEY_GOAL_OBJ_ID, -1);
 
         return goalDao.getGoalAsSingle(goalObjId)
-                .flatMap(localGoal -> goalAPI.modifyGoalAsSingle(authHeader, localGoal.getId(), localGoal)
+                .flatMap(localGoal -> goalAPI.modifyGoalAsSingle(authHeader, localGoal.getServerId(), localGoal)
                         .doOnSuccess(serverGoal -> updateDBEntry(localGoal, serverGoal)))
                 .map(goalSingle -> {
                     Log.d(TAG, "modified Goal: " + goalSingle.getId());

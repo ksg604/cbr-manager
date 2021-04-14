@@ -19,3 +19,10 @@ Lets use `local.properties` as our local configs. This file exists in the top le
 3. You can get the `API_URL` from `Helper.getBaseURL()`
 
 4. Use this url as the 'base url' when working with Retrofit
+
+## Google Map
+
+You need to add google map api key for the project to build
+
+1. Add this line to local.properties
+MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA

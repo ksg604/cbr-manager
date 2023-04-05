@@ -26,22 +26,67 @@ Baseline surveys definitely should get offline functionality. Baseline surveys s
 
 ## Django
 
-1. Run your server at 0.0.0.0 on port 8000
+### Setting up via Docker
 
-   `python manage.py runserver 0.0.0.0:8000`
+1. You can get the backend running easily using Docker.  If you don't have Docker installed on your computer, you can install it from the official provider at https://www.docker.com/.  If you are on MacOS, you can check to see that you have Docker installed using the following command:
 
+```docker --version```
 
+2. Run the following command.  You should now have a Docker container running the backend of cbr-manager listening in on port 8000
 
-2. Get your local computer IP
+```make start```
 
-   - Open a terminal
-   - Run `ipconfig` might be different for mac `man ipconfig`?
-   - Look for an `IPV4 Address` not `Default Gateway`
-   - Use this address to access Django and copy this somewhere. We will need this for the Android section.
+3. Now, you need to create a superuser which you can login to app with by SSHing into the container which you just created.  Copy the container ID of the Docker container you just created.  You can see the container ID by running 
+
+```docker ps```
+
+the container ID should be next to the image name "cbr-manager".  Now SSH into the container with the following command.
+
+```docker exec -it <CONTAINER_ID> sh```
+
+4. Create a super user.  Remember the username and password credentials as this is what you will use to login to the app.
+
+```python manage.py createsuperuser```
+
+5. Get your local computer IP
+
+  - Open a terminal
+  - Run `ipconfig` or for mac `ipconfig getifaddr en0`
+  - Look for an `IPV4 Address` not `Default Gateway` (if on Windows)
+  - Use this address to access Django and copy this somewhere. We will need this for the Android section.
+
+### Manual setup
+
+1. First, you need to ensure that you have Python installed on your computer.  On MacOS you can install Python via an installer which you can download off the official website https://www.python.org/.  On MacOS, you can check to see if you have Python installed using the following command:
+
+```python --version```
+
+2. Next, you need to ensure you have Django installed.  Django is installed via PIP which is Python's package manager.  PIP should have been automatically installed when you installed Python in the previous step.  Check to see if you have PIP correctly installed:
+
+```pip --version```
+
+3. Next, you need to install all project dependencies.  Run the following command:
+
+  ```pip install -r requirements.txt```
+
+4. Run your server at 0.0.0.0 on port 8000:
+
+   ```python manage.py runserver 0.0.0.0:8000```
+
+5. Create a super user.  Remember the username and password credentials as this is what you will use to login to the app.
+
+  ```python manage.py createsuperuser```
+
+6. Get your local computer IP
+
+  - Open a terminal
+  - Run `ipconfig` or for mac `ipconfig getifaddr en0`
+  - Look for an `IPV4 Address` not `Default Gateway` (if on Windows)
+  - Use this address to access Django and copy this somewhere. We will need this for the Android section.
 
 # Android
 
-1. Head to `frontend/` and find `local.properties`
+1. Head to `frontend/` and find `local.properties`.  If it does not exist, create it.
 
 2. Add a line to the file, and place your IP you found earlier in the appropriate field
 
@@ -50,20 +95,29 @@ Baseline surveys definitely should get offline functionality. Baseline surveys s
    - quotes are important here
    - the last slash is important
 
-3. Your file should look like this now
+3. Add an additional line
 
-   ```
-   sdk.dir=C\:\\Users\\tangj\\AppData\\Local\\Android\\Sdk
-   API_URL="http://<YOUR_IP>:8000/"
-   ```
+  `MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA`
 
+4. Your file should look like this now
 
+  ```
+  sdk.dir=C\:\\Users\\tangj\\AppData\\Local\\Android\\Sdk
+  API_URL="http://<YOUR_IP>:8000/"
+  MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA
+  ```
+
+  or if you are on MacOS
+
+  ```
+  sdk.dir=/Users/dev/Library/Android/sdk
+  API_URL="http://<YOUR_IP>:8000/"
+  MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA
+  ```
 
 # Done!
 
 Now you should be able to connect to the Django API with Android.
-
-
 
 # Directory Structure
 

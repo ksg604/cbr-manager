@@ -30,25 +30,33 @@ Baseline surveys definitely should get offline functionality. Baseline surveys s
 
 1. You can get the backend running easily using Docker.  If you don't have Docker installed on your computer, you can install it from the official provider at https://www.docker.com/.  If you are on MacOS, you can check to see that you have Docker installed using the following command:
 
-```docker --version```
+  ```
+  docker --version
+  ```
 
-2. Run the following command.  You should now have a Docker container running the backend of cbr-manager listening in on port 8000
+2. Head to `/backend` and run the following command.  You should now have a Docker container running the backend of cbr-manager listening in on port 8000.
 
-```make start```
+  ```
+  make start
+  ```
 
-3. Now, you need to create a superuser which you can login to app with by SSHing into the container which you just created.  Copy the container ID of the Docker container you just created.  You can see the container ID by running 
+3. Now, you need to create a superuser which you can login to app with by SSHing into the container which you just created.  Copy the container ID of the Docker container you just created.  The container ID should You can see the container ID by running 
 
-```docker ps```
+  ```
+  docker ps
+  ```
 
 the container ID should be next to the image name "cbr-manager".  Now SSH into the container with the following command.
 
-```docker exec -it <CONTAINER_ID> sh```
+  ```docker exec -it <CONTAINER_ID> sh```
 
 4. Create a super user.  Remember the username and password credentials as this is what you will use to login to the app.
 
-```python manage.py createsuperuser```
+  ```
+  python manage.py createsuperuser
+  ```
 
-5. Get your local computer IP
+5. Exit the SSH shell by typing `exit` then get your local computer IP
 
   - Open a terminal
   - Run `ipconfig` or for mac `ipconfig getifaddr en0`
@@ -59,25 +67,41 @@ the container ID should be next to the image name "cbr-manager".  Now SSH into t
 
 1. First, you need to ensure that you have Python installed on your computer.  On MacOS you can install Python via an installer which you can download off the official website https://www.python.org/.  On MacOS, you can check to see if you have Python installed using the following command:
 
-```python --version```
+  ```
+  python --version
+  ```
 
 2. Next, you need to ensure you have Django installed.  Django is installed via PIP which is Python's package manager.  PIP should have been automatically installed when you installed Python in the previous step.  Check to see if you have PIP correctly installed:
 
-```pip --version```
+  ```
+  pip --version
+  ```
 
 3. Next, you need to install all project dependencies.  Run the following command:
 
-  ```pip install -r requirements.txt```
+  ```
+  pip install -r requirements.txt
+  ```
 
-4. Run your server at 0.0.0.0 on port 8000:
+4. Now, run 
 
-   ```python manage.py runserver 0.0.0.0:8000```
+  ```
+  python manage.py makemigrations && python manage.py migrate
+  ```
 
 5. Create a super user.  Remember the username and password credentials as this is what you will use to login to the app.
 
-  ```python manage.py createsuperuser```
+  ```
+  python manage.py createsuperuser
+  ```
 
-6. Get your local computer IP
+6. Run your server at 0.0.0.0 on port 8000:
+
+  ```
+  python manage.py runserver 0.0.0.0:8000
+  ```
+
+7. Exit the SSH shell with CTRL-C or CMD-C (if on macOS) then get your local computer IP
 
   - Open a terminal
   - Run `ipconfig` or for mac `ipconfig getifaddr en0`
@@ -97,14 +121,14 @@ the container ID should be next to the image name "cbr-manager".  Now SSH into t
 
 3. Add an additional line
 
-  `MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA`
+  `MAPS_API_KEY=AIzaSyDhUGaY6JXS4kY7al7IbpHeIImT-eGlzXc`
 
 4. Your file should look like this now
 
   ```
   sdk.dir=C\:\\Users\\tangj\\AppData\\Local\\Android\\Sdk
   API_URL="http://<YOUR_IP>:8000/"
-  MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA
+  MAPS_API_KEY=AIzaSyDhUGaY6JXS4kY7al7IbpHeIImT-eGlzXc
   ```
 
   or if you are on MacOS
@@ -112,7 +136,7 @@ the container ID should be next to the image name "cbr-manager".  Now SSH into t
   ```
   sdk.dir=/Users/dev/Library/Android/sdk
   API_URL="http://<YOUR_IP>:8000/"
-  MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA
+  MAPS_API_KEY=AIzaSyDhUGaY6JXS4kY7al7IbpHeIImT-eGlzXc
   ```
 
 # Done!
@@ -270,9 +294,9 @@ To get maps to work, an additional dependency needs to be installed.
 2. Download and install 'Google Play services'
 3. Search for the 'local.properties' file using Android Studio search and add this line:
 
-MAPS_API_KEY=AIzaSyAwbtSesgcgNTyatQwfah7wOWP6D5J7KlA
+MAPS_API_KEY=AIzaSyDhUGaY6JXS4kY7al7IbpHeIImT-eGlzXc
 
-![Map Setup](/readme-images/map-readme.PNG)
+![Map Setup](/readme-images/map-readme.png)
 
 
 
@@ -683,7 +707,7 @@ Development will be deployed on port 8001
 
 # How to Navigate Application
 
-Once the app is running, you will be on the login screen. Input "user1" as the username and "password123" as the password. If you have logged in before on the same device, it may skip past this screen automatically.
+Once the app is running, you will be on the login screen. Input the username and password for the superuser you created in the "How to setup Local Development" section of this README here. If you have logged in before on the same device, it may skip past this screen automatically.
 
 <img src="/readme-images/login.png"  width="432" height="888">
 
@@ -691,7 +715,7 @@ After logging in, you will see the homepage. Here, you can click different icons
 
 <img src="/readme-images/homepage.png"  width="432" height="888">
 
-If you click on the dashboard, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.
+If you click on the dashboard, you  can view alerts, see high priority clients and visit information, and use the navigation bar to access other pages.  For your case, you should not be able to see any clients or alerts right now because you have not created any.
 
 <img src="/readme-images/dashboard.png"  width="432" height="888">
 
@@ -723,39 +747,7 @@ You can click on an alert from here to view more details about it.
 
 <img src="/readme-images/new_alert_details.png"  width="432" height="888">
 
-To view clients, click on "Client List" from the navigation bar.
-
-<img src="/readme-images/client_list.png"  width="432" height="888">
-
-To make it easier, you can use the search bar
-
-<img src="/readme-images/client_search.png"  width="432" height="888">
-
-From here, you can select a client to see more details about them.
-
-<img src="/readme-images/client_details.png"  width="432" height="888">
-
-You can edit a client by clicking on the edit button on the client details page.
-
-<img src="/readme-images/edit_client.png"  width="432" height="888">
-
-From the client details page, you can see a client's visits by clicking on "See Visits".
-
-<img src="/readme-images/per_client_visits.png"  width="432" height="888">
-
-You can click on any individual visit to see more visit details.
-
-<img src="/readme-images/visit_details.png"  width="432" height="888">
-
-You can also edit a visit by clicking on the edit button.
-
-<img src="/readme-images/edit_visit.png"  width="432" height="888">
-
-You can also view all visits for all clients by clicking on "Visits" on the navigation bar.
-
-<img src="/readme-images/all_visits.png"  width="432" height="888">
-
-You can register a new client by clicking on "New Client" from the navigation bar. This will take you to the new client page. Here, you will go through several screens of questions including some drop down menus before being able to submit the new client.
+You can register a new client by clicking on "New Client" from the home page. This will take you to the new client page. Here, you will go through several screens of questions including some drop down menus before being able to submit the new client.
 
 <img src="/readme-images/create_client_1.png"  width="432" height="888">
 
@@ -790,6 +782,38 @@ You can edit a referral by clicking the edit button. One major thing you might e
 Once a referral is marked RESOLVED, it will no longer show up in the outstanding toggle
 
 <img src="/readme-images/no_outstanding_referrals.png"  width="78" height="517">
+
+To view clients, click on "Client List" from the navigation bar.  You can create clients that will show up here by selecting the NEW CLIENT button from the home page.
+
+<img src="/readme-images/client_list.png"  width="432" height="888">
+
+To make it easier, you can use the search bar
+
+<img src="/readme-images/client_search.png"  width="432" height="888">
+
+From here, you can select a client to see more details about them.
+
+<img src="/readme-images/client_details.png"  width="432" height="888">
+
+You can edit a client by clicking on the edit button on the client details page.
+
+<img src="/readme-images/edit_client.png"  width="432" height="888">
+
+From the client details page, you can see a client's visits by clicking on "See Visits".
+
+<img src="/readme-images/per_client_visits.png"  width="432" height="888">
+
+You can click on any individual visit to see more visit details.
+
+<img src="/readme-images/visit_details.png"  width="432" height="888">
+
+You can also edit a visit by clicking on the edit button.
+
+<img src="/readme-images/edit_visit.png"  width="432" height="888">
+
+You can also view all visits for all clients by clicking on "Visits" on the navigation bar.
+
+<img src="/readme-images/all_visits.png"  width="432" height="888">
 
 You can view the location of all clients through the map, which is accessible from the homepage
 
